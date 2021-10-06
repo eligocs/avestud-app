@@ -1,0 +1,113 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="3">
+                    <ion-buttons>
+                        <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
+                    </ion-buttons>
+                </ion-col>
+                <ion-col size="5">
+                    <p class="ion-text-center heading">Test</p>
+                </ion-col>
+                <ion-col size="4">
+                    <div class="avatar_icon"></div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="comman_page_padding ">
+    <div class="test ">
+        <!--page_tittle and add button-->
+        <ion-row>
+            <ion-col size="8">
+                <h1 class="color_violet page_tittle">Test</h1>
+            </ion-col>
+            <ion-col size="2">
+                <div class="btn_theme">
+                    <button [routerLink]="['/add-test']" [queryParams]="{iacs:iacs,subject:subject}">Add</button>
+                </div> 
+            </ion-col>
+            <ion-col size="2">
+                <div class="btn_theme">
+                    <button [routerLink]="['/add-test-unit']" [queryParams]="{iacs:iacs,subject:subject}"> Add Unit</button>
+                </div>
+            </ion-col>
+        </ion-row>
+        <!--row_unit start-->
+        <ion-row class="row_unit">
+            <ion-col (click)="toggleShow()" id="{{!showUnitFor ? 'theme_shadow' :''}}" >
+                <p > All</p>
+            </ion-col>
+            <ion-col *ngFor="let assign of assignments;" id="{{showUnitFor == assign.name ? 'theme_shadow' :''}}">
+                <p (click)="toggleShow(assign.name)">{{assign.name | titlecase}}</p>
+            </ion-col> 
+        </ion-row>
+        <!--row_unit End-->
+        <!--test_section start-->
+        <div class="" *ngFor="let assign of assignments;">
+
+            <div  *ngIf="showUnitFor == assign.name || !showUnitFor">
+                <h2 class="text-center">{{assign.name | titlecase}}</h2>
+                <div class="test_section bg_light_yellow" *ngFor="let topicsAll of assign.topics;">
+                    <!--row_assignment-->
+
+                    <ion-row class="row_assignment">
+                        <div class="box box1">
+                            <h2 class="color_pink">{{topicsAll.title | titlecase}}</h2>
+                        </div>
+                        <div class="box box2 ion-text-center">
+                            <div>
+                                <a [routerLink]="['/add-assignment']" [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id}"><img src="../../assets/images/edit_icon.png" alt=""></a>
+                            </div>
+                            <div>
+                                <a (click)="presentAlert(topicsAll.id)"> <img src="../../assets/images/delete_icon.png" alt=""></a>
+                            </div>
+
+                            <button [routerLink]="['/publish-assignment']" [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id}"  class="{{topicsAll.publish_date ? 'publish_btn' : 'No_publish_btn'}}">  {{topicsAll.publish_date ? 'Published on'+topicsAll.publish_date : 'Not Published'}}  </button>
+                        </div>
+                    </ion-row>
+                    <!--details_sec-->
+                    <ion-row class="details_sec">
+                        <p>{{topicsAll.description}}</p>
+                    </ion-row>
+                    <!--question_section start-->
+                    <div>
+                        <ion-row class="question_section">
+                            <ion-col size="8">
+                                <span>Per Question Mark</span>
+                            </ion-col>
+                            <ion-col size="4">
+                                <span>{{topicsAll.per_q_mark}}</span>
+                            </ion-col>
+                            <ion-col size="8">
+                                <span>Total Questions</span>
+                            </ion-col>
+                            <ion-col size="4">
+                                <span>{{topicsAll.totalQuestions}}</span>
+                            </ion-col>
+                            <ion-col size='8'>
+                                <span>Time Duration</span>
+                            </ion-col>
+                            <ion-col size='4'>
+                                <span>{{topicsAll.timer}}</span>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                    <!--question_section End-->
+                    <!--assignment_btns-->
+                    <div class="assignment_btns">
+                        <button [routerLink]="['/list-question']" [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id}" class="bg_color add_q">Add Question</button>
+                        <button class="show_r bg_color_p">Show Reports</button>
+                    </div>
+                    <!--assignment_btns closer-->
+                </div>
+            </div>
+        </div>
+        <!--test_section End-->
+    </div>
+    </div>
+</ion-content>

@@ -1,0 +1,630 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+
+/* Core CSS required for Ionic components to work properly */
+
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+//   ion-back-button {
+//     display: block;
+//  }
+ion-content {
+    font-family: 'Poppins', sans-serif;
+}
+
+.color_violet {
+    color: #644699;
+}
+
+.avatar_icon {
+    background: url(./assets/images/avatar.svg);
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 30px;
+    float: right;
+    margin-top: 16px;
+}
+
+.logout_btn {
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 30px;
+    margin-top: 16px;
+}
+
+.text-center {
+    text-align: center !important;
+    font-size: 18px;
+    color: #717171;
+}
+
+.tittle {
+    font-size: 17px;
+}
+
+.mgtop {
+    margin-top: 40px;
+    border: 1px solid black;
+}
+
+.heading {
+    font-size: 16px;
+    color: #909090;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+ion-label {
+    color: #717171;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500 !important;
+}
+
+ion-input {
+    height: 39px;
+    border: 1px solid #BFBFBF;
+    color: #4e4c4c;
+    border-radius: 6px;
+    width: 95%;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+.text_area {
+    width: 100%;
+    height: 102px;
+    border: 1px solid #BFBFBF;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #717171;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: #4e4c4c;
+}
+
+.page_tittle {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.comman_font {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.color_pink {
+    color: #e03e91;
+}
+
+// After 12 august 2021 -- deepak the fire
+.page_tittle {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.comman_font {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.comman_font2 {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.color_pink {
+    color: #e03e91;
+}
+
+.bg_color {
+    background-color: #644699;
+}
+
+.comman_font3 {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.comman_btn {
+    height: 44px; 
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    border-radius: 8px;
+}
+
+.grad_sky {
+    background-image: linear-gradient(to bottom, #1482D2, #0FAFDF);
+}
+
+.grad_yellow {
+    background-image: linear-gradient(to bottom, #f7c15d, #f89a2f);
+}
+
+.grad_green {
+    background-image: linear-gradient(to bottom, #94E401, #6CB50D);
+}
+
+.grad_orange {
+    background-image: linear-gradient(to bottom, #FE8348, #FE6760);
+}
+ 
+.btn_theme button {
+    background-color: #644699;
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+    height: 36px;
+    width: 71px;
+    border-radius: 4px;
+    margin-top: 14px;
+}
+
+.btn_theme1 button {
+    background-color: #644699;
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+    height: 36px;
+    width: 100px;
+    border-radius: 4px;
+    margin-top: 14px;
+}
+
+.row_unit {
+    text-align: center;
+    background-color: #f5f5f5;
+    margin-top: 16px;
+    border-radius: 8px;
+    height: 71px;
+    align-items: center;
+}
+
+.row_unit p {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#theme_shadow {
+    box-shadow: 2px 2px 5px #b6b5b5;
+    border-radius: 8px;
+    text-align: center;
+    height: 71px;
+    background-color: white;
+} 
+
+  
+
+.bg_color_p {
+    background-color: #E03E91;
+}
+
+.color_green {
+    color: #00C43B;
+}
+
+.text_white {
+    color: white;
+}
+
+.searchbar-input {
+    box-shadow: none !important;
+    color: #000 !important;
+}
+
+.font_black {
+    color: #575757;
+}
+
+// Student-Home-page css start
+// different gradient colors
+.skyblue_gradient {
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #1487D4, #0FACDE);
+}
+
+.bg_gradient_skyblue {
+    background: linear-gradient(to top right, #1484D3, #0FAFDF);
+}
+
+.orange_gradient {
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #FB5F66, #FC8645);
+}
+
+.bg_gradient_orange {
+    background: linear-gradient(to top right, #FB6066, #FC8644);
+}
+
+.green_gradient {
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #62A811, #82C10D);
+}
+
+.bg_gradient_green {
+    background: linear-gradient(to top right, #61A611, #80C00D);
+}
+
+.yellow_gradient {
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #F68F2C, #F8B737);
+}
+
+.bg_gradient_yellow {
+    background: linear-gradient(to top right, #F8952E, #F9B236);
+}
+
+// Gradient-skyblue-button
+.skybleue {
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #1487D4, #0FACDE);
+}
+
+.badge_skyblue {
+    color: #1292D7;
+}
+
+.row2 {
+    margin-top: 15px;
+}
+
+// Gradoient-yellow-button
+.yellow {
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #F9B436, #F99D30);
+}
+
+.badge_yellow {
+    color: #F9AB33;
+}
+
+// Gradient-Green-Button
+.green {
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #93E201, #67AF0E);
+}
+
+.badge_green {
+    color: #8FDE02;
+}
+
+// Gradient-Orange-Button
+.orange {
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #FE7653, #FE695F);
+}
+
+.badge_orange {
+    color: #FE8248;
+}
+
+// Student log in page and  intittute log page and register page css start 
+ion-content {
+    font-family: "Poppins", sans-serif; 
+}
+.lectures { 
+    margin-bottom:50px;
+}
+
+.logo_area {
+    margin-top: 50px;
+}
+
+// head text part of form
+.login_page h1,
+.student_login_page h1,
+.register_page h1 {
+    font-size: 22px;
+    margin-top: -4%;
+    color: #090909;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+}
+
+.form_head {
+    margin-bottom: 20px;
+    line-height: 0;
+}
+
+.form_text_line {
+    font-size: 12px;
+    color: #a0a0a0;
+    font-family: "poppins", sans-serif;
+    font-weight: 400;
+}
+
+// ion-input start
+.login_page ion-input,
+.student_login_page ion-input {
+    border: 1px solid #a0a0a0;
+    border-radius: 25px;
+    height: 44px;
+    width: 95%;
+    font-size: 16px;
+    padding-left: 30px !important;
+    font-family: "poppins", sans-serif;
+    font-weight: 400;
+}
+
+.phone_input {
+    margin-bottom: 25px;
+}
+
+.password {
+    position: relative;
+}
+
+.lock_icon {
+    position: absolute;
+    top: 5px;
+    left: 80%;
+}
+
+.forgot_pass {
+    float: right;
+    margin-right: 22px;
+    font-size: 16px;
+    color: #a0a0a0;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+//   comman log in and sing up buttons css 
+.comman_login_btn {
+    height: 52px;
+    width: 268px;
+    color: white;
+    font-size: 16px;
+    border-radius: 30px;
+    font-family: "poppins", sans-serif;
+    font-weight: 500;
+}
+
+.login_btn,
+.get_otp {
+    background-color: #644699;
+}
+
+// student login page singup button css
+.singup_btn,
+.login_btn2 {
+    background-color: #e03e91;
+}
+
+.lines {
+    overflow: hidden;
+    text-align: center;
+    padding: 0 25%;
+}
+
+.lines:before,
+.lines:after {
+    background-color: #a0a0a0;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 50%;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+.lines:before {
+    right: 0.5em;
+    margin-left: -50%;
+}
+
+.lines:after {
+    left: 0.5em;
+    margin-right: -50%;
+}
+
+.hr_line p {
+    color: #a0a0a0;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+ion-select::part(icon) {
+    display: none !important;
+}
+
+// Student log in page and  intittute log page and register page css End 
+.bubblesloader {
+    color: #644699;
+}
+
+// ============================
+// css after 23 August 2021
+// ============================
+.bg_green {
+    background-color: #63aa0f;
+}
+
+.bg_violet {
+    background-color: #644699;
+}
+
+.bg_pink {
+    background-color: #e03e91;
+}
+
+// input type file css 
+::-webkit-file-upload-button {
+    display: none;
+}
+
+* {
+    font-family: "poppins", sans-serif;
+}
+
+// ============End==============
+// =================================
+// register page alert-box css start
+// ==================================
+.alert-box {
+    p {
+        color: #644699;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: -18px;
+    }
+    .alert-input.sc-ion-alert-md {
+        margin-left: 0;
+        margin-right: 0;
+        /* margin-top: 5px; */
+        /* margin-bottom: 5px; */
+        border-bottom: 1px solid var(--ion-color-step-150, #d9d9d9);
+        color: var(--ion-text-color, #000);
+        padding: 0;
+    }
+    .alert_otp_btn {
+        color: #644699;
+        font-weight: 400;
+        display: block;
+    }
+    .alert_signup_btn {
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        background-color: #644699;
+        padding: 0 28px;
+        border-radius: 5px;
+        height: 30px;
+    }
+    .alert-head.sc-ion-alert-md {
+        padding-left: unset;
+        padding-right: unset;
+        -webkit-padding-start: 23px;
+        padding-inline-start: 23px;
+        -webkit-padding-end: 23px;
+        padding-inline-end: 23px;
+        padding-top: 0px;
+    }
+}
+
+// ================End======================
+// =======================================================
+// student-class-schedule page edit_time_alert css start
+// =======================================================
+.edit_time_alert {
+    .alert-title.sc-ion-alert-md {
+        color: var(--ion-text-color, #000);
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+    .alert-sub-title.sc-ion-alert-md {
+        color: var(--ion-text-color, #717171);
+        font-size: 12px;
+        font-weight: 400;
+        margin-bottom: -26px;
+    }
+    .alert-input.sc-ion-alert-md {
+        border-bottom: 1px solid var(--ion-color-step-150, #d9d9d9);
+        color: var(--ion-text-color, #000);
+        border: 1px solid #707070;
+        height: 39px;
+        width: 230px;
+        border-radius: 5px;
+        margin-bottom: -9px;
+        padding-left: 5px;
+    }
+    .alert_save_btn {
+        height: 28px;
+        font-size: 12px;
+        font-weight: 400;
+        color: white;
+        background-color: #644699;
+        border-radius: 3px;
+        padding: 0px 13px;
+    }
+    .alert_close_btn {
+        height: 28px;
+        font-size: 12px;
+        font-weight: 400;
+        color: white;
+        background-color: #e03e91;
+        border-radius: 3px;
+        padding: 0px 13px;
+    }
+}
+
+// =====================End=============================
+// ======cards comman bagckground colors====== 
+.bg_light_yellow {
+    background-color: #FBFFF3;
+}
+
+.bg_light_pink {
+    background-color: #FDF6FA;
+}
+
+.bg_light_gray {
+    background-color: #FBF8FF;
+}
+
+// .d-flex{
+//     display: flex;
+// }
+
+// .space-between{
+//     justify-content: space-between;
+// }
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+
+.common_card{
+    border-radius: 15px;
+    box-shadow: 2px 2px 18px -2px lightgrey;
+    margin-top: 20px;
+    line-height: 0;
+
+}
+
+.comman_page_padding{
+    padding: 0 15px;
+}
+
+.common_btn_shadow{
+    box-shadow: 0 3px 6px rgba(0,0,0,.3);
+
+}
+.common_anc_btn{
+    padding: 6px 11px;
+    font-size: 12px;
+    color: white;
+    font-weight: 500;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+hr { 
+    background: #644699;
+}

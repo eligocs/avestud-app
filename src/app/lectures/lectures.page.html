@@ -1,0 +1,77 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="3">
+                    <ion-buttons>
+                        <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
+                    </ion-buttons>
+                </ion-col>
+                <ion-col size="5">
+                    <p class="ion-text-center heading">Lectures</p>
+                </ion-col>
+                <ion-col size="4">
+                    <div class="avatar_icon"></div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="comman_page_padding ">
+    <div class="lectures ">
+        <ion-row>
+            <ion-col size="10">
+                <h1 class="color_violet page_tittle">Lectures</h1>
+            </ion-col>
+            <ion-col size="2"> 
+                <button [routerLink]="['/addlecture']" [queryParams]="{iacs:iacs,subject:subject}" class='bg_color btn comman_btn common_anc_btn common_btn_shadow'>Create</button> 
+            </ion-col>
+        </ion-row>
+        
+       <ion-row class="row_unit">
+            <ion-col (click)="toggleShow()" id="{{!showUnitFor ? 'theme_shadow' :''}}" >
+                <p > All</p>
+            </ion-col>
+            <ion-col *ngFor="let lect of lectures;" id="{{showUnitFor == lect.unit ? 'theme_shadow' :''}}">
+                <p (click)="toggleShow(lect.unit)">{{lect?.unit | titlecase}}</p>
+            </ion-col> 
+        </ion-row>
+
+    
+
+
+        <div *ngFor="let lect of lectures;let i=index;"  >
+            <div *ngIf="showUnitFor == lect.unit || !showUnitFor">
+                <p class='text-center'>{{lect?.unit | titlecase}}</p>
+                <ion-row class="row_video" *ngFor="let single of lect.lectures;"> 
+                    <ion-col size="5">
+                        <div class="video_img">
+                            <a href='{{ single.lecture_video }}'><img src="../../assets/images/video_img2.png" class="youtube_icon"></a>
+                        </div>
+                    </ion-col>
+                    <ion-col size="7">
+                        <div class="col_text">
+                            <p class="comman_font color_violet"></p>
+                            <p class="comman color_pink">{{ single.lecture_name | titlecase }}</p>
+                            <p class="date_f">{{ single.lecture_date | date: 'dd/MM/yyyy' }}</p>
+                        </div>
+                        <div class="icons_set">
+                            <a href='{{ single.notes }}'><img src="../../assets/images/download_pdf.png"></a>
+                            <a [routerLink]="['/addlecture']" [queryParams]="{iacs:this.iacs,subject:subject,lectureid:single.id}"><img src="../../assets/images/edit_icon.png"></a>
+                            <a (click)="presentAlert(single.id)"><img src="../../assets/images/delete_icon.png"></a>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </div> 
+        </div>
+    </div>
+    <ion-card *ngIf="nolectures == true" class="card_4" no-lines>
+        <ion-row>
+            <ion-col class='ion-text-center'>No Lectures Added Yet !!!
+            </ion-col>
+        </ion-row>
+    </ion-card>
+</div>
+</ion-content>

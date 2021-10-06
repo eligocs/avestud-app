@@ -1,0 +1,68 @@
+.assignment_form {
+    padding: 0 18px;
+    margin-top: 15px;
+  }
+  
+  .assignment_form ion-label {
+    font-size: 16px;
+    color: #717171;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400 !important;
+  }
+  
+  .assignment_form ion-input {
+    height: 46px;
+    border: 1px solid #bfbfbf;
+    color: #4e4c4c;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400 !important;
+    font-size: 14px;
+    border-radius: 6px;
+    margin-top: 4px;
+    width: 100%;
+  }
+  
+  ion-checkbox {
+    width: 14px;
+    height: 14px;
+    top: 1px;
+  }
+  
+  .checkbox {
+    margin-top: 8px;
+  }
+  
+  .btns {
+    margin-top: 16px;
+  }
+  
+  .btns button {
+    width: 100px;
+    height: 36px;
+    font-size: 13px;
+    color: white;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+  }
+  
+  #add {
+    background-color: #644699;
+    margin-right: 5px;
+  }
+  
+  #reset {
+    background-color: #e03e91;
+    margin-left: 5px;
+  }
+  
+   
+
+  .lectureSelect {
+    width: 100%;
+    height: 44px;
+    border-radius: 4px;
+    border: 1px solid #cfcfcf;
+}
+  

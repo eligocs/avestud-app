@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-grid>
+          <ion-row>
+              <ion-col size="4">
+                  <ion-buttons>
+                      <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
+                  </ion-buttons>
+              </ion-col>
+              <ion-col size="4">
+                  <p class="ion-text-center heading">Questions</p>
+              </ion-col>
+              <ion-col size="4">
+                  <div class="avatar_icon"></div>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+ <!--questions_page Start-->
+  <div class="comman_page_padding">
+  <div class="questions_page">
+    <ion-row>
+      <ion-col size="10">
+        <h1 class="color_violet page_tittle">Questions</h1>
+      </ion-col>
+      <ion-col size="2">
+        <div class="btn_theme">
+          <button [routerLink]="['/add-question']" class='view_btn'   [queryParams]="{iacs:iacs,subject:subject,assignment_id: assignment_id}">Add</button>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    
+    
+
+    <div *ngFor='let quest of questionsList'>
+    
+      <ion-row >
+        <ion-col>
+          <p class="comman_font2 color_violet">Questions</p>
+        </ion-col>
+
+        <ion-col>
+          <p class="comman_font2 font_black">Answer</p>
+        </ion-col>
+
+        <ion-col>
+          <p class="comman_font2 font_black">Explanation</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <img src="../../assets/images/sum_maths.jpeg" class="sums_imgs">
+
+        <p class="comman_font3">{{quest.question ?? ''}}</p>
+      </ion-row>
+      <ion-row> 
+        <div class="options">
+          <p>A. {{quest.a ?? ''}}</p>
+          <p>B. {{quest.b ?? ''}}</p>
+          <p>C. {{quest.c ?? ''}}</p>
+          <p>D. {{quest.d ?? ''}}</p>
+        </div>
+
+      </ion-row>
+      <ion-row>    
+          <p>Answer : {{quest.answer ?? ''}}</p> 
+      </ion-row>
+      <ion-row> 
+          <p>Explaination : {{quest.answer_exp ?? ''}}</p>  
+      </ion-row>
+      <hr>
+    </div>
+
+    <div *ngIf='showEmptyMsg' class='text-center'><br>{{EmptyMsg ?? ''}}</div>
+
+
+
+  </div>
+  </div>
+  <!--questions_page Ends-->
+
+</ion-content>

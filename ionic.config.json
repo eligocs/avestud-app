@@ -1,0 +1,7 @@
+{
+  "name": "avestud-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

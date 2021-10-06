@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar> 
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">  
+          <ion-buttons>
+            <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button> 
+          </ion-buttons>
+        </ion-col> 
+        <ion-col size="5"> 
+          <p class="ion-text-center heading">Add Assignment</p> 
+        </ion-col> 
+        <ion-col size="4"> 
+          <div class="avatar_icon" (click)="presentPopover('any')"></div> 
+        </ion-col> 
+      </ion-row>
+    </ion-grid> 
+  </ion-toolbar> 
+</ion-header> 
+
+<ion-content>
+  <br>
+  <div class='comman_page_heading'>
+    <form class="assignment_form"  >
+      <ion-row>
+        <ion-col  >
+          <select class='lectureSelect' value="{{olddata?.unit}}" [(ngModel)]="postData.unit"   name='unit'>
+            <option value='' selected disabled>Select</option>
+            <option *ngFor="let unit_single of units"   value="{{unit_single.id}}">{{unit_single.unitName}}</option>
+          </select>
+        </ion-col>
+      </ion-row>
+      <!--Assignment Tittle-->
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-label position="stacked">Assignment Title</ion-label>
+          <ion-input name='title'  value="{{olddata?.title}}"  [(ngModel)]="postData.title" required placeholder="Please Enter Assignment Title" type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!--Per Question Mark-->
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-label position="stacked">Per Question Mark</ion-label>
+          <ion-input name='per_q_mark' value="{{olddata?.per_q_mark}}"  [(ngModel)]="postData.per_q_mark" required placeholder="Please Enter Question Marks" type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!--Discription-->
+      <ion-row>
+        <ion-col>
+          <ion-label position="stacked">Description</ion-label>
+          <ion-textarea name='description' value="{{olddata?.description}}"  [(ngModel)]="postData.description" name='description'  class="text_area" placeholder="Please Enter Assignment Description"></ion-textarea>
+        </ion-col>
+      </ion-row>
+      <!--Enable Show Answer-->
+      <div class="checkbox">
+        <ion-checkbox name='show_ans' value="{{olddata?.show_ans}}"  [(ngModel)]="postData.show_ans" name='show_ans' ></ion-checkbox>
+        <ion-label> Enable Show Answer</ion-label>
+      </div>
+      <!--btns-->
+      <div class="btns ion-text-center">
+        <button id="add" (click)="createAssigment()" >Add</button>
+        <!-- <button id="reset">Reset</button> --> 
+      </div>
+    </form>
+  </div>
+</ion-content>
