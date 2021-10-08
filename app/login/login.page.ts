@@ -1,0 +1,126 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthConstants } from '../../../config/auth-constants';
+import { AuthService } from '../services/auth.service';
+import { StorageService } from '../services/storage.service';
+import { ToastService } from '../services/toast.service';
+import { AlertController } from '@ionic/angular';  
+@Component({
+selector: 'app-login',
+templateUrl: './login.page.html',
+styleUrls: ['./login.page.scss']
+})
+export class LoginPage implements OnInit {
+postData = {
+email: '',
+password: ''
+};
+showloader:boolean;
+token:'';
+constructor(
+  public alertCtrl: AlertController,
+private router: Router,
+private authService: AuthService,
+private storageService: StorageService,
+private toastService: ToastService
+) {}
+
+async ngOnInit() { 
+  this.showloader = false;
+  var user =  await this.storageService.get(AuthConstants.AUTH);  
+  if(user){
+   window.location.href = 'homepage';
+  }
+}
+
+  
+async showAlert() {   
+  const alert = await this.alertCtrl.create({  
+    message: '<p>Send verification code to <br> verify your number </p>',
+    cssClass: 'alert-box',
+    inputs: [
+      
+      {
+        name: 'pin',
+        cssClass:'enter_otp',
+        type:'number'
+      }, 
+    ],
+    buttons: [
+        {
+        text: 'resend otp',
+        cssClass:'alert_otp_btn' 
+        },
+        {
+          text:'sign up',
+          cssClass: 'alert_signup_btn'
+        }
+      ]
+
+      
+  });  
+
+  await alert.present();  
+  const result = await alert.onDidDismiss();  
+} 
+
+validateInputs() {
+let email = this.postData.email.trim();
+let password = this.postData.password.trim();
+  return (
+    this.postData.email &&
+    this.postData.password &&
+    email.length > 0 &&
+    password.length > 0
+  );
+}
+
+  loginAction() {  
+    this.showloader = true;
+    if (this.validateInputs()) {
+      this.authService.login(this.postData).subscribe(
+      (res: any) => { 
+        if (res.access_token) { 
+          this.storageService.store(AuthConstants.AUTH, res.access_token);  
+          window.location.href = 'homepage';
+          //this.router.navigate(['homepage']);
+        } else {
+          this.toastService.presentToast('Incorrect email and password.');
+        }
+        this.showloader = false;
+      },
+      (error: any) => { 
+        this.toastService.presentToast('Un Authorized, Please enter correct email / password');
+        this.showloader = false
+      }
+      );
+    } else { 
+        this.toastService.presentToast('Username & Password Required !!!'); 
+        this.showloader = false
+      }
+    }
+  }
+
+
+  export class imageSlider {
+
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+    loop: true,
+    autoplay: {
+          delay: 2000
+    },
+
+    pagination : {
+      el: '.swiper-pagination',
+      clickable: true,
+      type: 'progressbar',
+      progressbarFillClass: 'swiper-pagination-progressbar-fill',
+      renderProgressbar: function (progressbarFillClass) {
+        return '<span class="' + progressbarFillClass + '" style="background: red"></span>';
+      }
+    }
+
+  }
+}

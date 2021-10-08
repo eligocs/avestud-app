@@ -1,0 +1,135 @@
+<ion-app>
+   
+    
+  <ion-header>
+    <ion-toolbar>
+  
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3">
+  
+            <ion-buttons>
+              <ion-back-button defaultHref="{{this.previousUrl}}" class="color_violet"></ion-back-button>
+            </ion-buttons>
+  
+          </ion-col>
+          
+          <ion-col size="5">
+  
+            <p class="ion-text-center heading">Enrollments</p>
+  
+          </ion-col>
+  
+          <ion-col size="4">
+  
+            <div class="avatar_icon" (click)="presentPopover('any')"></div>
+  
+          </ion-col>
+  
+        </ion-row>
+      </ion-grid>
+  
+    </ion-toolbar>
+  
+  </ion-header>
+
+ 
+ 
+ 
+<ion-content>
+
+
+  <!--enrollment_page Starts-->
+  <div class="enrollment_page">
+  <div>  <ion-searchbar search-icon="undefined"></ion-searchbar>
+    <img src="../../assets/images/searchbar_icon.png" class="search_icon">
+  </div>
+    <ion-row class="attendance_details">
+      <ion-card class="right_card">
+        <h2 class="color_pink">{{total ?? ''}}</h2>
+        <span class="color_violet">Total</span>
+        <span class="color_violet">Enrolled</span>
+      </ion-card>
+      <ion-card class="left_card">
+        <p>Attendance</p>
+        <div class="attendance_staus">
+          <div class="attendance_per">
+            <div class="dot_img">
+              <img src="../../assets/images/green_dot.png" alt="green_dot.png">
+            </div>
+            <div class="text">
+              <span>81-100%</span>
+            </div>
+          </div>
+          <div class="attendance_per">
+            <div class="dot_img">
+              <img src="../../assets/images/yellow_dot.png" alt="yellow_dot.png">
+            </div>
+            <div class="text">
+              <span>81-100%</span>
+            </div>
+          </div>
+          <div class="attendance_per">
+            <div class="dot_img">
+              <img src="../../assets/images/red_dot.png" alt="red_dot.png">
+            </div>
+            <div class="text">
+              <span>81-100%</span>
+            </div>
+          </div>
+        </div>
+      </ion-card>
+    </ion-row>
+
+    <h3 class="comman_font2 color_violet">Students</h3>
+    <!--student_profile start-->
+ 
+    <ion-row class="student_profile"  *ngFor="let data of students; let i = index">
+
+      <ion-col size="5" class="right_section">
+        <img src="{{data.detail[i].avatar ?? ''}}" alt="student_img.jpg">
+      </ion-col>
+      <ion-col class="left_section" size="7">
+        <div class="prof_name">
+          <h4 class="comman_font2 color_violet">{{data.detail[i].name ?? ''}}</h4> <img src="../../assets/images/green_eye_icon.png"
+            alt="green_eye_icon.png">
+        </div>
+        <p class="color_pink comman_font2 m_top">Addmission date</p>
+        <p class="comman_font3 color_pink">{{data.detail[i].created_at | date: 'dd/MM/yyyy'}}</p>
+        <p class="contact_no">{{data.detail[i].phone ?? ''}}</p> 
+        <div class="s_ship">
+          <p class="m_top2">Fee : ₹ {{data.price ?? ''}}</p> <img src="../../assets/images/download_icon.png" alt="download_icon.png">
+        </div>
+      </ion-col>
+
+    </ion-row> 
+
+
+    <!--student_profile End-->
+    <!--student_profile start-->
+   <!--  <ion-row class="student_profile mr_top">
+ 
+      <ion-col size="5" class="right_section">
+        <img src="../../assets/images/student_img.jpg" alt="student">
+      </ion-col>
+     
+      <ion-col class="left_section" size="7">
+        <div class="prof_name">
+          <h4 class="comman_font2 color_violet">Prashant</h4> <img src="../../assets/images/yellow_eye_icon.png"
+            alt="yellow_eye_icon.png">
+        </div>
+        <p class="color_pink comman_font2 m_top">Addmission date</p>
+        <p class="comman_font3 color_pink">24/12/2020</p>
+        <p class="contact_no">9845271589</p>
+        <div class="s_ship">
+          <p class="m_top2">Scholarship</p> <img src="../../assets/images/download_icon.png" alt="download_icon.png">
+        </div>
+      </ion-col>
+    </ion-row> -->
+    <!--student_profile End-->
+  </div>
+  <!--enrollment_page Ends-->
+</ion-content>
+<!--Ion-Content Ends-->
+ 
+    

@@ -1,0 +1,101 @@
+// add_lecture_form
+
+.add_lecture_form {
+    padding: 10px 20px;
+  }
+  
+  // form_tittle
+  
+  .form_tittle {
+    font-size: 18px;
+    color: #644699;
+    margin-left: 20px;
+    font-weight: 400;
+    margin-top: 8px;
+  }
+  
+  // ion-label and ion-input
+  
+  ion-select {
+    height: 45px;
+    border: 0.5px solid #dcd4d4;
+    color: #292727;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+  }
+  
+  .add_lecture_form ion-label {
+    color: #363636;
+    font-size: 16px;
+    font-weight: 400 !important;
+  }
+  
+  .add_lecture_form ion-input {
+    height: 45px;
+    border: 0.5px solid #e0d9d9;
+    color: #4e4c4c;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+  }
+  
+  // Choose date input
+  .add_lecture_form ion-datetime {
+    height: 45px;
+    border: 0.5px solid #dcd9d9;
+    color: #989393;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+  }
+  
+  .calender {
+    position: relative;
+  }
+  
+  .calender_icon {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+  }
+  
+  // file uploader / drag and drop
+  
+  .drag_drop {
+    border: 1px solid #d9d2d2;
+    height: 102px;
+    width: 100%;
+    border-radius: 11px;
+    background: url(../../assets/images/pdf_img.svg);
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    margin-top: 5px;
+  }
+  
+  ::-webkit-file-upload-button {
+    display: none;
+  }
+  
+  .mg_top {
+    margin-top: 12px;
+  }
+  
+  // .form_btn button {
+  //   height: 36px;
+  //   width: 71px;
+  //   font-size: 12px;
+  //   color: white;
+  //   font-weight: 400;
+  //   border-radius: 5px;
+  //   margin-top: 20px;
+  // }
+
+.lectureSelect {
+    width: 100%;
+    height: 44px;
+    border-radius: 4px;
+    border: 1px solid #cfcfcf;
+}
+  

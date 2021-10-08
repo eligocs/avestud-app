@@ -1,0 +1,161 @@
+// enrollment_page
+.enrollment_page{
+    padding: 0 15px;
+}
+
+// ion-searchbar
+ion-searchbar{
+    border: 1px solid #e0dbdb;
+    margin-top: 14px;
+    height: 44px;
+    --placeholder-color: white;
+    position: relative;
+}
+.search_icon{
+    position:absolute;
+    top: 26px;
+    right: 25px;
+}
+
+
+
+// attendance_details
+.attendance_details{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.attendance_details ion-card{
+    height: 103px;
+    max-width: 150px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 2px 4px #c7c7c7;
+    border-radius: 10px;
+}
+
+// right_card
+.right_card{
+    line-height: 16px;
+}
+
+.right_card h2{
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+.right_card span{
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+// left_card
+.left_card{
+    color: #000000;
+    line-height: 17px;
+    text-align: center;
+}
+
+.left_card p{
+    font-size: 14px;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+.left_card span{
+    font-size: 12px;
+}
+
+.attendance_staus {
+    line-height: 0;
+    margin-top: 8px;
+}
+
+.attendance_per{
+    display: flex;
+    line-height: 10px;
+    margin: 0 25%;
+}
+.attendance_per img{
+    margin: 3px 5px;
+}
+
+.text{
+    margin: 3px 0;
+}
+
+
+// student_profile
+
+.student_profile{
+    max-height: 133px;
+    height: 100%; 
+    box-shadow: 0 6px 11px #dcd9d9;
+    margin-top: 12px;
+}
+
+// right_section
+.right_section img{
+    height: 100px;
+    border-radius: 15px;
+    max-width: 122px;
+    width: 100%;
+}
+
+
+// left_section
+
+.left_section{
+    line-height: 8px;
+}
+
+.m_top{
+    margin-top: 8px;
+}
+
+.m_top2{
+    margin-top: 0;
+}
+
+.contact_no {
+    font-size: 12px;
+    color: #4E4E4E;
+    font-weight: 400;
+}
+
+.prof_name{
+    display: flex;
+    justify-content: space-between;
+}
+
+.prof_name img{
+    height: 19px;
+    width: 26px;
+}
+
+.s_ship{
+    display: flex;
+    justify-content: space-between;
+}
+
+.s_ship img{
+    height: 21px;
+}
+
+.s_ship p{
+    font-size: 14px;
+    color: #000000;
+    font-weight: 400;
+}
+
+.left_section h4{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.mr_top{
+    margin-top: 20px;
+}
+
+

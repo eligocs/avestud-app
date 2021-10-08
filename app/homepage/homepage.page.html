@@ -1,0 +1,126 @@
+ 
+  <ion-app> 
+    
+  <ion-header>
+    <ion-toolbar>
+  
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3">
+  
+            <ion-buttons>
+               <ion-icon class='logout_btn color_violet' (click)="logoutAction()" name="log-out-outline"></ion-icon>
+            </ion-buttons>
+  
+          </ion-col>
+          
+          <ion-col size="5">
+  
+            <p class="ion-text-center heading">My Classroom</p>
+  
+          </ion-col>
+  
+          <ion-col size="4">
+  
+            <div class="avatar_icon" (click)="presentPopover('any')"></div>
+  
+          </ion-col>
+  
+        </ion-row>
+      </ion-grid>
+  
+    </ion-toolbar>
+  
+  </ion-header>
+    <!--Ion-Header Ends-->
+    
+  
+  
+  <!--ion-Content Starts-->
+  
+    <ion-content>
+      <div class="comman_page_padding">
+      <h1 class="wel">Welcome</h1>
+      <span class="institute_name">{{inst_name ? inst_name: ''}}</span>
+      <!-- <ion-row class="row_unit">
+          <ion-col id="theme_shadow">
+              <p> All</p>
+          </ion-col>
+          <ion-col>
+              <p>Unit 1</p>
+          </ion-col>
+          <ion-col>
+              <p>Unit 2</p>
+          </ion-col>
+          <ion-col>
+              <p>Unit 3</p>
+          </ion-col> 
+      </ion-row> -->
+      <!-- <ion-row class="cards_section">
+        <ion-col size="4">
+          <ion-card class="card_1">
+          <p class="ion-text-center">5 Th <br>Standared</p>
+            
+          </ion-card>
+            
+        </ion-col>
+  
+        <ion-col size="4">
+          <ion-card class="card_2">
+          <p class="ion-text-center">4 Th <br>Standared</p>
+            
+          </ion-card>
+            
+        </ion-col>
+  
+        <ion-col size="4">
+          <ion-card class="card_3">
+          <p class="ion-text-center">6 Th <br>Standared</p>
+            
+          </ion-card>
+            
+        </ion-col>
+  
+      </ion-row> -->
+  
+     
+        <div   *ngFor="let data of classes; let i = index">
+          <ion-card  [ngStyle]="{ background: '#F3FCE3' }"  no-lines class="common_card">
+            <ion-card-header class="card_tittle">
+              <span class="color_violet class_5">{{data.class.name ?? ''}}   <small>Board : {{data.class.board ?? ''}}</small></span>
+              <span class="fee">₹ {{data.class.price}}</span>
+            </ion-card-header> 
+            <ion-card-content>
+                <ion-row>
+                {{data.language?.name  ? '- '+data.language.name : ''}}
+                </ion-row>
+              <ion-row>
+                <ion-col class="sub_btns" >   
+                  <div class=" btn_hindi"  *ngFor="let subj of data.subjects; let in = index">  
+                    <a class='link_subject '  [routerLink]="['/subject-detail']" [queryParams]="{iacs:subj.id,subject:subj.subject.id}" ><button class="common_anc_btn common_btn_shadow {{subj.color_code ?? 'green_gradient_btn'}}">
+                      {{subj.subject.name ?? ''}}
+                    </button>  </a> 
+                  </div>        
+                </ion-col>
+              </ion-row> 
+              <ion-row class="session_period">
+                <ion-col>
+                  <p>Start</p>
+                  <span>{{data.class.start_date | date: 'dd/MM/yyyy' }}</span>
+                </ion-col>  
+                <ion-col>
+                  <p>End</p>
+                  <span>{{data.class.end_date | date: 'dd/MM/yyyy' }}</span>
+                </ion-col>
+              </ion-row>
+              <a class="btn_enroll common_anc_btn common_btn_shadow" [routerLink]="['/enrollments']" [queryParams]="{iacs:data.class.institute_id,subject:data.class.id}">{{data.students ?? ''}} Enrolled</a> 
+              </ion-card-content>
+            </ion-card>
+          </div>
+         
+      </div>
+      
+    </ion-content>
+  
+  </ion-app>
+  
