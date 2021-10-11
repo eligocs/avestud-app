@@ -1,0 +1,172 @@
+<!--===Ion-Header Start===-->
+<ion-header>
+  <ion-toolbar>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">
+
+          <ion-buttons>
+             <ion-icon class='logout_btn color_violet' (click)="logoutAction()" name="log-out-outline"></ion-icon>
+          </ion-buttons>
+
+        </ion-col>
+        
+        <ion-col size="5">
+
+          <p class="ion-text-center heading">My Classroom</p>
+
+        </ion-col>
+
+        <ion-col size="4">
+
+          <div class="avatar_icon" (click)="presentPopover('any')"></div>
+
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+  </ion-toolbar>
+
+</ion-header>
+<!--===ion-header End-===-->
+<!--====ion-content Start====-->
+<ion-content>
+  <!--===home_page_student===-->
+  <div class="home_page_student">
+    <!--====page_headings====-->
+    <div class="page_headings">
+      <h1 class="color_violet">Welcome</h1>
+      <h2 class="color_pink">JOHN WATSON</h2>
+    </div>
+    <!--====main div / box shadow====-->
+    <div class="box_shadow">
+      <ion-row class="line_height">
+        <ion-col class="ion-text-center standared" size="12">
+          <h3 class="color_pink comman_font">5th Standared</h3>
+          <p>By: Akash Institute</p>
+        </ion-col>
+        <ion-col size="12" class="ion-text-center video_btn">
+          <button class="grad_green"><img src="../../assets/images/btn_red_icon.png">Next Class on <br>08/08/2021</button>
+        </ion-col>
+      </ion-row>
+      <!--=====subject_card=====-->
+      <div class="subject_card grad_yellow">
+        <h4 class="ion-text-center">Math</h4>
+        <!--====subject_details=====-->
+        <div class="subject_details">
+          <div>
+            <p>Next Class</p>
+            <p>Attendance</p>
+            <p>Percentage</p>
+          </div>
+          <div>
+            <p>Tuesday 6:00pm</p>
+            <p>7P | 3 AB</p>
+            <p>75%</p>
+          </div>
+        </div>
+        <!--=====subject_details close======-->
+      </div>
+      <!--===subject_card===-->
+      <div class="subject_card grad_green">
+        <h4 class="ion-text-center">Hindi</h4>
+        <!--===subject_details===-->
+        <div class="subject_details">
+          <div>
+            <p>Next Class</p>
+            <p>Attendance</p>
+            <p>Percentage</p>
+          </div>
+          <div>
+            <p>Tuesday 6:00pm</p>
+            <p>7P | 3 AB</p>
+            <p>75%</p>
+          </div>
+        </div>
+        <!--===subject_details close====-->
+      </div>
+      <!--===subject_card===-->
+      <div class="subject_card grad_orange">
+        <h4 class="ion-text-center">English</h4>
+        <!--===subject_details===-->
+        <div class="subject_details">
+          <div>
+            <p>Next Class</p>
+            <p>Attendance</p>
+            <p>Percentage</p>
+          </div>
+          <div>
+            <p>Tuesday 6:00pm</p>
+            <p>7P | 3 AB</p>
+            <p>75%</p>
+          </div>
+        </div>
+        <!--====subject_details close====-->
+      </div>
+      <!--class_days-->
+      <div class="class_days">
+        <div>
+          <p>Start <span> 07/08/2021</span></p>
+        </div>
+        <div>
+          <p>End <span> 07/08/2021</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!--====second card/ box shadow====-->
+    <div class="box_shadow margin_for_card">
+      <ion-row>
+        <ion-col class="ion-text-center standared" size="12">
+          <h3 class="color_pink comman_font">6th Standared</h3>
+          <p>By: Akash Institute</p>
+        </ion-col>
+        <ion-col size="12" class="ion-text-center video_btn">
+          <button class="grad_green"><img src="../../assets/images/btn_red_icon.png">Next Class on <br>08/08/2021</button>
+        </ion-col>
+      </ion-row>
+      <!--====subject_card====-->
+      <div class="subject_card grad_sky">
+        <h4 class="ion-text-center">Science</h4>
+        <!--===subject_details===-->
+        <div class="subject_details">
+          <div>
+            <p>Next Class</p>
+            <p>Attendance</p>
+            <p>Percentage</p>
+          </div>
+          <div>
+            <p>Tuesday 6:00pm</p>
+            <p>7P | 3 AB</p>
+            <p>75%</p>
+          </div>
+        </div>
+        <!--====subject_details close====-->
+      </div>
+      <!--===subject_card===-->
+      <div class="subject_card grad_orange">
+        <h4 class="ion-text-center">English</h4>
+        <!--===subject_details===-->
+        <div class="subject_details">
+          <div>
+            <p>Next Class</p>
+            <p>Attendance</p>
+            <p>Percentage</p>
+          </div>
+          <div>
+            <p>Tuesday 6:00pm</p>
+            <p>7P | 3 AB</p>
+            <p>75%</p>
+          </div>
+        </div>
+        <!--===subject_details Close====-->
+      </div>
+      <!--====subject_card====-->
+    </div>
+    <!--===box_shadow close===-->
+  </div>
+  <!--======home_page_student Close========-->
+</ion-content>
+<!--==========ion-content End==========-->

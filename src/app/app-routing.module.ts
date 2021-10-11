@@ -84,6 +84,10 @@ const routes: Routes = [
   {
     path: 'verifyotp',
     loadChildren: () => import('./verifyotp/verifyotp.module').then( m => m.VerifyotpPageModule)
+  },
+  {
+    path: 'studenthome',
+    loadChildren: () => import('./studenthome/studenthome.module').then( m => m.StudenthomePageModule)
   }
 
 ];

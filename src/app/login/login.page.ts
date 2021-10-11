@@ -28,8 +28,11 @@ private toastService: ToastService
 async ngOnInit() { 
   this.showloader = false;
   var user =  await this.storageService.get(AuthConstants.AUTH);  
-  if(user){
+  var role =  await this.storageService.get(AuthConstants.Role);  
+  if(user && role == 'institute'){
    window.location.href = 'homepage';
+  }else if(role == 'student'){
+    window.location.href = '/studenthome';
   }
 }
 
@@ -82,8 +85,12 @@ let password = this.postData.password.trim();
       (res: any) => { 
         if (res.access_token) { 
           this.storageService.store(AuthConstants.AUTH, res.access_token);  
-          window.location.href = 'homepage';
-          //this.router.navigate(['homepage']);
+          this.storageService.store(AuthConstants.Role, res.role); 
+          if(res.role == 'student'){
+            window.location.href = 'studenthome';
+          } else if(res.role == 'institute'){
+            window.location.href = 'homepage'; 
+          }
         } else {
           this.toastService.presentToast('Incorrect email and password.');
         }

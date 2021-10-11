@@ -33,6 +33,9 @@ signup(postData: any): Observable<any> {
 register_student(postData: any): Observable<any> {
   return this.httpService.post('register_student', postData);
 }
+resendOtp(postData: any): Observable<any> {
+  return this.httpService.post('resendOtp', postData);
+}
 
   logout( ) {  
     this.storageService.removeStorageItem(AuthConstants.AUTH).then(res => {

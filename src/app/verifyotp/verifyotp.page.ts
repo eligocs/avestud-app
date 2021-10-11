@@ -46,8 +46,8 @@ export class VerifyotpPage implements OnInit {
                 this.storageService.removeStorageItem(AuthConstants.otp);
                 this.storageService.store(AuthConstants.AUTH, res.access_token);  
                 this.storageService.removeStorageItem(AuthConstants.phone);
-                this.storageService.removeStorageItem(AuthConstants.pwd);
-                window.location.href = 'homepage';
+                this.storageService.removeStorageItem(AuthConstants.pwd); 
+                window.location.href = 'studenthome';
                 //this.router.navigate(['homepage']);
               } else {
                 this.toastService.presentToast('Incorrect email and password.');
@@ -59,6 +59,29 @@ export class VerifyotpPage implements OnInit {
       this.toastService.presentToast('Please enter OTP sent to your phone number !!!');  
     }else{
       this.toastService.presentToast('OTP did not match !!!'); 
+    }
+   
+
+  }
+  async resendOtp(){   
+    var phone = await this.storageService.get(AuthConstants.phone);   
+   
+    if(phone){  
+        var newData = {
+          phone : phone, 
+        } 
+        await this.authService.resendOtp(newData).subscribe(
+          (res: any) => {  
+            if (res.status == 'Success') {  
+              this.storageService.removeStorageItem(AuthConstants.otp);
+              this.storageService.store(AuthConstants.otp, res.otp); 
+              this.toastService.presentToast('Otp sent successfully');
+            } else {
+              this.toastService.presentToast('Fail to sent otp');
+            }
+          })  
+    } else{
+      this.toastService.presentToast('Phone number required !!!'); 
     }
    
 

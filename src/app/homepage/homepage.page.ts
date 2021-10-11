@@ -28,10 +28,14 @@ export class HomepagePage implements OnInit {
     ) {  } 
   async ngOnInit() {  
     var token =  await this.storageService.get(AuthConstants.AUTH); 
+    var role =  await this.storageService.get(AuthConstants.Role); 
     var mainThis = this; 
     if(!token){
       this.router.navigate(['/']);
     }else{ 
+        if(role == 'student'){
+          mainThis.router.navigate(['/studenthome']);
+        }
       var classroom =  await this.homeService.getClassRoom(token).subscribe(
         (res: any) => {  
           if (res.data) {

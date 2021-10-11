@@ -1,0 +1,136 @@
+* {
+    font-family: "poppins", sans-serif;
+  }
+  
+  // =====home_page_student css start====
+  
+  .home_page_student {
+    padding: 0 18px;
+  }
+  
+  // ===header part's css=== 
+  
+  h1 {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 0;
+  }
+  
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 0;
+  }
+  
+  .standared {
+    line-height: 0;
+  }
+  
+  .standared h3 {
+    font-weight: 500;
+  }
+  
+  .standared p {
+    margin-top: 12px;
+    color: #727272;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  
+  // ======header video btn====== 
+  
+  .video_btn button {
+    height: 40px;
+    width: 154px;
+    color: white;
+    font-size: 10px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    margin: 0 auto;
+    margin-bottom: 6px;
+  }
+  
+  .video_btn button img {
+    padding-right: 15px;
+    height: 32px;
+    width: 45px;
+  }
+  
+  // ====subject_card /box_shadow css start====
+  
+  // ===box_shadow===
+  
+  .box_shadow{
+    box-shadow: 0px 3px 10px #d6d2d2;
+    width: 100%;
+    padding: 0 10px;
+    border-radius: 7px;
+  
+  }
+  
+  
+  // ===subject_card==== 
+  
+  .subject_card {
+    line-height: 8px;
+    width: 100%;
+    padding: 5px 15px;
+    border-radius: 6px;
+    color: white;
+  }
+  
+  .subject_card h4 {
+    margin-top: 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  //=====subject card subject_details css===== 
+  
+  .subject_details {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .subject_details p {
+    font-size: 14px;
+    margin-top: 0;
+    font-weight: 500;
+  }
+  
+  
+  .grad_green,
+  .grad_orange,
+  .grad_sky {
+    margin-top: 16px;
+  }
+  
+  //==subject_details==
+  
+  .class_days {
+    display: flex;
+    justify-content: space-evenly;
+    line-height: 8px;
+  }
+  
+  .class_days p {
+    font-size: 14px;
+    color: #727272;
+    font-weight: 600;
+  }
+  
+  .class_days span {
+    font-size: 10px;
+    color: #000000;
+    font-weight: 400;
+  }
+  
+  
+  .margin_for_card{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+  }
