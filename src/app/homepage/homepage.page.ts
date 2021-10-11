@@ -17,6 +17,7 @@ export class HomepagePage implements OnInit {
   access_token: any; 
   showloader: any; 
   previousUrl: any; 
+  inst_name: any; 
   userData$ = new BehaviorSubject<any>([]);
   constructor(
     private previousRouteService: PreviousRouteService,
@@ -26,24 +27,24 @@ export class HomepagePage implements OnInit {
     private homeService: HomeService
     ) {  } 
   async ngOnInit() {  
-    
     var token =  await this.storageService.get(AuthConstants.AUTH); 
     var mainThis = this; 
-      if(!token){
-        this.router.navigate(['/']);
-      }else{ 
-        var classroom =  await this.homeService.getClassRoom(token).subscribe(
-          (res: any) => {  
+    if(!token){
+      this.router.navigate(['/']);
+    }else{ 
+      var classroom =  await this.homeService.getClassRoom(token).subscribe(
+        (res: any) => {  
           if (res.data) {
-           var result =  res.data;
-           var allClasses = [];
-            result.forEach((entry) => { 
-              entry.subjects.forEach((subj) => { 
-                subj.color_code = colorLight();  
+            var result =  res.data;
+            var allClasses = [];
+            result.forEach((entry,i) => { 
+              entry.subjects.forEach((subj) => {  
+                subj.color_code = colorLight(i);  
               });    
               allClasses.push(entry)
             });    
             this.classes = allClasses;    
+            this.inst_name = allClasses[0].institute.name;  
           }else{
             mainThis.storageService.removeStorageItem(AuthConstants.AUTH).then(res => { 
               mainThis.router.navigate(['/']);
@@ -52,9 +53,24 @@ export class HomepagePage implements OnInit {
         });
 
       }
-        function colorLight() {
-          var messages = ["#F9B637", "#1582D2", "#96E601",'#FE8448'];
-          var randomColor = messages[Math.floor(Math.random() * messages.length)];
+        function colorLight(i) {
+         /*  var messages = ["#F9B637", "#1582D2", "#96E601",'#FE8448'];
+          var randomColor = messages[Math.floor(Math.random() * messages.length)]; */
+          var randomColor;
+          if(i == 0){
+            randomColor =  'orange_gradient_btn';
+          }else if(i % 5 == 0){ 
+              randomColor =  'pink_btn'; 
+          }
+          if(i == 1){
+            randomColor =  'blue_gradient_btn';
+          }
+          if(i % 2 == 0){
+            randomColor =  'green_gradient_btn';
+          }
+          if(i % 3 == 0){
+            randomColor =  'yellow_gradient_btn';
+          } 
           return randomColor; 
         }  
       /*   function colortop() {

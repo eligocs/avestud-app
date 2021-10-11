@@ -24,6 +24,7 @@ export class ListQuestionPage implements OnInit {
   showEmptyMsg:boolean;
   EmptyMsg:string;
   topic:any;
+  pagetype:any;
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -38,8 +39,13 @@ export class ListQuestionPage implements OnInit {
       params => { 
         this.iacs =  params['iacs'];   
         this.subject =  params['subject'];   
-        this.assignment_id =  params['assignment_id'];   
-        this.previousUrl = 'assignments?iacs='+this.iacs+'&subject='+this.subject;  
+        this.assignment_id =  params['assignment_id'];    
+        this.pagetype =  params['type'];   
+        if(this.pagetype != ''){
+          this.previousUrl = 'test?iacs='+this.iacs+'&subject='+this.subject;  
+        }else{
+          this.previousUrl = 'assignments?iacs='+this.iacs+'&subject='+this.subject;  
+        } 
         if(this.assignment_id && this.iacs){
           this.getQuestions(this.iacs,this.assignment_id);
         } 
@@ -55,8 +61,9 @@ export class ListQuestionPage implements OnInit {
       }
       await this.homeService.getQuestions(data,token).subscribe(
         (res: any) => {     
+         
           if(res.status == 200){ 
-            this.questionsList = res.questions.length > 0 ? res.questions :'';     
+            this.questionsList = res.questions ? res.questions :'';     
             this.topic = res.topic ? res.topic :'';
             this.showEmptyMsg = false;    
             this.EmptyMsg = '';    
@@ -65,8 +72,7 @@ export class ListQuestionPage implements OnInit {
             this.topic = '';
             this.showEmptyMsg = true;    
             this.EmptyMsg = 'No question added yet !!!';    
-          }  
-          console.log(this.questionsList)
+          }   
         });
     } 
 

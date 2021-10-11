@@ -39,8 +39,9 @@
   <!--ion-Content Starts-->
   
     <ion-content>
+      <div class="comman_page_padding">
       <h1 class="wel">Welcome</h1>
-     <!--  <span class="institute_name">Akash Institute</span> -->
+      <span class="institute_name">{{inst_name ? inst_name: ''}}</span>
       <!-- <ion-row class="row_unit">
           <ion-col id="theme_shadow">
               <p> All</p>
@@ -82,7 +83,7 @@
   
       </ion-row> -->
   
-      <div class="comman_page_padding">
+     
         <div   *ngFor="let data of classes; let i = index">
           <ion-card  [ngStyle]="{ background: '#F3FCE3' }"  no-lines class="common_card">
             <ion-card-header class="card_tittle">
@@ -91,14 +92,13 @@
             </ion-card-header> 
             <ion-card-content>
                 <ion-row>
-                  {{data.institute.name | titlecase}} - {{data.language.name ?? ''}}
+                {{data.language?.name  ? '- '+data.language.name : ''}}
                 </ion-row>
               <ion-row>
-                <ion-col class="sub_btns" > 
-                  <div class=" btn_hindi"  *ngFor="let subject of data.subjects; let i = index">   
-                  <!--   [ngStyle]="{ background: 'linear-gradient('+subject.color_code+','+subject.color_code+'   )' }"  -->
-                    <a class='link_subject '  [routerLink]="['/subject-detail']" [queryParams]="{iacs:subject.id,subject:subject.subject.id}" ><button class="common_anc_btn common_btn_shadow yellow_gradient_btn">
-                      {{subject.subject.name}}
+                <ion-col class="sub_btns" >   
+                  <div class=" btn_hindi"  *ngFor="let subj of data.subjects; let in = index">  
+                    <a class='link_subject '  [routerLink]="['/subject-detail']" [queryParams]="{iacs:subj.id,subject:subj.subject.id}" ><button class="common_anc_btn common_btn_shadow {{subj.color_code ?? 'green_gradient_btn'}}">
+                      {{subj.subject.name ?? ''}}
                     </button>  </a> 
                   </div>        
                 </ion-col>

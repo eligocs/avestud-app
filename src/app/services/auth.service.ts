@@ -24,18 +24,21 @@ getUserData() {
 }
 
 login(postData: any): Observable<any> { 
-return this.httpService.post('login', postData);
+  return this.httpService.post('login', postData);
 }
 
 signup(postData: any): Observable<any> {
-return this.httpService.post('signup', postData);
+  return this.httpService.post('signup', postData);
+}
+register_student(postData: any): Observable<any> {
+  return this.httpService.post('register_student', postData);
 }
 
-logout( ) {  
-  this.storageService.removeStorageItem(AuthConstants.AUTH).then(res => {
-    this.userData$.next('');
-    window.location.href = 'homepage';
-    //this.router.navigate(['/']);
-  });
-}
+  logout( ) {  
+    this.storageService.removeStorageItem(AuthConstants.AUTH).then(res => {
+      this.userData$.next('');
+      window.location.href = 'homepage';
+      //this.router.navigate(['/']);
+    });
+  }
 }

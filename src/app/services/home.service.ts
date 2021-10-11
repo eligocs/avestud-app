@@ -60,6 +60,12 @@ export class HomeService {
     }
     return this.httpService.gettrip('getAssignmentunits',postData,token);
   }
+  getTestunits(iacs,token){ 
+    var postData = {
+      iacs:iacs, 
+    }
+    return this.httpService.gettrip('getTestunits',postData,token);
+  }
   getTests(iacs,token){  
     var data = {
       iacs:iacs, 
@@ -89,6 +95,12 @@ export class HomeService {
       id:id, 
     } 
     return this.httpService.delLecture('delAssignments',data,token);
+  }
+  deltest(id,token){  
+    var data = {
+      id:id, 
+    } 
+    return this.httpService.delLecture('deltest',data,token);
   }
   getLecture(id,token){  
     var data = {
@@ -134,6 +146,10 @@ export class HomeService {
   
   createAssigmentUnit(data,token){   
       return this.httpService.gettrip('createAssigmentUnit',data,token);
+  }
+  
+  createTestUnit(data,token){   
+      return this.httpService.gettrip('createTestUnit',data,token);
   }
 
 }

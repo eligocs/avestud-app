@@ -14,10 +14,12 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./test.page.scss'],
 })
 export class TestPage implements OnInit {
+  showUnitFor:'';
   iacs:string;
   subject:string;
   previousUrl:string;
   testAll:any; 
+  testWithoutClass:any; 
   noTest:boolean; 
   constructor(
       private previousRouteService: PreviousRouteService,
@@ -39,19 +41,66 @@ export class TestPage implements OnInit {
       }
     )
   }
-
+  toggleShow(unit) {
+    if(unit){
+      this.showUnitFor = unit;
+    }else{
+      this.showUnitFor = '';
+    } 
+  }
   async getTests(iacs,token){
     if(iacs && token){    
       await this.homeService.getTests(iacs,token).subscribe(
-        (res: any) => {    
+        (res: any) => {     
           if(res.status == 200){
-            this.testAll = res.topics ? res.topics:'';  
+            this.testAll = res.topics? res.topics:'';  
+            this.testWithoutClass = res.assignmet_w_n_t ? res.assignmet_w_n_t:'';  
           }else{
             this.testAll = [];   
+            this.testWithoutClass = [];  
             this.noTest = true;   
           }
       }); 
     }  
+  }
+
+
+  
+  async presentAlert(id) {
+ 
+    var token = await this.storageService.get(AuthConstants.AUTH);  
+    var toast = this.toastService;
+    var serv_home = this.homeService; 
+    var mainthis = this;
+    function delete_l(id){
+      serv_home.deltest(id,token).subscribe(
+        (res: any) => {   
+          mainthis.getTests(mainthis.iacs,token);
+           
+        }); 
+      }
+      const alert = await this.alertCtrl.create({
+        cssClass: 'my-custom-class',
+        header: 'Confirm!',
+        message: 'Are you sure you want to delete this !!!',
+        buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            
+          }
+        }, {
+          text: 'Yes',
+          handler: function() {
+           
+            delete_l(id); 
+          }
+        }
+      ]
+    }); 
+    await alert.present();
   }
 
 }

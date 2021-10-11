@@ -1,34 +1,122 @@
-<ion-header>
-  <ion-toolbar color="mango">
-  <ion-title>Registration</ion-title>
-  </ion-toolbar>
-  </ion-header>
+ 
   
   <ion-content padding='true'>
-  <div class="center">
-  <img src="assets/images/logo.png" class="smallLogo"/>
-  <h1>Create Account</h1>
-  </div>
-  <form>
-  <ion-list>
-  <ion-item>
-  <ion-label position="stacked">Email</ion-label>
-  <ion-input autocomplete="off" name="email" type="email"></ion-input>
-  </ion-item>
-  <ion-item>
-  <ion-label position="stacked">Username</ion-label>
-  <ion-input autocomplete="off" name="username" type="text"></ion-input>
-  </ion-item>
-  
-  <ion-item>
-  <ion-label position="stacked">Password</ion-label>
-  <ion-input autocomplete="off" name="password" type="password"></ion-input>
-  </ion-item>
-  
-  <ion-item lines='none'>
-  Already have an account? <a routerLink='/login'>Sign in.</a>
-  </ion-item>
-  </ion-list>
-  <ion-button expand="block" share="round" color="success" (click)="signupAction()">Registration</ion-button>
-  </form>
+    <div class="register_page">
+      <div class="logo_area ion-text-center">
+        <img src="../../assets/images/logo.png" />
+      </div>
+      <div class="ion-text-center form_head">
+        <h1>Welcome Back</h1>
+        <span class="form_text_line">Please enter below detials to login to Avestud</span>
+      </div>
+      <!--======regster page input start=======-->
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <!--======input phone number======-->
+          <ion-item lines="none">
+            <ion-input  [(ngModel)]="postData.name" name='name' required placeholder="Full Name" type="text"></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-input  [(ngModel)]="postData.phone" name='phone' required placeholder="Phone Number" type="Number"></ion-input>
+          </ion-item>
+          <!--input Grade-->
+          <ion-item lines="none">
+            <ion-input  [(ngModel)]="postData.grade" name='grade' type="text" required placeholder="your grade  eg: 12th,engineering"></ion-input>
+          </ion-item>
+          <!--======input select state=====-->
+          <ion-item lines="none">
+            <ion-select placeholder="Select State"  [(ngModel)]="postData.state" name='state' class="ion_select">
+              <ion-select-option value="Andhra Pradesh">Andhra Pradesh</ion-select-option>
+              <ion-select-option value="Arunachal Pradesh">Arunachal Pradesh</ion-select-option>
+              <ion-select-option value="Assam">Assam</ion-select-option>
+              <ion-select-option value="Bihar">Bihar</ion-select-option>
+              <ion-select-option value="Chhattisgarh">Chhattisgarh</ion-select-option>
+              <ion-select-option value="Goa">Goa</ion-select-option>
+              <ion-select-option value="Gujarat">Gujarat</ion-select-option>
+              <ion-select-option value="Haryana">Haryana</ion-select-option>
+              <ion-select-option value="Himachal Pradesh">Himachal Pradesh</ion-select-option>
+              <ion-select-option value="Jammu and Kashmir">Jammu and Kashmir</ion-select-option>
+              <ion-select-option value="Jharkhand">Jharkhand</ion-select-option>
+              <ion-select-option value="Karnataka">Karnataka</ion-select-option>
+              <ion-select-option value="Kerala">Kerala</ion-select-option>
+              <ion-select-option value="Madhya Pradesh">Madhya Pradesh</ion-select-option>
+              <ion-select-option value="Maharashtra">Maharashtra</ion-select-option>
+              <ion-select-option value="Manipur">Manipur</ion-select-option>
+              <ion-select-option value="Meghalaya">Meghalaya</ion-select-option>
+              <ion-select-option value="Mizoram">Mizoram</ion-select-option>
+              <ion-select-option value="Nagaland">Nagaland</ion-select-option>
+              <ion-select-option value="Odisha">Odisha</ion-select-option>
+              <ion-select-option value="Punjab">Punjab</ion-select-option>
+              <ion-select-option value="Rajasthan">Rajasthan</ion-select-option>
+              <ion-select-option value="Sikkim">Sikkim</ion-select-option>
+              <ion-select-option value="Tamil Nadu">Tamil Nadu</ion-select-option>
+              <ion-select-option value="Telangana">Telangana</ion-select-option>
+              <ion-select-option value="Tripura">Tripura</ion-select-option>
+              <ion-select-option value="Uttar Pradesh">Uttar Pradesh</ion-select-option>
+              <ion-select-option value="Uttarakhand">Uttarakhand</ion-select-option>
+              <ion-select-option value="West Bengal">West Bengal</ion-select-option>
+              <ion-select-option value="Andaman and Nicobar Islands">Andaman and Nicobar Island</ion-select-option> 
+              <ion-select-option value="Chandigarh">Chandigarh</ion-select-option>
+              <ion-select-option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</ion-select-option>
+              <ion-select-option value="Daman and Diu">Daman and Diu</ion-select-option>
+              <ion-select-option value="Lakshadweep">Lakshadweep</ion-select-option>
+              <ion-select-option value="National Capital Territory of Delhi">National Capital Tion-select-optionry of Delhi</ion-select-option>
+              <ion-select-option value="Puducherry">Puducherry</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <!--=====input City=====-->
+          <ion-item lines="none">
+            <ion-input  [(ngModel)]="postData.city"  name='city' required placeholder="Enter your city name" type="text"></ion-input>
+          </ion-item>
+          <!-- =======iput password======== -->
+          <ion-item lines="none">
+            <ion-input type="password" [(ngModel)]="postData.password" name='password'  required placeholder="Password"></ion-input>
+          </ion-item>
+          <!--input confirm password-->
+          <ion-item lines="none">
+            <ion-input type="password" required [(ngModel)]="postData.confirm_password" name='confirm_password' placeholder="Confirm Password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!--======regster page input End=======-->
+      <div class="ion-text-center" id="otp_alert_box">
+        <button class="get_otp comman_login_btn" (click)="register_student()">
+          Get Otp
+        </button>
+      </div>
+      <div class="hr_line">
+        <p class="lines">Existing user</p>
+      </div>
+      <div class="ion-text-center">
+        <button class="login_btn2 comman_login_btn" [routerLink]="['/']">
+          Login
+        </button>
+      </div>
+    </div>
+   <!--  <div class="center">
+    <img src="assets/images/logo.png" class="smallLogo"/>
+    <h1>Create Account</h1>
+    </div>
+    <form>
+    <ion-list>
+    <ion-item>
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input autocomplete="off" name="email" type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+    <ion-label position="stacked">Username</ion-label>
+    <ion-input autocomplete="off" name="username" type="text"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+    <ion-label position="stacked">Password</ion-label>
+    <ion-input autocomplete="off" name="password" type="password"></ion-input>
+    </ion-item>
+    
+    <ion-item lines='none'>
+    Already have an account? <a routerLink='/login'>Sign in.</a>
+    </ion-item>
+    </ion-list>
+    <ion-button expand="block" share="round" color="success" (click)="signAction()">Registration</ion-button>
+    </form> -->
   </ion-content>

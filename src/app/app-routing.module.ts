@@ -80,6 +80,10 @@ const routes: Routes = [
   {
     path: 'add-test-unit',
     loadChildren: () => import('./add-test-unit/add-test-unit.module').then( m => m.AddTestUnitPageModule)
+  },
+  {
+    path: 'verifyotp',
+    loadChildren: () => import('./verifyotp/verifyotp.module').then( m => m.VerifyotpPageModule)
   }
 
 ];

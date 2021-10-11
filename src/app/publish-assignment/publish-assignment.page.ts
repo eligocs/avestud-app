@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router,ActivatedRoute  } from '@angular/router';
+import { Router,ActivatedRoute,NavigationExtras } from '@angular/router'; 
 import { AuthConstants } from '../../../config/auth-constants';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
@@ -13,6 +13,7 @@ import { AlertController,ModalController  } from '@ionic/angular';
 })
 export class PublishAssignmentPage implements OnInit {
   iacs:string;
+  pagetype:string;
   subject:string;
   previousUrl:string;
   assignments:any; 
@@ -29,13 +30,19 @@ export class PublishAssignmentPage implements OnInit {
         ) {} 
 
   ngOnInit() {
-
+    
     this.route.queryParams.subscribe(
       params => {
         this.iacs =  params['iacs']; 
         this.subject =  params['subject'];   
         this.assignment_id =  params['assignment_id'];   
-        this.previousUrl = 'assignments?iacs='+this.iacs+'&subject='+this.subject;  
+        this.pagetype =  params['type'];   
+        if(this.pagetype != ''){
+          this.previousUrl = 'test?iacs='+this.iacs+'&subject='+this.subject;  
+        }else{
+          this.previousUrl = 'assignments?iacs='+this.iacs+'&subject='+this.subject;  
+        } 
+        this.publishingDate = '';
       }
     )
 
@@ -44,16 +51,21 @@ export class PublishAssignmentPage implements OnInit {
   async publishAssigment(){
     var newData = {
       publishingDate : this.publishingDate,  
-      iacs : this.iacs,  
+      iacs : this.iacs, 
+      id:this.assignment_id 
     }   
     var token =  await this.storageService.get(AuthConstants.AUTH);    
     await this.homeService.publishAssigment(newData,token).subscribe(
       (res: any) => {    
-        console.log(res)
         if (res.status == 200) {
-          this.toastService.presentToast('Assignment updated successfully'); 
+          this.toastService.presentToast(res.msg+' on '+this.publishingDate); 
+          let navigationExtras: NavigationExtras = {
+            queryParams: { 'iacs': this.iacs ,'subject':this.subject},
+            fragment: 'anchor'
+          };
+          this.router.navigate(['test'],navigationExtras);
         } else{
-          this.toastService.presentToast('Something went wrong,try again later'); 
+          this.toastService.presentToast(res.msg); 
         }
       }
       );

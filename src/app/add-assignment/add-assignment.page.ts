@@ -22,6 +22,7 @@ export class AddAssignmentPage implements OnInit {
     old_id: '',  
     show_ans: '',  
   };
+  pagetype:any;
   olddata:any;
   previousUrl:any;
   iacs:any;
@@ -44,8 +45,13 @@ export class AddAssignmentPage implements OnInit {
         this.iacs =  params['iacs'];   
         this.subject =  params['subject'];   
         this.assignment_id =  params['assignment_id'];   
+        this.pagetype =  params['type'];   
         if(this.iacs && this.subject){
-          this.previousUrl = 'assignments?iacs='+this.iacs+'&subject='+this.subject;  
+          if(this.pagetype != ''){
+            this.previousUrl = 'test?iacs='+this.iacs+'&subject='+this.subject;  
+          }else{
+            this.previousUrl = 'assignments?iacs='+this.iacs+'&subject='+this.subject;  
+          }
         }
         if(this.assignment_id){
           this.getSingleAssignment(this.assignment_id);

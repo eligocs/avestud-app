@@ -81,7 +81,7 @@ let password = this.postData.password.trim();
       this.authService.login(this.postData).subscribe(
       (res: any) => { 
         if (res.access_token) { 
-          this.storageService.store(AuthConstants.AUTH, res.access_token); 
+          this.storageService.store(AuthConstants.AUTH, res.access_token);  
           window.location.href = 'homepage';
           //this.router.navigate(['homepage']);
         } else {
@@ -101,7 +101,7 @@ let password = this.postData.password.trim();
     }
   }
 
-
+/* 
   export class imageSlider {
 
   slideOpts = {
@@ -123,4 +123,4 @@ let password = this.postData.password.trim();
     }
 
   }
-}
+} */

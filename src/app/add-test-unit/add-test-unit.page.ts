@@ -40,4 +40,29 @@ export class AddTestUnitPage implements OnInit {
     ) 
   }
 
+  async createTestUnit(){
+    var newData = {
+      unitName : this.postData.unitName, 
+      iacsId : this.iacs, 
+    }    
+    
+    if(newData){
+      var token =  await this.storageService.get(AuthConstants.AUTH)    
+        await this.homeService.createTestUnit(newData,token).subscribe(
+          (res: any) => {    
+            if (res.status == 200) {
+              this.toastService.presentToast(res.msg); 
+              let navigationExtras: NavigationExtras = {
+                queryParams: { 'iacs': this.iacs,'subject' : this.subject },
+                fragment: 'anchor'
+              };
+              this.router.navigate(['test'],navigationExtras);
+            }else{
+              this.toastService.presentToast(res.msg); 
+            }
+          }
+        );
+    }
+  }
+
 }

@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-grid>
+          <ion-row>
+              <ion-col size="3">
+                  <ion-buttons>
+                      <ion-back-button defaultHref="/" class="color_violet"></ion-back-button>
+                  </ion-buttons>
+              </ion-col>
+              <ion-col size="5">
+                
+              </ion-col>
+              <ion-col size="4">
+                
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="comman_page_padding">
+    <div class="register_page">
+      <div class="logo_area ion-text-center">
+        <img src="../../assets/images/logo.png" />
+      </div>
+      <div class="ion-text-center form_head">
+        <h1>Enter the OTP received</h1>
+        <span class="form_text_line">We have sent an OTP to your phone</span>
+      </div>
+      <!--======regster page input start=======-->
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <!--======input phone number======-->
+          <ion-item lines="none">
+            <ion-input  [(ngModel)]="postData.otpentered" name='postData' required placeholder="Enter OTP" type="text"></ion-input>
+          </ion-item> 
+        </ion-col>
+      </ion-row>
+      <!--======regster page input End=======-->
+    
+      <div class="ion-text-center">
+        <button class="login_btn2 comman_login_btn" (click)="verifyotp()">
+          Verify
+        </button>
+      </div>
+      <div class="hr_line"> 
+        <p class="lines">Didn' get OTP</p>
+      </div>
+      <div class="ion-text-center">
+        <button class="comman_login_btn login_btn1" (click)="resendOtp()">
+          Resend OTP
+        </button>
+      </div> 
+    </div>
+  </div>
+  
+</ion-content>
