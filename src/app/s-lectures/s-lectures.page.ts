@@ -14,16 +14,15 @@ export class SLecturesPage implements OnInit {
     private route: ActivatedRoute,
   ) { }
 
-  ngOnInit() {
-
-
-
-
+  ngOnInit() { 
     this.route.queryParams.subscribe(
       params => { 
         this.iacs =  params['iacs'];
         this.subject = params['subject']; 
         this.purchased = 1;
+        /* if(this.purchased){
+          this.previousUrl = '/subject-detail-student?iacs='+this.iacs+'&subject='+this.subject+'&purchased='+this.purchased; 
+        }  */
         if(this.purchased){
           this.previousUrl = '/subject-detail-student?iacs='+this.iacs+'&subject='+this.subject+'&purchased='+this.purchased; 
         } 

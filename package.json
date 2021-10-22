@@ -16,7 +16,8 @@
     "ios-open": "ionic capacitor open ios",
     "android-open": "ionic capacitor open android",
     "ios-copy": "ionic capacitor copy ios",
-    "android-copy": "ionic capacitor copy android"
+    "android-copy": "ionic capacitor copy android",
+    "resources": "capacitor-resources -p android,ios && node resources.js"
   },
   "private": true,
   "dependencies": {
