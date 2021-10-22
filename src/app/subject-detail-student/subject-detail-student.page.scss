@@ -60,7 +60,7 @@ h1{
 
 
 .card{
-    height: 40px;
+    height: 70px;
     width: 85%;
     border-radius: 10px;
     // background: repeating-linear-gradient(#74ABDD, #74ABDD 49.9%, #498DCB 50.1%, #498DCB 100%);
@@ -151,4 +151,11 @@ ion-row.success_msg.md.hydrated {
     padding: 3px;
     color: #375702;
     border-radius: 5px;
+}
+
+ion-row.teacher_.md.hydrated {
+    background: #faefd76b;
+    box-shadow: 3px 2px 5px 1px #b7b7b7;
+    border-radius: 4px;
+    padding: 6px;
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthConstants } from '../../../config/auth-constants';
+import { AuthConstants } from '../../config/auth-constants';
 import { AuthService } from '../services/auth.service'; 
 import { StorageService } from '../services/storage.service';
 import { ToastService } from '../services/toast.service';
@@ -70,8 +70,7 @@ import { AlertController } from '@ionic/angular';
     return 1;
   }
   
-  register_student() {
-    console.log(this.postData);
+  register_student() { 
     if (this.validateInputs()) {
       if(this.postData.password == this.postData.confirm_password){
         this.authService.register_student(this.postData).subscribe(

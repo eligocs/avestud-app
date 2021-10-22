@@ -35,7 +35,7 @@
                 <p > All</p>
             </ion-col>
             <ion-col *ngFor="let lect of lectures;" id="{{showUnitFor == lect.unit ? 'theme_shadow' :''}}">
-                <p (click)="toggleShow(lect.unit)">{{lect?.unit | titlecase}}</p>
+                <p (click)="toggleShow(lect.unit)"><!-- {{lect?.unit | titlecase}} -->{{lect.unit.length > 12 ? lect.unit.substring(0,12)+' ...' : '...' }}</p>
             </ion-col> 
         </ion-row>
 
@@ -54,7 +54,7 @@
                     <ion-col size="7">
                         <div class="col_text">
                             <p class="comman_font color_violet"></p>
-                            <p class="comman color_pink">{{ single.lecture_name | titlecase }}</p>
+                            <p class="comman color_pink lineHe">{{ single.lecture_name | titlecase }}</p>
                             <p class="date_f">{{ single.lecture_date | date: 'dd/MM/yyyy' }}</p>
                         </div>
                         <div class="icons_set">

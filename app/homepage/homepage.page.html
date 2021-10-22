@@ -88,8 +88,8 @@
           <ion-card  [ngStyle]="{ background: '#F3FCE3' }"  no-lines class="common_card">
             <ion-card-header class="card_tittle">
               <span class="color_violet class_5">{{data.class.name ?? ''}}   <small>Board : {{data.class.board ?? ''}}</small></span>
-              <span class="fee">₹ {{data.class.price}}</span>
-            </ion-card-header> 
+             <div class="total_cost"> <span class="fee">₹ {{data.class.price}}</span></div>
+            </ion-card-header>   
             <ion-card-content>
                 <ion-row>
                 {{data.language?.name  ? '- '+data.language.name : ''}}

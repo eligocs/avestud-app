@@ -27,14 +27,16 @@ export class HomepagePage implements OnInit {
     private homeService: HomeService
     ) {  } 
   async ngOnInit() {  
-    var token =  await this.storageService.get(AuthConstants.AUTH); 
-    var role =  await this.storageService.get(AuthConstants.Role); 
+    var token =  await this.storageService.get(AuthConstants.AUTH);  
+    var userdetails =  await this.storageService.get(AuthConstants.userdetails); 
     var mainThis = this; 
     if(!token){
       this.router.navigate(['/']);
     }else{ 
-        if(role == 'student'){
+        if(userdetails.role == 'student'){
           mainThis.router.navigate(['/studenthome']);
+        }else if(userdetails.role == 'institute'){
+          mainThis.router.navigate(['/homepage']);
         }
       var classroom =  await this.homeService.getClassRoom(token).subscribe(
         (res: any) => {  
@@ -51,6 +53,7 @@ export class HomepagePage implements OnInit {
             this.inst_name = allClasses[0].institute.name;  
           }else{
             mainThis.storageService.removeStorageItem(AuthConstants.AUTH).then(res => { 
+              mainThis.storageService.removeStorageItem(AuthConstants.userdetails); 
               mainThis.router.navigate(['/']);
             });
           }  
@@ -88,7 +91,9 @@ export class HomepagePage implements OnInit {
   async logoutAction() {   
     this.showloader = true;
     this.storageService.removeStorageItem(AuthConstants.AUTH); 
-      this.authService.logout(); 
+    this.storageService.removeStorageItem(AuthConstants.Role); 
+    this.storageService.removeStorageItem(AuthConstants.userdetails); 
+    this.authService.logout(); 
   }
 
 }

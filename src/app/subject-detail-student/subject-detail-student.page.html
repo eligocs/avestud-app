@@ -1,0 +1,154 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-grid>
+          <ion-row>
+              <ion-col size="2">
+                  <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
+              </ion-col>
+              <ion-col size="8">
+                  <p class="ion-text-center heading">{{iac ?? ''}}</p>
+              </ion-col>
+              <ion-col size="2">
+                  <div class="avatar_icon" (click)="presentPopover('any')"></div>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page_content">
+
+      <h1 class="ion-text-center color_pink">{{subjectname ?? ''}}</h1>
+      <h2 class="ion-text-center color_pink"></h2>
+      <ion-row>
+          <ion-col class="btn_demo">
+              <ion-button class='text-white' class="btn_view"   href='{{video ?? ""}}'><img src="../../assets/images/btn_red_icon.png"> View Demo </ion-button>
+          </ion-col>
+      </ion-row>
+
+      <ion-row class="syllabus_btns ion-text-center">
+          <ion-col>
+              <ion-button href='{{syllabus ?? ""}}' class="view_btn">View Syllabus</ion-button>
+          </ion-col>  
+      </ion-row>
+
+      <ion-row>
+          <ion-col size="8">
+              <p class="comman_font color_violet">Class Shedule</p>
+          </ion-col>
+
+          <ion-col size="4">
+            <a class='link_subject '  [routerLink]="['/changetime']" [queryParams]="{iacs:iacs,subject:subject}" ><p class="comman_font font_b">Class Time</p></a>
+          </ion-col>
+
+      </ion-row>
+
+
+      <!--ion row starts-->
+
+      <ion-row>
+          <ion-col *ngFor="let subjec of getSubjectsInfo; let i = index;" size="6">
+
+            <ion-card class="card"> 
+                <ion-col class="card1" size="5">
+                  <p class="text_white">{{class_time[i] ??  ''}}</p>
+                </ion-col> 
+                <ion-col class="card2" size="7">
+                  <p class="day">{{subjec?.day}}</p>
+                  <!-- <p class="time"></p> -->
+                </ion-col>
+              </ion-card>
+              <!-- <ion-card class="card"> 
+                  <ion-col class="card1 " size="12"> 
+                      <p class="text_white mt-2 ">{{subjec?.day}}</p> 
+                  </ion-col> 
+              </ion-card>  -->
+
+          </ion-col> 
+      </ion-row>
+     
+
+      <div>
+
+        <div>
+            <h2 class="color_violet comman_font resources">Class Teacher</h2>
+            <ion-row class='teacher_'>
+                <ion-col class='ion-text-center'> 
+                    <div *ngIf='teacher?.avatar'>
+                        <img  src="../assets/images/avatar_bottom_nav.png">
+                    </div>
+                    <div class='teacher_card'>
+                        <h1 >{{teacher?.name}}</h1>
+                        <h3  >{{teacher?.qualifications}}</h3>
+                        <h4  >{{teacher?.experience ? 'Experience : '+teacher?.experience : ''}}</h4> 
+                    </div>
+                </ion-col>
+            </ion-row>
+        </div>
+
+          <h2 class="color_violet comman_font resources">Class Resources</h2> 
+          <div *ngIf='purchased != 1'>
+            <ion-row class="resources_btns">
+                <ion-col size="6">
+                    <button class="grad_sky comman_btn common_anc_btn common_btn_shadow">Live Classes</button>
+                </ion-col> 
+                <ion-col size="6">
+                    <button  class="grad_yellow comman_btn common_anc_btn common_btn_shadow">Lectures</button>
+                </ion-col> 
+            </ion-row> 
+            <ion-row class="resources_btns">
+                <ion-col size="6">
+                    <button  class="grad_green comman_btn common_anc_btn common_btn_shadow">Assigments</button>
+                </ion-col> 
+                <ion-col size="6">
+                    <button class="grad_sky comman_btn common_anc_btn common_btn_shadow">Doubts ({{doubtsnotify ?? ''}})</button>
+                </ion-col> 
+            </ion-row> 
+            <ion-row class="resources_btns">
+                <ion-col size="6">
+                    <button   class="grad_orange comman_btn common_anc_btn common_btn_shadow">Test</button>
+                </ion-col> 
+                <ion-col size="6">
+                    <button  class="grad_green comman_btn common_anc_btn common_btn_shadow">Extra Classes</button>
+                </ion-col> 
+            </ion-row>
+        </div>
+
+          <div *ngIf='purchased == 1'>
+            <ion-row class="resources_btns">
+                <ion-col size="6">
+                    <a class='link_subject ' ><button class="grad_sky comman_btn common_anc_btn common_btn_shadow">Live Classes</button></a>
+                </ion-col> 
+                <ion-col size="6">
+                    <a class='link_subject '  [routerLink]="['/s-lectures']" [queryParams]="{iacs:iacs,subject:subject}" ><button  class="grad_yellow comman_btn common_anc_btn common_btn_shadow">Lectures</button></a>
+                </ion-col> 
+            </ion-row> 
+            <ion-row class="resources_btns">
+                <ion-col size="6">
+                    <a class='link_subject '  [routerLink]="['/s_assignments']" [queryParams]="{iacs:iacs,subject:subject}" ><button  class="grad_green comman_btn common_anc_btn common_btn_shadow">Assigments</button></a>
+                </ion-col> 
+                <ion-col size="6">
+                    <a class='link_subject '  [routerLink]="['/s_doubts']" [queryParams]="{iacs:iacs,subject:subject}" ><button class="grad_sky comman_btn common_anc_btn common_btn_shadow">Doubts ({{doubtsnotify ?? ''}})</button></a>
+                </ion-col> 
+            </ion-row> 
+            <ion-row class="resources_btns">
+                <ion-col size="6">
+                    <a class='link_subject '  [routerLink]="['/s_test']" [queryParams]="{iacs:iacs,subject:subject}" ><button   class="grad_orange comman_btn common_anc_btn common_btn_shadow">Test</button></a>
+                </ion-col> 
+                <ion-col size="6">
+                    <a class='link_subject '  [routerLink]="['/s_extraclasses']" [queryParams]="{iacs:iacs,subject:subject}" ><button  class="grad_green comman_btn common_anc_btn common_btn_shadow">Extra Classes</button></a>
+                </ion-col> 
+            </ion-row>
+            </div>
+
+
+          
+
+      </div>
+
+      <!-- <ion-row class='success_msg' *ngIf='loadsuccess'>{{loadsuccess}}</ion-row>
+      <button class="bg_color create common_anc_btn common_btn_shadow" (click)="setText($event)">Create</button> -->
+  </div>
+</ion-content>
+ 

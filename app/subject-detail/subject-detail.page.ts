@@ -3,7 +3,7 @@ import { Router,ActivatedRoute  } from '@angular/router';
 import { StorageService } from '../services/storage.service'; 
 import { HomeService } from '../services/home.service'; 
 import { PreviousRouteService } from '../previous-route.service';
-import { AuthConstants } from '../../../config/auth-constants';
+import { AuthConstants } from '../../config/auth-constants';
 import { ToastService } from '../services/toast.service';
 import { AlertController } from '@ionic/angular'; 
  

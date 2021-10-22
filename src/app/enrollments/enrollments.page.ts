@@ -42,8 +42,7 @@ export class EnrollmentsPage implements OnInit {
           (res: any) => {   
             setTimeout(() => {
               this.total = res.students.length;
-              this.students = res.students[0].student; 
-              console.log(this.students) 
+              this.students = res.students[0].student;  
             }, 2000);
           }
         )   

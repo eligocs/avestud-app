@@ -1,0 +1,219 @@
+// =====search_classes_page=====
+
+.search_classes_page {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0px 8px;
+  }
+  
+  // =======================
+  // header part of the page 
+  // =======================
+  
+  // =====ion-searchbar====
+  
+  .search-bar{
+    height: 36px;
+    margin-top: 6px;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+    width: 100%;
+    background: url(../../assets/images/searchbar_icon.png);
+    background-position: right 5% bottom 52%;
+    background-repeat: no-repeat;
+    padding-right: 35px !important;
+  }
+  
+  ::placeholder{
+    font-size: 14px;
+    color: #AFAFAF;
+    padding-left: 5px;
+  }
+  
+  select.category {
+      width: 126px;
+      background: #e03e91;
+      color: white;
+      border: 1px solid #e03e91;
+      border-radius: 4px;
+      padding: 4px;
+  }
+  .btn_category {
+    border-radius: 5px;
+    background-color: #e03e91;
+    font-size: 12px;
+    color: white;
+    font-weight: 400;
+    // padding: 10px 30px;
+    height: 35px;
+    width: 108px;
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    padding-right: 0;
+    text-align: center;
+    padding: 2% 10%;
+    margin-top: -8px;
+  }
+  
+  .testing select{
+    border-radius: 5px;
+    background-color: #e03e91;
+    font-size: 12px;
+    color: white;
+    font-weight: 400;
+    // padding: 10px 30px;
+    height: 35px;
+    width: 108px;
+  }
+  
+  .btn_category img{
+    padding-left: 5%;
+  }
+  
+  ion-select{
+    position: absolute;
+    width: 100%;
+    top: 13px;
+    left: 21px;
+  }
+  
+  .btn_category img {
+    margin-left: 5px;
+  }
+  
+  h1 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #634996;
+    margin-top: 27px;
+  }
+  
+  .content_card {
+    border-radius: 12px;
+    box-shadow: 0 4px 4px #c6c1c1;
+    width: 95%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+  }
+  
+  .page_tittles {
+    line-height: 0;
+  }
+  
+  .page_tittles p {
+    color: #afafaf;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  .details_section {
+    line-height: 0;
+    padding: 0 15px;
+  }
+  
+  .d_flex {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+  }
+  
+  .mg_right {
+    margin-right: 91px;
+  }
+  
+  .left_col p {
+    color: #000000;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .right_col p {
+    color: #707070;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  // subject_btns
+  .subject_btns button {
+    height: 40px;
+    width: 134px;
+    font-size: 14px;
+    font-weight: 400;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  .demo_video {
+    line-height: 0;
+    margin-top: 5px;
+  }
+  
+  // session_time
+  .session_time {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .session_time p{
+      color: #727272;
+  }
+  
+  .enroll_fee {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .font_bold{
+      font-weight: 600;
+      font-size: 14px;
+  }
+  
+  .font_light{
+      font-weight: 400;
+      font-size: 12px;
+  }
+  
+  .enroll_fee p{
+      font-size: 14px;
+      color: #000000;
+      font-weight: 400;
+  }
+  
+  // spacing
+  .spacing {
+    line-height: 0;
+    margin-top: 8px;
+  }
+  
+  // options_btns
+  .options_btns{
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: 4px;
+  }
+  
+  .options_btns button {
+    height: 25px;
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 4px;
+    margin-bottom: 15px;  
+  }
+  
+  .btn_enroll {
+    width: 87px;
+    background-color: #644699;
+  }
+  
+  .btn_trail {
+    width: 69px;
+    background-color: #e03e91;
+  }
+  
+  .pink_btn {
+    background-image: linear-gradient(to bottom, #fe48d1, #633f9d);
+}
+  
+  

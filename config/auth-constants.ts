@@ -4,4 +4,5 @@ export class AuthConstants {
     public static readonly phone = 'phone'
     public static readonly pwd = 'pwd'
     public static readonly Role = 'pwd'
+    public static readonly userdetails = 'pwd'
 };

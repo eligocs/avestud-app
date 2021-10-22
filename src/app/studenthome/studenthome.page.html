@@ -14,7 +14,7 @@
         
         <ion-col size="5">
 
-          <p class="ion-text-center heading">My Classroom</p>
+          <p class="ion-text-center heading">My Study Room</p>
 
         </ion-col>
 
@@ -38,86 +38,101 @@
     <!--====page_headings====-->
     <div class="page_headings">
       <h1 class="color_violet">Welcome</h1>
-      <h2 class="color_pink">JOHN WATSON</h2>
+      <h2 class="color_pink">{{studentname | titlecase  }}</h2>
+    </div>
+    <div class="ion-text-center" *ngIf="showEnrolled == false">
+      <div  class='mt-5'>
+        <h1 class="color_violet ">
+          <a  [routerLink]="['/searchclass']" class='btn_theme '>
+            <img src="../../assets/images/home_icon.png"> Search a class
+          </a>
+        </h1>
+        <small class=" ">No class yet !!!</small> 
+      </div>
     </div>
     <!--====main div / box shadow====-->
-    <div class="box_shadow">
-      <ion-row class="line_height">
-        <ion-col class="ion-text-center standared" size="12">
-          <h3 class="color_pink comman_font">5th Standared</h3>
-          <p>By: Akash Institute</p>
-        </ion-col>
-        <ion-col size="12" class="ion-text-center video_btn">
-          <button class="grad_green"><img src="../../assets/images/btn_red_icon.png">Next Class on <br>08/08/2021</button>
-        </ion-col>
-      </ion-row>
-      <!--=====subject_card=====-->
-      <div class="subject_card grad_yellow">
-        <h4 class="ion-text-center">Math</h4>
-        <!--====subject_details=====-->
-        <div class="subject_details">
-          <div>
-            <p>Next Class</p>
-            <p>Attendance</p>
-            <p>Percentage</p>
-          </div>
-          <div>
-            <p>Tuesday 6:00pm</p>
-            <p>7P | 3 AB</p>
-            <p>75%</p>
-          </div>
-        </div>
-        <!--=====subject_details close======-->
-      </div>
-      <!--===subject_card===-->
-      <div class="subject_card grad_green">
-        <h4 class="ion-text-center">Hindi</h4>
-        <!--===subject_details===-->
-        <div class="subject_details">
-          <div>
-            <p>Next Class</p>
-            <p>Attendance</p>
-            <p>Percentage</p>
-          </div>
-          <div>
-            <p>Tuesday 6:00pm</p>
-            <p>7P | 3 AB</p>
-            <p>75%</p>
+    <div *ngIf='showEnrolled == true'>
+      <div class="box_shadow"  *ngFor='let class of allClasses.institute_assigned_class'>
+        <ion-row class="line_height">
+          <ion-col class="ion-text-center standared" size="12">
+            <h3 class="color_pink comman_font">{{class.name ?? ''}}</h3>
+            <!-- <p>By: Akash Institute</p> -->
+          </ion-col>
+          <!-- <ion-col size="12" class="ion-text-center video_btn">
+            <button class="grad_green"><img src="../../assets/images/btn_red_icon.png">Next Class on <br>08/08/2021</button>
+          </ion-col> -->
+        </ion-row>
+        
+        <div *ngFor='let subj of class.institute_assigned_class_subject'> 
+          <div  class="subject_card {{subj.color_code ?? grad_orange}}">
+            <a  [routerLink]="['/subject-detail-student']" [queryParams]="{iacs:subj.id,subject:class.institute_id,purchased:1}" class=" text-white ">
+              {{subj.details ? subj.details.name : ''}}
+             
+              <h4 class="ion-text-center text-white ">{{subj.subject.name ?? ''}}</h4> 
+              <div class="subject_details text-white ">
+                <div>
+                  <p>Board</p>
+                  <p>Attendance</p>
+                  <p>Percentage</p>
+                </div>
+                <div>
+                  <p>{{class.board ?? ''}}</p>
+                  <p>{{subj.total_absents_in_lectures ?? 0}} P | {{subj.total_attended_lectures ?? 0}} AB</p>
+                  <p>{{subj.percentage ?? 0}} %</p>
+                </div>
+              </div>
+            </a> 
           </div>
         </div>
-        <!--===subject_details close====-->
-      </div>
-      <!--===subject_card===-->
-      <div class="subject_card grad_orange">
-        <h4 class="ion-text-center">English</h4>
-        <!--===subject_details===-->
-        <div class="subject_details">
+        
+       <!--  <div class="subject_card grad_green">
+          <h4 class="ion-text-center">Hindi</h4>
+        
+          <div class="subject_details">
+            <div>
+              <p>Next Class</p>
+              <p>Attendance</p>
+              <p>Percentage</p>
+            </div>
+            <div>
+              <p>Tuesday 6:00pm</p>
+              <p>7P | 3 AB</p>
+              <p>75%</p>
+            </div>
+          </div>
+        
+        </div> 
+        <div class="subject_card grad_orange">
+          <h4 class="ion-text-center">English</h4>
+        
+          <div class="subject_details">
+            <div>
+              <p>Next Class</p>
+              <p>Attendance</p>
+              <p>Percentage</p>
+            </div>
+            <div>
+              <p>Tuesday 6:00pm</p>
+              <p>7P | 3 AB</p>
+              <p>75%</p>
+            </div>
+          </div>
+        
+        </div> -->
+      
+        <div class="class_days">
           <div>
-            <p>Next Class</p>
-            <p>Attendance</p>
-            <p>Percentage</p>
+            <p>Start <span>{{class.start_date | date: 'dd/MM/yyyy'}}</span></p>
           </div>
           <div>
-            <p>Tuesday 6:00pm</p>
-            <p>7P | 3 AB</p>
-            <p>75%</p>
+            <p>End <span> {{class.end_date | date: 'dd/MM/yyyy'}}</span></p>
           </div>
-        </div>
-        <!--====subject_details close====-->
-      </div>
-      <!--class_days-->
-      <div class="class_days">
-        <div>
-          <p>Start <span> 07/08/2021</span></p>
-        </div>
-        <div>
-          <p>End <span> 07/08/2021</span></p>
         </div>
       </div>
     </div>
 
-    <!--====second card/ box shadow====-->
-    <div class="box_shadow margin_for_card">
+   
+    <!-- <div class="box_shadow margin_for_card">
       <ion-row>
         <ion-col class="ion-text-center standared" size="12">
           <h3 class="color_pink comman_font">6th Standared</h3>
@@ -127,10 +142,10 @@
           <button class="grad_green"><img src="../../assets/images/btn_red_icon.png">Next Class on <br>08/08/2021</button>
         </ion-col>
       </ion-row>
-      <!--====subject_card====-->
+     
       <div class="subject_card grad_sky">
         <h4 class="ion-text-center">Science</h4>
-        <!--===subject_details===-->
+       
         <div class="subject_details">
           <div>
             <p>Next Class</p>
@@ -143,12 +158,12 @@
             <p>75%</p>
           </div>
         </div>
-        <!--====subject_details close====-->
+     
       </div>
-      <!--===subject_card===-->
+ 
       <div class="subject_card grad_orange">
         <h4 class="ion-text-center">English</h4>
-        <!--===subject_details===-->
+     
         <div class="subject_details">
           <div>
             <p>Next Class</p>
@@ -161,10 +176,10 @@
             <p>75%</p>
           </div>
         </div>
-        <!--===subject_details Close====-->
+    
       </div>
-      <!--====subject_card====-->
-    </div>
+  
+    </div> -->
     <!--===box_shadow close===-->
   </div>
   <!--======home_page_student Close========-->

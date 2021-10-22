@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router,ActivatedRoute,NavigationEnd   } from '@angular/router';
 import { StorageService } from '../services/storage.service'; 
 import { HomeService } from '../services/home.service'; 
-import { AuthConstants } from '../../../config/auth-constants';
+import { AuthConstants } from '../../config/auth-constants';
 import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-enrollments',
@@ -42,8 +42,7 @@ export class EnrollmentsPage implements OnInit {
           (res: any) => {   
             setTimeout(() => {
               this.total = res.students.length;
-              this.students = res.students[0].student; 
-              console.log(this.students) 
+              this.students = res.students[0].student;  
             }, 2000);
           }
         )   

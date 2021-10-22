@@ -11,6 +11,8 @@
     height: 36px;
     border-radius: 4px;
     margin-top: 20px;
+    position: absolute;
+    right: 0px;
   }
   
   .row_unit {
@@ -21,7 +23,7 @@
   }
   
   .row_unit p {
-    font-size: 14px;
+    font-size: 14px; 
     font-weight: 500;
   }
   
@@ -41,7 +43,7 @@
     max-height: 138px;
     height: 100%;
   }
-  
+   
   .video_img img {
     height: 111px;
     width: 128px;

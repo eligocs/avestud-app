@@ -27,6 +27,7 @@ export class SubjectDetailPage implements OnInit {
   notificat:any; 
   loadsuccess:any; 
   syllabus:string; 
+  istudent:string; 
   constructor(
     private previousRouteService: PreviousRouteService,
     private router: Router,
@@ -46,8 +47,13 @@ export class SubjectDetailPage implements OnInit {
       params => { 
         this.iacs =  params['iacs'];
         this.subject_id = params['subject'];
+        this.istudent = params['istudent']; 
         if(this.subject_id && this.iacs && token){
-          this.loaddata(this.iacs,this.subject_id,token); 
+          /* if(this.istudent){
+            this.loadstudentdata(this.iacs,this.subject_id,token); 
+          }else{ */ 
+            this.loaddata(this.iacs,this.subject_id,token); 
+         /*  } */
         }
       }
     ) 
@@ -84,6 +90,7 @@ export class SubjectDetailPage implements OnInit {
 
   
 
+  
   async loaddata(iacs,subject_id,token){ 
     if(this.iacs && this.subject_id){
         if(this.iacs && this.subject_id){
@@ -100,6 +107,6 @@ export class SubjectDetailPage implements OnInit {
             });
         }   
     }
-   }
+  }
 
 }

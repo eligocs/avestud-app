@@ -7,8 +7,7 @@ providedIn: 'root'
 export class UserDataResolver {
 constructor(private authService: AuthService) {}
 
-resolve() {
-console.log('Hello');
+resolve() { 
 return this.authService.getUserData();
 }
 }

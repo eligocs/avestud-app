@@ -160,6 +160,5 @@ import { AlertController } from '@ionic/angular';
 
     await alert.present();  
     const result = await alert.onDidDismiss();  
-    console.log(result);  
   }  */
 } 

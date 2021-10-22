@@ -22,8 +22,7 @@ export class VerifyotpPage implements OnInit {
     private router: Router) { }
 
   async ngOnInit() { 
-    var otp = await this.storageService.get(AuthConstants.otp);   
-    console.log(otp)
+    var otp = await this.storageService.get(AuthConstants.otp);  
     
   }
 

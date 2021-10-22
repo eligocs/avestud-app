@@ -36,6 +36,13 @@ export class HomeService {
     }
     return this.httpService.gettrip('inst_detail',postData,token);
   }
+  loadstudentdata(iacs,subject,token){ 
+    var postData = {
+      iacs:iacs,
+      subject:subject, 
+    }
+    return this.httpService.gettrip('loadstudentdata',postData,token);
+  }
   openLecture(iacs,token){ 
     var postData = {
       iacs:iacs, 

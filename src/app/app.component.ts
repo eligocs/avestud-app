@@ -18,10 +18,15 @@ export class AppComponent implements OnInit {
     private storageService: StorageService,
   ) {}
   
-  async ngOnInit() {   
+  async ngOnInit() {     
     var token =  await this.storageService.get(AuthConstants.AUTH)    
+    var userdetails =  await this.storageService.get(AuthConstants.userdetails)   
     if(token){
-      this.previousUrl = 'showfootertabs';
+      if(userdetails.role == 'institute'){
+        this.previousUrl = 'institute';
+      }else if(userdetails.role == 'student'){
+        this.previousUrl = 'student';
+      } 
     }else{
       this.previousUrl = '';
     }

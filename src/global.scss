@@ -117,10 +117,7 @@ ion-input {
     font-size: 18px;
     font-weight: 400;
 }
-
-.color_pink {
-    color: #e03e91;
-}
+ 
 
 // After 12 august 2021 -- deepak the fire
 .page_tittle {
@@ -604,8 +601,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-radius: 15px;
     box-shadow: 2px 2px 18px -2px lightgrey;
     margin-top: 20px;
-    line-height: 0;
-
+    line-height: 20px;
 }
 
 .comman_page_padding{

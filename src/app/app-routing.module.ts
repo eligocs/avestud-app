@@ -88,6 +88,22 @@ const routes: Routes = [
   {
     path: 'studenthome',
     loadChildren: () => import('./studenthome/studenthome.module').then( m => m.StudenthomePageModule)
+  },
+  {
+    path: 'searchclass',
+    loadChildren: () => import('./searchclass/searchclass.module').then( m => m.SearchclassPageModule)
+  },
+  {
+    path: 'subject-detail-student',
+    loadChildren: () => import('./subject-detail-student/subject-detail-student.module').then( m => m.SubjectDetailStudentPageModule)
+  },
+  {
+    path: 'selecttimings',
+    loadChildren: () => import('./selecttimings/selecttimings.module').then( m => m.SelecttimingsPageModule)
+  },
+  {
+    path: 's-lectures',
+    loadChildren: () => import('./s-lectures/s-lectures.module').then( m => m.SLecturesPageModule)
   }
 
 ];

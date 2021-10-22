@@ -1,0 +1,146 @@
+<!--===Ion-Header Start===-->
+<ion-header>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">
+          <ion-buttons>
+            <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col size="5">
+          <p class="ion-text-center heading">Search Classes</p>
+        </ion-col>
+        <ion-col size="4">
+          <div class="avatar_icon" (click)="presentPopover('any')"></div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<!--===Ion-Header Ends===-->
+<!--====Ion-content Starts====-->
+<ion-content>
+  <!--====search_classes_page start====-->
+  <div class="search_classes_page">
+    <ion-row class="category">
+      <ion-col size="5">
+        <ion-item lines="none">
+          <!-- <ion-label class="btn_category">Category<img src="../../assets/images/select_option.png"></ion-label> -->
+          <!-- <ion-select>
+            <ion-select-option *ngFor='let cats of categories'>{{cats.name ?? ''}}</ion-select-option> 
+          </ion-select> --> 
+          <select class='category' (change)="oncatChange()" [(ngModel)]="selected_cat"  name='unit'>
+            <option value='' selected>Category</option>
+            <option *ngFor="let cats of categories" value="{{cats.id}}">{{cats.name ?? ''}}</option>
+          </select>
+        </ion-item>
+        </ion-col>
+      <ion-col size="7">
+        <!-- <ion-searchbar></ion-searchbar> -->
+        <ion-input type="search" class="search-bar" placeholder="search"></ion-input>
+      </ion-col>
+    </ion-row>
+   
+    
+    <div class="content_card" *ngIf='show_default == true'>
+      <div class="logo_area ion-text-center">
+
+        <img src="../../assets/images/searchclass.png">
+    
+      </div>
+    </div>
+
+    <div  *ngIf='show_default == false'>
+      <div *ngFor='let class of classes' >
+      <div class="content_card" >
+          <ion-row>
+            <ion-col class="ion-text-center page_tittles">
+              <h1>{{class.name ?? ''}}</h1>
+              <p>By: {{class.institute_details.name ?? ''}}</p>
+            </ion-col>
+          </ion-row>
+        
+          
+          <div class="details_section">
+            <div class="d_flex">
+              <div class="left_col">
+                <p>Language </p>
+              </div>
+              <div class="right_col">
+                <p>{{class.language ? class.language.name : ''}}</p>
+              </div>
+            </div>
+            <div class="d_flex">
+              <div class="left_col">
+                <p>Board</p>
+              </div>
+              <div class="right_col">
+                <p class="">{{class.board ?? ''}}</p>
+              </div>
+            </div>
+            <div class="d_flex">
+              <div class="left_col">
+                <p>Location</p>
+              </div>
+              <div class="right_col">
+                <p>{{class.city ?? ''}}</p>
+              </div>
+            </div>
+          </div>
+        
+          
+          <ion-row class="subject_btns ion-text-center">
+            <ion-col size="6" *ngFor='let subj of class.subjects'>
+              <button  [routerLink]="['/subject-detail-student']" [queryParams]="{iacs:class.institute_details.id,subject:subj.id}" class="{{subj.color_code ?? grad_orange}}">{{subj.details ? subj.details.name : ''}}</button>
+            </ion-col>
+          <!--   <ion-col size="6">
+              <button class="grad_sky">English</button>
+            </ion-col>
+            <ion-col size="6">
+              <button class="grad_green">Science</button>
+            </ion-col>
+            <ion-col size="6">
+              <button class="grad_orange">Hindi</button>
+            </ion-col> -->
+          </ion-row>
+          <ion-row class="ion-text-center demo_video">
+            <ion-col>
+              <p>View Class Demo</p>
+              <a href='{{class.video}}' ><img src="../../assets/images/youtube_icon.svg"></a>
+            </ion-col>
+          </ion-row>
+          <div class="spacing">
+            <div class="session_time">
+              <div class="start_date">
+                <p class="font_bold">Start <span class="font_light">{{class.start_date | date: 'dd/MM/yyyy'}}</span></p>
+              </div>
+              <div class="end_time">
+                <p class="font_bold">End <span class="font_light">{{class.end_date | date: 'dd/MM/yyyy'}}</span></p>
+              </div>
+            </div>
+            <div class="enroll_fee">
+              <div>
+                <p>Enrollment Fee</p>
+              </div>
+              <div>
+                <p>{{class.price}} ₹</p>
+              </div>
+            </div>
+          </div>
+          <div class="options_btns">
+            <button *ngIf='class.classStatus == "Free Trial"' class="btn_enroll" >Free Trial</button>
+            <button *ngIf='class.classStatus == "Enrolled"' class="btn_enroll" >Enrolled</button>
+            <button *ngIf='class.classStatus == "Enroll"' class="btn_enroll" (click)='presentAlert(class.id)'>Enroll Now</button> 
+          </div>
+        </div>
+        
+        </div>
+
+    </div>
+
+    <!--===Content_card End====-->
+  </div>
+  <!--===search_classes_page End===-->
+</ion-content>
+<!--====Ion-Content Ends====-->
