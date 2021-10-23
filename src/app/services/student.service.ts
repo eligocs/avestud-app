@@ -53,6 +53,12 @@ export class StudentService {
     }
     return this.httpService.gettrip('verifyPayment',data,token);
   }
+  getstudentsubject(data,token){  
+    return this.httpService.gettrip('getstudentsubject',data,token);
+  }
+  getstudentAssignment(data,token){  
+    return this.httpService.gettrip('getstudentAssignment',data,token);
+  }
 
  
 

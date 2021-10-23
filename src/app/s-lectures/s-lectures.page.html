@@ -42,22 +42,26 @@
       </ion-col>
     </ion-row>
     <!--Row Uint End-->
-    <h1>The Golden Touch</h1>
-    <!--class_detais row start-->
-    <ion-row class="class_details bg_light_yellow">
-      <ion-col size="10" class="left_col">
-        <h2>Unit No 5</h2>
-        <p class="color_pink">The Golden Touch</p>
-        <span>16/01/2021</span>
-      </ion-col>
-      <ion-col size="2" class="right_col">
-        <img src="../../assets/images/youtube_icon.svg" class="youtube_icon">
-        <div class="download_icons">
-          <img src="../../assets/images/download_receipt.png">
-          <img src="../../assets/images/arrow_down_pdf.png">
-        </div>
-      </ion-col>
-    </ion-row> 
+
+    <div *ngFor='let unit of myclasses'>  
+      <!--  <div *ngIf='unit.lectures.length > 0'> -->
+        <h1>{{unit.name ?? ''}}</h1> 
+          <!-- <ion-row class="class_details bg_light_yellow" *ngFor='let lect of unit.lectures'>
+            <ion-col size="10" class="left_col"> 
+              <p class="color_pink">{{lect.lecture_name}}</p>
+              <span>{{lect.lecture_date}}</span>
+            </ion-col>
+            <ion-col size="2" class="right_col">
+              <a href='{{video ?? ""}}'><img src="../../assets/images/youtube_icon.svg" class="youtube_icon"></a>
+              <div class="download_icons">
+                <img src="../../assets/images/download_receipt.png">
+                <a href='{{syllabus ?? ""}}' class="view_btn"><img src="../../assets/images/arrow_down_pdf.png"></a>
+              </div>
+            </ion-col>
+          </ion-row>  -->
+        <!-- </div>  -->
+    </div>
+
     <!--class_detais row End-->
     <!--class_detais row start-->
     <!-- <ion-row class="class_details mg_top bg_light_gray">

@@ -104,6 +104,10 @@ const routes: Routes = [
   {
     path: 's-lectures',
     loadChildren: () => import('./s-lectures/s-lectures.module').then( m => m.SLecturesPageModule)
+  },
+  {
+    path: 's-assignments',
+    loadChildren: () => import('./s-assignments/s-assignments.module').then( m => m.SAssignmentsPageModule)
   }
 
 ];

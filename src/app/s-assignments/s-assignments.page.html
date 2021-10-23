@@ -1,0 +1,116 @@
+<!--Ion-Header Start-->
+<ion-header>
+  <ion-toolbar>
+     <ion-grid>
+        <ion-row>
+           <ion-col size="3">
+              <ion-buttons>
+                 <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
+              </ion-buttons>
+           </ion-col>
+           <ion-col size="5">
+              <p class="ion-text-center heading">Assignments</p>
+           </ion-col>
+           <ion-col size="4">
+              <div class="avatar_icon" (click)="presentPopover('any')"></div>
+           </ion-col>
+        </ion-row>
+     </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<!--Ion-Header Ends-->
+<!--ion-content Start-->
+<ion-content>
+  <div class="assignment_qustion_page">
+    <div class="comman_page_padding">
+    <ion-row class="row_unit">
+      <ion-col id="theme_shadow">
+        <p>Unit 5</p>
+      </ion-col>
+      <ion-col>
+        <p>Unit 4</p>
+      </ion-col>
+      <ion-col>
+        <p>Unit 3</p>
+      </ion-col>
+      <ion-col>
+        <p>Unit 2</p>
+      </ion-col>
+      <ion-col>
+        <p>Unit 1</p>
+      </ion-col>
+    </ion-row>
+    <!--assignment_card start-->
+    <div *ngFor='let assign of assignment_old_unit;'>
+      <div class="assignment_card">
+        <ion-row>
+          <ion-col>
+            <h1 class="color_pink comman_font2">Assignment</h1>
+            <span class="comman_font2 font_b">{{assign.title | titlecase}}</span>
+            <p class="comman_font3">{{assign.description ?? ''}}</p>
+          </ion-col>
+        </ion-row> 
+        <ion-row class="points_row">
+          <ion-col size="8">
+            <p>Per Question Mark</p>
+          </ion-col>
+          <ion-col size="4">
+            <p>{{assign.per_q_mark ?? ''}}</p>
+          </ion-col>
+          <ion-col size="8">
+            <p>Total Questions</p>
+          </ion-col>
+          <ion-col size="4">
+            <p>{{assign.questions.length ?? ''}}</p>
+          </ion-col>
+          <ion-col size="8">
+            <p>Total Mark</p>
+          </ion-col>
+          <ion-col size="4">
+            <p>{{assign.questions.length * assign.per_q_mark}}</p>
+          </ion-col>
+          <div class="start_session">
+            <button class="start_btn">Start</button>
+          </div>
+        </ion-row> 
+      </div>
+    </div>
+    <!--assignment_card Ends-->
+    <!--assignment_card End strat (2)-->
+   <!--  <div class="assignment_card">
+      <ion-row>
+        <ion-col>
+          <h1 class="color_pink comman_font2">Assignment 2</h1>
+          <span class="comman_font2 font_b">How creatures Move</span>
+          <p class="comman_font3">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
+            piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+        </ion-col>
+      </ion-row> 
+      <ion-row class="points_row">
+        <ion-col size="8">
+          <p>Per Question Mark</p>
+        </ion-col>
+        <ion-col size="4">
+          <p>2</p>
+        </ion-col>
+        <ion-col size="8">
+          <p>Total Mark</p>
+        </ion-col>
+        <ion-col size="4">
+          <p>4</p>
+        </ion-col>
+        <ion-col size="8">
+          <p>Total Questions</p>
+        </ion-col>
+        <ion-col size="4">
+          <p>2</p>
+        </ion-col>
+        <div class="start_session">
+          <button class="start_btn">Start</button>
+        </div>
+      </ion-row> 
+    </div>  -->
+  </div>
+  </div>
+</ion-content>
+<!--ion-content End-->

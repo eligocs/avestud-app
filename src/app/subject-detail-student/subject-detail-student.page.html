@@ -18,7 +18,7 @@
 
 <ion-content>
   <div class="page_content">
-
+    <div class="comman_page_padding">
       <h1 class="ion-text-center color_pink">{{subjectname ?? ''}}</h1>
       <h2 class="ion-text-center color_pink"></h2>
       <ion-row>
@@ -126,18 +126,18 @@
             </ion-row> 
             <ion-row class="resources_btns">
                 <ion-col size="6">
-                    <a class='link_subject '  [routerLink]="['/s_assignments']" [queryParams]="{iacs:iacs,subject:subject}" ><button  class="grad_green comman_btn common_anc_btn common_btn_shadow">Assigments</button></a>
+                    <a class='link_subject '  [routerLink]="['/s-assignments']" [queryParams]="{iacs:iacs,subject:subject}" ><button  class="grad_green comman_btn common_anc_btn common_btn_shadow">Assigments</button></a>
                 </ion-col> 
                 <ion-col size="6">
-                    <a class='link_subject '  [routerLink]="['/s_doubts']" [queryParams]="{iacs:iacs,subject:subject}" ><button class="grad_sky comman_btn common_anc_btn common_btn_shadow">Doubts ({{doubtsnotify ?? ''}})</button></a>
+                    <a class='link_subject '  [routerLink]="['/s-doubts']" [queryParams]="{iacs:iacs,subject:subject}" ><button class="grad_sky comman_btn common_anc_btn common_btn_shadow">Doubts ({{doubtsnotify ?? ''}})</button></a>
                 </ion-col> 
             </ion-row> 
             <ion-row class="resources_btns">
                 <ion-col size="6">
-                    <a class='link_subject '  [routerLink]="['/s_test']" [queryParams]="{iacs:iacs,subject:subject}" ><button   class="grad_orange comman_btn common_anc_btn common_btn_shadow">Test</button></a>
+                    <a class='link_subject '  [routerLink]="['/s-test']" [queryParams]="{iacs:iacs,subject:subject}" ><button   class="grad_orange comman_btn common_anc_btn common_btn_shadow">Test</button></a>
                 </ion-col> 
                 <ion-col size="6">
-                    <a class='link_subject '  [routerLink]="['/s_extraclasses']" [queryParams]="{iacs:iacs,subject:subject}" ><button  class="grad_green comman_btn common_anc_btn common_btn_shadow">Extra Classes</button></a>
+                    <a class='link_subject '  [routerLink]="['/s-extraclasses']" [queryParams]="{iacs:iacs,subject:subject}" ><button  class="grad_green comman_btn common_anc_btn common_btn_shadow">Extra Classes</button></a>
                 </ion-col> 
             </ion-row>
             </div>
@@ -149,6 +149,7 @@
 
       <!-- <ion-row class='success_msg' *ngIf='loadsuccess'>{{loadsuccess}}</ion-row>
       <button class="bg_color create common_anc_btn common_btn_shadow" (click)="setText($event)">Create</button> -->
+  </div>
   </div>
 </ion-content>
  
