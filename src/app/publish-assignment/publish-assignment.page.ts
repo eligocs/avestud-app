@@ -29,23 +29,26 @@ export class PublishAssignmentPage implements OnInit {
         private route: ActivatedRoute,
         ) {} 
 
-  ngOnInit() {
-    
+  ngOnInit() { 
     this.route.queryParams.subscribe(
       params => {
         this.iacs =  params['iacs']; 
         this.subject =  params['subject'];   
         this.assignment_id =  params['assignment_id'];   
         this.pagetype =  params['type'];   
-        if(this.pagetype != ''){
-          this.previousUrl = 'test?iacs='+this.iacs+'&subject='+this.subject;  
-        }else{
+        if(this.pagetype == 'assignment'){
           this.previousUrl = 'assignments?iacs='+this.iacs+'&subject='+this.subject;  
+        }else{
+          this.previousUrl = 'test?iacs='+this.iacs+'&subject='+this.subject;  
         } 
         this.publishingDate = '';
       }
     )
 
+  }
+
+  setSelectedDate(e){
+    this.publishingDate = e;
   }
 
   async publishAssigment(){
@@ -63,7 +66,11 @@ export class PublishAssignmentPage implements OnInit {
             queryParams: { 'iacs': this.iacs ,'subject':this.subject},
             fragment: 'anchor'
           };
-          this.router.navigate(['test'],navigationExtras);
+          if(this.pagetype == 'assignment'){
+            this.router.navigate(['assignments'],navigationExtras);
+          }else{
+            this.router.navigate(['test'],navigationExtras);
+          }
         } else{
           this.toastService.presentToast(res.msg); 
         }

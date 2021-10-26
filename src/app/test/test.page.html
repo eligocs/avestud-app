@@ -22,7 +22,7 @@
     <div class="comman_page_padding ">
     <div class="test ">
         <!--page_tittle and add button-->
-        <ion-row>
+        <!-- <ion-row>
             <ion-col size="8">
                 <h1 class="color_violet page_tittle">Test</h1>
             </ion-col>
@@ -34,6 +34,18 @@
             <ion-col size="2">
                 <div class="btn_theme">
                     <button [routerLink]="['/add-test-unit']" [queryParams]="{iacs:iacs,subject:subject}"> Add Unit</button>
+                </div>
+            </ion-col>
+        </ion-row> -->
+        <ion-row>
+            <ion-col size="12" class='d-flex'>
+                <h1 class="color_violet page_tittle">Test</h1> 
+                <div class="text-right">
+                    <div class="btn_theme">
+                        <button [routerLink]="['/add-test']" [queryParams]="{iacs:iacs,subject:subject,type:test}">Add</button> 
+                    &nbsp;&nbsp; 
+                        <button [routerLink]="['/add-test-unit']" [queryParams]="{iacs:iacs,subject:subject,type:test}"> Add Unit</button>
+                    </div>
                 </div>
             </ion-col>
         </ion-row>

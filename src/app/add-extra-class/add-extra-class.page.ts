@@ -113,12 +113,8 @@ export class AddExtraClassPage implements OnInit {
         await this.homeService.createExtraClass(newData,token).subscribe(
           (res: any) => {    
             if (res.status == 200) {
-              this.toastService.presentToast(res.msg); 
-              let navigationExtras: NavigationExtras = {
-                queryParams: { 'iacs': this.iacs },
-                fragment: 'anchor'
-              };
-              this.router.navigate(['extraclass'],navigationExtras);
+              this.toastService.presentToast(res.msg);   
+              window.location.href = 'extraclass?iacs='+this.iacs+'&subject='+this.subject; 
             }else{
               this.toastService.presentToast('Fail to add extra class !!!'); 
             }

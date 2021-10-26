@@ -33,6 +33,7 @@ export class AddQuestionPage implements OnInit {
   units:any;
   subject:any;
   assignment_id:any;
+  pagetype:any;
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -42,14 +43,18 @@ export class AddQuestionPage implements OnInit {
     private toastService: ToastService
   ) { }
 
-  ngOnInit() {
-
+  ngOnInit() { 
     this.route.queryParams.subscribe(
       params => { 
         this.iacs =  params['iacs'];   
         this.subject =  params['subject'];   
-        this.assignment_id =  params['assignment_id'];   
-        this.previousUrl = 'list-question?iacs='+this.iacs+'&subject='+this.subject;  
+        this.assignment_id =  params['assignment_id']; 
+        this.pagetype =  params['type']; 
+        if(this.pagetype == 'assignment'){
+          this.previousUrl = 'list-question?iacs='+this.iacs+'&subject='+this.subject+'&assignment_id='+this.assignment_id+'&type=assignment';  
+        }else{
+          this.previousUrl = 'list-question?iacs='+this.iacs+'&subject='+this.subject+'&assignment_id='+this.assignment_id+'&type=test';  
+        }   
         if(this.assignment_id){
           this.getSingleQuestion(this.assignment_id);
         }else{ 
@@ -63,11 +68,9 @@ export class AddQuestionPage implements OnInit {
           this.postData.question_img = '';  
         }
       }
-    ) 
-
-
+    )  
   }
-
+ 
   onChange(event) {
     this.postData.question_img = event.target.files[0]; 
   }

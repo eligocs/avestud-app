@@ -13,6 +13,7 @@ export class SAssignmentsPage implements OnInit {
   iacs:any;
   assignment_old_unit:any;
   topics:any;
+  previousUrl:any;
   constructor(
     private studentService: StudentService,
     private route: ActivatedRoute,
@@ -26,6 +27,7 @@ export class SAssignmentsPage implements OnInit {
         this.iacs =  params['iacs'];
         this.subject = params['subject'];   
         if(this.subject && this.iacs && token){ 
+            this.previousUrl = '/subject-detail-student?iacs='+this.iacs+'&subject='+this.subject+'&purchased=1'; 
             this.loadstudentAssign(this.iacs,this.subject,token);  
         }
       }
@@ -40,8 +42,7 @@ export class SAssignmentsPage implements OnInit {
     }
     await this.studentService.getstudentAssignment(newData,token).subscribe(
       (res: any) => {    
-        if (res.status == 200) {
-          console.log(res)
+        if (res.status == 200) { 
           this.assignment_old_unit = res.assignment_old_unit;  
           this.topics = res.topics;   
         }

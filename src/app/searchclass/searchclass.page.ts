@@ -108,11 +108,7 @@ export class SearchclassPage implements OnInit {
            }
          }, {
            text: 'Yes',
-           handler: function() {  
-              /* let navigationExtras: NavigationExtras = {
-                queryParams: { 'id': id },
-                fragment: 'anchor'
-              }; mainthis.router.navigate(['selecttimings'],navigationExtras); */
+           handler: function() {   
               window.location.href = 'selecttimings/?id='+id;
            }
          }

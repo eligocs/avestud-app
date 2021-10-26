@@ -41,10 +41,10 @@ export class ListQuestionPage implements OnInit {
         this.subject =  params['subject'];   
         this.assignment_id =  params['assignment_id'];    
         this.pagetype =  params['type'];   
-        if(this.pagetype != ''){
-          this.previousUrl = 'test?iacs='+this.iacs+'&subject='+this.subject;  
-        }else{
+        if(this.pagetype == 'assignment'){
           this.previousUrl = 'assignments?iacs='+this.iacs+'&subject='+this.subject;  
+        }else{
+          this.previousUrl = 'test?iacs='+this.iacs+'&subject='+this.subject;  
         } 
         if(this.assignment_id && this.iacs){
           this.getQuestions(this.iacs,this.assignment_id);

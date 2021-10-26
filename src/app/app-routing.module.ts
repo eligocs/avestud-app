@@ -108,6 +108,10 @@ const routes: Routes = [
   {
     path: 's-assignments',
     loadChildren: () => import('./s-assignments/s-assignments.module').then( m => m.SAssignmentsPageModule)
+  },
+  {
+    path: 'startassignment',
+    loadChildren: () => import('./startassignment/startassignment.module').then( m => m.StartassignmentPageModule)
   }
 
 ];

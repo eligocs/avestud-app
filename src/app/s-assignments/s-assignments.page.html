@@ -23,7 +23,7 @@
 <ion-content>
   <div class="assignment_qustion_page">
     <div class="comman_page_padding">
-    <ion-row class="row_unit">
+   <!--  <ion-row class="row_unit">
       <ion-col id="theme_shadow">
         <p>Unit 5</p>
       </ion-col>
@@ -39,7 +39,7 @@
       <ion-col>
         <p>Unit 1</p>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
     <!--assignment_card start-->
     <div *ngFor='let assign of assignment_old_unit;'>
       <div class="assignment_card">
@@ -70,7 +70,7 @@
             <p>{{assign.questions.length * assign.per_q_mark}}</p>
           </ion-col>
           <div class="start_session">
-            <button class="start_btn">Start</button>
+            <button [routerLink]="['/startassignment']" [queryParams]="{iacs:iacs,assignment:assign.id}" class="start_btn">Start</button>
           </div>
         </ion-row> 
       </div>

@@ -59,6 +59,9 @@ export class StudentService {
   getstudentAssignment(data,token){  
     return this.httpService.gettrip('getstudentAssignment',data,token);
   }
+  startassignment(data,token){  
+    return this.httpService.gettrip('startassignment',data,token);
+  }
 
  
 

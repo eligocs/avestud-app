@@ -1,0 +1,116 @@
+<!--===Ion-Header Start===-->
+<ion-header>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">
+          <ion-buttons>
+            <ion-back-button defaultHref="/logout" class="color_violet"></ion-back-button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col size="5">
+          <p class="ion-text-center heading">Assignments</p>
+        </ion-col>
+        <ion-col size="4">
+          <div class="avatar_icon" (click)="presentPopover('any')"></div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<!--====Ion-Header Ends=====-->
+<!--====ion-content Start===-->
+<ion-content>
+  <!--===assignment_test_page====-->
+  <div class="comman_page_padding">
+
+  <div class="assignment_test_page ">
+    <!--==content_header==-->
+    <ion-row class="content_header">
+      <ion-col size="8">
+        <h1>29:15 min</h1>
+      </ion-col>
+      <ion-col size="4">
+        <div class="btn_theme">
+          <button href="#">Submit</button>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!--===row_pagination===-->
+    <ion-row>
+      <ion-col class="row_pagination">
+        <div class="pagination">
+          <a href="#"><img src="../../assets/images/previous_btn.png"></a>
+              <div  *ngFor='let quest of questions; let i = index;'>
+                <div class='overflow'>
+                  <a href="#" (click)="changestep()" class="font_dark {{instep == 1 ? 'circle' : ''}}">{{i+1}}</a>
+                </div>
+              </div>
+             <!--  <a href="#" class="font_dark circle"><span class="active">2</span></a>
+              <a href="#">3</a>   -->
+          <a href="#"><img src="../../assets/images/next_button.png"></a>
+        </div>
+      </ion-col>
+    </ion-row>
+
+
+    <!--==question==-->
+    <div class='questionary' *ngFor='let quest of questions; let i = index;'> 
+      <div class='questionary' *ngIf='instep == 1;'> 
+        <ion-row class="question">
+          <ion-col>
+            <p><span class="numbreq">{{i+1}}</span> : {{quest.question ?? ''}}</p>
+            <br>
+          </ion-col>
+        </ion-row>
+        <!--======ion-list======-->
+        <ion-list>
+          <ion-radio-group value="biff">
+            <ion-item class="border_v">
+              <ion-label>A. <span class="mg-left">{{quest.a ?? ''}}</span></ion-label>
+              <ion-radio slot="start" value="biff"></ion-radio>
+            </ion-item>
+            <ion-item class="border_y">
+              <ion-label>B. <span class="mg-left">{{quest.b ?? ''}}</span></ion-label>
+              <ion-radio slot="start" value="griff"></ion-radio>
+            </ion-item>
+            <ion-item class="border_o">
+              <ion-label>C. <span class="mg-left">{{quest.c ?? ''}}</span></ion-label>
+              <ion-radio slot="start" value="buford"></ion-radio>
+            </ion-item>
+            <ion-item class="border_s mg_bottom">
+              <ion-label>D. <span class="mg-left">{{quest.d ?? ''}}</span></ion-label>
+              <ion-radio slot="start" value="afjdks"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+        <br>
+        <!--======ion-list End====-->
+        <ion-row *ngIf='quest.question_img'>
+          <ion-col>
+            <img src="{{quest.question_img ?? ''}}" class="sums_img">
+          </ion-col>
+        </ion-row>
+        <hr>
+        <br>
+      </div>
+    </div>
+      <!--====btns_row====-->
+      <ion-row class="btns_row ion-text-center">
+        <ion-col>
+          <button class="bg_green">Skip</button>
+        </ion-col>
+        <ion-col>
+          <button class="bg_violet">Prev</button>
+        </ion-col>
+        <ion-col>
+          <button class="bg_pink">Next</button>
+        </ion-col>
+      </ion-row>
+    </div>
+   
+  
+</div>
+   <!--===assignment_test_page End====-->
+</ion-content>
+<!--Ion Content End-->

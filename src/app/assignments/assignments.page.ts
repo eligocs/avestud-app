@@ -19,8 +19,10 @@ export class AssignmentsPage implements OnInit {
   subject:string;
   previousUrl:string; 
   assignments:any; 
+  assignmet_w_n_t:any; 
   showUnitFor:any; 
   noassignments:boolean; 
+  assignment:any; 
   constructor(
     public modalController: ModalController,
     private previousRouteService: PreviousRouteService,
@@ -33,6 +35,7 @@ export class AssignmentsPage implements OnInit {
   ) { }   
  
   async ngOnInit() {   
+    this.assignment = 'assignment';
     var token =  await this.storageService.get(AuthConstants.AUTH);
     this.route.queryParams.subscribe(
       params => {
@@ -46,9 +49,11 @@ export class AssignmentsPage implements OnInit {
   async getAssignments(iacs,token){
     if(iacs && token){    
       await this.homeService.openAssignments(iacs,token).subscribe(
-        (res: any) => {    
+        (res: any) => {   
+          console.log(res) 
           if(res.status == 200){
             this.assignments = res.topics ? res.topics:'';  
+            this.assignmet_w_n_t = res.assignmet_w_n_t ? res.assignmet_w_n_t:'';  
           }else{
             this.assignments = [];   
             this.noassignments = true;   

@@ -1,0 +1,148 @@
+// =====assignment_test_page=====
+
+.assignment_test_page {
+    padding: 0 15px;
+  }
+  
+  .content_header {
+    align-items: center;
+  }
+  
+  .btn_theme button {
+    height: 35px;
+    width: 85px;
+  }
+  
+  h1 {
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  // ====row_pagination====
+  
+  .row_pagination {
+    margin-top: 20px;
+  }
+  
+  .pagination{
+      display: flex;
+      justify-content: space-between;
+  }
+  
+  .pagination a {
+    color: #8a8a8a;
+    float: left;
+    padding: 8px 10px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500; 
+  }
+  
+  .pagination .font_dark {
+    color: #000000;
+  }
+  
+  //====pagination circle=====
+  
+  .circle {
+    height: 28px;
+    width: 28px;
+    border: 2px solid #82cf05;
+    border-radius: 50%;
+    position: relative;
+    top: 4px;
+  }
+  
+  .active {
+      position: absolute;
+      right: 8px;
+      bottom: 2px;
+  }
+  
+  // =====question=====
+  
+  .question {
+    margin-bottom: 20px;
+    box-shadow: 0 3px 6px 1px #a9a9a9;
+    border-radius: 5px;
+  }
+  span.numbreq {
+    font-size: 15px;
+    color: #644699;
+    font-weight: 900;
+}
+  
+  .question p {
+    font-size: 12px;
+    color: #000000;
+    font-weight: 400;
+    line-height: 22px;
+  }
+  
+  //=====Radio Questions=====
+  
+  ion-item {
+    margin-bottom: 12px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+  }
+  
+  ion-radio {
+    height: 13px;
+    width: 13px;
+    margin-right: 15px;
+  }
+  
+  ion-label {
+    font-size: 14px;
+    color: #404040;
+    font-weight: 400;
+  }
+  
+  .mg-left{
+      margin-left: 15px;
+  }
+  
+  // =====Radio Questions=====
+  
+  .border_v {
+    border: 1px solid #634996;
+  }
+  
+  .border_y {
+    border: 1px solid #f99f30;
+  }
+  
+  .border_o {
+    border: 1px solid #fe7d4d;
+  }
+  
+  .border_s {
+    border: 1px solid #1489d4;
+  }
+  
+  .sums_img {
+    width: 150px;
+    height: 100px;
+  }
+  
+  .mg_bottom {
+    margin-bottom: 0;
+  }
+  
+  // ======btns_row=======
+  
+  .btns_row button {
+    height: 30px;
+    width: 85px;
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 5px;
+  }
+  .overflowhidden {
+    overflow-y: scroll;
+}
+ 
