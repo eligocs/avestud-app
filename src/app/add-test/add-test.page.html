@@ -20,12 +20,13 @@
 
 <ion-content>
   <br>
+  <div class='comman_page_heading'>
   <form class="assignment_form"  >
     <ion-row>
       <ion-col  >
         <select class='lectureSelect' value="{{olddata?.unit}}" [(ngModel)]="postData.unit"   name='unit'>
           <option value='' selected disabled>Select</option>
-          <option *ngFor="let unit_single of units"   value="{{unit_single.id}}">{{unit_single.unitName}}</option>
+          <option *ngFor="let unit_single of units"   value="{{unit_single.id}}">{{unit_single.unit}}</option>
         </select>
       </ion-col>
     </ion-row>
@@ -61,4 +62,5 @@
       <!-- <button id="reset">Reset</button> --> 
     </div>
   </form>
+  </div>
 </ion-content>

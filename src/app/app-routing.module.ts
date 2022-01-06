@@ -112,6 +112,18 @@ const routes: Routes = [
   {
     path: 'startassignment',
     loadChildren: () => import('./startassignment/startassignment.module').then( m => m.StartassignmentPageModule)
+  },
+  {
+    path: 'doubts',
+    loadChildren: () => import('./doubts/doubts.module').then( m => m.DoubtsPageModule)
+  },
+  {
+    path: 'doubt-messages',
+    loadChildren: () => import('./doubt-messages/doubt-messages.module').then( m => m.DoubtMessagesPageModule)
+  },
+  {
+    path: 'view-attendance',
+    loadChildren: () => import('./view-attendance/view-attendance.module').then( m => m.ViewAttendancePageModule)
   }
 
 ];

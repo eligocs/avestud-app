@@ -1,0 +1,202 @@
+select.category {
+    width: 100%;
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 1px solid #e03e91;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+// =====search_classes_page=====
+
+.search_classes_page {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0px 8px;
+  }
+  
+  // =======================
+  // header part of the page 
+  // =======================
+  
+  // =====ion-searchbar====
+  
+  .search-bar{
+    height: 36px;
+    margin-top: 6px;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+    width: 100%;
+    background: url(../../assets/images/searchbar_icon.png);
+    background-position: right 5% bottom 52%;
+    background-repeat: no-repeat;
+    padding-right: 35px !important;
+  }
+  
+  ::placeholder{
+    font-size: 14px;
+    color: #AFAFAF;
+    padding-left: 5px;
+  }
+
+  // attendance_page start 
+.attendance_page{
+  padding: 0 10px;
+}
+
+h1{
+  font-size: 22px;
+  margin-left: 26px;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.cards_section ion-card{
+  padding: 0;
+  margin: 0;
+  border-radius: 12px;
+  width: 95%;
+  height: 100px;
+  text-align: center;
+  line-height: 1px;
+  color: white;
+  align-items: center;
+  font-size: 24px;
+  margin-top: 2px;
+  box-shadow: 2px 2px 6px #645555;
+}
+
+.cards_section ion-card p{
+  margin-top: 38px;
+}
+
+.cards_section{
+  width: 100%;
+  height: 100%;
+}
+
+
+.cards_section span{
+  font-size: 12px;
+}
+
+.grad_green{
+  background: linear-gradient(to bottom, #95E601, #64AB0F);
+}
+
+.grad_yellow{
+  background: linear-gradient(to bottom, #F9B637, #F99B2F);
+}
+
+.grad_skyblue{
+  background: linear-gradient(to bottom, #1483D3, #0FAFE0);
+}
+
+.grad_lightorange{
+  background: linear-gradient(to bottom, #FE8448, #FE6860);
+}
+
+// attendance_status 
+
+h2{
+  margin-left: 20px;
+}
+
+.attendance_status{
+  display: flex;
+  margin-left: 20px;
+}
+
+.attendance_status img{
+  height: 13px;
+  width: 13px;
+  margin-top: 22px;
+  margin-right: 10px;
+}
+
+.present{
+  display: flex;
+}
+
+.absent{
+  display: flex;
+}
+
+.present p, .absent p{
+  margin-right: 48px;
+}
+
+
+// Calander css start 
+
+table{
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+table td{
+text-align: center;
+height: 45px;
+width: 45px;
+}
+
+.table_head{
+  height: 45px;
+  width: 100%;
+  background-color: #E03E91;
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+// table_head img 
+
+.table_head img{
+  margin-top: 5px;
+}
+
+.table_head .prev{
+  float: left;
+  margin-left: 25px;
+}
+.table_head .next{
+  float: right;
+  margin-right: 25px;
+}
+
+.weekly_days th{
+  height: 45px;
+  width: 45px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #634996;
+  border-radius: 4px;
+}
+
+#absent_day{
+  background-color: #C34C4F;
+  color: white;
+  border-radius: 4px;
+}
+
+#present_day{
+  background-color: #50C45B;
+  border-radius: 4px;
+}
+
+#prev_month{
+  font-size: 15px;
+  font-weight: 500;
+  color: #AAAAAA;
+}
+
+.wel.m-3 {
+  margin-top: 20px;
+}
+
+// calender css end 
+  

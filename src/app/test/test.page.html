@@ -116,7 +116,7 @@
                     <!--assignment_btns-->
                     <div class="assignment_btns">
                         <button [routerLink]="['/list-question']" [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id,type:'test'}" class="bg_color add_q">Add Question</button>
-                        <button class="show_r bg_color_p">Show Reports</button>
+                        <button [routerLink]="['/test-reports']" [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id}"  class="show_r bg_color_p">Show Reports</button>
                     </div>
                     <!--assignment_btns closer-->
                 </div>

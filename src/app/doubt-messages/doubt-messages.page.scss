@@ -1,0 +1,108 @@
+// chats_page 
+.chats_page{
+    padding: 0 15px;
+}
+
+// ion-header section 
+
+.chats_img{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.chats_img img{
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+
+// .left_section 
+
+.left_section{
+    margin-left: 10px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    line-height: 18px;
+    width: 100%;
+}
+
+.left_section img{
+    //height: 100px;
+    width: 50%;
+}
+.right_section img{
+    //height: 100px;
+    width: 50%;
+}
+
+.left_section p, .right_section p{
+    color: #000000;
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 2px;
+}
+.right_section {
+    text-align: right;
+}
+
+
+.right_section .chat_content {
+    width: 60%;
+}
+
+
+.right_section{
+    // float: right;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+// .right_section img{
+//     float: right;
+// }
+
+// .clearfix{
+//     clear: both;
+// }
+
+// ion-input css
+
+ 
+ion-input{
+    height: 39px;
+    width: 100%;
+    padding-left: 15% !important;
+    border: 1px solid #BFBFBF;
+    border-radius: 8px;
+    color: #8d8c8c;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.image-upload > input {
+    visibility:hidden;
+    width:0;
+    height:0
+  }
+img.se.lect_doc {
+    position: absolute;
+    z-index: 99999;
+    margin-top: -30px;
+    margin-left: 4px;
+}
+.camera_icon{
+    /* top: 20px; */
+    margin-right: 20px;
+    position: absolute;
+    /* margin-right: 40px; */
+    top: 12px;
+    margin-left: 10px;
+}
+
+.select_doc{
+    position: absolute;
+    right: 5%;
+    top: 22%;
+}
+

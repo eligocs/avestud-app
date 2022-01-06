@@ -37,12 +37,25 @@ export class AddAssignmentUnitPage implements OnInit {
         this.subject =  params['subject'];  
         if(this.iacs && this.subject){
           this.previousUrl = 'assignments?iacs='+this.iacs+'&subject='+this.subject;  
+          this.getAssignmentunits();
         } 
       }
     )  
   }
 
-
+  async getAssignmentunits(){
+    if(this.iacs){
+      var token =  await this.storageService.get(AuthConstants.AUTH)   
+      var classid= this.iacs;
+      var classroom =  await this.homeService.getAssignmentunits(classid,token).subscribe(
+        (res: any) => { 
+          if (res) {
+            this.units = res.data;   
+          } 
+        });
+    }
+  }
+  
   async createAssigmentUnit(){
     var newData = {
       unitName : this.postData.unitName, 

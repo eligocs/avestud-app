@@ -75,6 +75,25 @@ export class HttpService {
   
     return this.http.post(url, formDatas, options);
   }
+
+  senddoubt(serviceName: string,data: any,token:any){
+    const formDatas = new FormData(); 
+    if(data.message){
+      formDatas.append('message', data.message); 
+    }
+    formDatas.append('doubt', data.doubt); 
+    formDatas.append('iacs', data.iacs); 
+    formDatas.append('student_id', data.student_id); 
+    formDatas.append('type', data.type); 
+    const url = environment.apiUrl + serviceName;  
+    const options = {
+      headers: new HttpHeaders({ 
+        'Authorization': 'Bearer ' + token,  
+      })
+    }; 
+    return this.http.post(url, formDatas, options);
+  }
+
   createAssigmentQuestion(serviceName: string,data: any,token:any) {         
     const formDatas = new FormData();
     formDatas.append('topic_id', data.topic_id);

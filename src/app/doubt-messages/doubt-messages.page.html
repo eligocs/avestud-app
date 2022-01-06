@@ -1,0 +1,79 @@
+<!--Ion-Header Start-->
+<ion-header>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">
+          <ion-buttons>
+            <ion-back-button defaultHref="{{previousurl ?? ''}}" class="color_violet"></ion-back-button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col size="6" class="chats_img">
+          <img src="../../assets/images/Doubts-image2.png">
+          <p class="ion-text-center heading">Doubt Messages</p>
+        </ion-col>
+        <ion-col size="3">
+          <div class="avatar_icon" (click)="presentPopover('any')"></div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar> 
+</ion-header>
+<!--ion-header End-->
+<!--ion-content start-->
+<ion-content  #target >
+  <!--Chats Page Start-->
+  <div class='comman_page_padding'>
+    <div class="chats_page">
+    <!--   <div  *ngFor='let msg of messages.slice().reverse()'>
+        <div *ngIf='msg.sendable_id == this.student'> 
+          <div class="left_section"> 
+            <img src="{{msg.message ?? '../../assets/images/Chats-image3.png'}}"> 
+          </div>
+        </div>   
+        <div *ngIf='msg.sendable_id != this.student'> 
+          <div class="right_section">
+            <img src="{{msg.message ?? '../../assets/images/Chats-image3.png'}}"> 
+          </div>
+        </div>
+      </div> -->
+      <div  *ngFor='let msg of messages ' class='chat_div'>
+        <div *ngIf='msg.sendable_id == this.student'> 
+          <div class="left_section">
+            <div *ngIf='msg.type == "file"'> 
+            <img class='chatsectionimg' src="{{msg.message ?? '../../assets/images/Chats-image3.png'}}"> 
+            </div> 
+            <div *ngIf='msg.type == "text"'> 
+              {{msg.message}}
+            </div> 
+          </div>
+        </div>
+        <div *ngIf='msg.sendable_id != this.student'> 
+          <div class="right_section ">
+            <img class='chatsectionimg' src="{{msg.message ?? '../../assets/images/Chats-image3.png'}}"> 
+          </div> 
+        </div> 
+      </div> 
+
+      <ion-row class="clearfix " >
+        <ion-col   size="10">
+          <!-- <img src="../../assets/images/chats_camera_icon.png" class="camera_icon"> -->
+          <ion-input type="text" [(ngModel)]="text_message" name='text_message' placeholder="Text"></ion-input>
+          <div class="image-upload"  id='text_input'>
+            <label for="file-input"> 
+              <img src="../../assets/images/chats_doc.png"  class="se lect_doc">
+            </label> 
+            <input  id="file-input" type="file" (change)="onChange($event)" />
+          </div> 
+        </ion-col>
+        <ion-col size="2" (click)='send_btn()' class="send_btn">
+          <img src="../../assets/images/send_button.png">
+        </ion-col>
+      </ion-row>
+      
+    </div>
+  </div>
+  
+  <!--Chats Page End-->
+</ion-content>
+<!--Ion-content End-->

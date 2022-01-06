@@ -14,7 +14,7 @@ ion-searchbar{
 .search_icon{
     position:absolute;
     top: 26px;
-    right: 25px;
+    right: 40px;
 }
 
 
@@ -24,7 +24,10 @@ ion-searchbar{
     display: flex;
     justify-content: space-evenly;
 }
-
+.input_search {
+    margin-top: 22px;
+    width: 100%;
+}
 .attendance_details ion-card{
     height: 103px;
     max-width: 150px;
@@ -159,3 +162,11 @@ ion-searchbar{
 }
 
 
+img.eye_img {
+    margin-right: 4px;
+    margin-top: 4px;
+}
+img.down_img {
+    margin-right: 10px;
+    margin-bottom: 4px;
+}

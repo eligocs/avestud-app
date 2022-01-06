@@ -15,6 +15,8 @@ export class EnrollmentsPage implements OnInit {
   total:BigInteger;
   students:any;
   previousUrl:any;
+  searchName:any;
+  showloader:boolean;
   constructor(
     private router: Router,
     private storageService: StorageService,
@@ -23,7 +25,7 @@ export class EnrollmentsPage implements OnInit {
   ) { }
 
   async ngOnInit() { 
-
+    this.showloader = true;
       
     this.route.queryParams.subscribe(
       params => {
@@ -39,15 +41,55 @@ export class EnrollmentsPage implements OnInit {
       await this.storageService.get(AuthConstants.AUTH)   
       if(this.iacs && this.subject){
         await this.homeService.enrollments(this.iacs,this.subject,token).subscribe(
-          (res: any) => {   
-            setTimeout(() => {
-              this.total = res.students.length;
+          (res: any) => {    
+            setTimeout(() => { 
+              this.total = res.students[0].student.length;
               this.students = res.students[0].student;  
+              this.showloader = false;
             }, 2000);
           }
         )   
     } 
 
+  }
+
+  async searchStudent(){
+    this.showloader = true;
+    this.students = '';
+    var token =  await this.storageService.get(AuthConstants.AUTH);
+    if(this.searchName.length > 2 && this.searchName.length < 10){
+      await this.homeService.searchenrollments(this.iacs,this.subject,this.searchName,token).subscribe(
+        (res: any) => {      
+            this.total = res.students[0].student.length;
+            this.students = res.students[0].student;   
+            this.showloader = false;
+          }
+          ) 
+    }else{
+          if(this.iacs && this.subject){
+        await this.homeService.enrollments(this.iacs,this.subject,token).subscribe(
+          (res: any) => {    
+            setTimeout(() => { 
+              this.total = res.students[0].student.length;
+              this.students = res.students[0].student;  
+              this.showloader = false;
+            }, 2000);
+          }
+          )   
+        }
+    } 
+  }
+
+  async downloadReceipt(class_id,student_id){ 
+    var token =  await this.storageService.get(AuthConstants.AUTH);
+    if(class_id &&  student_id){
+      await this.homeService.downloadReceipt(class_id,student_id,token).subscribe(
+      (res: any) => {  
+        console.log(res) 
+        if (res.status == 200) {   
+        }
+      }) 
+    }
   }
 
 }

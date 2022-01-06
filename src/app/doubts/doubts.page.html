@@ -1,0 +1,102 @@
+<!--Ion-Header Start-->
+<ion-header>
+  <ion-toolbar class="bg_color">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">
+           <ion-buttons>
+              <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
+           </ion-buttons>
+        </ion-col>
+        <ion-col size="5">
+           <p class="ion-text-center heading">Doubts</p>
+        </ion-col>
+        <ion-col size="4">
+           <div class="avatar_icon" (click)="presentPopover('any')"></div>
+        </ion-col>
+     </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<!--Ion-Header Ends-->
+<!---Ion-Content Statts-->
+<ion-content>
+  <div class='comman_page_padding'>
+  <h1 class="color_violet">Search</h1>
+ <div>
+  <ion-searchbar
+    [(ngModel)]="myInput"
+    [showCancelButton]="shouldShowCancel"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)">
+  </ion-searchbar>
+  <!-- <ion-searchbar placeholder="search" search-icon="undifined"></ion-searchbar> -->
+ <!--  <img src="../../assets/images/searchbar_icon.png" class="search_icon"> -->
+ </div>
+
+  <div *ngIf='alldoubts'> 
+    <div *ngFor='let doubtSingle of alldoubts;'> 
+      <div *ngIf='doubtSingle.senderdetail.avatar'>
+        <ion-item lines="none" class="profile1" [routerLink]="['/doubt-messages']" [queryParams]="{iacs:iacs,subject:subject,doubt:doubtSingle.doubt.id}">
+          <ion-avatar slot="start">
+            <img src="https://aaradhanaclasses.s3.ap-south-1.amazonaws.com/{{doubtSingle.senderdetail.avatar ?? '../assets/images/avatar.png'}}" alt="avatar.png">
+          </ion-avatar>
+          <ion-label class="name">{{doubtSingle.student.name ?? ''}}<br>
+            <span class="font_f">{{doubtSingle.doubt.created_at | date:'MM/dd/yyyy hh:mm a'}}</span>
+          </ion-label>
+          <div class="dot">
+            <p class="green_circle">{{doubtSingle.assignmentnotifications ? doubtSingle.assignmentnotifications : '0'}}</p>
+          </div>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <ion-item lines="none">
+    <ion-avatar slot="start">
+      <img src="../../assets/images/avatar.png" alt="avatar.png">
+    </ion-avatar>
+    <ion-label class="name">Lorem lspum<br>
+      <span class="font_f">11:45am 24/07/2021</span>
+    </ion-label>
+    <div class="dot">
+      <p class="orange_circle">2</p>
+    </div>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-avatar slot="start">
+      <img src="../../assets/images/avatar.png" alt="avatar.png">
+    </ion-avatar>
+    <ion-label class="name">Lorem lspum<br>
+      <span class="font_f">11:45am 24/07/2021</span>
+    </ion-label>
+    <div class="dot">
+      <p class="yellow_circle">1</p>
+    </div>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-avatar slot="start">
+      <img src="../../assets/images/avatar.png" alt="avatar.png">
+    </ion-avatar>
+    <ion-label class="name">Lorem lspum<br>
+      <span class="font_f">11:45am 24/07/2021</span>
+    </ion-label>
+    <div class="dot">
+      <p class="skyblue_circle">2</p>
+    </div>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-avatar slot="start">
+      <img src="../../assets/images/avatar.png" alt="avatar.png">
+    </ion-avatar>
+    <ion-label class="name">Lorem lspum<br>
+      <span class="font_f">11:45am 24/07/2021</span>
+    </ion-label>
+    <div class="dot">
+      <p class="green_circle">2</p>
+    </div>
+  </ion-item> -->
+</div>
+</ion-content>
+<!--ion-content End-->

@@ -60,7 +60,7 @@ export class AddTestPage implements OnInit {
     )  
     if(this.iacs){
       var token =  await this.storageService.get(AuthConstants.AUTH)   
-      var classid= this.iacs;
+      var classid = this.iacs;
       var classroom =  await this.homeService.getTestunits(classid,token).subscribe(
         (res: any) => { 
           if (res) {

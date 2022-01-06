@@ -63,8 +63,13 @@ export class AddAssignmentPage implements OnInit {
           this.postData.old_id = '';  
           this.postData.show_ans = '';  
         }
+        this.getAssignmentunits();
       }
     )  
+    
+  }
+
+  async getAssignmentunits(){
     if(this.iacs){
       var token =  await this.storageService.get(AuthConstants.AUTH)   
       var classid= this.iacs;

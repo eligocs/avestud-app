@@ -6,7 +6,7 @@
   
       <ion-grid>
         <ion-row>
-          <ion-col size="3">
+          <ion-col size="4">
   
             <ion-buttons>
                <ion-icon class='logout_btn color_violet' (click)="logoutAction()" name="log-out-outline"></ion-icon>
@@ -14,7 +14,7 @@
   
           </ion-col>
           
-          <ion-col size="5">
+          <ion-col size="4">
   
             <p class="ion-text-center heading">My Classroom</p>
   
@@ -85,7 +85,7 @@
   
      
         <div   *ngFor="let data of classes; let i = index">
-          <ion-card  [ngStyle]="{ background: '#F3FCE3' }"  no-lines class="common_card">
+          <ion-card  [ngStyle]="{ background: 'white' }"  no-lines class="common_card">
             <ion-card-header class="card_tittle">
               <span class="color_violet class_5">{{data.class.name ?? ''}}   <small>Board : {{data.class.board ?? ''}}</small></span>
               <span class="fee">₹ {{data.class.price}}</span>
