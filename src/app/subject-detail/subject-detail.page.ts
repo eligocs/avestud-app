@@ -28,6 +28,8 @@ export class SubjectDetailPage implements OnInit {
   loadsuccess:any; 
   syllabus:string; 
   istudent:string; 
+  showloader:boolean;
+  syllabusSelected:string; 
   constructor(
     private previousRouteService: PreviousRouteService,
     private router: Router,
@@ -61,7 +63,24 @@ export class SubjectDetailPage implements OnInit {
 
   }
 
- 
+  async onChange(event) {
+    this.showloader = true;
+    var token =  await this.storageService.get(AuthConstants.AUTH)   
+      if(event.target.files[0]) {
+        var newData = {
+          syllabus : event.target.files[0], 
+          i_assigned_class_subject_id:this.iacs
+        }  
+        await this.homeService.saveSyllabus(newData,token).subscribe(
+          (res: any) => {     
+            this.showloader = false;
+            if(res.status == 200){ 
+              this.toastService.presentToast(res.msg); 
+              window.location.reload() 
+            }
+          })
+        } 
+    } 
 
   async setText(e) { 
     if(this.notificat){

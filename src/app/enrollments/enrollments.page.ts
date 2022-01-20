@@ -4,6 +4,7 @@ import { StorageService } from '../services/storage.service';
 import { HomeService } from '../services/home.service'; 
 import { AuthConstants } from '../../../config/auth-constants';
 import { filter } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-enrollments',
   templateUrl: './enrollments.page.html',
@@ -16,7 +17,7 @@ export class EnrollmentsPage implements OnInit {
   students:any;
   previousUrl:any;
   searchName:any;
-  showloader:boolean;
+  showloader:boolean; 
   constructor(
     private router: Router,
     private storageService: StorageService,
@@ -25,7 +26,7 @@ export class EnrollmentsPage implements OnInit {
   ) { }
 
   async ngOnInit() { 
-    this.showloader = true;
+    this.showloader = true; 
       
     this.route.queryParams.subscribe(
       params => {

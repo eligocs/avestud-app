@@ -75,6 +75,22 @@ export class HttpService {
   
     return this.http.post(url, formDatas, options);
   }
+  saveSyllabus(serviceName: string,data: any,token:any) {         
+    const formDatas = new FormData(); 
+  
+    if(data.syllabus){
+      formDatas.append('syllabus', data.syllabus); 
+    }  
+    formDatas.append('iacs_id', data.i_assigned_class_subject_id);  
+    const url = environment.apiUrl + serviceName;  
+    const options = {
+      headers: new HttpHeaders({ 
+        'Authorization': 'Bearer ' + token,  
+      })
+    };
+  
+    return this.http.post(url, formDatas, options);
+  }
 
   senddoubt(serviceName: string,data: any,token:any){
     const formDatas = new FormData(); 

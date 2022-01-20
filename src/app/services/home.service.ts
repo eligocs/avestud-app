@@ -80,6 +80,9 @@ export class HomeService {
     }
     return this.httpService.gettrip('getTestunits',postData,token);
   }
+  saveSyllabus(postData,token){   
+    return this.httpService.saveSyllabus('saveSyllabus',postData,token);
+  }
   getTests(iacs,token){  
     var data = {
       iacs:iacs, 

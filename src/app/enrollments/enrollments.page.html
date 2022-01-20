@@ -95,7 +95,7 @@
     <ion-row class="student_profile"  *ngFor="let data of students; let i = index">
 
       <ion-col size="5" class="right_section">
-        <img src="{{data.detail[i].avatar ?? ''}}" alt="student_img.jpg">
+        <img src="{{data.detail[i].avatar ? data.detail[i].avatar : '../../assets/images/teachers_profile.png'}}" alt="student_img.jpg">
       </ion-col>
       <ion-col class="left_section" size="7">
         <div class="prof_name">
