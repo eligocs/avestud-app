@@ -14,6 +14,8 @@ export class SAssignmentsPage implements OnInit {
   assignment_old_unit:any;
   topics:any;
   previousUrl:any;
+  hideOlds:any;
+  nodata:any;
   constructor(
     private studentService: StudentService,
     private route: ActivatedRoute,
@@ -42,9 +44,15 @@ export class SAssignmentsPage implements OnInit {
     }
     await this.studentService.getstudentAssignment(newData,token).subscribe(
       (res: any) => {    
-        if (res.status == 200) { 
+        if (res.status == 200) {  
+          console.log(res)
           this.assignment_old_unit = res.assignment_old_unit;  
           this.topics = res.topics;   
+          if(this.topics.length > 0){
+            this.nodata = false;
+          }else{
+            this.nodata = true;
+          }    
         }
       }
     );

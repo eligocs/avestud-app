@@ -29,6 +29,15 @@ export class HomeService {
   publishAssigment(data,token){  
     return this.httpService.gettrip('publishAssigment',data,token);
   }
+  profile(token){  
+    return this.httpService.get('profile',token);
+  }
+  getReport(postData,token){  
+    return this.httpService.gettrip('getReport',postData,token);
+  }
+  resettest(postData,token){  
+    return this.httpService.gettrip('resettest',postData,token);
+  }
   openSubject(iacs,subject,token){ 
     var postData = {
       iacs:iacs,
@@ -41,7 +50,7 @@ export class HomeService {
       class_id:class_id,
       student_id:student_id, 
     }
-    return this.httpService.gettrip('generate_receipt',postData,token);
+    return this.httpService.postpdf('generate_receipt',postData,token);
   }
   loadstudentdata(iacs,subject,token){ 
     var postData = {
@@ -49,6 +58,9 @@ export class HomeService {
       subject:subject, 
     }
     return this.httpService.gettrip('loadstudentdata',postData,token);
+  }
+  readnotification(data,token){  
+    return this.httpService.gettrip('readnotification',data,token);
   }
   openLecture(iacs,token){ 
     var postData = {
@@ -89,7 +101,13 @@ export class HomeService {
     }
     return this.httpService.gettrip('getTests',data,token);
   }
-  createLecture(postData,token){  
+  getSTests(iacs,token){  
+    var data = {
+      iacs:iacs, 
+    }
+    return this.httpService.gettrip('getSTests',data,token);
+  }
+  createLecture(postData,token){   
     return this.httpService.postWithImg('createLecture',postData,token);
   }
   createExtraClass(postData,token){  
@@ -112,6 +130,12 @@ export class HomeService {
       id:id, 
     } 
     return this.httpService.delLecture('delAssignments',data,token);
+  }
+  delQuestion(id,token){  
+    var data = {
+      id:id, 
+    } 
+    return this.httpService.delLecture('delQuestion',data,token);
   }
   deltest(id,token){  
     var data = {
@@ -136,6 +160,12 @@ export class HomeService {
       id:id, 
     } 
     return this.httpService.gettrip('getSAssigment',data,token);
+  }
+  getSQuestion(id,token){  
+    var data = {
+      id:id, 
+    } 
+    return this.httpService.gettrip('getSQuestion',data,token);
   }
   enrollments(iacs,subject_id,token){ 
     var data = {
@@ -181,6 +211,9 @@ export class HomeService {
   
   createAssigmentUnit(data,token){   
       return this.httpService.gettrip('createAssigmentUnit',data,token);
+  }
+  createLectureUnit(data,token){   
+      return this.httpService.gettrip('createLectureUnit',data,token);
   }
   
   createTestUnit(data,token){   

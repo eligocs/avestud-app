@@ -27,6 +27,10 @@ login(postData: any): Observable<any> {
   return this.httpService.post('login', postData);
 }
 
+forgotAction(postData: any): Observable<any> { 
+  return this.httpService.post('forgotAction', postData);
+}
+
 signup(postData: any): Observable<any> {
   return this.httpService.post('signup', postData);
 }
@@ -35,6 +39,9 @@ register_student(postData: any): Observable<any> {
 }
 resendOtp(postData: any): Observable<any> {
   return this.httpService.post('resendOtp', postData);
+}
+updatepassword(postData: any): Observable<any> {
+  return this.httpService.post('updatepassword', postData);
 }
 
   logout( ) {  

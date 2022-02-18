@@ -124,7 +124,47 @@ const routes: Routes = [
   {
     path: 'view-attendance',
     loadChildren: () => import('./view-attendance/view-attendance.module').then( m => m.ViewAttendancePageModule)
-  }
+  },
+  {
+    path: 's-extraclasses',
+    loadChildren: () => import('./s-extraclasses/s-extraclasses.module').then( m => m.SExtraclassesPageModule)
+  }, 
+  {
+    path: 'student-doubts',
+    loadChildren: () => import('./student-doubts/student-doubts.module').then( m => m.StudentDoubtsPageModule)
+  },
+  {
+    path: 's-test',
+    loadChildren: () => import('./s-test/s-test.module').then( m => m.STestPageModule)
+  },
+  {
+    path: 'lec-unit',
+    loadChildren: () => import('./lec-unit/lec-unit.module').then( m => m.LecUnitPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'forgotpassword',
+    loadChildren: () => import('./forgotpassword/forgotpassword.module').then( m => m.ForgotpasswordPageModule)
+  },
+  {
+    path: 'notifications',
+    loadChildren: () => import('./notifications/notifications.module').then( m => m.NotificationsPageModule)
+  },
+  {
+    path: 'newpassword',
+    loadChildren: () => import('./newpassword/newpassword.module').then( m => m.NewpasswordPageModule)
+  },
+  {
+    path: 'reports',
+    loadChildren: () => import('./reports/reports.module').then( m => m.ReportsPageModule)
+  },
+  {
+    path: 'starttest',
+    loadChildren: () => import('./starttest/starttest.module').then( m => m.StarttestPageModule)
+  },
 
 ];
 @NgModule({

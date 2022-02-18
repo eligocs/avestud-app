@@ -64,8 +64,7 @@ export class SDoubtsPage implements OnInit {
       iacs : this.iacs, 
       student_id : this.student,
       type : type
-    }    
-     console.log(newData);
+    }     
     if(newData){
       var token =  await this.storageService.get(AuthConstants.AUTH)   
       var classid= this.iacs;

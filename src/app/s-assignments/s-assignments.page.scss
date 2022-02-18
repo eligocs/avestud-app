@@ -17,6 +17,10 @@
     font-weight: 600;
   }
   
+  .text-center.mt-4 {
+    margin-top: 40px;
+}
+
   .comman_font3 {
     margin-bottom: 0;
     color: #949591;
@@ -45,6 +49,7 @@
   }
   
   .start_btn {
+    padding: 8px;
     height: 36px;
     width: 114px;
     font-size: 14px;

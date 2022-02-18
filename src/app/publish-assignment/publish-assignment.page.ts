@@ -55,7 +55,8 @@ export class PublishAssignmentPage implements OnInit {
     var newData = {
       publishingDate : this.publishingDate,  
       iacs : this.iacs, 
-      id:this.assignment_id 
+      id:this.assignment_id ,
+      type: this.pagetype
     }   
     var token =  await this.storageService.get(AuthConstants.AUTH);    
     await this.homeService.publishAssigment(newData,token).subscribe(

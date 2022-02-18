@@ -3,12 +3,12 @@
   <ion-toolbar>
      <ion-grid>
         <ion-row>
-           <ion-col size="3">
+           <ion-col size="4">
               <ion-buttons>
                  <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
               </ion-buttons>
            </ion-col>
-           <ion-col size="5">
+           <ion-col size="4">
               <p class="ion-text-center heading">Revise Lectures</p>
            </ion-col>
            <ion-col size="4">
@@ -25,31 +25,62 @@
   <div class="revise_lectures_page">
     <!--Row Unit Start-->
     <ion-row class="row_unit">
-      <ion-col id="theme_shadow">
-        <p>Unit 5</p>
+      <ion-col (click)="toggleShow()" id="{{!showUnitFor ? 'theme_shadow' :''}}" >
+          <p > All</p>
       </ion-col>
-      <ion-col>
-        <p>Unit 4</p>
-      </ion-col>
-      <ion-col>
-        <p>Unit 3</p>
-      </ion-col>
-      <ion-col>
-        <p>Unit 2</p>
-      </ion-col>
-      <ion-col>
-        <p>Unit 1</p>
-      </ion-col>
-    </ion-row>
+      <ion-col *ngFor="let lect of lectures;" id="{{showUnitFor == lect.unit ? 'theme_shadow' :''}}">
+          <p (click)="toggleShow(lect.unit)">{{lect.unit.length > 0 && lect.unit.length > 12 ? lect.unit.substring(0,12)+' ...' : lect.unit.length > 0 && lect.unit.length < 12 ? lect.unit :''}}</p>
+      </ion-col> 
+  </ion-row>
     <!--Row Uint End-->
-
-    <div *ngFor='let unit of myclasses'>  
-      <!--  <div *ngIf='unit.lectures.length > 0'> -->
+    <div class="text-center mt-4"  *ngIf="nodata" > 
+      No lecture yet !!
+    </div>
+    <div *ngFor="let lect of myclasses;let i=index;"  >
+      <div *ngIf="showUnitFor == lect.unit || !showUnitFor">
+          <p class='text-center'> {{lect?.unit | titlecase}}</p> 
+          <ion-row class="class_details bg_light_yellow" *ngFor="let single of lect.lectures;">
+            <ion-col size="10" class="left_col">
+              <h2>{{ single?.lecture_number }}</h2>
+              <p class="color_pink">{{ single.lecture_name | titlecase }}</p>
+              <span>{{ single.lecture_date | date: 'dd/MM/yyyy' }}</span>
+            </ion-col>
+            <ion-col size="2" class="right_col">
+              <a *ngIf='single.lecture_video' (click)="markattendance(single.id,single?.lecture_video)"><img src="../../assets/imgs/youtube_icon.svg"  class="youtube_icon"></a>
+              <div class="download_icons">
+                <img src="../../assets/imgs/download_receipt.png">
+                <a *ngIf='single.notes' href='{{ single.notes ?? "#" }}'><img src="../../assets/imgs/arrow_down_pdf.png"></a>
+              </div>
+            </ion-col>
+          </ion-row>
+          <!-- <ion-row class="row_video" *ngFor="let single of lect.lectures;"> 
+              <ion-col size="5">
+                  <div class="video_img"> 
+                      <a *ngIf='single.lecture_video' (click)="markattendance(single.id,single?.lecture_video)"><img src="../../assets/images/video_img2.png" class="youtube_icon"></a>
+                      <img *ngIf='!single.lecture_video' src="../../assets/images/video_img2.png" class="youtube_icon">
+                  </div>
+              </ion-col>
+              <ion-col size="7">
+                  <div class="col_text text-center">
+                      <p class="comman_font color_violet"></p>
+                      <p class="comman color_pink lineHe">{{ single?.lecture_number }} {{ single.lecture_name | titlecase }}</p>
+                      <p class="date_f">{{ single.lecture_date | date: 'dd/MM/yyyy' }}</p>
+                  </div>
+                  <div class="icons_set">
+                    <a *ngIf='single.notes' href='{{ single.notes ?? "#" }}'><img src="../../assets/images/download_pdf.png"></a>
+                    <img *ngIf='!single.notes'  src="../../assets/images/download_pdf.png"> 
+                  </div>
+              </ion-col>
+          </ion-row> -->
+      </div> 
+  </div>
+   <!--  <div *ngFor='let unit of myclasses'>  
+       <div *ngIf='unit.lectures.length > 0'>
         <h1>{{unit.name ?? ''}}</h1> 
-          <!-- <ion-row class="class_details bg_light_yellow" *ngFor='let lect of unit.lectures'>
+          <ion-row class="class_details bg_light_yellow" *ngFor='let lect of unit.lectures'>
             <ion-col size="10" class="left_col"> 
               <p class="color_pink">{{lect.lecture_name}}</p>
-              <span>{{lect.lecture_date}}</span>
+              <span>{{lect.lecture_date | date: 'MM/dd/yyyy'}}</span>
             </ion-col>
             <ion-col size="2" class="right_col">
               <a href='{{video ?? ""}}'><img src="../../assets/images/youtube_icon.svg" class="youtube_icon"></a>
@@ -58,9 +89,9 @@
                 <a href='{{syllabus ?? ""}}' class="view_btn"><img src="../../assets/images/arrow_down_pdf.png"></a>
               </div>
             </ion-col>
-          </ion-row>  -->
-        <!-- </div>  -->
-    </div>
+          </ion-row> 
+        </div> 
+    </div> -->
 
     <!--class_detais row End-->
     <!--class_detais row start-->

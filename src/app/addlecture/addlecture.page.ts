@@ -26,6 +26,7 @@ export class AddlecturePage implements OnInit {
   notes:File=null;
   video:File=null;
   units:any;
+  showloader:boolean;
   subject:any;
   iacs:any;
   previousUrl:any;
@@ -41,6 +42,7 @@ export class AddlecturePage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.olddata = {}; 
     this.route.queryParams.subscribe(
       params => { 
         this.iacs =  params['iacs']; 
@@ -52,6 +54,7 @@ export class AddlecturePage implements OnInit {
         if(this.lectureid){
           this.getOlddata(this.lectureid);
         }else{
+          this.olddata = {}; 
           this.postData = {
             unit: '',
             number: '',
@@ -86,6 +89,7 @@ export class AddlecturePage implements OnInit {
           this.olddata = res.data;  
           this.postData.unit = res.data.unit_id ? res.data.unit_id : '';  
         } 
+        this.showloader = false;
       });
     }
   }
@@ -96,6 +100,7 @@ export class AddlecturePage implements OnInit {
       this.video = event.target.files[0]; 
   }
   async createLecture(){
+    this.showloader = true;
     var newData = {
       unit : this.postData.unit,
       number : this.postData.number,
@@ -109,7 +114,8 @@ export class AddlecturePage implements OnInit {
     
     if(newData){
       var token =  await this.storageService.get(AuthConstants.AUTH)   
-      var classid= this.iacs;
+      var classid= this.iacs; 
+      if(classid){
         await this.homeService.createLecture(newData,token).subscribe(
           (res: any) => {    
             if (res.status == 200) {
@@ -124,6 +130,7 @@ export class AddlecturePage implements OnInit {
             }
           }
         );
+      }
       }
   }
 

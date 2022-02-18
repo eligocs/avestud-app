@@ -53,6 +53,24 @@ export class StudentService {
     }
     return this.httpService.gettrip('verifyPayment',data,token);
   }
+  getstudentextraclass(data,token){  
+    return this.httpService.gettrip('getstudentextraclass',data,token);
+  }
+  loadstudentDoubt(data,token){  
+    return this.httpService.gettrip('loadstudentDoubt',data,token);
+  }
+  getnotification(data,token){  
+    return this.httpService.gettrip('getnotification',data,token);
+  }
+  updateprofile(data,token){  
+    return this.httpService.updateprofile('updateprofile',data,token);
+  }
+  mark_an_attendence(data,token){  
+    return this.httpService.gettrip('mark_an_attendence',data,token);
+  }
+  send_btn(data,token){  
+    return this.httpService.send_message('send_btn',data,token);
+  }
   getstudentsubject(data,token){  
     return this.httpService.gettrip('getstudentsubject',data,token);
   }
@@ -61,6 +79,15 @@ export class StudentService {
   }
   startassignment(data,token){  
     return this.httpService.gettrip('startassignment',data,token);
+  }
+  starttest(data,token){  
+    return this.httpService.gettrip('startassignment',data,token);
+  }
+  saveAnswer(data,token){  
+    return this.httpService.gettrip('saveAnswer',data,token);
+  }
+  finishAssign(data,token){  
+    return this.httpService.gettrip('finishAssign',data,token);
   }
 
  

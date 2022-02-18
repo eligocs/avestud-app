@@ -3,12 +3,12 @@
   <ion-toolbar>
      <ion-grid>
         <ion-row>
-           <ion-col size="3">
+           <ion-col size="4">
               <ion-buttons>
                  <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
               </ion-buttons>
            </ion-col>
-           <ion-col size="5">
+           <ion-col size="4">
               <p class="ion-text-center heading">Assignments</p>
            </ion-col>
            <ion-col size="4">
@@ -21,8 +21,8 @@
 <!--Ion-Header Ends-->
 <!--ion-content Start-->
 <ion-content>
+  <div class="comman_page_padding">
   <div class="assignment_qustion_page">
-    <div class="comman_page_padding">
    <!--  <ion-row class="row_unit">
       <ion-col id="theme_shadow">
         <p>Unit 5</p>
@@ -41,13 +41,20 @@
       </ion-col>
     </ion-row> -->
     <!--assignment_card start-->
-    <div *ngFor='let assign of assignment_old_unit;'>
-      <div class="assignment_card">
-        <ion-row>
-          <ion-col>
-            <h1 class="color_pink comman_font2">Assignment</h1>
-            <span class="comman_font2 font_b">{{assign.title | titlecase}}</span>
-            <p class="comman_font3">{{assign.description ?? ''}}</p>
+    <div class="text-center mt-4"  *ngIf="nodata" > 
+      No assignment yet !!
+    </div>
+    <div class="" *ngFor="let assign of topics;">
+      <h2 class="text-center">{{assign.name | titlecase}}</h2>
+      <div class="test_section bg_light_yellow" *ngFor="let topicsAll of assign.topics;">
+        <div class="assignment_card">
+          <ion-row>
+            <ion-col>
+              <h1 class="color_pink comman_font2">Assignment</h1>
+              <span class="comman_font2 font_b">{{topicsAll.title | titlecase}}</span>
+              <h4 class="color_pink">{{topicsAll.testType && topicsAll.testType == 1 ? 'MCQ':''}}</h4>
+              <h4 class="color_pink">{{topicsAll.testType && topicsAll.testType == 2 ? 'Theory':''}}</h4>
+            <p class="comman_font3">{{topicsAll.description ?? ''}}</p>
           </ion-col>
         </ion-row> 
         <ion-row class="points_row">
@@ -55,25 +62,32 @@
             <p>Per Question Mark</p>
           </ion-col>
           <ion-col size="4">
-            <p>{{assign.per_q_mark ?? ''}}</p>
+            <p>{{topicsAll.per_q_mark ?? ''}}</p>
           </ion-col>
           <ion-col size="8">
             <p>Total Questions</p>
           </ion-col>
           <ion-col size="4">
-            <p>{{assign.questions.length ?? ''}}</p>
-          </ion-col>
+            <p>{{topicsAll.questions.length ?? ''}}</p>
+          </ion-col> 
           <ion-col size="8">
-            <p>Total Mark</p>
+            <p>Total Marks</p>
           </ion-col>
-          <ion-col size="4">
-            <p>{{assign.questions.length * assign.per_q_mark}}</p>
-          </ion-col>
-          <div class="start_session">
-            <button [routerLink]="['/startassignment']" [queryParams]="{iacs:iacs,assignment:assign.id}" class="start_btn">Start</button>
+          <ion-col size="4"  >
+            <p>{{topicsAll.questions.length && topicsAll.per_q_mark   ? topicsAll.questions.length * topicsAll.per_q_mark : ''}}</p>
+          </ion-col> 
+          <div class="start_session" *ngIf="topicsAll?.questions.length > 0">
+            
+            <a *ngIf="topicsAll.testType && topicsAll.testType == 1" [routerLink]="['/startassignment']" [queryParams]="{iacs:iacs,subject:subject,assignment:topicsAll.id}" class="start_btn">Start</a>
+            <a *ngIf="topicsAll.testType && topicsAll.testType == 2" [routerLink]="['/startTheoryassignment']" [queryParams]="{iacs:iacs,subject:subject,assignment:topicsAll.id}" class="start_btn">Start</a>
+          </div>
+          <div class="start_session" *ngIf="topicsAll?.questions.length == 0">
+            <button  class="start_btn">No Question</button>
           </div>
         </ion-row> 
       </div>
+      </div>
+      <hr>
     </div>
     <!--assignment_card Ends-->
     <!--assignment_card End strat (2)-->

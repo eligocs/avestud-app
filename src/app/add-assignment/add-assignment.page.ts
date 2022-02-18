@@ -5,8 +5,7 @@ import { HomeService } from '../services/home.service';
 import { BehaviorSubject,Observable } from 'rxjs';
 import { AuthConstants } from '../../../config/auth-constants';
 import { Router,ActivatedRoute,NavigationExtras } from '@angular/router'; 
-import 'select2';                      
-import 'select2/dist/css/select2.css';
+import $ from 'jquery';
 import { ToastService } from '../services/toast.service'; 
 @Component({
   selector: 'app-add-assignment',
@@ -21,6 +20,7 @@ export class AddAssignmentPage implements OnInit {
     description: '', 
     old_id: '',  
     show_ans: '',  
+    testType: '',  
   };
   pagetype:any;
   olddata:any;
@@ -51,8 +51,9 @@ export class AddAssignmentPage implements OnInit {
             this.previousUrl = 'assignments?iacs='+this.iacs+'&subject='+this.subject;  
           }else{
             this.previousUrl = 'test?iacs='+this.iacs+'&subject='+this.subject;  
-          }
+          } 
         }
+        this.getAssignmentunits();
         if(this.assignment_id){
           this.getSingleAssignment(this.assignment_id);
         }else{ 
@@ -61,9 +62,9 @@ export class AddAssignmentPage implements OnInit {
           this.postData.per_q_mark = ''; 
           this.postData.description = ''; 
           this.postData.old_id = '';  
-          this.postData.show_ans = '';  
+          this.postData.show_ans = ''; 
+          this.postData.testType = '';  
         }
-        this.getAssignmentunits();
       }
     )  
     
@@ -85,17 +86,18 @@ export class AddAssignmentPage implements OnInit {
   async getSingleAssignment(id){
     if(id){
       var token =  await this.storageService.get(AuthConstants.AUTH)    
-          await this.homeService.getSAssigment(id,token).subscribe(
-            (res: any) => {    
-              if (res.status == 200) { 
-                this.olddata = res.data; 
-              }else{
-                this.toastService.presentToast('Something went wrong,try again later'); 
-              }
-            }
-          );
-    }
-
+      await this.homeService.getSAssigment(id,token).subscribe(
+        (res: any) => {     
+          if (res.status == 200) { 
+            this.olddata = res.data;
+            this.postData =  this.olddata;
+            console.log(this.postData.testType)
+          }else{
+            this.toastService.presentToast('Something went wrong,try again later'); 
+          }
+        }
+      );
+    } 
   }
   
     async createAssigment(){
@@ -104,8 +106,10 @@ export class AddAssignmentPage implements OnInit {
         title : this.postData.title,
         per_q_mark : this.postData.per_q_mark,
         description : this.postData.description, 
+        testType : this.postData.testType, 
         show_ans : this.postData.show_ans ? true : false, 
-        iacs:this.iacs
+        iacs:this.iacs,
+        last_id:this.olddata ? this.olddata.id:''
       }    
       
       if(newData){
@@ -124,7 +128,7 @@ export class AddAssignmentPage implements OnInit {
               }
             }
           );
-        }
+      }
     }
 
 }

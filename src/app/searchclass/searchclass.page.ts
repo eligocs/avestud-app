@@ -3,7 +3,7 @@ import { StorageService } from '../services/storage.service';
 import { AuthService } from '../services/auth.service';
 import { StudentService } from '../services/student.service'; 
 import { AuthConstants } from '../../../config/auth-constants';
-import { Router,NavigationExtras } from '@angular/router';
+import { Router,NavigationExtras,ActivatedRoute } from '@angular/router';
 import { PreviousRouteService } from '../previous-route.service';
 import { AlertController } from '@ionic/angular';
 import { ToastService } from '../services/toast.service';  
@@ -18,7 +18,9 @@ export class SearchclassPage implements OnInit {
   selected_cat:any;
   previousUrl:any;
   iacsdetails:any;
+  nodata:any;
   timeslots:any;
+  showloader:boolean;
   show_default:boolean;
   constructor( 
     private previousRouteService: PreviousRouteService,
@@ -27,10 +29,12 @@ export class SearchclassPage implements OnInit {
     private storageService: StorageService,
     private StudentService: StudentService,
     public alertController: AlertController,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private route: ActivatedRoute,
   ) { }
 
   async ngOnInit() {
+    this.showloader = false;
     this.show_default = true;
     var token =  await this.storageService.get(AuthConstants.AUTH);  
     var userdetails =  await this.storageService.get(AuthConstants.userdetails); 
@@ -46,27 +50,49 @@ export class SearchclassPage implements OnInit {
           }
         }) 
       } 
+ 
+      this.route.queryParams.subscribe(
+        params => { 
+          if(params['selected_cat']){
+            this.selected_cat = params['selected_cat'];
+            this.oncatChange(); 
+          }
+        }
+      )
     }
     
     
     async oncatChange(){
+      this.classes  = {};
+      this.showloader = true;
+      this.nodata = false;
       var token =  await this.storageService.get(AuthConstants.AUTH);  
       if(this.selected_cat){
         await this.StudentService.getstudentclass(token,this.selected_cat).subscribe(
         (res: any) => {  
           if (res.status == 200) {  
-            var result =  res.classes;  
-            var allClasses = [];
-            console.log(allClasses)
-            result.forEach((entry,i) => { 
-              entry.subjects.forEach((subj) => {  
-                subj.color_code = colorLight(i);  
-              });    
-              allClasses.push(entry)
-            });     
-            this.classes  = allClasses;   
-            this.show_default = false;
+            var result =  res.classes;   
+            var allClasses = []; 
+            if(result.length > 0){
+              result.forEach((entry,i) => { 
+                entry.subjects.forEach((subj) => {  
+                  subj.color_code = colorLight(i);  
+                });    
+                allClasses.push(entry)
+                if(i == result.length -1){
+                  this.classes = allClasses; 
+                }
+              });
+              console.log(allClasses)
+              if(this.classes.length > 0){
+                  this.nodata = false;
+              } else {
+                  this.nodata = true;
+              } 
+            }     
           }
+          this.show_default = false;
+          this.showloader = false;
         }) 
       }
    

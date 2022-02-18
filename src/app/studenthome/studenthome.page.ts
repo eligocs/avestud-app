@@ -30,12 +30,16 @@ export class StudenthomePage implements OnInit {
   ) { }
 
   async ngOnInit() { 
-    this.showEnrolled =false;
+
     var token =  await this.storageService.get(AuthConstants.AUTH);  
-    var userdetails =  await this.storageService.get(AuthConstants.userdetails); 
-   
+    var userdetails =  await this.storageService.get(AuthConstants.userdetails);  
+    if(!userdetails){
+      window.location.href = '/';
+    }
+    this.showEnrolled =false;
     this.studentname = userdetails.name ? userdetails.name : '';
     var mainThis = this; 
+   
     if(!token){
       this.router.navigate(['/']);
     }else{ 
@@ -45,17 +49,19 @@ export class StudenthomePage implements OnInit {
         mainThis.router.navigate(['/homepage']);
       }
       var classroom =  await this.StudentService.studenthome(token).subscribe(
-        (res: any) => {  
+        (res: any) => {   
           if (res.data) { 
             var allClasses = res.data;
             allClasses.institute_assigned_class.forEach((entry,i) => { 
               entry.institute_assigned_class_subject.forEach((entry1,i) => { 
                 entry1.color_code = colorLight(i);     
+                entry1.color_code2 = colorLight(i);     
               });    
             });    
-            this.allClasses =  allClasses;
-            console.log(this.allClasses)
-            this.showEnrolled = true;    
+            this.allClasses =  allClasses; 
+            if(allClasses.institute_assigned_class.length > 0){
+              this.showEnrolled = true;    
+            }
           }else{
              /*  mainThis.storageService.removeStorageItem(AuthConstants.AUTH).then(res => { 
               mainThis.storageService.removeStorageItem(AuthConstants.Role); 
@@ -66,7 +72,7 @@ export class StudenthomePage implements OnInit {
         });
       }
       function colorLight(i) { 
-        var items = ['yellow_gradient_btn','pink_btn','blue_gradient_btn','green_gradient_btn','orange_gradient_btn']
+        var items = ['grad_sky','grad_yellow','grad_green','grad_orange','grad_sky']
         return items[Math.floor(Math.random()*items.length)]; 
       }  
 

@@ -1,0 +1,124 @@
+<!--Ion-Header Start-->
+<ion-header>
+  <ion-toolbar>
+     <ion-grid>
+        <ion-row>
+           <ion-col size="4">
+              <ion-buttons>
+                 <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
+              </ion-buttons>
+           </ion-col>
+           <ion-col size="4">
+              <p class="ion-text-center heading">Test</p>
+           </ion-col>
+           <ion-col size="4">
+              <div class="avatar_icon" (click)="presentPopover('any')"></div>
+           </ion-col>
+        </ion-row>
+     </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<!--Ion-Header Ends-->
+<!--ion-content Start-->
+<ion-content>
+  <div class="assignment_qustion_page">
+    <div class="comman_page_padding">
+   <!--  <ion-row class="row_unit">
+      <ion-col id="theme_shadow">
+        <p>Unit 5</p>
+      </ion-col>
+      <ion-col>
+        <p>Unit 4</p>
+      </ion-col>
+      <ion-col>
+        <p>Unit 3</p>
+      </ion-col>
+      <ion-col>
+        <p>Unit 2</p>
+      </ion-col>
+      <ion-col>
+        <p>Unit 1</p>
+      </ion-col>
+    </ion-row> -->
+    <!--assignment_card start-->
+    <div class="text-center mt-4"  *ngIf="nodata" > 
+      No test yet !!
+    </div>
+
+    <div class="" *ngFor="let assign of testAll;">
+      <h2 class="text-center">{{assign.name | titlecase}}</h2>
+      <div class="test_section bg_light_yellow" *ngFor="let topicsAll of assign.topics;">
+      <div class="assignment_card">
+        <ion-row>
+          <ion-col>
+            <!-- <h1 class="color_pink comman_font2">Assignment</h1> -->
+            <span class="comman_font2 font_b">{{topicsAll.title | titlecase}}</span>
+            <p class="comman_font3">{{topicsAll.description ?? ''}}</p>
+          </ion-col>
+        </ion-row> 
+        <ion-row class="points_row">
+          <ion-col size="8">
+            <p>Per Question Mark</p>
+          </ion-col>
+          <ion-col size="4">
+            <p>{{topicsAll?.per_q_mark}}</p>
+          </ion-col>
+          <ion-col size="8">
+            <p>Total Questions</p>
+          </ion-col>
+          <ion-col size="4">
+            <p>{{topicsAll.questions}}</p>
+          </ion-col> 
+          <ion-col size="8">
+            <p>Total Marks</p>
+          </ion-col>
+          <ion-col size="4">
+            <p>{{topicsAll.questions > 0 && topicsAll.per_q_mark ? topicsAll.questions * topicsAll.per_q_mark : ''}}</p>
+          </ion-col> 
+          <div class="start_session">
+           <!--  <a *ngIf="type == 'assignment'" [routerLink]="['/startassignment']" [queryParams]="{iacs:iacs,subject:subject,assignment:assign.id,type:type}" class="start_btn">Start</a> -->
+            <a *ngIf="type == 'test' && topicsAll.questions > 0" [routerLink]="['/starttest']" [queryParams]="{iacs:iacs,subject:subject,test:topicsAll.id,type:type}" class="start_btn">Start </a>
+          </div>
+        </ion-row> 
+      </div>
+      </div>
+    </div>
+    <!--assignment_card Ends-->
+    <!--assignment_card End strat (2)-->
+   <!--  <div class="assignment_card">
+      <ion-row>
+        <ion-col>
+          <h1 class="color_pink comman_font2">Assignment 2</h1>
+          <span class="comman_font2 font_b">How creatures Move</span>
+          <p class="comman_font3">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
+            piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+        </ion-col>
+      </ion-row> 
+      <ion-row class="points_row">
+        <ion-col size="8">
+          <p>Per Question Mark</p>
+        </ion-col>
+        <ion-col size="4">
+          <p>2</p>
+        </ion-col>
+        <ion-col size="8">
+          <p>Total Mark</p>
+        </ion-col>
+        <ion-col size="4">
+          <p>4</p>
+        </ion-col>
+        <ion-col size="8">
+          <p>Total Questions</p>
+        </ion-col>
+        <ion-col size="4">
+          <p>2</p>
+        </ion-col>
+        <div class="start_session">
+          <button class="start_btn">Start</button>
+        </div>
+      </ion-row> 
+    </div>  -->
+  </div>
+  </div>
+</ion-content>
+<!--ion-content End-->

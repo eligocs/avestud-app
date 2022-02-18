@@ -1,7 +1,7 @@
  
 
 <ion-content> 
-
+  <div class="comman_page_front">
  
 
 
@@ -33,13 +33,14 @@
         <ion-item lines="none">
 
 
-          <ion-input class="password" name="password" [(ngModel)]="postData.password" required placeholder="Password" type="password"></ion-input>
+          <ion-input class="password" name="password" [(ngModel)]="postData.password" required placeholder="Password" type="{{this.typepass}}"></ion-input>
 
 
-          <img class="lock_icon"  src="../assets/images/lock.svg">
+          <img class="lock_icon" (click)="showpassword()" src="../assets/images/lock.svg">
 
         </ion-item>
-        <p class="forgot_pass">Forgot Password ?</p>
+        <p class="forgot_pass"  ></p>
+        <p class="forgot_pass"  [routerLink]="['/forgotpassword']">Forgot Password ?</p>
 
 
       </ion-col>
@@ -61,6 +62,6 @@
           Register
         </button>
       </div>
-
+    </div>
 
 </ion-content>

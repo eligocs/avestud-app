@@ -31,6 +31,7 @@ export class LecturesPage implements OnInit {
 
 
     async ngOnInit() { 
+      this.nolectures = false;
       var token =  await this.storageService.get(AuthConstants.AUTH);
       this.route.queryParams.subscribe(
         params => {
@@ -40,15 +41,19 @@ export class LecturesPage implements OnInit {
           if(this.iacs && this.subject){   
             this.previousUrl = 'subject-detail?iacs='+this.iacs+'&subject='+this.subject;  
           }
+          if(this.iacs && !this.subject){   
+            this.previousUrl = 'subject-detail?iacs='+this.iacs;  
+          }
         }
       )
     }
     async getallectures(iacs,token){
       if(iacs && token){    
         await this.homeService.openLecture(iacs,token).subscribe(
-          (res: any) => {   
+          (res: any) => {    
             if(res.data.length > 0){
-              this.lectures = res.data ? res.data:'';   
+              this.lectures = res.data ? res.data:'';  
+              this.nolectures = false;  
             }else{
               this.lectures = [];   
               this.nolectures = true;   
@@ -65,7 +70,7 @@ export class LecturesPage implements OnInit {
       } 
     }
 
-  async presentAlert(id) {
+  async presentAlert(id) { 
     var token = await this.storageService.get(AuthConstants.AUTH);  
     var toast = this.toastService;
     var serv_home = this.homeService; 

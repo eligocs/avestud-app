@@ -26,15 +26,7 @@
     line-height: 18px;
     width: 100%;
 }
-
-.left_section img{
-    //height: 100px;
-    width: 50%;
-}
-.right_section img{
-    //height: 100px;
-    width: 50%;
-}
+  
 
 .left_section p, .right_section p{
     color: #000000;
@@ -99,10 +91,17 @@ img.se.lect_doc {
     top: 12px;
     margin-left: 10px;
 }
-
+.text-rights {
+    float: right;
+    margin-right: 20px;
+}
 .select_doc{
     position: absolute;
     right: 5%;
     top: 22%;
 }
 
+img.chaticon {
+    height: 44px;
+    border-radius: 14px;
+}

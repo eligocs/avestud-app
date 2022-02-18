@@ -45,14 +45,12 @@ ion-content {
     height: 30px;
     width: 30px;
     float: right;
-    margin-top: 16px;
 }
 
 .logout_btn {
     background-repeat: no-repeat;
     height: 30px;
-    width: 30px;
-    margin-top: 16px;
+    width: 30px; 
 }
 
 .text-center {
@@ -165,11 +163,11 @@ ion-input {
 }
 
 .grad_green {
-    background-image: linear-gradient(to bottom, #94E401, #6CB50D);
+    background-image: linear-gradient(to bottom, #8fd70a, #4f8904);
 }
 
 .grad_orange {
-    background-image: linear-gradient(to bottom, #FE8348, #FE6760);
+    background-image:  linear-gradient(to bottom, #ff8d57, #dc5650);
 }
  
 .btn_theme button {
@@ -246,7 +244,9 @@ ion-input {
 .skyblue_gradient {
     background-image: linear-gradient(white, white), radial-gradient(circle at top left, #1487D4, #0FACDE);
 }
-
+.skyblue_gradientWhite {
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #1487D4, #0FACDE);
+}
 .bg_gradient_skyblue {
     background: linear-gradient(to top right, #1484D3, #0FAFDF);
 }
@@ -479,6 +479,7 @@ ion-select::part(icon) {
 }
 
 // ============End==============
+
 // =================================
 // register page alert-box css start
 // ==================================
@@ -574,7 +575,7 @@ ion-select::part(icon) {
 // =====================End=============================
 // ======cards comman bagckground colors====== 
 .bg_light_yellow {
-    background-color: #FBFFF3;
+    background-color: #F9FCF4;
 }
 
 .bg_light_pink {
@@ -582,7 +583,7 @@ ion-select::part(icon) {
 }
 
 .bg_light_gray {
-    background-color: #FBF8FF;
+    background-color: #F8F7FA;
 }
 
 // .d-flex{
@@ -605,10 +606,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 20px;
     line-height: 20px;
 }
-
-.comman_page_padding{
-    padding: 0 15px;
-}
+ 
 
 .common_btn_shadow{
     box-shadow: 0 3px 6px rgba(0,0,0,.3);
@@ -625,4 +623,42 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 hr { 
     background: #644699;
+}
+
+// 2 feb 2022---
+
+ion-header ion-row{
+    align-items: center;
+}
+
+.d-flex{
+    display: flex;
+    justify-content: space-between;
+}
+.comman_page_front{
+    padding:20px;
+    margin-bottom: 50px;
+}
+.comman_page_heading{ 
+    margin-bottom: 50px;
+}
+.comman_page_padding{ 
+    padding: 0 10px;
+}
+
+.parent_subject_card{
+    box-shadow: 0px 3px 10px #d6d2d2;
+    width: 100%;
+    padding: 0 10px;
+    border-radius: 7px;
+    margin-bottom: 26px;
+}
+
+
+a{
+    text-decoration: none;
+}
+
+.font_size_12{
+    font-size: 12px !important;
 }

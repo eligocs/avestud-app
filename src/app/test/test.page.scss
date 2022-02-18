@@ -1,7 +1,4 @@
-.test {
-    padding: 0 12px;
-  }
-  
+
   h3 {
     font-size: 16px;
     font-weight: 500;
@@ -15,10 +12,10 @@
   
   .test_section {
     border-radius: 14px;
-    padding: 0 15px;
+    padding: 0 10px;
     line-height: 15px;
     margin-bottom: 20px;
-    box-shadow: 2px 2px 14px #ccc7c7;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
     margin-top: 22px;
   }
 
@@ -44,6 +41,7 @@
   .box2 img {
     padding: 16px 3px;
     height: 49px;
+    margin-top: 4px;
   }
  
   

@@ -38,6 +38,17 @@ export class HttpService {
     const url = environment.apiUrl + serviceName;  
     return this.http.post(url, JSON.stringify(data), options);
   }
+  postpdf(serviceName: string,data: any,token:any) {  
+    var headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    );  
+    const options =  {headers}; 
+    const url = environment.apiUrl + serviceName;  
+    return this.http.post(url, JSON.stringify(data), options);
+  }
   delLecture(serviceName: string,data: any,token:any) {  
     var headers = new HttpHeaders(
       { 
@@ -48,6 +59,23 @@ export class HttpService {
     formDatas.append('id', data.id);
     const options =  {headers}; 
     const url = environment.apiUrl + serviceName;  
+    return this.http.post(url, formDatas, options);
+  }
+  send_message(serviceName: string,data: any,token:any) {         
+    const formDatas = new FormData(); 
+    formDatas.append('doubt', data.doubt); 
+    formDatas.append('student_id', data.student_id); 
+    formDatas.append('type', data.type); 
+    formDatas.append('iacs', data.iacs);  
+    if(data.message){
+      formDatas.append('message', data.message); 
+    }  
+    const url = environment.apiUrl + serviceName;  
+    const options = {
+      headers: new HttpHeaders({ 
+        'Authorization': 'Bearer ' + token,  
+      })
+    }; 
     return this.http.post(url, formDatas, options);
   }
   postWithImg(serviceName: string,data: any,token:any) {         
@@ -66,6 +94,28 @@ export class HttpService {
       formDatas.append('video', data.video); 
     } 
     formDatas.append('i_assigned_class_subject_id', data.i_assigned_class_subject_id);  
+    const url = environment.apiUrl + serviceName;  
+    const options = {
+      headers: new HttpHeaders({ 
+        'Authorization': 'Bearer ' + token,  
+      })
+    };
+  
+    return this.http.post(url, formDatas, options);
+  }
+  updateprofile(serviceName: string,data: any,token:any) {         
+    const formDatas = new FormData();
+    formDatas.append('name', data.name);
+    formDatas.append('phone', data.phone);
+    formDatas.append('board', data.board);
+    formDatas.append('date_of_birth', data.date_of_birth);  
+    formDatas.append('gender', data.gender);  
+    formDatas.append('state', data.state);  
+    formDatas.append('city', data.city);  
+    formDatas.append('grade', data.grade);  
+    if(data.avatar){
+      formDatas.append('avatar', data.avatar); 
+    }  
     const url = environment.apiUrl + serviceName;  
     const options = {
       headers: new HttpHeaders({ 
@@ -106,7 +156,7 @@ export class HttpService {
       headers: new HttpHeaders({ 
         'Authorization': 'Bearer ' + token,  
       })
-    }; 
+    };  
     return this.http.post(url, formDatas, options);
   }
 
@@ -122,7 +172,7 @@ export class HttpService {
     formDatas.append('answer_exp', data.answer_exp); 
     formDatas.append('testType', data.testType); 
     if(data.old_id){
-      formDatas.append('last_id', data.old_id); 
+      formDatas.append('id', data.old_id); 
     } 
     if(data.question_img){
       formDatas.append('question_img', data.question_img); 

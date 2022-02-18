@@ -29,11 +29,14 @@ export class AddQuestionPage implements OnInit {
   };
   old_id:any;
   olddata:any;
+  questionType:any;
   iacs:any;
   units:any;
   subject:any;
   assignment_id:any;
   pagetype:any;
+  question_id:any;
+  showloader:any;
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -50,13 +53,17 @@ export class AddQuestionPage implements OnInit {
         this.subject =  params['subject'];   
         this.assignment_id =  params['assignment_id']; 
         this.pagetype =  params['type']; 
-        if(this.pagetype == 'assignment'){
-          this.previousUrl = 'list-question?iacs='+this.iacs+'&subject='+this.subject+'&assignment_id='+this.assignment_id+'&type=assignment';  
+        this.question_id =  params['question_id']; 
+        this.questionType =  params['questionType']; 
+        if(this.pagetype == 'assignment'){ 
+            this.previousUrl = 'list-question?iacs='+this.iacs+'&subject='+this.subject+'&assignment_id='+this.assignment_id+'&type=assignment';   
         }else{
           this.previousUrl = 'list-question?iacs='+this.iacs+'&subject='+this.subject+'&assignment_id='+this.assignment_id+'&type=test';  
         }   
-        if(this.assignment_id){
-          this.getSingleQuestion(this.assignment_id);
+     
+        if(this.question_id){
+          this.old_id = this.question_id;
+          this.getSingleQuestion(this.question_id);
         }else{ 
           this.postData.topic_id = '';
           this.postData.question = '';
@@ -65,7 +72,9 @@ export class AddQuestionPage implements OnInit {
           this.postData.c = '';  
           this.postData.d = '';  
           this.postData.answer = '';  
-          this.postData.question_img = '';  
+          this.postData.answer_exp = '';  
+          this.postData.question_img = '';
+          $('#file').val('');  
         }
       }
     )  
@@ -78,10 +87,11 @@ export class AddQuestionPage implements OnInit {
   async getSingleQuestion(id){
     if(id){
       var token =  await this.storageService.get(AuthConstants.AUTH)    
-          await this.homeService.getSAssigment(id,token).subscribe(
+          await this.homeService.getSQuestion(id,token).subscribe(
             (res: any) => {    
               if (res.status == 200) { 
-                this.olddata = res.data; 
+                this.olddata = res.data;  
+                this.postData.answer = res.data.answer;   
               }else{
                 this.toastService.presentToast(res.msg); 
               }
@@ -92,6 +102,7 @@ export class AddQuestionPage implements OnInit {
   }
 
   async createAssigment(){
+    this.showloader = true;
     var newData = {
         topic_id : this.assignment_id,
         question : this.postData.question,
@@ -102,7 +113,7 @@ export class AddQuestionPage implements OnInit {
         answer : this.postData.answer, 
         question_img : this.postData.question_img, 
         iacs:this.iacs,
-        testType:1,
+        testType:this.questionType && this.questionType == 'theory' ? 2 :1,
         old_id:this.old_id,
         answer_exp:this.postData.answer_exp,
     }         
@@ -113,13 +124,14 @@ export class AddQuestionPage implements OnInit {
             if (res.status == 200) {
               this.toastService.presentToast(res.msg); 
               let navigationExtras: NavigationExtras = {
-                queryParams: { 'iacs': this.iacs ,'subject':this.subject,'assignment_id':this.assignment_id},
+                queryParams: { 'iacs': this.iacs ,'subject':this.subject,'assignment_id':this.assignment_id,'type':this.pagetype,'questionType':this.questionType && this.questionType == 'theory' ? 'theory' :'mcq'},
                 fragment: 'anchor'
               };
               this.router.navigate(['list-question'],navigationExtras);
             }else{
               this.toastService.presentToast(res.msg); 
             }
+            this.showloader = false;
           }
         );
     }

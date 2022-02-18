@@ -15,12 +15,14 @@ import { ToastService } from '../services/toast.service';
 export class DoubtMessagesPage implements OnInit {   
   subject:any;
   iacs:any;
+  showEmpty:any;
   previousUrl:any;
   messages:any;
   doubt:any;
   doubtfile:any;
   student:any;
   text_message:any;
+  showloader:boolean;
   constructor( private router: Router,
     private authService: AuthService,
     private storageService: StorageService,
@@ -31,9 +33,7 @@ export class DoubtMessagesPage implements OnInit {
       
 
   async ngOnInit() {   
-    setTimeout(() => {
-      this.scrollToElement()  
-    }, 1500);
+    
     var token =  await this.storageService.get(AuthConstants.AUTH);  
     this.route.queryParams.subscribe(
       params => { 
@@ -41,11 +41,11 @@ export class DoubtMessagesPage implements OnInit {
         this.subject =  params['subject'];  
         this.doubt =  params['doubt'];  
         if(this.iacs && this.subject){
-          this.previousUrl = 'doubt?iacs='+this.iacs+'&subject='+this.subject;  
-          this.loadsingleDoubt(this.iacs,this.doubt,token);
+          this.previousUrl = 'doubts?iacs='+this.iacs+'&subject='+this.subject;  
+          this.loadsingleDoubt(this.iacs,this.doubt,token); 
         }
       });
-    }
+  }
 
     /* ngAfterViewInit () { 
       setTimeout(() => {
@@ -58,6 +58,7 @@ export class DoubtMessagesPage implements OnInit {
     }
 
     async send_btn(){ 
+      this.showloader = true;
       var mainthis= this;
       var type = 'file';
       var _msg = this.doubtfile;
@@ -78,15 +79,23 @@ export class DoubtMessagesPage implements OnInit {
           await this.homeService.send_btn(newData,token).subscribe(
             (res: any) => {    
               if (res.status == 200) { 
+                console.log(res.msg)
                 this.toastService.presentToast(res.msg); 
                 mainthis.loadsingleDoubt(newData.iacs,newData.doubt,token);
                 this.text_message = '';
               }else{
                 this.toastService.presentToast(res.msg); 
               }
+              this.showloader = false;
             }
           );
         }
+    }
+
+    async reloadpage(event) {
+      var token =  await this.storageService.get(AuthConstants.AUTH)   
+      this.loadsingleDoubt(this.iacs,this.doubt,token);
+      this.scrollToElement()  
     }
 
     onChange(event) {
@@ -95,6 +104,7 @@ export class DoubtMessagesPage implements OnInit {
     }
 
     async loadsingleDoubt(iacs,doubt,token){
+      this.showloader = true;
       var token =  await this.storageService.get(AuthConstants.AUTH) 
      
       var data ={
@@ -102,11 +112,20 @@ export class DoubtMessagesPage implements OnInit {
         doubt:doubt
       }
       await this.homeService.loadsingleDoubt(data,token).subscribe(
-        (res: any) => {  
+        (res: any) => {   
           if (res.status == 200) {
             this.messages = res.messages.reverse();
             this.student = res.doubt.student_id;
+            if (res.messages.length > 0) {
+              this.showEmpty = false;
+            }else{
+              this.showEmpty = true;
+            } 
+            this.showloader = false;
           }
+          setTimeout(() => {
+            this.scrollToElement()  
+          }, 1500);
         }); 
     }
 }

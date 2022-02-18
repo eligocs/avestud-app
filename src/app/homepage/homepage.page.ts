@@ -30,6 +30,7 @@ export class HomepagePage implements OnInit {
     var token =  await this.storageService.get(AuthConstants.AUTH);  
     var userdetails =  await this.storageService.get(AuthConstants.userdetails); 
     var mainThis = this; 
+   
     if(!token){
       this.router.navigate(['/']);
     }else{ 

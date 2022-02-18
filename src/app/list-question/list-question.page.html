@@ -22,26 +22,27 @@
   <div class="comman_page_padding">
   <div class="questions_page">
     <ion-row>
-      <ion-col size="10">
+      <ion-col size="9">
         <h1 class="color_violet page_tittle">Questions</h1>
       </ion-col>
-      <ion-col size="2">
+      <ion-col size="3">
         <div class="btn_theme">
-          <button [routerLink]="['/add-question']" class='view_btn'   [queryParams]="{iacs:iacs,subject:subject,assignment_id: assignment_id,type:pagetype}">Add</button>
+          <button [routerLink]="['/add-question']" class='view_btn'   [queryParams]="{iacs:iacs,subject:subject,assignment_id: assignment_id,type:pagetype,questionType:questionType}">Add</button>
         </div>
       </ion-col>
     </ion-row>
 
-    
+    <div *ngIf='showEmptyMsg' class='text-center'><br>No questions added yet !!!</div>
+
     
 
     <div *ngFor='let quest of questionsList'>
     
-      <ion-row >
+    <!--   <ion-row >
         <ion-col>
           <p class="comman_font2 color_violet">Questions</p>
         </ion-col>
-
+       
         <ion-col>
           <p class="comman_font2 font_black">Answer</p>
         </ion-col>
@@ -49,13 +50,21 @@
         <ion-col>
           <p class="comman_font2 font_black">Explanation</p>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
-      <ion-row>
-        <img src="../../assets/images/sum_maths.jpeg" class="sums_imgs">
-
-        <p class="comman_font3">{{quest.question ?? ''}}</p>
-      </ion-row>
+      <hr>
+      <ion-row class=''>
+        <p class="d-flex   ">Question : {{quest.question ?? ''}}</p>  
+      </ion-row> 
+      <hr>
+      <ion-row class='fl-right'>
+        <div>
+          <a [routerLink]="['/add-question']" [queryParams]="{iacs:iacs,subject:subject,assignment_id:assignment_id,question_id: quest.id,type:pagetype}"><img src="../../assets/images/edit_icon.png" alt=""></a>
+        </div>&nbsp;&nbsp;
+      <div >
+          <a (click)="presentAlert(quest.id)"> <img src="../../assets/images/delete_icon.png" alt=""></a>
+        </div> 
+      </ion-row> 
       <ion-row> 
         <div class="options">
           <p>A. {{quest.a ?? ''}}</p>
@@ -63,19 +72,24 @@
           <p>C. {{quest.c ?? ''}}</p>
           <p>D. {{quest.d ?? ''}}</p>
         </div>
-
+        
       </ion-row>
+      <ion-row *ngIf='quest.question_img'>
+        <a href="{{quest.question_img ?? ''}}" class="sums _imgs">View Question File</a>
+      </ion-row>
+      
       <ion-row>    
           <p>Answer : {{quest.answer ?? ''}}</p> 
       </ion-row>
       <ion-row> 
           <p>Explaination : {{quest.answer_exp ?? ''}}</p>  
-      </ion-row>
-      <hr>
+      </ion-row> 
+    <!--   <ion-row> 
+          <p>Show Explaination : {{quest.show_ans && quest.show_ans == 1 ? 'Show': 'Dont Show'}}</p>  
+      </ion-row>  -->
     </div>
 
-    <div *ngIf='showEmptyMsg' class='text-center'><br>{{EmptyMsg ?? ''}}</div>
-
+    
 
 
   </div>

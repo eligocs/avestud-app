@@ -1,6 +1,6 @@
 
 .page_content{
-    padding: 0 20px;
+    padding: 0 15px;
 }
 
 h1{
@@ -60,8 +60,7 @@ h1{
 
 
 .card{
-    height: 70px;
-    width: 85%;
+    height: 40px; 
     border-radius: 10px;
     // background: repeating-linear-gradient(#74ABDD, #74ABDD 49.9%, #498DCB 50.1%, #498DCB 100%);
     display: flex;
@@ -88,7 +87,7 @@ h1{
 }
 
 .day{ 
-    font-size: 14px;
+    font-size: 16px;
     color: #644699;
 }
 
@@ -153,9 +152,130 @@ ion-row.success_msg.md.hydrated {
     border-radius: 5px;
 }
 
-ion-row.teacher_.md.hydrated {
-    background: #faefd76b;
-    box-shadow: 3px 2px 5px 1px #b7b7b7;
-    border-radius: 4px;
-    padding: 6px;
-}
+.border_outside {
+    height: 25px;
+    width: 25px;
+    border: 1px solid transparent;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    left: 18px;
+    line-height: 22px;
+  }
+
+  
+.badge {
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+.circle p {
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 30px;
+    text-align: center;
+  }
+.circle .para {
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 30px;
+    text-align: center;
+  }
+  
+  // ======comman css for circle section======
+  .outter_border {
+    height: 71px;
+    width: 71px;
+    border: 3px solid transparent;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  .inner_background {
+    border-radius: 50%;
+    height: 61px;
+    width: 61px;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+  }
+  
+  
+.test_results p {
+    font-size: 12px;
+    color: #000000;
+    font-weight: 500;
+    line-height: 20px;
+    margin-top: 0;
+  }
+  
+  .color_green {
+    font-size: 20px;
+    color: #8ac331;
+    font-weight: 500;
+  }
+  
+  .color_redish {
+    color: #fc5e6a;
+    font-size: 20px;
+    font-weight: 400;
+  }
+  
+  .color_redish2 {
+    color: #fc5e6a !important;
+    font-size: 12px !important;
+    line-height: 14px !important;
+  }
+  
+  .mr_top {
+    margin-top: 0;
+  }
+  
+  .shadow {
+    box-shadow: 2px 2px 8px #989898;
+  }
+  
+  .test_results ion-card {
+    height: 100px;
+    width: 32%;
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 7px 5px;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .test_results {
+    font-weight: bold !important;
+  }
+
+  
+.attendance_status {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .attendance_status img {
+    height: 13px;
+    width: 13px;
+    margin-top: 22px;
+    margin-right: 10px;
+  }
+  
+  .present {
+    display: flex;
+  }
+  
+  .absent {
+    display: flex;
+  }
+  
+  .present p,
+  .absent p {
+    margin-right: 48px;
+  }

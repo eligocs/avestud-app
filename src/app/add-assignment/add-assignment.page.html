@@ -24,6 +24,22 @@
     <form class="assignment_form"  >
       <ion-row>
         <ion-col  >
+          <div class="form-group ">
+              <div id="selecte_mode">
+                   Select paper mode 
+                  <span class="required">*</span><br>
+              </div>
+              <div id="lableOfCalss">
+                  <label for="mcq">Mcq</label>&nbsp;&nbsp;
+                  <input type="radio" [(ngModel)]="postData.testType"    name="testType" id="mcqradio" value="1" />&nbsp;&nbsp;
+                  <label for="theory">Theory</label>&nbsp;&nbsp;
+                  <input type="radio"  [(ngModel)]="postData.testType"  name="testType" id="theoryradio" value="2" />
+              </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col  >
           <select class='lectureSelect' value="{{olddata?.unit}}" [(ngModel)]="postData.unit"   name='unit'>
             <option value='' selected disabled>Select</option>
             <option *ngFor="let unit_single of units"   value="{{unit_single.id}}">{{unit_single.unitName}}</option>
@@ -53,8 +69,8 @@
       </ion-row>
       <!--Enable Show Answer-->
       <div class="checkbox">
-        <ion-checkbox name='show_ans' value="{{olddata?.show_ans}}"  [(ngModel)]="postData.show_ans" name='show_ans' ></ion-checkbox>
-        <ion-label> Enable Show Answer</ion-label>
+        <ion-label> <ion-checkbox name='show_ans' value="{{olddata?.show_ans}}"  [(ngModel)]="postData.show_ans" name='show_ans' ></ion-checkbox>
+         Enable Show Answer</ion-label>
       </div>
       <!--btns-->
       <div class="btns ion-text-center">

@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar> 
+    <ion-grid>
+      <ion-row  class="mg_top">
+        <ion-col size="3">  
+            <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button> 
+        </ion-col> 
+        <ion-col size="5"> 
+          <p class="ion-text-center heading">Profile</p> 
+        </ion-col> 
+        <ion-col size="4"> 
+          <div class="avatar_icon" (click)="presentPopover('any')"></div> 
+        </ion-col> 
+      </ion-row>
+    </ion-grid> 
+  </ion-toolbar> 
+</ion-header> 
+
+<ion-content>
+  <div class="comman_page_padding  ">
+    <br> 
+    My Profile
+    <hr> 
+
+
+    <ion-row *ngIf="student" class='text-left'> 
+      <form class="add_lecture_form"> 
+       <ion-row  class="mg_top">
+         <img *ngIf='avatar' src="{{this.avatar ? this.avatar:'../../assets/images/Chats-image3.png'}}" class="pdf_img">
+          <ion-label position="stacked">Upload Avatar*</ion-label>
+          <input class="drag_drop"  name="avatar"   accept="image/*" (change)="onChangefile($event)"  type="file" id="avatar"  /><br />
+        </ion-row> 
+        <ion-row  class="mg_top">
+          <ion-label position="stacked">Name</ion-label>
+          <ion-input  [(ngModel)]="postData.name"   autocomplete="off" name="name"  required placeholder="Full Name" type="text"></ion-input>
+        </ion-row> 
+        <ion-row  class="mg_top">
+          <ion-label position="stacked">Phone</ion-label>
+          <ion-input  [(ngModel)]="postData.phone"   autocomplete="off" name="phone"  required placeholder="Phone" type="text"></ion-input>
+        </ion-row> 
+        <ion-row  class="mg_top">
+          <ion-label position="stacked">Board/University</ion-label>
+          <ion-input  [(ngModel)]="postData.board"   autocomplete="off" name="board"  required placeholder="Board/University" type="text"></ion-input>
+        </ion-row> 
+        <ion-row  class="mg_top">
+          <ion-label position="stacked">Date Of Birth</ion-label>
+          <!-- <ion-input  [(ngModel)]="postData.date_of_birth"  autocomplete="off" name="date_of_birth"  required placeholder="Date Of Birth" type="date"></ion-input> --> 
+          <ion-datetime displayFormat="DD MM YYYY"   [(ngModel)]="postData.date_of_birth" autocomplete="off" name="date_of_birth" placeholder="Select Date"></ion-datetime>
+        </ion-row>  
+        <ion-row  class="mg_top">
+          <label>Select Gender</label>
+          <select class='lectureSelect'   [(ngModel)]="postData.gender" name='unit'>
+            <option value='' selected disabled>Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Fe-male</option>
+            <option value="Others">Others</option>
+          </select> 
+        </ion-row> 
+        <ion-row  class="mg_top">
+          <ion-label position="stacked">State</ion-label>
+          <ion-input  [(ngModel)]="postData.state"  autocomplete="off" name="state"  required placeholder="State" type="text"></ion-input>
+        </ion-row> 
+        <ion-row  class="mg_top">
+          <ion-label position="stacked">City</ion-label>
+          <ion-input  [(ngModel)]="postData.city"  autocomplete="off" name="city"  required placeholder="City" type="text"></ion-input>
+        </ion-row> 
+        <ion-row  class="mg_top">
+          <ion-label position="stacked">Grade</ion-label>
+          <ion-input  [(ngModel)]="postData.grade"  autocomplete="off" name="grade"  required placeholder="Grade" type="text"></ion-input>
+        </ion-row> 
+        <ion-button expand="block" share="round" color="success" class="btn_bottom_mrgn"   (click)="updateprofile()">Save</ion-button>
+        </form>
+    </ion-row>
+
+
+    <ion-row *ngIf="institute" >
+      <ion-col size='6' class='text-left'>
+          Institute Name :  
+      </ion-col>
+      <ion-col size='6' class='text-left'>
+          {{institute?.name}} 
+      </ion-col> 
+      <ion-col size='6' class='text-left'>
+          Institute Email :  
+      </ion-col>
+      <ion-col size='6' class='text-left'>
+          {{institute?.email}} 
+      </ion-col> 
+      <ion-col size='6' class='text-left'>
+          Institute Phone :  
+      </ion-col>
+      <ion-col size='6' class='text-left'>
+          {{institute?.phone}} 
+      </ion-col> 
+      <ion-col size='6' class='text-left'>
+          Address :  
+      </ion-col>
+      <ion-col size='6' class='text-left'>
+          {{institute?.address}} 
+      </ion-col> 
+      <ion-col size='6' class='text-left'>
+          Institute Id :  
+      </ion-col>
+      <ion-col size='6' class='text-left'>
+          {{institute?.id}} 
+      </ion-col>
+    </ion-row>
+      
+  </div>
+</ion-content>

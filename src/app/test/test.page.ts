@@ -21,6 +21,7 @@ export class TestPage implements OnInit {
   testAll:any; 
   testWithoutClass:any; 
   noTest:boolean; 
+  hideOlds:boolean; 
   constructor(
       private previousRouteService: PreviousRouteService,
       private storageService: StorageService,
@@ -53,11 +54,17 @@ export class TestPage implements OnInit {
       await this.homeService.getTests(iacs,token).subscribe(
         (res: any) => {     
           if(res.status == 200){
-            this.testAll = res.topics? res.topics:'';  
-            this.testWithoutClass = res.assignmet_w_n_t ? res.assignmet_w_n_t:'';  
+            this.testAll = res.topics ? res.topics:{};  
+            this.testWithoutClass = res.assignmet_w_n_t ? res.assignmet_w_n_t:{};  
+            if(this.testWithoutClass.length > 0){
+              this.hideOlds = true;
+            }else{
+              this.hideOlds = false;
+            }     
+            console.log(this.testAll)
           }else{
-            this.testAll = [];   
-            this.testWithoutClass = [];  
+            this.testAll = {};   
+            this.testWithoutClass = {};  
             this.noTest = true;   
           }
       }); 

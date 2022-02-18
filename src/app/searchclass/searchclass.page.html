@@ -30,8 +30,8 @@
           <!-- <ion-select>
             <ion-select-option *ngFor='let cats of categories'>{{cats.name ?? ''}}</ion-select-option> 
           </ion-select> --> 
-          <select class='category' (change)="oncatChange()" [(ngModel)]="selected_cat"  name='unit'>
-            <option value='' selected>Category</option>
+          <select class='category' (change)="oncatChange()" [(ngModel)]="selected_cat" value='selected_cat'  name='unit' >
+            <option value=''>Select</option>
             <option *ngFor="let cats of categories" value="{{cats.id}}">{{cats.name ?? ''}}</option>
           </select>
         </ion-item>
@@ -50,9 +50,22 @@
     
       </div>
     </div>
-
+    <ion-row class='ion-text-center' *ngIf="showloader">
+      <ion-col size-sm="12" >
+        <ion-spinner name="bubbles" class='bubblesloader' style="color:#644699"></ion-spinner>
+      </ion-col>
+    </ion-row>
+    <div  *ngIf='nodata == true'>
+      <div class="content_card" >
+        <ion-row>
+          <ion-col class="ion-text-center page_tittles">
+            <h1>Nothing Found !!!</h1>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div> 
     <div  *ngIf='show_default == false'>
-      <div *ngFor='let class of classes' >
+      <div  *ngFor='let class of classes' >
       <div class="content_card" >
           <ion-row>
             <ion-col class="ion-text-center page_tittles">
@@ -92,7 +105,7 @@
           
           <ion-row class="subject_btns ion-text-center">
             <ion-col size="6" *ngFor='let subj of class.subjects'>
-              <button  [routerLink]="['/subject-detail-student']" [queryParams]="{iacs:class.institute_details.id,subject:subj.id}" class="{{subj.color_code ?? grad_orange}}">{{subj.details ? subj.details.name : ''}}</button>
+              <button  [routerLink]="['/subject-detail-student']" [queryParams]="{iacs:subj.id,subject:class.institute_details.id,selected_cat:selected_cat}" class="{{subj.color_code ?? grad_orange}}">{{subj.details ? subj.details.name : ''}}</button>
             </ion-col>
           <!--   <ion-col size="6">
               <button class="grad_sky">English</button>
@@ -107,7 +120,8 @@
           <ion-row class="ion-text-center demo_video">
             <ion-col>
               <p>View Class Demo</p>
-              <a href='{{class.video}}' ><img src="../../assets/images/youtube_icon.svg"></a>
+              <a *ngIf='class.video' href='{{class.video ?? "#"}}' ><img src="../../assets/images/youtube_icon.svg"></a>
+             <img  *ngIf='!class.video' src="../../assets/images/youtube_icon.svg"> 
             </ion-col>
           </ion-row>
           <div class="spacing">

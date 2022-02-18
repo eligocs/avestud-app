@@ -27,7 +27,8 @@
     <!--Select Unit*-->
     <ion-row>
       <ion-col  >
-        <select class='lectureSelect' value="{{olddata?.unit_id}}" [(ngModel)]="postData.unit" name='unit'>
+        <select required class='lectureSelect' value="{{olddata?.unit_id}}" [(ngModel)]="postData.unit" name='unit'>
+          <option   selected value="">Select</option>
           <option *ngFor="let unit of units" value="{{unit.id}}">{{unit.name}}</option>
         </select> 
       </ion-col>
@@ -36,7 +37,7 @@
     <ion-row>
       <ion-col size-sm="6" offset-sm="3">
         <ion-label position="stacked">Extra Class Number*</ion-label>
-        <ion-input  [(ngModel)]="postData.number" value='{{olddata?.extra_class_number}}' autocomplete="off" name="number"  required placeholder="Lecture Number" type="text"></ion-input>
+        <ion-input    [(ngModel)]="postData.number" value='{{olddata?.extra_class_number}}' autocomplete="off" name="number"  required placeholder="Lecture Number" type="text"></ion-input>
       </ion-col>
     </ion-row>
     <!--Lecture Name*-->
@@ -58,16 +59,31 @@
     <ion-row class="mg_top">
       <ion-col class="pdf_img">
         <ion-label position="stacked">Upload Notes*</ion-label>
-        <input class="drag_drop"  name="notes" (change)="onChange($event)"  type="file" id="notes"  /><br />
+        <input class="drag_drop"  name="notes" (change)="onChange($event)"  accept="application/pdf"  type="file" id="notes"  /><br />
         <!-- <img src="../../assets/imgs/pdf_img.svg" class="pdf_img"> -->
       </ion-col>
+    </ion-row>
+    <ion-row class="mg_top">
+      <div *ngIf='olddata?.notes'>
+        <a href='{{olddata?.notes}}'>View Old</a> 
+      </div>
     </ion-row>
     <ion-row class="mg_top">
       <ion-col class="pdf_img">
         <ion-label position="stacked">Upload Video (You can add later)</ion-label><br/>
         <small>Only extra class with video will show to students</small>
-        <input class="drag_drop"  name="video" (change)="onChangeVideo($event)"  type="file" id="video"  /><br />
+        <input class="drag_drop"  name="video"  accept="video/*" (change)="onChangeVideo($event)"  type="file" id="video"  /><br />
         <!-- <img src="../../assets/imgs/pdf_img.svg" class="pdf_img"> -->
+      </ion-col>
+    </ion-row>
+    <ion-row class="mg_top">
+      <div *ngIf='olddata?.extra_class_video'>
+        <a href='{{olddata?.extra_class_video}}'>View Old Video</a> 
+      </div>
+    </ion-row>
+    <ion-row class='ion-text-center' *ngIf="showloader">
+      <ion-col size-sm="12" >Please be patient, files are being uploaded <br> 
+        <ion-spinner name="bubbles" class='bubblesloader' style="color:#644699"></ion-spinner>
       </ion-col>
     </ion-row>
     <ion-button expand="block" share="round" color="success" (click)="createExtraClass()">Save</ion-button>

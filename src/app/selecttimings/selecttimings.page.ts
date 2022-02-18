@@ -9,6 +9,8 @@ import { AlertController } from '@ionic/angular';
 import { ToastService } from '../services/toast.service'; 
 import $ from 'Jquery';
 import { WindowRefService } from '../window-ref.service';
+import { environment } from '../../environments/environment';
+declare var RazorpayCheckout:any;
 @Component({
   selector: 'app-selecttimings',
   templateUrl: './selecttimings.page.html',
@@ -145,31 +147,29 @@ export class SelecttimingsPage implements OnInit {
         }); 
     }
   }
-
-  async payWithRazor() {
+  async payWithRazor() { 
     var token =  await this.storageService.get(AuthConstants.AUTH);
     var classid = this.id; 
+     
     if(classid){
       const options: any = {
-        key: 'rzp_test_zLlDyvswGqIYqe',
+        key:  environment.razorpay_key,
+        //key: 'rzp_live_ZE7hdsaXoOIu8c',
         amount: this.amount * 100, // amount should be in paise format to display Rs 1255 without decimal point
         currency: 'INR',
         name: '', // company name or product name
-        description: '',  // product description
-        //image: './assets/logo.png', // company logo or product image
-        //order_id: val, // order_id created by you in backend
-        modal: {
-          // We should prevent closing of the form when esc key is pressed.
+        description: '',  // product description 
+        modal: { 
           escape: false,
         },
-        notes: {
-          // include notes if any
+        notes: { 
         },
         theme: {
           color: '#0c238a'
         }
       };
       options.handler = ((response, error) => {
+        
         options.response = response; 
         this.StudentService.verifyPayment(response,classid,token).subscribe(
           (res: any) => {
@@ -177,18 +177,16 @@ export class SelecttimingsPage implements OnInit {
               window.location.href = 'studenthome'; 
             }
             this.toastService.presentToast(res.msg);  
-          }); 
-      /*  console.log(response);
-        console.log(options); */
-        // call your backend api to verify payment signature & capture transaction
+          });  
       });
-      options.modal.ondismiss = (() => {
-        // handle the case when user closes the form while transaction is in progress
+      options.modal.ondismiss = (() => { 
         console.log('Transaction cancelled.');
       });
-      const rzp = new this.winRef.nativeWindow.Razorpay(options);
+      const rzp = new this.winRef.nativeWindow.Razorpay(options); 
       rzp.open();
     }
+    
+     
   }
 
 }

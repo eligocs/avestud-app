@@ -5,10 +5,8 @@ import { HomeService } from '../services/home.service';
 import { BehaviorSubject,Observable } from 'rxjs';
 import { AuthConstants } from '../../../config/auth-constants';
 import { Router,ActivatedRoute,NavigationExtras } from '@angular/router';
-import * as $ from 'jquery';
-import 'select2';                      
-import 'select2/dist/css/select2.css';
-import { ToastService } from '../services/toast.service'; 
+import { AlertController,ModalController  } from '@ionic/angular';  
+import { ToastService } from '../services/toast.service';  
 @Component({
   selector: 'app-list-question',
   templateUrl: './list-question.page.html',
@@ -24,6 +22,7 @@ export class ListQuestionPage implements OnInit {
   showEmptyMsg:boolean;
   EmptyMsg:string;
   topic:any;
+  questionType:any;
   pagetype:any;
   constructor(
     private router: Router,
@@ -31,21 +30,23 @@ export class ListQuestionPage implements OnInit {
     private storageService: StorageService,
     private homeService: HomeService,
     private route: ActivatedRoute, 
-
+    public alertCtrl: AlertController,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() { 
+    this.showEmptyMsg = true;   
     this.route.queryParams.subscribe(
       params => { 
         this.iacs =  params['iacs'];   
         this.subject =  params['subject'];   
         this.assignment_id =  params['assignment_id'];    
-        this.pagetype =  params['type'];   
+        this.pagetype =  params['type'];      
         if(this.pagetype == 'assignment'){
           this.previousUrl = 'assignments?iacs='+this.iacs+'&subject='+this.subject;  
         }else{
           this.previousUrl = 'test?iacs='+this.iacs+'&subject='+this.subject;  
-        } 
+        }  
         if(this.assignment_id && this.iacs){
           this.getQuestions(this.iacs,this.assignment_id);
         } 
@@ -60,20 +61,56 @@ export class ListQuestionPage implements OnInit {
         assignment_id : this.assignment_id, 
       }
       await this.homeService.getQuestions(data,token).subscribe(
-        (res: any) => {     
-         
-          if(res.status == 200){ 
-            this.questionsList = res.questions ? res.questions :'';     
-            this.topic = res.topic ? res.topic :'';
-            this.showEmptyMsg = false;    
-            this.EmptyMsg = '';    
+        (res: any) => {    
+          this.questionsList = res.questions ? res.questions :'';     
+          this.topic = res.topic ? res.topic :'';
+          if(this.questionsList.length > 0){ 
+             this.showEmptyMsg = false;       
           }else{
-            this.questionsList = '';
-            this.topic = '';
-            this.showEmptyMsg = true;    
-            this.EmptyMsg = 'No question added yet !!!';    
+            this.questionsList = [];
+            this.topic = [];
+            this.showEmptyMsg = true;       
           }   
         });
+        console.log(this.showEmptyMsg)
     } 
+
+
+    async presentAlert(id) {
+ 
+      var token = await this.storageService.get(AuthConstants.AUTH);  
+      var toast = this.toastService;
+      var serv_home = this.homeService; 
+      var mainthis = this;
+      function delete_l(id){
+        serv_home.delQuestion(id,token).subscribe(
+          (res: any) => {   
+            mainthis.getQuestions(mainthis.iacs,mainthis.assignment_id);
+             
+          }); 
+        }
+        const alert = await this.alertCtrl.create({
+          cssClass: 'my-custom-class',
+          header: 'Confirm!',
+          message: 'Are you sure you want to delete this question!!!',
+          buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              
+            }
+          }, {
+            text: 'Yes',
+            handler: function() {
+             
+              delete_l(id); 
+            }
+          }
+        ]
+      }); 
+      await alert.present();
+    }
 
 }

@@ -1,70 +1,76 @@
-.lectures {
-    padding: 0 12px;
-  }
+// .lectures {
+//     padding: 0 12px;
+//   }
   
-  .btn_theme button {
-    background-color: #644699;
-    color: white;
-    font-size: 12px;
-    font-weight: 400;
-    width: 71px;
-    height: 36px;
-    border-radius: 4px;
-    margin-top: 20px;
-  }
-  
-  .row_unit {
-    height: 71px;
-    background-color: #f5f5f5;
-    margin-top: 16px;
-    border-radius: 6px;
-  }
-  
-  .row_unit p {
-    font-size: 14px;
-    font-weight: 500;
-  }
-  
-  #theme_shadow {
-    background: white;
-    height: 68px;
-    box-shadow: 0px 0 9px 1px #888888;
-    border-radius: 5px;
-    text-align: center;
-    margin-top:-2px;
-  }
-  
-  
-  .row_video {
-    border-radius: 8px;
-    box-shadow: 1px 4px 7px #c3c3c3;
-    margin-top: 15px;
-    max-height: 138px;
-    height: 100%;
-  }
-  
-  .video_img img {
-    height: 111px;
-    width: 128px;
-  }
-  
-  .col_text {
-    line-height: 8px;
-  }
-  
-  .icons_set {
-    margin-top: 17px;
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .date_f {
-    font-size: 12px;
-    color: #f9922d;
-    font-weight: 400;
-  }
-
-  p.color_pink.comman.lineHe {
-    line-height: 1;
+.btn_theme button {
+  background-color: #644699;
+  color: white;
+  font-size: 12px;
+  font-weight: 400;
+  width: 71px;
+  height: 36px;
+  border-radius: 4px;
+  margin-top: 20px;
 }
-  
+
+.row_unit {
+  height: 71px;
+  background-color: #f5f5f5;
+  margin-top: 16px;
+  border-radius: 6px;
+}
+
+.row_unit p {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#theme_shadow {
+  background: white;
+  height: 68px;
+  box-shadow: 0px 0 9px 1px #888888;
+  border-radius: 5px;
+  text-align: center;
+  margin-top:-2px;
+}
+
+
+.row_video {
+  border-radius: 8px;
+  // box-shadow: 1px 4px 7px #c3c3c3;
+  margin-top: 20px;
+  align-items: center;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.video_img img {
+  height: 111px;
+  width: 128px;
+  vertical-align: middle;
+}
+
+
+.icons_set {
+  margin-top: 17px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.date_f {
+  font-size: 12px;
+  color: #f9922d;
+  font-weight: 400;
+}
+
+p.color_pink.comman.lineHe {
+  line-height: 18px;
+}
+
+.add_btn_group button{
+  margin-top: 15px;
+  width: 74px;
+}
+
+.add_btn_group button:nth-child(1) {
+  margin-right: 15px;
+}

@@ -37,39 +37,72 @@
   <div class="home_page_student">
     <div class="comman_page_padding">
     <!--====page_headings====-->
-    <div class="page_headings">
-      <h1 class="color_violet">Welcome</h1>
-      <h2 class="color_pink">{{studentname | titlecase  }}</h2>
-    </div>
-    <div class="ion-text-center" *ngIf="showEnrolled == false">
-      <div  class='mt-5'>
+    <ion-grid>
+      <ion-row>
+      <ion-col size="6">
+        <h1 class="color_violet">Welcome</h1>
+        <h2 class="color_pink">{{studentname | titlecase  }}</h2>
+      </ion-col>
+      <ion-col size="6" class="text-right">
+       <!--  <a  [routerLink]="['/searchclass']" class='btn_theme '>
+          <img src="../../assets/images/home_icon.png"> Search a class
+        </a> -->
+        <!-- <a  [routerLink]="['/searchclass']" class='btn_theme '> <h1 class="color_violet">Classes</h1>
+        <h2 class="color_pink"><img class="height-im" src="../../assets/images/btn_red_icon.png"></h2>
+        </a> -->
+      </ion-col>
+    </ion-row>
+    </ion-grid>
+    <div class="ion-text-center" *ngIf="!showEnrolled">
+      <div class="content_card">
+        <div class="logo_area ion-text-center"> 
+          <img src="../../assets/images/searchclass.png"> 
+        </div>
+      </div>
+      <!-- <div  class='mt-5'>
         <h1 class="color_violet ">
           <a  [routerLink]="['/searchclass']" class='btn_theme '>
             <img src="../../assets/images/home_icon.png"> Search a class
           </a>
         </h1>
         <small class=" ">No class yet !!!</small> 
-      </div>
+      </div> -->
     </div>
     <!--====main div / box shadow====-->
-    <div *ngIf='showEnrolled == true'>
-      <div class="box_shadow"  *ngFor='let class of allClasses.institute_assigned_class'>
+    <div *ngIf='showEnrolled'>
+      <div class="box_shadow parent_subject_card"  *ngFor='let class of allClasses.institute_assigned_class'>
+       <!--  <ion-row class="line_height">
+          <ion-col class="ion-text-center standared" size="12">
+            <h3 class="color_pink comman_font">{{class.name | titlecase}}</h3>
+            <p class="font_size_12">By: Akash Institute</p>
+          </ion-col> 
+          <ion-col size="12" class="ion-text-center video_btn">
+            <button class="grad_green"><img src="../../assets/images/btn_red_icon.png">Next Class on <br>08/08/2021</button>
+          </ion-col>
+        </ion-row> -->
         <ion-row class="line_height">
           <ion-col class="ion-text-center standared" size="12">
-            <h3 class="color_pink comman_font">{{class.name ?? ''}}</h3>
-            <!-- <p>By: Akash Institute</p> -->
-          </ion-col>
-          <!-- <ion-col size="12" class="ion-text-center video_btn">
-            <button class="grad_green"><img src="../../assets/images/btn_red_icon.png">Next Class on <br>08/08/2021</button>
-          </ion-col> -->
+            <h3 class="color_pink comman_font">{{class.name | titlecase}}</h3>
+            <p class="font_size_12">By: {{class?.institute.name}}</p>
+          </ion-col> 
         </ion-row>
         
-        <div *ngFor='let subj of class.institute_assigned_class_subject'> 
-          <div  class="subject_card {{subj.color_code ?? grad_orange}}">
-            <a  [routerLink]="['/subject-detail-student']" [queryParams]="{iacs:subj.id,subject:class.institute_id,purchased:1}" class=" text-white ">
+        <div *ngFor='let subj of class.institute_assigned_class_subject;  let ind = index;'> 
+          <a *ngIf="ind == 0"  [routerLink]="['/subject-detail-student']" [queryParams]="{iacs:subj.id,subject:subj.subject_id,purchased:1}" class=" text-white ">
+            <ion-row class="line_height">  
+              <ion-col size="12" class="ion-text-center video_btn">
+                <button class="{{subj.color_code2}}"><img src="../../assets/images/btn_red_icon.png">{{subj?.next_class}}</button> 
+              </ion-col>
+            </ion-row>
+          </a>
+          <div  class="subject_card {{subj.color_code}}">
+            <!-- <ion-col size="12" class="ion-text-center video_btn">
+              <button class="grad_green"><img src="../../assets/images/btn_red_icon.png">Next Class on <br>{{subj?.next_class}}</button>
+            </ion-col> -->
+            <a  [routerLink]="['/subject-detail-student']" [queryParams]="{iacs:subj.id,subject:subj.subject_id,purchased:1}" class=" text-white ">
               {{subj.details ? subj.details.name : ''}}
              
-              <h4 class="ion-text-center text-white ">{{subj.subject.name ?? ''}}</h4> 
+              <h4 class="ion-text-center text-white ">{{subj.subject.name | titlecase}}</h4> 
               <div class="subject_details text-white ">
                 <div>
                   <p>Board</p>
@@ -77,10 +110,14 @@
                   <p>Percentage</p>
                 </div>
                 <div>
-                  <p>{{class.board ?? ''}}</p>
-                  <p>{{subj.total_absents_in_lectures ?? 0}} P | {{subj.total_attended_lectures ?? 0}} AB</p>
-                  <p>{{subj.percentage ?? 0}} %</p>
+                  <p class="font_size_12">{{class.board ?? ''}}</p>
+                  <p class="font_size_12">{{subj.total_absents_in_lectures ?? 0}} P | {{subj.total_attended_lectures ?? 0}} AB</p>
+                  <p class="font_size_12">{{subj.percentage ?? 0}} %</p>
                 </div>
+                
+              </div>
+              <div class="'ion-text-center text-white font_size_12" *ngIf="ind > 0">
+                Next class on {{subj?.next_class}}
               </div>
             </a> 
           </div>

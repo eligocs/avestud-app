@@ -17,6 +17,7 @@ password: ''
 };
 showloader:boolean;
 token:'';
+typepass:any;
 constructor(
   public alertCtrl: AlertController,
 private router: Router,
@@ -26,8 +27,11 @@ private toastService: ToastService
 ) {}
 
 async ngOnInit() { 
+  this.typepass = 'password';
   this.showloader = false;
-  this.storageService.removeStorageItem(AuthConstants.Role); 
+  if(AuthConstants.Role){
+    this.storageService.removeStorageItem(AuthConstants.Role); 
+  }
   var user =  await this.storageService.get(AuthConstants.AUTH);  
   var role =  await this.storageService.get(AuthConstants.Role);    
   if(role == 'institute'){
@@ -37,7 +41,14 @@ async ngOnInit() {
   }
 }
 
-  
+  showpassword(){
+    if(this.typepass == 'password'){
+      this.typepass = 'text';
+    }else{
+      this.typepass = 'passwsord';
+    }
+  }
+
 async showAlert() {   
   const alert = await this.alertCtrl.create({  
     message: '<p>Send verification code to <br> verify your number </p>',

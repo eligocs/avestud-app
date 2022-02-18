@@ -15,6 +15,7 @@ export class DoubtsPage implements OnInit {
   iacs:any;
   previousUrl:any;
   alldoubts:any;
+  nodoubt:any;
   constructor( private router: Router,
     private authService: AuthService,
     private storageService: StorageService,
@@ -58,8 +59,12 @@ export class DoubtsPage implements OnInit {
       await this.homeService.loadDoubts(iacs,token).subscribe(
         (res: any) => { 
           if (res.status == 200) {
-            this.alldoubts = res.data;
-            console.log(this.alldoubts) 
+            this.alldoubts = res.data; 
+            if(this.alldoubts.length > 0){
+              this.nodoubt = false;
+            }else{
+              this.nodoubt = true;
+            }
           }
         }); 
     }

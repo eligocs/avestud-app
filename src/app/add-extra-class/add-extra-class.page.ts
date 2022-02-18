@@ -32,6 +32,7 @@ export class AddExtraClassPage implements OnInit {
   olddata:any;
   lectureid:any;
   subject:any;
+  showloader:boolean;
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -42,6 +43,7 @@ export class AddExtraClassPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.olddata = {}; 
     var token =  await this.storageService.get(AuthConstants.AUTH)   
     this.route.queryParams.subscribe(
       params => { 
@@ -54,6 +56,7 @@ export class AddExtraClassPage implements OnInit {
         if(this.lectureid){
           this.getoldlecture(this.lectureid);
         }else{
+          this.olddata = {}; 
           this.postData = {
             unit: '',
             number: '',
@@ -85,6 +88,8 @@ export class AddExtraClassPage implements OnInit {
       (res: any) => { 
         if (res) { 
           this.olddata = res.data;      
+          this.olddata.unit = res.data.unit_id;      
+          this.postData = res.data;   
         } 
       });
     }
@@ -97,6 +102,7 @@ export class AddExtraClassPage implements OnInit {
       this.video = event.target.files[0]; 
   }
   async createExtraClass(){
+    this.showloader = true;
     var newData = {
       unit : this.postData.unit,
       number : this.postData.number,

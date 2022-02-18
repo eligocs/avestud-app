@@ -18,7 +18,9 @@ export class SubjectDetailPage implements OnInit {
   getSubjectsInfo:any;
   doubtsnotify:number;
   class_days:any;
+  next_class:any;
   iac:any;
+  video:any;
   lecture_dates:any;
   subject:any;
   iacs:any;
@@ -50,6 +52,7 @@ export class SubjectDetailPage implements OnInit {
         this.iacs =  params['iacs'];
         this.subject_id = params['subject'];
         this.istudent = params['istudent']; 
+       
         if(this.subject_id && this.iacs && token){
           /* if(this.istudent){
             this.loadstudentdata(this.iacs,this.subject_id,token); 
@@ -96,11 +99,12 @@ export class SubjectDetailPage implements OnInit {
         } 
           await this.homeService.creatnotify(newData,token).subscribe(
             (res: any) => {     
-              this.loadsuccess = res.msg;
+              this.toastService.presentToast('Class Notification Created Successfully'); 
+              this.notificat = '';
+             /*  this.loadsuccess = res.msg;
               setTimeout(() => {
                 this.loadsuccess = '';
-                this.notificat = '';
-              }, 5000);
+              }, 5000); */
             })
           } 
     }
@@ -110,12 +114,13 @@ export class SubjectDetailPage implements OnInit {
   
 
   
-  async loaddata(iacs,subject_id,token){ 
+  async loaddata(iacs,subject_id,token){  
     if(this.iacs && this.subject_id){
         if(this.iacs && this.subject_id){
           await this.homeService.openSubject(iacs,subject_id,token).subscribe(
             (res: any) => {    
               this.syllabus = res.data.syllabus ? res.data.syllabus:'';
+              this.video = res.data.video ? res.data.video:'';
               this.getSubjectsInfo = res.data.getSubjectsInfo ? res.data.getSubjectsInfo:'';
               this.doubtsnotify = res.data.doubtsnotify ? res.data.doubtsnotify:0;
               this.class_days = res.data.class_days ? res.data.class_days:'';
@@ -123,6 +128,8 @@ export class SubjectDetailPage implements OnInit {
               this.lecture_dates = res.data.lecture_dates ? res.data.lecture_dates:'';
               this.subject = res.data.subject ? res.data.subject:'';  
               this.i_a_c_s_id = res.data.i_a_c_s_id ? res.data.i_a_c_s_id:'';    
+              this.next_class = res.data.next_class ? res.data.next_class:''; 
+              console.log(this.video)
             });
         }   
     }

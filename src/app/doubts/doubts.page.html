@@ -35,11 +35,12 @@
  </div>
 
   <div *ngIf='alldoubts'> 
-    <div *ngFor='let doubtSingle of alldoubts;'> 
-      <div *ngIf='doubtSingle.senderdetail.avatar'>
+    <div *ngFor='let doubtSingle of alldoubts;'>  
+      <div >
         <ion-item lines="none" class="profile1" [routerLink]="['/doubt-messages']" [queryParams]="{iacs:iacs,subject:subject,doubt:doubtSingle.doubt.id}">
-          <ion-avatar slot="start">
-            <img src="https://aaradhanaclasses.s3.ap-south-1.amazonaws.com/{{doubtSingle.senderdetail.avatar ?? '../assets/images/avatar.png'}}" alt="avatar.png">
+          <ion-avatar  slot="start"> 
+            <!-- <img src="https://aaradhanaclasses.s3.ap-south-1.amazonaws.com/{{doubtSingle.senderdetail.avatar ?? '../assets/images/avatar.png'}}" alt="avatar.png">  -->
+            <img src="{{doubtSingle.senderdetail.avatar ? 'https://aaradhanaclasses.s3.ap-south-1.amazonaws.com/'+doubtSingle.senderdetail.avatar :'../assets/images/avatar.png'}}" alt="avatar.png"> 
           </ion-avatar>
           <ion-label class="name">{{doubtSingle.student.name ?? ''}}<br>
             <span class="font_f">{{doubtSingle.doubt.created_at | date:'MM/dd/yyyy hh:mm a'}}</span>
@@ -51,19 +52,17 @@
       </div>
     </div>
   </div>
+  <ion-item lines="none" *ngIf="nodoubt">
+  <ion-avatar slot="start">
+    <img src="../../assets/images/avatar.png" alt="avatar.png">
+  </ion-avatar> 
+  <ion-label>
+    <span class="font_f">No doubts !!!!</span>
+  </ion-label> 
+</ion-item>
 
 
-  <!-- <ion-item lines="none">
-    <ion-avatar slot="start">
-      <img src="../../assets/images/avatar.png" alt="avatar.png">
-    </ion-avatar>
-    <ion-label class="name">Lorem lspum<br>
-      <span class="font_f">11:45am 24/07/2021</span>
-    </ion-label>
-    <div class="dot">
-      <p class="orange_circle">2</p>
-    </div>
-  </ion-item>
+  <!-- 
   <ion-item lines="none">
     <ion-avatar slot="start">
       <img src="../../assets/images/avatar.png" alt="avatar.png">

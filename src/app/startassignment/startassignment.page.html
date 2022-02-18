@@ -3,13 +3,13 @@
   <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="3">
+        <ion-col size="4">
           <ion-buttons>
-            <ion-back-button defaultHref="/logout" class="color_violet"></ion-back-button>
+            <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
           </ion-buttons>
         </ion-col>
-        <ion-col size="5">
-          <p class="ion-text-center heading">Assignments</p>
+        <ion-col size="4">
+          <p class="ion-text-center heading">Assignment</p>
         </ion-col>
         <ion-col size="4">
           <div class="avatar_icon" (click)="presentPopover('any')"></div>
@@ -24,39 +24,46 @@
   <!--===assignment_test_page====-->
   <div class="comman_page_padding">
 
-  <div class="assignment_test_page ">
+  <div class="assignment_test_page " *ngIf="!showresult">
     <!--==content_header==-->
     <ion-row class="content_header">
-      <ion-col size="8">
-        <h1>29:15 min</h1>
+      <ion-col size="9">
+        <!-- <h1>29:15 min</h1> -->
       </ion-col>
-      <ion-col size="4">
-        <div class="btn_theme">
+      <ion-col size="3">
+       <!--  <div class="btn_theme">
           <button href="#">Submit</button>
-        </div>
+        </div> -->
       </ion-col>
     </ion-row>
     <!--===row_pagination===-->
     <ion-row>
       <ion-col class="row_pagination">
-        <div class="pagination">
-          <a href="#"><img src="../../assets/images/previous_btn.png"></a>
+        <div class="pagination" *ngIf='!alreadygiven'>
+          <span   (click)="prev()"><img src="../../assets/images/previous_btn.png"></span>
               <div  *ngFor='let quest of questions; let i = index;'>
                 <div class='overflow'>
-                  <a href="#" (click)="changestep()" class="font_dark {{instep == 1 ? 'circle' : ''}}">{{i+1}}</a>
+                  <p   (click)="changestep(i)" class="font_dark circle">{{i+1}}</p>
                 </div>
               </div>
              <!--  <a href="#" class="font_dark circle"><span class="active">2</span></a>
               <a href="#">3</a>   -->
-          <a href="#"><img src="../../assets/images/next_button.png"></a>
+          <span   (click)="next()"><img src="../../assets/images/next_button.png"></span>
         </div>
       </ion-col>
     </ion-row>
 
 
     <!--==question==-->
+    <div class='questionary' *ngIf='alreadygiven'>  
+      <ion-row class="green_gradient text-center">
+        <ion-col class="">
+          Assignment Completed 
+        </ion-col>
+      </ion-row>
+    </div>
     <div class='questionary' *ngFor='let quest of questions; let i = index;'> 
-      <div class='questionary' *ngIf='instep == 1;'> 
+      <div class='questionary' *ngIf='instep == i;'>  
         <ion-row class="question">
           <ion-col>
             <p><span class="numbreq">{{i+1}}</span> : {{quest.question ?? ''}}</p>
@@ -68,19 +75,19 @@
           <ion-radio-group value="biff">
             <ion-item class="border_v">
               <ion-label>A. <span class="mg-left">{{quest.a ?? ''}}</span></ion-label>
-              <ion-radio slot="start" value="biff"></ion-radio>
+              <ion-radio slot="start" (click)="setAnswer(quest.id,'A',quest.answer)" value="{{quest.a ?? ''}}" name="answer"></ion-radio>
             </ion-item>
             <ion-item class="border_y">
               <ion-label>B. <span class="mg-left">{{quest.b ?? ''}}</span></ion-label>
-              <ion-radio slot="start" value="griff"></ion-radio>
+              <ion-radio slot="start" (click)="setAnswer(quest.id,'B',quest.answer)" value="{{quest.b ?? ''}}" name="answer"></ion-radio>
             </ion-item>
             <ion-item class="border_o">
               <ion-label>C. <span class="mg-left">{{quest.c ?? ''}}</span></ion-label>
-              <ion-radio slot="start" value="buford"></ion-radio>
+              <ion-radio slot="start" (click)="setAnswer(quest.id,'C',quest.answer)" value="{{quest.c ?? ''}}" name="answer"></ion-radio>
             </ion-item>
             <ion-item class="border_s mg_bottom">
               <ion-label>D. <span class="mg-left">{{quest.d ?? ''}}</span></ion-label>
-              <ion-radio slot="start" value="afjdks"></ion-radio>
+              <ion-radio slot="start" (click)="setAnswer(quest.id,'D',quest.answer)" value="{{quest.d ?? ''}}" name="answer"></ion-radio>
             </ion-item>
           </ion-radio-group>
         </ion-list>
@@ -88,7 +95,7 @@
         <!--======ion-list End====-->
         <ion-row *ngIf='quest.question_img'>
           <ion-col>
-            <img src="{{quest.question_img ?? ''}}" class="sums_img">
+            <a href="{{quest.question_img ?? ''}}" class="sums_img">View File Attached</a>
           </ion-col>
         </ion-row>
         <hr>
@@ -96,20 +103,140 @@
       </div>
     </div>
       <!--====btns_row====-->
-      <ion-row class="btns_row ion-text-center">
+      <ion-row class="btns_row ion-text-center" *ngIf="!showsubmit">
         <ion-col>
-          <button class="bg_green">Skip</button>
+          <button  (click)="next()" class="bg_green">Skip</button>
         </ion-col>
         <ion-col>
-          <button class="bg_violet">Prev</button>
+          <button  (click)="prev()"  class="bg_violet">Prev</button>
         </ion-col>
         <ion-col>
-          <button class="bg_pink">Next</button>
+          <button (click)="next()" class="bg_pink">Next</button>
         </ion-col>
       </ion-row>
+      <ion-row class="btns_row ion-text-center" *ngIf="showsubmit">
+        <ion-col size="12">
+            <button  (click)="finish()"  class="bg_green">Finish</button> 
+        </ion-col> 
+      </ion-row>
     </div>
-   
+
+
+
+
+    <div *ngIf="showresult">
+      <div class="result_page">
+        <!--progress_bar-->
+        <ion-row>
+        <ion-col  class="progress_bar" size="6">
+          <h1 class="color_violet">
+            {{this.percentStatus ?? ''}}
+          </h1>
+          <div class="circular">
+            <div class="inner"></div>
+            <div class="outer"></div>
+            <div class="numb">
+              {{this.report?.percentage}}%
+            </div>
+            <div class="circle11">
+              <div class="dot">
+                <span></span>
+              </div>
+              <div class="bar left">
+                <div class="progress"></div>
+              </div>
+              <div class="bar right">
+                <div class="progress"></div>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+        <!--correct / Not correct answers card-->
+        <ion-col size="6">
+          <div class="grad_green d-flex">
+            <div>
+              <p class="numeric">{{this.report?.totalcorrect}}</p>
+            </div>
+            <div><p class="font_biger">Correct <br> <span class="font_small">Answers</span></p></div>
+          </div>
+          <div class="grad_orange d-flex">
+            <div>
+              <p class="numeric">{{this.report?.totalnotcorrect}}</p>
+            </div>
+            <div><p class="font_biger">Not Correct <br> <span class="font_small">Answers</span></p></div>
+          </div>
+        </ion-col>
+        </ion-row>
+        <h2>Answer with Explaination</h2>
+        <!--row_unit-->
+        <ion-row class="row_unit">
+          <ion-col *ngFor='let quest of report.questions; let i = index;' id="{{isquestion == i+1 ? 'theme_shadow' :''}}{{isquestion == 0  && i == 0? 'theme_shadow' :''}}">
+            <p (click)="toggleShow(i+1)">Q{{i+1}}</p>
+          </ion-col>
+     <!--      <ion-col id="theme_shadow">
+            <p>Q2</p>
+          </ion-col>
+          <ion-col>
+            <p>Q3</p>
+          </ion-col>
+          <ion-col>
+            <p>Q4</p>
+          </ion-col>
+          <ion-col>
+            <p>Q5</p>
+          </ion-col> -->
+        </ion-row>
+        <!--result_discription-->
+
+
+        <div *ngFor='let quest of report.questions; let i = index;'>
+        <div *ngIf='isquestion == i+1 || isquestion == 0 && i == 0'>
+          <ion-row>
+            <ion-col class="result_discription"> 
+              <p>{{i+1}}. {{quest.question ?? ''}}</p>
+              <hr>
+              <p *ngIf='quest.question_img'>
+                <a  href="{{quest.question_img ?? ''}}" class="sums _imgs">View Question File</a>
+              </p>
+            </ion-col>
+          </ion-row>
+          <!--answer_btns-->
+          <ion-row>
+            <ion-col>
+              <div class="answer_btns">
+                <h4>Answer</h4>
+                <div class="options">
+                  <p>A. {{quest.a ?? ''}}</p>
+                  <p>B. {{quest.b ?? ''}}</p>
+                  <p>C. {{quest.c ?? ''}}</p>
+                  <p>D. {{quest.d ?? ''}}</p>
+                </div>
+                Correct answer is
+                <button><p> {{quest.answer ?? ''}}</p></button>
+              </div>
+            </ion-col>
+          </ion-row>
+          <!--explanation-->
+          <ion-row>
+            <ion-col class="explanation">
+              <h5>Explanation</h5>
+              <hr>
+              <p>{{quest?.answer_exp}}</p>
+            </ion-col>
+          </ion-row>
+        </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
   
+
+
+
+
 </div>
    <!--===assignment_test_page End====-->
 </ion-content>

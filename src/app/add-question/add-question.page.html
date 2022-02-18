@@ -21,24 +21,14 @@
 <ion-content>
   <form class="add_question_form">
     <!--Question-->
-    <ion-row>
+    <ion-row >
       <ion-col>
         <ion-label position="stacked">Question</ion-label>
         <ion-textarea  value="{{olddata?.question}}" [(ngModel)]="postData.question"   name='question' class="text_area" placeholder="Please Enter Question"></ion-textarea>
       </ion-col>
     </ion-row>
     <!--select Correct Answer-->
-    <ion-row>
-      <ion-col>
-        <ion-label>Correct Answer</ion-label>
-        <ion-select placeholder="Answers" class="select_opt"  value="{{olddata?.answer}}" [(ngModel)]="postData.answer" name='answer'>
-          <ion-select-option value='A'>A</ion-select-option>
-          <ion-select-option value='B'>B</ion-select-option>
-          <ion-select-option value='C'>C</ion-select-option>
-          <ion-select-option value='D'>D</ion-select-option>
-        </ion-select>
-      </ion-col>
-    </ion-row>
+    
     <!--option-->
     <ion-row>
       <ion-col>
@@ -67,6 +57,17 @@
         <ion-input value="{{olddata?.d}}" [(ngModel)]="postData.d" name='d' placeholder="Please Enter Option D"></ion-input>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label>Select Correct Answer</ion-label>
+        <ion-select placeholder="Answers" class="select_opt"  value="{{olddata?.answer}}" [(ngModel)]="postData.answer" name='answer'>
+          <ion-select-option value='A'>A</ion-select-option>
+          <ion-select-option value='B'>B</ion-select-option>
+          <ion-select-option value='C'>C</ion-select-option>
+          <ion-select-option value='D'>D</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
      <!--Answer Explaination-->
     <ion-row>
       <ion-col>
@@ -78,9 +79,24 @@
     <ion-row>
       <ion-col class="pdf_img">
         <ion-label>Add image to Question</ion-label>
-        <input class="drag_drop" type="file" id="file" name="file"  (change)="onChange($event)"    /><br />
+        <input class="drag_drop" type="file" accept="image/*" id="file" name="file"  (change)="onChange($event)"    /><br />
       </ion-col>
     </ion-row>
+
+    <ion-row class="mg_top">
+      <div *ngIf='olddata?.question_img'>
+        <a href='{{olddata?.question_img}}'>View Old File</a> 
+      </div>
+    </ion-row>
+
+
+    <ion-row class='ion-text-center' *ngIf="showloader">
+      <ion-col size-sm="12" >Please be patient, file is uploading <br>
+        <ion-spinner name="bubbles" class='bubblesloader' style="color:#644699"></ion-spinner>
+      </ion-col>
+    </ion-row>
+
+
     <ion-button class="btn_bottom_mrgn" expand="block" share="round" color="success" (click)="createAssigment()">Save</ion-button>
   </form>
 </ion-content>

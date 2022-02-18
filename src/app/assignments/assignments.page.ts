@@ -21,6 +21,7 @@ export class AssignmentsPage implements OnInit {
   assignments:any; 
   assignmet_w_n_t:any; 
   showUnitFor:any; 
+  hideOlds:any;
   noassignments:boolean; 
   assignment:any; 
   constructor(
@@ -49,15 +50,24 @@ export class AssignmentsPage implements OnInit {
   async getAssignments(iacs,token){
     if(iacs && token){    
       await this.homeService.openAssignments(iacs,token).subscribe(
-        (res: any) => {   
-          console.log(res) 
+        (res: any) => {    
           if(res.status == 200){
             this.assignments = res.topics ? res.topics:'';  
             this.assignmet_w_n_t = res.assignmet_w_n_t ? res.assignmet_w_n_t:'';  
+            if(this.assignmet_w_n_t.length > 0){
+              this.hideOlds = true;   
+            }else{
+              this.hideOlds = false;    
+            }   
           }else{
-            this.assignments = [];   
-            this.noassignments = true;   
+            this.noassignments = false;   
+            this.assignments = [];       
           }
+          if(res.topics.length > 0){
+            this.noassignments = false;   
+          }else{
+            this.noassignments = true;    
+          }    
       }); 
     }  
   }

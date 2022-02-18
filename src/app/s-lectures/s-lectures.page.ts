@@ -17,6 +17,7 @@ export class SLecturesPage implements OnInit {
     subject: any;
     purchased: any;
     myclasses: any;
+    nodata: any;
   constructor( 
     public modalController: ModalController,
     private studentService: StudentService,
@@ -42,18 +43,34 @@ export class SLecturesPage implements OnInit {
       }
     )  
   }
-
+ async markattendance(lecture,link){
+  var token =  await this.storageService.get(AuthConstants.AUTH);    
+  var newData = {
+    lecture:lecture,  
+  } 
+  await this.studentService.mark_an_attendence(newData,token).subscribe(
+    (res: any) => { 
+      if(res.status = 200){
+       // window.location.href = link;
+      }
+    });
+ }
   async getstudentsubject(iacs_id,lecture){
     var token =  await this.storageService.get(AuthConstants.AUTH);    
     var newData = {
       iacs_id:iacs_id,
-      lecture:lecture,
+      //lecture:lecture,
       token:token,
-    }
+    } 
     await this.studentService.getstudentsubject(newData,token).subscribe(
       (res: any) => {    
         if (res.status == 200) {
-          this.myclasses = res.lecturesGroupedByUnits;  
+          this.myclasses = res.lecturesGroupedByUnits;   
+          if(this.myclasses.length > 0){ 
+            this.nodata = false;
+          }else{
+            this.nodata = true; ;
+          }  
         }
       }
     );

@@ -3,6 +3,7 @@ export class AuthConstants {
     public static readonly otp = 'otp'
     public static readonly phone = 'phone'
     public static readonly pwd = 'pwd'
-    public static readonly Role = 'pwd'
-    public static readonly userdetails = 'pwd'
+    public static readonly Role = 'role'
+    public static readonly userdetails = 'userdetails'
+    public static readonly TIMER = 'timer'
 };
