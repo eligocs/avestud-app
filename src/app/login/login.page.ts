@@ -45,8 +45,9 @@ async ngOnInit() {
     if(this.typepass == 'password'){
       this.typepass = 'text';
     }else{
-      this.typepass = 'passwsord';
+      this.typepass = 'password';
     }
+    console.log(this.typepass)
   }
 
 async showAlert() {   

@@ -60,6 +60,7 @@ font-weight: 600;
     position: absolute;
     top: 5px;
     left: 80%;
+    z-index: 99999 !important;
 }
 
 .login_btn{
@@ -71,4 +72,9 @@ font-weight: 600;
     border-radius: 30px;
     font-family: 'poppins',sans-serif;
     font-weight: 500;
+    }
+
+
+    .native-input.sc-ion-input-md:-webkit-autofill{
+        background-color: transparent !important;
     }

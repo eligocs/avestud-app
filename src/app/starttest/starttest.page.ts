@@ -29,8 +29,11 @@ export class StarttestPage implements OnInit {
   topic:any;
   countDown:any; 
   time: number;
+  skipquestion: any;
   interval;
   display;
+  showLoader: boolean;
+  p_bar_value: number;
   constructor(
     private studentService: StudentService,
     private route: ActivatedRoute,
@@ -39,6 +42,7 @@ export class StarttestPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.skipquestion = true; 
     this.alreadygiven = false; 
     this.showsubmit = false; 
     this.showsubmit=false;
@@ -70,6 +74,30 @@ export class StarttestPage implements OnInit {
   }
 
   
+  showProgressBar() {
+    this.showLoader = true;
+  }
+
+  hideProgressBar() {
+    this.showLoader = false;
+  }
+
+  runDeterminateProgress() {
+    this.showProgressBar()
+    for (let index = 0; index <= 100; index++) {
+      this.setPercentBar(+index);
+    }
+  }
+
+  setPercentBar(i) {
+    setTimeout(() => {
+      let apc = (i / 100)
+      console.log(apc);
+      this.p_bar_value = apc;
+    }, 30 * i);
+  }
+
+  
   async StartTimer(){   
     var total_t = this.topic.timer ?? 0; 
     if(total_t){
@@ -93,14 +121,25 @@ export class StarttestPage implements OnInit {
   clearInterval(this.interval);
   }
   changestep(i){ 
-      this.instep = i; 
+    if(this.instep < this.questions.length){
+      this.instep = i + 1 ; 
+    }
+    if(this.instep == this.questions.length){
+      this.skipquestion = false;
+    }  
   }
 
   prev(){ 
     if(this.instep > 0){
       this.instep = this.instep - 1; 
+      this.skipquestion = true;
     } 
   }
+
+  newstep(i){  
+      this.instep = i;  
+  }
+
   next(){   
     if(this.answer){ 
       if(this.questions.length -1 > this.instep){
@@ -188,8 +227,7 @@ export class StarttestPage implements OnInit {
       (res: any) => {       
         if (res.status == 200) { 
           this.topic = res.topic ?? '';
-          this.questions = res.questions ?? '';
-          console.log(this.questions.length)
+          this.questions = res.questions ?? ''; 
           if(this.questions.length > 0){
             this.alreadygiven = false;  
             this.showsubmit = false; 

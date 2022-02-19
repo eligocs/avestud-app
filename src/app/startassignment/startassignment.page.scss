@@ -329,7 +329,13 @@ h2{
   font-size: 16px;
   font-weight: 400;
 }
-
+.withoutcircle  {
+  padding-left: 8px;
+  height: 28px;
+  width: 28px;  
+  position: relative;
+  top: -18px;
+}
 .answer_btns button{
   height: 36px;
   width: 148px;

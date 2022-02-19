@@ -26,6 +26,7 @@ export class StartassignmentPage implements OnInit {
   isquestion:any;
   percentStatus:any;
   correct:any;
+  skipquestion:any;
   constructor(
     private studentService: StudentService,
     private route: ActivatedRoute,
@@ -34,6 +35,7 @@ export class StartassignmentPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.skipquestion = true; 
     this.alreadygiven = false; 
     this.showsubmit = false; 
     this.showsubmit=false;
@@ -63,12 +65,21 @@ export class StartassignmentPage implements OnInit {
     } 
   }
   changestep(i){ 
-      this.instep = i; 
+    if(this.instep < this.questions.length){
+      this.instep = i + 1 ; 
+    }
+    if(this.instep == this.questions.length){
+      this.skipquestion = false;
+    }  
+  }
+  newstep(i){  
+      this.instep = i;  
   }
  
   prev(){ 
     if(this.instep > 0){
       this.instep = this.instep - 1; 
+      this.skipquestion = true;
     } 
   }
   next(){   

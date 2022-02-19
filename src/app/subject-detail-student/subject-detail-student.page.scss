@@ -162,7 +162,7 @@ ion-row.success_msg.md.hydrated {
     position: absolute;
     top: 0px;
     left: 18px;
-    line-height: 22px;
+    line-height: 20px;
   }
 
   
@@ -241,8 +241,7 @@ ion-row.success_msg.md.hydrated {
     box-shadow: 2px 2px 8px #989898;
   }
   
-  .test_results ion-card {
-    height: 100px;
+  .test_results ion-card { 
     width: 32%;
     border-radius: 5px;
     margin: 0 auto;

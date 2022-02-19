@@ -43,7 +43,7 @@
           <span   (click)="prev()"><img src="../../assets/images/previous_btn.png"></span>
               <div  *ngFor='let quest of questions; let i = index;'>
                 <div class='overflow'>
-                  <p   (click)="changestep(i)" class="font_dark circle">{{i+1}}</p>
+                  <p   (click)="newstep(i)" class="font_dark {{this.instep == i ? 'circle':''}} withoutcircle">{{i+1}}</p>
                 </div>
               </div>
              <!--  <a href="#" class="font_dark circle"><span class="active">2</span></a>
@@ -105,10 +105,10 @@
       <!--====btns_row====-->
       <ion-row class="btns_row ion-text-center" *ngIf="!showsubmit">
         <ion-col>
-          <button  (click)="next()" class="bg_green">Skip</button>
+          <button  (click)="changestep(instep)"  *ngIf="skipquestion" class="bg_green">Skip</button>
         </ion-col>
         <ion-col>
-          <button  (click)="prev()"  class="bg_violet">Prev</button>
+          <button  (click)="prev()"  *ngIf="instep > 0"   class="bg_violet">Prev</button>
         </ion-col>
         <ion-col>
           <button (click)="next()" class="bg_pink">Next</button>

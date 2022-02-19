@@ -38,6 +38,9 @@ export class SubjectDetailStudentPage implements OnInit {
   testsnotification:any;
   extranotifications:any;
   next_class:any;
+  toatalmarks:any;
+  total_unattempted:any;
+  total_attempted:any;
   constructor(
     private previousRouteService: PreviousRouteService,
     private router: Router,
@@ -84,6 +87,9 @@ export class SubjectDetailStudentPage implements OnInit {
           await this.homeService.loadstudentdata(iacs,subject,token).subscribe(
             (res: any) => {    
               if(res.status == 200){
+                this.total_attempted = res.total_attempted !='' ? res.total_attempted:'';
+                this.total_unattempted = res.total_unattempted !='' ? res.total_unattempted:'';
+                this.toatalmarks = res.toatalmarks !='' ? res.toatalmarks:'';
                 this.syllabus = res.syllabus !='' ? res.syllabus:'';
                 this.getSubjectsInfo = res.getSubjectsInfo ? res.getSubjectsInfo:'';
                 this.iac = res.iac ? res.iac:''; 

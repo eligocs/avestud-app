@@ -178,21 +178,21 @@
 
     <ion-row class="ion-text-center test_results">
         <ion-card class="shadow">
-            <span class="color_redish mr_top">0</span>
+            <span class="color_redish mr_top">{{total_attempted ?? 0}}</span>
             <p> Total
                 <br /> Attempted
                 <br /> test
             </p>
         </ion-card>
         <ion-card class="shadow">
-            <span class="color_green mr_top">0</span>
+            <span class="color_green mr_top">{{total_unattempted ?? 0}}</span>
             <p> Total
                 <br /> Unattempted
                 <br /> test
             </p>
         </ion-card>
         <ion-card class="shadow"> 
-            <span class="color_redish mr_top">0</span>
+            <span class="color_redish mr_top">{{total_attempted ?? 0}}</span>
             <p class="mr_top"> Marks In
                 <br /> last test
             </p>

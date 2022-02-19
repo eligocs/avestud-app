@@ -36,7 +36,7 @@
           <ion-input class="password" name="password" [(ngModel)]="postData.password" required placeholder="Password" type="{{this.typepass}}"></ion-input>
 
 
-          <img class="lock_icon" (click)="showpassword()" src="../assets/images/lock.svg">
+          <a (click)="showpassword()"><img class="lock_icon"  src="../assets/images/lock.svg"></a>
 
         </ion-item>
         <p class="forgot_pass"  ></p>
