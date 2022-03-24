@@ -4,7 +4,8 @@ import { AuthConstants } from '../../../config/auth-constants';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { ToastService } from '../services/toast.service';
-import { AlertController } from '@ionic/angular';  
+import { AlertController } from '@ionic/angular';  /* 
+import { CallNumber } from '@ionic-native/call-number/ngx'; */
 @Component({
 selector: 'app-login',
 templateUrl: './login.page.html',
@@ -24,7 +25,8 @@ constructor(
 private router: Router,
 private authService: AuthService,
 private storageService: StorageService,
-private toastService: ToastService
+private toastService: ToastService,
+/* private callNumber: CallNumber */
 ) {}
 
 async ngOnInit() { 
@@ -54,6 +56,11 @@ async ngOnInit() {
     console.log(this.typepass)
   }
 
+  /* launchDialer(n:string){
+    this.callNumber.callNumber(n, true)
+    .then(() => {window.location.href = '/signup'})
+    .catch(() => window.location.href = '/hompage');
+  } */
 async showAlert() {   
   const alert = await this.alertCtrl.create({  
     message: '<p>Send verification code to <br> verify your number </p>',

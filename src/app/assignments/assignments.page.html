@@ -48,7 +48,7 @@
                 <p> All</p>
             </ion-col>
             <ion-col *ngFor="let assign of assignments;" id="{{showUnitFor == assign.name ? 'theme_shadow' :''}}">
-                <p (click)="toggleShow(assign.name)">{{assign.name | titlecase}}</p>
+                <p (click)="toggleShow(assign.name)"> {{assign.name.length > 0 && assign.name.length > 10 ? assign.name.substring(0,10)+' ...' : assign.name.length > 0 && assign.name.length < 10 ? assign.name :''}}</p>
             </ion-col>
         </ion-row>
         <!--row_unit End-->
@@ -85,7 +85,9 @@
                     </ion-row>
                     <!--details_sec-->
                     <ion-row class="details_sec">
-                        <p>{{topicsAll.description}}</p>
+                        <p> 
+                            {{topicsAll.description.length > 0 && topicsAll.description.length > 180 ? topicsAll.description.substring(0,180)+' ...' : topicsAll.description.length > 0 && topicsAll.description.length < 180 ? topicsAll.description :''}}
+                        </p>
                     </ion-row>
                     <ion-row  >
                         <ion-col size="12">

@@ -47,7 +47,7 @@
           <p > All</p>
       </ion-col>
       <ion-col *ngFor="let lect of lectures;" id="{{showUnitFor == lect.unit ? 'theme_shadow' :''}}">
-        <p (click)="toggleShow(lect.unit)">{{lect?.unit | titlecase}}</p>
+        <p (click)="toggleShow(lect.unit)">{{lect.unit.length > 0 && lect.unit.length > 10 ? lect.unit.substring(0,10)+' ...' : lect.unit.length > 0 && lect.unit.length < 10 ? lect.unit :''}}</p>
       </ion-col> 
     </ion-row>
 
