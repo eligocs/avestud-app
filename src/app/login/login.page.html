@@ -1,67 +1,74 @@
- 
-
-<ion-content> 
-  <div class="comman_page_front">
- 
-
-
-  <div class="logo_area ion-text-center">
-
-    <img src="../../assets/images/logo.png">
-
+<ion-content>
+  <div class="comman_page_front page_login loading_img" *ngIf="!showSplash"> 
+    <img class="logowebsite_icon" src="../assets/images/weblgo.png">
   </div>
-
-
-  <div class="ion-text-center form_head">
-
-    <h1>Welcome</h1>
-    <span class="form_text_line">Please enter below details to login to Avestud  </span>
-
-    </div>
-
+  <div class="comman_page_front page_login" *ngIf="showSplash">
+    <ion-row>
+      <ion-col size="12">
+        <div class="logo_area ion-text-center">
+          <img src="../../assets/images/logo.png">
+        </div>
+        <div class="ion-text-center form_head">
+          <span class='ave'>AVE</span><span class='stud'>STUD</span>
+        </div>
+      </ion-col>
+    </ion-row>
 
     <ion-row>
-      <ion-col size-sm="6" offset-sm="3" class="Password_input">
-        <ion-item lines="none"> 
-
-
-
-          <ion-input required placeholder="Phone Number" name="email" [(ngModel)]="postData.email" class="phone_input" type='text'></ion-input>
-
-        </ion-item>
-        
-        <ion-item lines="none">
-
-
-          <ion-input class="password" name="password" [(ngModel)]="postData.password" required placeholder="Password" type="{{this.typepass}}"></ion-input>
-
-
-          <a (click)="showpassword()"><img class="lock_icon"  src="../assets/images/lock.svg"></a>
-
-        </ion-item>
-        <p class="forgot_pass"  ></p>
-        <p class="forgot_pass"  [routerLink]="['/forgotpassword']">Forgot Password ?</p>
-
-
+      <ion-col size="12">
+        <span class="form_text_line">Log In To Your Account </span>
       </ion-col>
-      </ion-row>
-   
-      <ion-row class='ion-text-center' *ngIf="showloader">
-        <ion-col size-sm="12" >
-          <ion-spinner name="bubbles" class='bubblesloader' style="color:#644699"></ion-spinner>
-        </ion-col>
-      </ion-row>
-      <div class="log-btn ion-text-center"> 
-        <button class="login_btn" (click)="loginAction()">Log In</button> 
-      </div> 
-      <div class="hr_line">
-        <p class="lines">Register</p>
-      </div>
-      <div class="ion-text-center">
-        <button class="login_btn2 comman_login_btn" [routerLink]="['/signup']">
-          Register
-        </button>
-      </div>
-    </div>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" class="Password_input">
+        <ion-item lines="none">
+          <ion-input required placeholder="Email / Phone Number" name="email" [(ngModel)]="postData.email"
+            class="phone_input" type='text'></ion-input>
+          <i class='fa fa-mobile lock_icon'></i>
+        </ion-item>
 
+        <ion-item lines="none">
+          <ion-input class="password" name="password" [(ngModel)]="postData.password" required placeholder="Password"
+            type="{{this.typepass}}">
+          </ion-input>
+          <a (click)="showpassword()"><i class='fa fa-eye lock_icon'></i></a>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="6" class="Password_input">
+        <a href='https://avestud.com/privacy-policy'>
+          <p class=" forgot_pass">Privacy Policy</p>
+        </a>
+      </ion-col>
+      <ion-col size="6" class="Password_input">
+        <p class="forgot_pass" [routerLink]="['/forgotpassword']">Forgot Password ?</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class='ion-text-center' *ngIf="showloader">
+      <ion-col size-sm="12">
+        <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner>
+      </ion-col>
+    </ion-row>
+    <div class="log-btn ion-text-center">
+      <button class="login_btn" (click)="loginAction()">Log In</button>
+    </div>
+    <div class="hr_line">
+      <p class="lines">Register</p>
+    </div>
+    <div class="ion-text-center">
+      <button class="login_btn2 comman_login_btn" [routerLink]="['/signup']">
+        Register
+      </button>
+    </div>
+    <ion-row class="logo_bottom_bar">
+      <ion-col size="12">
+        <div class="ion-text-center">
+          <img class="logowebsite_icon" src="../assets/images/weblgo.png">
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>

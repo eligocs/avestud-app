@@ -3,16 +3,17 @@
   <ion-toolbar>
      <ion-grid>
         <ion-row>
-           <ion-col size="4">
-              <ion-buttons>
+          <ion-col size="3">
+            <div class="d-flex">  
                  <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
-              </ion-buttons>
+                 <img class="header_icon_I ml-2" src="../../assets/images/weblgo.png">
+            </div>
            </ion-col>
-           <ion-col size="4">
+           <ion-col size="7">
               <p class="ion-text-center heading">Revise Lectures</p>
            </ion-col>
-           <ion-col size="4">
-              <div class="avatar_icon" (click)="presentPopover('any')"></div>
+           <ion-col size="2">
+            <div class="avatar_icon" (click)="presentPopover('any')"><i class="fa fa-bell"></i> </div>
            </ion-col>
         </ion-row>
      </ion-grid>
@@ -46,10 +47,9 @@
               <span>{{ single.lecture_date | date: 'dd/MM/yyyy' }}</span>
             </ion-col>
             <ion-col size="2" class="right_col">
-              <a *ngIf='single.lecture_video' (click)="markattendance(single.id,single?.lecture_video)"><img src="../../assets/imgs/youtube_icon.svg"  class="youtube_icon"></a>
-              <div class="download_icons">
-                <img src="../../assets/imgs/download_receipt.png">
-                <a *ngIf='single.notes' href='{{ single.notes ?? "#" }}'><img src="../../assets/imgs/arrow_down_pdf.png"></a>
+              <a *ngIf='single.lecture_video' (click)="markattendance(single.id,single?.lecture_video)"><img src="../../assets/images/youtube_icon.svg"  class="youtube_icon"></a>
+              <div class="download_icons"> 
+                <a *ngIf='single.notes' href='{{ single.notes ?? "#" }}'><img src="../../assets/images/arrow_down_pdf.png"></a>
               </div>
             </ion-col>
           </ion-row>

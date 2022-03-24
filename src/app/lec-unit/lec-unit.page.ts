@@ -37,7 +37,11 @@ export class LecUnitPage implements OnInit {
         this.type =  params['type'];
         console.log(this.type)
         if(this.iacs && this.subject){
-          this.previousUrl = 'lectures?iacs='+this.iacs+'&subject='+this.subject;  
+          if(this.type == 'extraclass'){
+            this.previousUrl = 'extraclass?iacs='+this.iacs+'&subject='+this.subject;  
+          }else{
+            this.previousUrl = 'lectures?iacs='+this.iacs+'&subject='+this.subject;   
+          }
         } 
       }
     ) 
@@ -55,17 +59,14 @@ export class LecUnitPage implements OnInit {
         await this.homeService.createLectureUnit(newData,token).subscribe(
           (res: any) => {    
             if (res.status == 200) {
-              this.toastService.presentToast(res.msg); 
-              let navigationExtras: NavigationExtras = {
-                queryParams: { 'iacs': this.iacs,'subject' : this.subject },
-                fragment: 'anchor'
-              }; 
-              console.log(this.type == 'extraclass') 
-              if(this.type == 'extraclass'){
-                window.location.href = 'extraclass?iacs='+this.iacs+'&subject='+this.subject;
-              }else{
-                window.location.href = 'lectures?iacs='+this.iacs+'&subject='+this.subject;
-              }
+              this.toastService.presentToast(res.msg);  
+              setTimeout(() => {
+                if(this.type == 'extraclass'){
+                  window.location.href = 'extraclass?iacs='+this.iacs+'&subject='+this.subject;
+                }else{
+                  window.location.href = 'lectures?iacs='+this.iacs+'&subject='+this.subject;
+                }
+              }, 2000);
             }else{
               this.toastService.presentToast(res.msg); 
             }

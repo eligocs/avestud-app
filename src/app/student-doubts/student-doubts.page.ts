@@ -31,9 +31,7 @@ export class StudentDoubtsPage implements OnInit {
   ) { } 
 
   async ngOnInit() {
-    setTimeout(() => {
-      this.scrollToElement()  
-    }, 1500);
+    
     var token =  await this.storageService.get(AuthConstants.AUTH);  
     this.route.queryParams.subscribe(
       params => { 
@@ -46,7 +44,7 @@ export class StudentDoubtsPage implements OnInit {
         }
       });
   }
-  scrollToElement() {
+  scrollToElement() { 
     document.getElementById("text_input").scrollIntoView();
   }
   async send_btn(){ 
@@ -112,8 +110,10 @@ export class StudentDoubtsPage implements OnInit {
           this.student = res.student;
           this.doubt = res.messages.length > 0 ? res.messages[0].doubt_id :'';
           this.messages = res.messages.length > 0 ? res.messages:''; 
+          setTimeout(() => {
+            this.scrollToElement()  
+          }, 1500);
         }
-        this.scrollToElement()  
         this.showloader = false;
       }); 
   }

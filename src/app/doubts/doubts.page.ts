@@ -59,7 +59,8 @@ export class DoubtsPage implements OnInit {
       await this.homeService.loadDoubts(iacs,token).subscribe(
         (res: any) => { 
           if (res.status == 200) {
-            this.alldoubts = res.data; 
+            this.alldoubts = res.data;  
+           
             if(this.alldoubts.length > 0){
               this.nodoubt = false;
             }else{

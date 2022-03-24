@@ -62,6 +62,7 @@ export class AddlecturePage implements OnInit {
             date: '',  
             old_id: '',  
           };
+          this.showloader = false;
         }
       }
     ) 
@@ -89,9 +90,9 @@ export class AddlecturePage implements OnInit {
           this.olddata = res.data;  
           this.postData.unit = res.data.unit_id ? res.data.unit_id : '';  
         } 
-        this.showloader = false;
       });
     }
+    this.showloader = false;
   }
   onChange(event) {
       this.notes = event.target.files[0]; 

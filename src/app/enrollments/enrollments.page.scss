@@ -10,11 +10,10 @@ ion-searchbar{
 }
 .search_icon{
     position: absolute;
-    top: 28px;
+    top: 40px;
     right: 25px;
+    filter: brightness(0.5) invert(1);
 }
-
-
 
 // attendance_details
 .attendance_details{
@@ -26,17 +25,27 @@ ion-searchbar{
 .input_search {
     margin-top: 22px;
     width: 100%;
-    height: 35px;
+    height: 40px;
     border: 1px solid #D1D1D1;
-    border-radius: 4px;
+    border-radius: 3px;
     padding-left: 8px;
+    background: inherit;
 }
+
+.input_search:focus-visible{
+    outline: none;
+}
+
+.input_search::placeholder{
+    color: #adaaaa;
+}
+
 .attendance_details ion-card{
     height: 103px;
     max-width: 150px;
     width: 100%;
     text-align: center;
-    box-shadow: 0 2px 4px #c7c7c7;
+    box-shadow: 0 2px 4px #000000;
     border-radius: 10px;
 }
 
@@ -58,7 +67,7 @@ ion-searchbar{
 
 // left_card
 .left_card{
-    color: #000000;
+    color: #e7e7e7;
     line-height: 17px;
     text-align: center;
 }
@@ -95,11 +104,12 @@ ion-searchbar{
 // student_profile
 
 .student_profile{
-    margin-top: 12px;
+    margin: 20px 0;
     align-items: center;
-    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+    box-shadow: 0px 2px 5px 0px black;
     border-radius: 10px;
     padding-left: 5px;
+    background: #39546eb3;
 }
 
 // right_section
@@ -128,7 +138,7 @@ ion-searchbar{
 
 .contact_no {
     font-size: 12px;
-    color: #4E4E4E;
+    color: #ffffff;
     font-weight: 400;
 }
 
@@ -138,8 +148,8 @@ ion-searchbar{
 }
 
 .prof_name img{
-    height: 19px;
-    width: 26px;
+    height: 14px;
+    width: 18px;
 }
 
 .s_ship{
@@ -153,7 +163,7 @@ ion-searchbar{
 
 .s_ship p{
     font-size: 14px;
-    color: #000000;
+    color: #ffffff;
     font-weight: 400;
 }
 

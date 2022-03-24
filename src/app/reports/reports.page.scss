@@ -1,16 +1,12 @@
-* {
-    font-family: "poppins", sans-serif;
-  }
-  
-  // =====home_page_student css start====
   
   .test_section {
-    border-radius: 14px;
-    padding: 0 15px;
+    border-radius: 6px;
+    padding: 6px 15px;
     line-height: 15px;
     margin-bottom: 20px;
-    box-shadow: 2px 2px 14px #ccc7c7;
     margin-top: 22px;
+    box-shadow: rgb(31 30 30) 0px 1px 2px 0px, rgb(31 30 30) 0px 1px 3px 1px;
+    border: 1px solid #2d3a47;
 }
 
 .publish_btn {
@@ -23,4 +19,16 @@
     border-radius: 5px;
     margin-top: 15px;
     line-height: 13px;
+  }
+
+  .page_reports .page_heading{
+    margin-left: 15px;
+  }
+
+  .test_section p {
+    margin: 0;
+  }
+
+  .test_section{
+      line-height: 24px;
   }

@@ -13,6 +13,9 @@ import { ToastService } from '../services/toast.service';
   styleUrls: ['./searchclass.page.scss'],
 })
 export class SearchclassPage implements OnInit {
+  postData = {
+    category: '',  
+  };
   classes:any;
   categories:any;
   selected_cat:any;
@@ -22,6 +25,7 @@ export class SearchclassPage implements OnInit {
   timeslots:any;
   showloader:boolean;
   show_default:boolean;
+  enteredName:any
   constructor( 
     private previousRouteService: PreviousRouteService,
     private router: Router,
@@ -60,41 +64,82 @@ export class SearchclassPage implements OnInit {
         }
       )
     }
+    setName(){
+      if(this.enteredName.length > 1 && this.enteredName.length < 15){
+         this.oncatChange(); 
+      } 
+    }
     
-    
-    async oncatChange(){
+    async oncatChange(){ 
       this.classes  = {};
       this.showloader = true;
       this.nodata = false;
-      var token =  await this.storageService.get(AuthConstants.AUTH);  
+     ;  
       if(this.selected_cat){
-        await this.StudentService.getstudentclass(token,this.selected_cat).subscribe(
-        (res: any) => {  
-          if (res.status == 200) {  
-            var result =  res.classes;   
-            var allClasses = []; 
-            if(result.length > 0){
-              result.forEach((entry,i) => { 
-                entry.subjects.forEach((subj) => {  
-                  subj.color_code = colorLight(i);  
-                });    
-                allClasses.push(entry)
-                if(i == result.length -1){
-                  this.classes = allClasses; 
-                }
-              });
-              console.log(allClasses)
-              if(this.classes.length > 0){
-                  this.nodata = false;
-              } else {
-                  this.nodata = true;
-              } 
-            }     
-          }
-          this.show_default = false;
-          this.showloader = false;
-        }) 
+        var detail = {
+          category_id : this.selected_cat
+        }
+        var token =  await this.storageService.get(AuthConstants.AUTH)
+        await this.StudentService.getstudentclass(token,detail).subscribe(
+          (res: any) => {  
+            if (res.status == 200) {  
+              var result =  res.classes;   
+              var allClasses = []; 
+              if(result.length > 0){
+                result.forEach((entry,i) => { 
+                  entry.subjects.forEach((subj) => {  
+                    subj.color_code = colorLight(i);  
+                  });    
+                  allClasses.push(entry)
+                  if(i == result.length -1){
+                    this.classes = allClasses; 
+                  }
+                });
+                console.log(allClasses)
+                if(this.classes.length > 0){
+                    this.nodata = false;
+                } else {
+                    this.nodata = true;
+                } 
+              }     
+            }
+            this.show_default = false;
+            this.showloader = false;
+          }) 
       }
+      if(this.enteredName){
+        var detailA = {
+          class : this.enteredName
+        }
+        var token =  await this.storageService.get(AuthConstants.AUTH)
+        await this.StudentService.getstudentclassByname(token,detailA).subscribe(
+          (res: any) => {  
+            if (res.status == 200) {  
+              var result =  res.classes;   
+              var allClasses = []; 
+              if(result.length > 0){
+                result.forEach((entry,i) => { 
+                  entry.subjects.forEach((subj) => {  
+                    subj.color_code = colorLight(i);  
+                  });    
+                  allClasses.push(entry)
+                  if(i == result.length -1){
+                    this.classes = allClasses; 
+                  }
+                });
+                console.log(allClasses)
+                if(this.classes.length > 0){
+                    this.nodata = false;
+                } else {
+                    this.nodata = true;
+                } 
+              }     
+            }
+            this.show_default = false;
+            this.showloader = false;
+          }) 
+      }
+      
    
 
     function colorLight(i) {  

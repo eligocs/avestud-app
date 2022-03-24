@@ -2,6 +2,7 @@
 
 .assignment_test_page {
     padding: 0 15px;
+    margin-bottom: 50px;
   }
   
   .content_header {
@@ -30,7 +31,7 @@
   }
   
   .pagination a {
-    color: #8a8a8a;
+    color: #ffffff;
     float: left;
     padding: 8px 10px;
     text-decoration: none;
@@ -39,7 +40,7 @@
   }
   
   .pagination .font_dark {
-    color: #000000;
+    color: #ffffff;
   }
   
   //====pagination circle=====
@@ -63,18 +64,18 @@
   
   .question {
     margin-bottom: 20px;
-    box-shadow: 0 3px 6px 1px #a9a9a9;
+    box-shadow: 0 3px 6px 1px #000000;
     border-radius: 5px;
   }
   span.numbreq {
-    font-size: 15px;
-    color: #644699;
+    font-size: 14px;
+    color: #ffffff;
     font-weight: 900;
 }
   
   .question p {
-    font-size: 12px;
-    color: #000000;
+    font-size: 14px;
+    color: #ffffff;
     font-weight: 400;
     line-height: 22px;
   }
@@ -97,7 +98,7 @@
   
   ion-label {
     font-size: 14px;
-    color: #404040;
+    color: #ffffff;
     font-weight: 400;
   }
   
@@ -258,8 +259,9 @@
 }
 
 .progress_bar{
-  box-shadow: 0px 2px #d8d7d7;
+  box-shadow: 1px 2px 3px #000000;
   border-radius: 10px;
+  margin-top: 20px;
 }
 
 //   progress bar css End 
@@ -301,7 +303,7 @@ h1{
 
 h2{
     font-size: 14px;
-    color: #000000;
+    color: #ffffff;
     font-weight: 400;
 }
 
@@ -313,8 +315,8 @@ h2{
 }
 
 .result_discription p{
-    font-size: 12px;
-    color: #000000;
+    font-size: 14px;
+    color: #ffffff;
     font-weight: 400;
 }
 
@@ -325,7 +327,7 @@ h2{
 
 //   answer_btns 
 .answer_btns h4{
-  color: #000000;
+  color: #fcfcfc;
   font-size: 16px;
   font-weight: 400;
 }
@@ -345,7 +347,7 @@ h2{
 
 // explanation
 .explanation h5{
-  color: #000000;
+  color: #ffffff;
   font-size: 16px;
   font-weight: 400;
 }
@@ -359,7 +361,48 @@ h2{
 }
 .explanation p{
   font-size: 12px;
-  color: #000000;
+  color: #ffffff;
   font-weight: 400;
 }
 
+
+
+@keyframes growProgressBar {
+  0%, 33% { --pgPercentage: 0; }
+  100% { --pgPercentage: var(--value); }
+}
+
+@property --pgPercentage {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+div[role="progressbar"] {
+    /* --size: 12rem; */
+    --fg: #2196f3;
+    --bg: #def;
+    --pgPercentage: var(--value);
+    animation: growProgressBar 3s 1 forwards;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(closest-side, white 86%, transparent 0 99.9%, white 0), conic-gradient(var(--fg) calc(var(--pgPercentage) * 1%), var(--bg) 0);
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    color: var(--fg);
+    height: 100px;
+    width: 100px;
+    margin: 8px auto;
+}
+
+  .progress_bar .result_status{
+  display: inline-block;  
+  }
+
+div[role="progressbar"]::before {
+  counter-reset: percentage var(--value);
+  content: counter(percentage) '%';
+}

@@ -3,33 +3,27 @@ ion-content{
     font-family: 'poppins' sans-serif;
 }
 
-.color_violet{
-    color: #644699;
-}
-
-.avatar_icon{
-    background: url(../../assets/images/avatar.svg);
+ 
+.avatar_icon{ 
     background-repeat: no-repeat;
     height: 30px;
     width: 30px;
     float: right;
 }
 
-
-
+ 
 .wel{
-    color: #644699;
+    color: #fafafa;
     font-size: 18px;
     margin-left: 20px;
     font-weight: 500;
 }
 
 .institute_name{
-    color: #E03E91;
+    color: #b6dcff;
     font-size: 18px;
     font-weight: bold;
     margin-left: 20px;
-
 }
 
 .cards_section ion-card{
@@ -85,7 +79,7 @@ ion-content{
 
 .fee{
     font-size: 22px;
-    color: black;
+    color: rgb(216, 216, 216);
     font-weight: 500;
 }
 
@@ -172,13 +166,13 @@ ion-content{
 
 
 .session_period p{
-    color: #727272;
+    color: #ffffff;
     font-size: 14px;
     font-weight: 500;
 }
 
 .session_period span{
-    color: #000000;
+    color: #ffffff;
     font-size: 12px;
     font-weight: 500;
 }
@@ -186,7 +180,7 @@ ion-content{
 .btn_enroll{
     width: 90px;
     height: 20px;
-    font-size: 12px;
+    font-size: 14px;
     color: white;   
     font-weight: 500;
     border-radius: 4px;

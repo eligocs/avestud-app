@@ -1,110 +1,104 @@
- 
-  <ion-app> 
-    
-    <ion-header>
-      <ion-toolbar>
-    
-        <ion-grid>
-          <ion-row>
-            <ion-col size="4">
-    
-              <ion-buttons>
-                <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
-              </ion-buttons>
-    
-            </ion-col>
-            
-            <ion-col size="4">
-    
-              <p class="ion-text-center heading">Attendance</p>
-    
-            </ion-col>
-    
-            <ion-col size="4">
-    
-              <div class="avatar_icon" (click)="presentPopover('any')"></div>
-    
-            </ion-col>
-    
-          </ion-row>
-        </ion-grid>
-    
-      </ion-toolbar>
-    
-    </ion-header>
-      <!--Ion-Header Ends-->
-      
-    
-    
-    <!--ion-Content Starts-->
-    
-      <ion-content>
-        
-        <div class="comman_page_padding">
-        
-        <!--attendance page start-->
-        <div class="attendance_page ">
-    <div class="comman_page_padding mt-5">  
-        <div class="wel m-3">Select Class</div>  
-        <select class='category' (change)="onSubChange()" [(ngModel)]="selected_sub"  name='selected_sub'>
-          <option value='' selected>Select</option> 
-          <option *ngFor="let subs of allsubjects" value="{{subs.id}}">{{subs.detail.name ?? ''}}</option>
-        </select>  
-      </div>
-     <h1 class="color_violet">{{studentName ?? ''}}</h1>
-     <!--cards_section Start-->
-     <ion-grid class="cards_section mt-5">
-        <ion-row>
-           <!--grad_green Card-->
-           <ion-col size="6">
-              <ion-card class="grad_green">
-                 <p>{{percentage ?? 0}}%</p>
-                 <span>Percentage</span>
-              </ion-card>
-           </ion-col>
-           <!--grad_yellow Card-->
-           <ion-col size="6">
-              <ion-card class="grad_yellow">
-                 <p>{{total_past_lectures ?? 0}}</p>
-                 <span>Total lectures</span>
-              </ion-card>
-           </ion-col>
-        </ion-row>
-        <ion-row>
-           <!--grad_skyblue Card-->
-           <ion-col size="6">
-              <ion-card class="grad_skyblue">
-                 <p>{{total_attended_lectures ?? 0}}</p>
-                 <span>Total Present</span>
-              </ion-card>
-           </ion-col>
-           <!--grad_lightorange Card-->
-           <ion-col size="6">
-              <ion-card class="grad_lightorange">
-                 <p>{{total_absents_in_lectures ?? 0}}</p>
-                 <span>Total Absent</span>
-              </ion-card>
-           </ion-col>
-        </ion-row>
-     </ion-grid>
-     
-     <h2 class="color_violet comman_font2">Attendance</h2> 
-     <div class="attendance_status">
-        <div class="present">
-           <img src="../assets/images/green_dot.png" alt="green_dot.png">
-           <p>Present</p>
-        </div>
-        <div class="absent">
-           <img src="../assets/images/red_dot.png" alt="red_dot.png">
-           <p>Absent</p>
-        </div>
-     </div>
-     <p  class='attendancehtml'></p>
-  </div> 
-</div> 
-</ion-content> 
+<ion-app>
 
- 
-    
-    </ion-app>
-    
+   <ion-header>
+      <ion-toolbar>
+
+         <ion-grid>
+            <ion-row>
+               <ion-col size="4">
+
+                  <ion-buttons>
+                     <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
+                  </ion-buttons>
+
+               </ion-col>
+
+               <ion-col size="4">
+
+                  <p class="ion-text-center heading">Attendance</p>
+
+               </ion-col>
+
+               <ion-col size="4">
+
+                  <div class="avatar_icon" (click)="presentPopover('any')"></div>
+
+               </ion-col>
+
+            </ion-row>
+         </ion-grid>
+
+      </ion-toolbar>
+
+   </ion-header>
+   <!--Ion-Header Ends-->
+
+
+
+   <!--ion-Content Starts-->
+
+   <ion-content>
+      <div class="attendance_page">
+         <!--attendance page start-->
+            <div class=" mt-5">
+               <label for="class">Select Class</label>
+               <select class='category' (change)="onSubChange()" [(ngModel)]="selected_sub" name='selected_sub'>
+                  <option value='' selected>Select</option>
+                  <option *ngFor="let subs of allsubjects" value="{{subs.id}}">{{subs.detail.name ?? ''}}</option>
+               </select>
+            </div>
+            <h1 class="color_violet">{{studentName ?? ''}}</h1>
+            <!--cards_section Start-->
+            <ion-grid class="cards_section mt-5">
+               <ion-row>
+                  <!--grad_green Card-->
+                  <ion-col size="6">
+                     <ion-card class="grad_green">
+                        <p>{{percentage ?? 0}}%</p>
+                        <span>Percentage</span>
+                     </ion-card>
+                  </ion-col>
+                  <!--grad_yellow Card-->
+                  <ion-col size="6">
+                     <ion-card class="grad_yellow">
+                        <p>{{total_past_lectures ?? 0}}</p>
+                        <span>Total lectures</span>
+                     </ion-card>
+                  </ion-col>
+               </ion-row>
+               <ion-row>
+                  <!--grad_skyblue Card-->
+                  <ion-col size="6">
+                     <ion-card class="grad_skyblue">
+                        <p>{{total_attended_lectures ?? 0}}</p>
+                        <span>Total Present</span>
+                     </ion-card>
+                  </ion-col>
+                  <!--grad_lightorange Card-->
+                  <ion-col size="6">
+                     <ion-card class="grad_lightorange">
+                        <p>{{total_absents_in_lectures ?? 0}}</p>
+                        <span>Total Absent</span>
+                     </ion-card>
+                  </ion-col>
+               </ion-row>
+            </ion-grid>
+
+            <h2 class="color_violet comman_font2">Attendance</h2>
+            <div class="attendance_status">
+               <div class="present">
+                  <img src="../assets/images/green_dot.png" alt="green_dot.png">
+                  <p>Present</p>
+               </div>
+               <div class="absent">
+                  <img src="../assets/images/red_dot.png" alt="red_dot.png">
+                  <p>Absent</p>
+               </div>
+            </div>
+            <p class='attendancehtml'></p>
+      </div>
+   </ion-content>
+
+
+
+</ion-app>

@@ -3,14 +3,15 @@
     <ion-grid>
       <ion-row>
         <ion-col size="3">
-           <ion-buttons>
+          <div class="d-flex">
               <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
-           </ion-buttons>
+              <img class="header_icon_1" src="../../assets/images/weblgo.png">
+           </div>
         </ion-col>
-        <ion-col size="5">
+        <ion-col size="7">
            <p class="ion-text-center heading">Doubts</p>
         </ion-col>
-        <ion-col size="4">
+        <ion-col size="2">
            <div class="avatar_icon" (click)="presentPopover('any')"></div>
         </ion-col>
      </ion-row>

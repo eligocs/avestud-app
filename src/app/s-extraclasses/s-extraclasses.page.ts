@@ -45,6 +45,19 @@ export class SExtraclassesPage implements OnInit {
     )  
   }
 
+  async markattendance(lecture,link){
+    var token =  await this.storageService.get(AuthConstants.AUTH);    
+    var newData = {
+      lecture:lecture,  
+    } 
+    await this.studentService.mark_an_attendence(newData,token).subscribe(
+      (res: any) => { 
+        if(res.status = 200){
+          window.location.href = link;
+        }
+      });
+   }
+   
   async getstudentsubject(iacs_id,lecture){
     var token =  await this.storageService.get(AuthConstants.AUTH);    
     var newData = {

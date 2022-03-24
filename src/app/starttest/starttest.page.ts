@@ -99,13 +99,15 @@ export class StarttestPage implements OnInit {
 
   
   async StartTimer(){   
-    var total_t = this.topic.timer ?? 0; 
+    var total_t = this.topic.timer ?? 0;
+    var mainthis = this; 
     if(total_t){
       this.time = 60*total_t;
       this.interval = setInterval(() => {
         if(this.time > 0) {
             this.time--; 
         } else { 
+            mainthis.saveAnswer();
             this.time= 0;
         } 
         this.display=this.transform( this.time)

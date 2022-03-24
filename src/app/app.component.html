@@ -2,11 +2,10 @@
   <ion-router-outlet></ion-router-outlet>
 <!-- institute -->
   <ion-tabs *ngIf="this.previousUrl && this.previousUrl == 'institute'">
-    <ion-tab-bar slot="bottom" > 
+    <ion-tab-bar slot="bottom" >  
       <ion-tab-button tab="homepage">
-       <li  class="home"><img src="../../assets/images/home_icon.png"></li>
-      </ion-tab-button>
-  
+        <li  class="homeicon"><i class='fa fa-home'></i></li><span class='icon_tab'>Classroom</span>
+        </ion-tab-button>
       <!-- <ion-tab-button tab="homepage">
         <li class="youtube"><img src="../../assets/images/youtube_icon.svg"></li>
        </ion-tab-button>
@@ -16,8 +15,8 @@
        </ion-tab-button> -->
   
        <ion-tab-button tab="profile">
-        <li class="avatar"><img src="../../assets/images/avatar.svg"></li>
-       </ion-tab-button>
+        <li class="avatar_bottom_nav"><i class='fa fa-user'></i></li><span class='icon_tab'>Profile</span>
+      </ion-tab-button> 
   
     </ion-tab-bar>
   </ion-tabs>
@@ -26,24 +25,43 @@
     <ion-tabs *ngIf="this.previousUrl && this.previousUrl == 'student'">
       <ion-tab-bar slot="bottom">
         <ion-tab-button tab="studenthome">
-        <li  class="home"><img src="../../assets/images/home_icon.png"></li>
+        <li  class="homeicon"><i class='fa fa-home'></i></li><span class='icon_tab'>Classroom</span>
         </ion-tab-button>
     
         <ion-tab-button tab="searchclass">
-          <li class="searching_avatar"><img src="../assets/images/searching_avatar.png"></li>
+          <li class="searching_avatar"><i class='fa fa-search'></i></li><span class='icon_tab'>Search</span>
         </ion-tab-button>
     
         <ion-tab-button tab="studenthome">
-          <li class="notepad_bottom_nav" ><img src="../assets/images/notepad_bottom_nav.png"></li>
+          <li class="notepad_bottom_nav" ><i class='fa fa-file'></i></li><span class='icon_tab'>Receipt</span>
         </ion-tab-button>
     
         <ion-tab-button tab="profile">
-          <li class="avatar_bottom_nav"><img src="../assets/images/avatar_bottom_nav.png"></li>
+          <li class="avatar_bottom_nav"><i class='fa fa-user'></i></li><span class='icon_tab'>Profile</span>
+        </ion-tab-button> 
+      </ion-tab-bar> 
+    </ion-tabs>
+    <!-- <ion-tabs *ngIf="this.previousUrl && this.previousUrl == 'student'">
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="studenthome">
+        <li  class="home"><img src="../../assets/images/home_icon.png">Home</li>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="searchclass">
+          <li class="searching_avatar"><img src="../assets/images/searching_avatar.png">Search</li>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="studenthome">
+          <li class="notepad_bottom_nav" ><img src="../assets/images/notepad_bottom_nav.png">Receipt</li>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="profile">
+          <li class="avatar_bottom_nav"><img src="../assets/images/avatar_bottom_nav.png">Profile</li>
         </ion-tab-button>
     
       </ion-tab-bar>
     
-    </ion-tabs>
+    </ion-tabs> -->
   
 </ion-app> 
 

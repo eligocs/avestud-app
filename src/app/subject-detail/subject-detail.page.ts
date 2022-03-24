@@ -78,9 +78,9 @@ export class SubjectDetailPage implements OnInit {
           (res: any) => {     
             this.showloader = false;
             if(res.status == 200){ 
-              this.toastService.presentToast(res.msg); 
-              window.location.reload() 
+              window.location.href = 'subject-detail?iacs='+this.iacs+'&subject='+this.subject_id; 
             }
+            this.toastService.presentToast(res.msg); 
           })
         } 
     } 

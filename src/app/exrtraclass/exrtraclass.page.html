@@ -2,12 +2,13 @@
   <ion-toolbar>
      <ion-grid>
         <ion-row>
-           <ion-col size="2">
-              <ion-buttons>
+          <ion-col size="3">
+            <div class="d-flex"> 
                 <ion-back-button defaultHref="{{this.previousUrl}}" class="color_violet"></ion-back-button>
-              </ion-buttons>
+                <img class="header_icon_1" src="../../assets/images/weblgo.png">
+            </div>
            </ion-col>
-           <ion-col size="8">
+           <ion-col size="7">
               <p class="ion-text-center heading">Extra class</p>
            </ion-col>
            <ion-col size="2">
@@ -64,7 +65,7 @@
                     <img *ngIf='!single.extra_class_video' src="../../assets/images/video_img2.png" class="youtube_icon">
                 </div>
             </ion-col>
-            <ion-col size="7">
+            <ion-col size="7" class="video_details">
                 <div class="col_text">
                     <p class="comman_font color_violet"></p>
                     <p class="comman color_pink">{{ single.extra_class_name | titlecase }}</p>
@@ -72,11 +73,11 @@
                 </div>
                 <div class="icons_set">
                     <a *ngIf='single.notes'  href='{{ single.notes }}'>
-                      <img src="../../assets/images/download_pdf.png">
+                      <i class='fa fa-download text-white'></i>
                     </a>
-                    <img *ngIf='!single.notes'  src="../../assets/images/download_pdf.png">
-                    <a [routerLink]="['/add-extra-class']" [queryParams]="{iacs:this.iacs,subject:subject,lectureid:single.id}"><img src="../../assets/images/edit_icon.png"></a>
-                    <a (click)="presentAlert(single.id)"><img src="../../assets/images/delete_icon.png"></a>
+                    <i class='fa fa-download text-white' *ngIf='!single.notes' ></i> 
+                    <a [routerLink]="['/add-extra-class']" [queryParams]="{iacs:this.iacs,subject:subject,lectureid:single.id}"><i class='fa fa-pencil text-white'></i></a>
+                    <a (click)="presentAlert(single.id)"><i class='fa fa-trash text-white'></i></a>
                 </div>
             </ion-col>
         </ion-row>

@@ -97,6 +97,15 @@ export class ProfilePage implements OnInit {
           );
         }
     }
+
+
+    async logoutAction() {   
+      this.showloader = true;
+      this.storageService.removeStorageItem(AuthConstants.AUTH); 
+      this.storageService.removeStorageItem(AuthConstants.Role); 
+      this.storageService.removeStorageItem(AuthConstants.userdetails); 
+      this.authService.logout(); 
+    }
     
   
 

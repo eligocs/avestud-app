@@ -51,7 +51,7 @@ export class SLecturesPage implements OnInit {
   await this.studentService.mark_an_attendence(newData,token).subscribe(
     (res: any) => { 
       if(res.status = 200){
-       // window.location.href = link;
+        window.location.href = link;
       }
     });
  }

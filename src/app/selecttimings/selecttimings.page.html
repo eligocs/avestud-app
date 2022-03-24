@@ -3,15 +3,16 @@
   <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="4">
-          <ion-buttons>
+        <ion-col size="3">
+          <div class="d-flex"> 
             <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
-          </ion-buttons>
+            <img class="header_icon_1" src="../../assets/images/weblgo.png">
+          </div>
         </ion-col>
-        <ion-col size="4">
+        <ion-col size="7">
           <p class="ion-text-center heading">Select Class Time</p>
         </ion-col>
-        <ion-col size="4">
+        <ion-col size="2">
           <div class="avatar_icon" (click)="presentPopover('any')"></div>
         </ion-col>
       </ion-row>
@@ -20,101 +21,100 @@
 </ion-header>
 
 <ion-content>
-  <div class="search_classes_page comman_page_padding"   *ngIf='showcheckout == false && showpaybutton == false' >
-    <ion-row class="category">
-      <ion-col size="12" > 
-        <div  *ngFor="let iacss of iacsdetails; ">
-          <div class='ion-text-center'>
-            <h1 size="12">{{iacss.subject.name ?? ''}}</h1>
-            <small>Select class timings for specific days</small>
+  <div class="select_timing_page">
+    <div class="" *ngIf='showcheckout == false && showpaybutton == false'>
+      <ion-row class="category">
+        <ion-col>
+          <div *ngFor="let iacss of iacsdetails; ">
+            <div class='ion-text-center'>
+              <h1 size="12">{{iacss.subject.name ?? ''}}</h1>
+              <small>Select class timings for specific days</small>
+            </div>
+            <hr />
+            <div *ngFor='let days of iacss.subjects_infos;'>
+              <br />
+              <div><label class="subject m-0">{{days.day | titlecase}}</label></div>
+              <div>
+                <select class='timing_select timevalues' data-id="{{days.id ?? ''}}" name='{{days.day ?? ""}}' required>
+                  <option value='' selected disabled>Select</option>
+                  <option *ngFor="let slots of timeslots" value="{{slots.id ?? ''}}">{{slots.slot ? slots.slot : ''}}
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
-          <hr/> 
-          <div *ngFor='let days of iacss.subjects_infos;'> 
-            <br/>
-                <div size="12"><label class="subject m-0" >{{days.day | titlecase}}</label></div>
-                <div size="12">
-                  <select class='lectureSelect timevalues' data-id="{{days.id ?? ''}}"  name='{{days.day ?? ""}}'>
-                    <option value='' selected>Select</option>
-                    <option *ngFor="let slots of timeslots" value="{{slots.id ?? ''}}">{{slots.slot ? slots.slot : ''}}</option>
-                  </select>
-                </div> 
+        </ion-col>
+        <ion-col size="12">
+          <div class="btns ion-text-center">
+            <button id="add" (click)="enrollthisclass()">Enroll Now</button>
           </div>
-        </div>
-      </ion-col> 
-      <ion-col size="12" >
-        <div class="btns ion-text-center">
-          <button id="add" (click)="enrollthisclass()" >Enroll Now</button> 
-        </div>
-      </ion-col>
-    </ion-row>
-  </div>
-  <div class="search_classes_page comman_page_padding" *ngIf='showcheckout == true'  >
-    <ion-row class="category">
-      <ion-col size="12" > 
-        <div  *ngFor="let class of classes; ">
-          <div class='ion-text-center'>
-            <h3 class="heading-title mt-0 mb-0 text-center heading text-white donis_font">{{class.name ?? ''}}</h3>
-            <h4 class=" m-0 text-center fw-100 text-white donis_font">By {{instdata.name ?? ''}}</h4>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div class="search_classes_page " *ngIf='showcheckout == true'>
+      <ion-row class="category">
+        <ion-col size="12">
+          <div *ngFor="let class of classes; ">
+            <div class='ion-text-center'>
+              <h3 class="" style="font-size: 17px;">{{class.name ?? ''}}</h3>
+              <h4 class=" m-0 text-center fw-100 text-white donis_font">By {{instdata.name ?? ''}}</h4>
+            </div>
+            <div class='ion-text-center'>
+              <h1 style="font-size: 16px;"><b>Total : ₹ {{class.price ?? ''}}</b></h1>
+            </div>
+            <hr />
+            <ion-card class='my_card grad_sky' *ngFor="let subj of subjects; ">
+              <div size="12">
+                <label class="subject m-0">
+                  <h4 class=" text-whitish mt-0 mb-2 m-auto text-center">
+                    {{subj.name ?? ''}}
+                  </h4>
+                </label>
+              </div>
+            </ion-card>
           </div>
-          <div class='ion-text-center'>
-            <h1 class="heading-title mt-0 mb-0 text-center heading text-white donis_font"><b>Total : ₹ {{class.price ?? ''}}</b></h1> 
+          <hr />
+        </ion-col>
+        <ion-col size="12" *ngIf='showpaybutton == false'>
+          <div class="btns ">
+            <div class='ion-text-center'>
+              <ion-label size="12">Have a coupen ?</ion-label>
+            </div>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item lines="none">
+                  <ion-input placeholder="Enter coupen Code Here" name="coupencode" [(ngModel)]="coupencode"
+                    class="coupencode" type='text'></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
           </div>
-          <hr/> 
-          <ion-card class='my_card' *ngFor="let subj of subjects; ">  
-                <div size="12">
-                  <label class="subject m-0" >
-                    <h4 class=" text-whitish mt-0 mb-2 m-auto text-center">
-                      <b>{{subj.name ?? ''}}</b>
-                    </h4>
-                  </label>
-              </div> 
-          </ion-card> 
-        </div>
-        <hr/>
-      </ion-col> 
-      <ion-col size="12" *ngIf='showpaybutton == false'>
-        <div class="btns " >
-          <div  class='ion-text-center'>
-            <ion-label size="12" >Have a coupen ?</ion-label>
+          <div class="btns ion-text-center">
+            <button id="red" (click)="canclepaynow()">Apply</button>
+            <button id="add" (click)="paynow()">Next</button>
           </div>
-          <ion-row >
-            <ion-col size="12">
-              <ion-item lines="none">  
-                <ion-input placeholder="Enter coupen Code Here" name="coupencode" [(ngModel)]="coupencode" class="coupencode" type='text'></ion-input> 
-              </ion-item> 
-            </ion-col> 
-          </ion-row>
-        </div>
-        <div class="btns ion-text-center">
-          <button id="red" (click)="canclepaynow()">Cancle</button> 
-          <button id="add" (click)="paynow()" >Next</button>  
-        </div> 
-      </ion-col>
-      <ion-col size="12" ><!-- *ngIf='showpaybutton == true' -->
-        <!--  <form class="mt-2" action="" method="POST">
-          <script id="checkoutScript" src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{config('app.razorpay_api_key')}}" data-amount="100" data-currency="INR"  data-buttontext="Pay Now" data-name="Acme Corp" data-description="Enrollment Class Payment" data-image="https://example.com/your_logo.jpg" data-prefill.name="studentname" data-prefill.email="test@gmail.com" data-prefill.contact="8894254007" data-theme.color="#F37254">
-          </script>
-        </form> -->
-        
-        <div class="btns ion-text-center">
-          <p id="amt" >{{this.amount ? '₹ '+this.amount : ''}}</p>  
-        </div> 
-        <div class="btns ion-text-center" *ngIf='showpaybutton == true'>
-          <button id="red" (click)="canclefinal()">Back</button>
-          <button id="add" (click)="payWithRazor()" >Pay now</button>  
-        </div>
-        <br/>
-        <hr/>
-        <br/>
-        <p class='ion-text-center'>
+        </ion-col>
+        <ion-col size="12">
+          <div class="btns ion-text-center">
+            <p id="amt">{{this.amount ? '₹ '+this.amount : ''}}</p>
+          </div>
+          <div class="btns ion-text-center" *ngIf='showpaybutton == true'>
+            <button id="red" (click)="canclefinal()">Back</button>
+            <button id="add" (click)="payWithRazor()">Pay now</button>
+          </div>
+          <br />
+          <hr />
+          <br />
+          <p style="line-height: 25px;" class='ion-text-center'>
             <small>For More Help</small> <br>
             AVESTUD <br>
             BULDHANA, Maharashtra, India, 443001 <br>
             Hot Line: 08421784125 <br>
             Email Id: support@avestud.com <br>
-            <small>www.avestud.com</small> <br> 
-        </p>
-      </ion-col>
-    </ion-row>
+            <small>www.avestud.com</small> <br>
+          </p>
+        </ion-col>
+      </ion-row>
+    </div>
   </div>
 </ion-content>

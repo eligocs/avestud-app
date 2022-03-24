@@ -1,80 +1,8 @@
-ion-content{
-    font-family: 'Poppins', sans-serif;
+.centerdi{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
 }
-
-.logo_area{
-margin-top: 50px;
-}
-
-h1{
-font-size:22px;
-margin-top: 0%;
-color: #090909;
-font-family: 'Poppins', sans-serif;
-font-weight: 500;
-}
-
-
-.forgot_pass{
-    float: right;
-    margin-right: 22px;
-    font-size: 16px;
-    color: #A0A0A0;
-    font-weight: 400;
-    font-family: 'Poppins', sans-serif;
-
-}
-
-.phone_input{
-    margin-bottom: 25px ;
-}
-
-ion-input{
-border: 1px solid #A0A0A0;
-border-radius: 25px;
-height: 44px;
-width: 95%;
-font-size: 16px;
-padding-left: 30px !important;
-font-family: 'poppins', sans-serif;
-font-weight: 500;
-}
-
-.form_head{
-    margin-bottom: 12px;
-}
-
-.form_text_line{
-font-size: 12px;
-color: #A0A0A0;
-font-family: 'poppins', sans-serif;
-font-weight: 600;
-}
-
-.password{
-    position: relative;
-}
-
-
-.lock_icon{
-    position: absolute;
-    top: 5px;
-    left: 80%;
-    z-index: 99999 !important;
-}
-
-.login_btn{
-    background-color: #644699;
-    height: 52px;
-    width: 268px;
-    color: white;
-    font-size: 16px;
-    border-radius: 30px;
-    font-family: 'poppins',sans-serif;
-    font-weight: 500;
-    }
-
-
-    .native-input.sc-ion-input-md:-webkit-autofill{
-        background-color: transparent !important;
-    }

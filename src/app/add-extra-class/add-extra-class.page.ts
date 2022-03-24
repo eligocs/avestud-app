@@ -88,8 +88,8 @@ export class AddExtraClassPage implements OnInit {
       (res: any) => { 
         if (res) { 
           this.olddata = res.data;      
-          this.olddata.unit = res.data.unit_id;      
-          this.postData = res.data;   
+          //this.olddata.unit = res.data.unit_id ?? '';           
+          //this.postData = res.data;    
         } 
       });
     }

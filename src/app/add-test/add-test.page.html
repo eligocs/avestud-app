@@ -1,95 +1,100 @@
 <ion-header>
-  <ion-toolbar> 
+  <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="3">  
+        <ion-col size="4">
           <ion-buttons>
-            <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button> 
+            <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
           </ion-buttons>
-        </ion-col> 
-        <ion-col size="5"> 
-          <p class="ion-text-center heading">Add Test</p> 
-        </ion-col> 
-        <ion-col size="4"> 
-          <div class="avatar_icon" (click)="presentPopover('any')"></div> 
-        </ion-col> 
+        </ion-col>
+        <ion-col size="4">
+          <p class="ion-text-center heading">Add Test</p>
+        </ion-col>
+        <ion-col size="4">
+          <div class="avatar_icon" (click)="presentPopover('any')"></div>
+        </ion-col>
       </ion-row>
-    </ion-grid> 
-  </ion-toolbar> 
-</ion-header> 
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <br>
   <div class='comman_page_heading'>
-  <form class="assignment_form"  >
-    <ion-row>
-      <ion-col  >
-        <div class="form-group ">
+    <form class="assignment_form">
+      <ion-row>
+        <ion-col>
+          <div class="form-group ">
             <div id="selecte_mode">
-                 Select paper mode 
-                <span class="required">*</span><br>
+             <ion-label> Select paper mode</ion-label>
+              <span class="required">*</span><br>
             </div>
-            <div id="lableOfCalss">
-                <label for="mcq">Mcq</label>&nbsp;&nbsp;
-                <input type="radio" [(ngModel)]="postData.testType"    name="testType" id="mcqradio" value="1" />&nbsp;&nbsp;
-                <label for="theory">Theory</label>&nbsp;&nbsp;
-                <input type="radio"  [(ngModel)]="postData.testType"  name="testType" id="theoryradio" value="2" />
+            <div class="test_radiogroup" id="lableOfCalss">
+              <label for="mcq">Mcq</label>
+              <input type="radio" [(ngModel)]="postData.testType" name="testType" id="mcqradio" value="1" />
+              <label for="theory">Theory</label>
+              <input type="radio" [(ngModel)]="postData.testType" name="testType" id="theoryradio" value="2" />
             </div>
-        </div>
-      </ion-col>
-    </ion-row>
-      
-    <ion-row>
-      <ion-col  >
-        <select class='lectureSelect' value="{{olddata?.unit}}" [(ngModel)]="postData.unit"   name='unit'>
-          <option value='' selected disabled>Select</option>
-          <option *ngFor="let unit_single of units"   value="{{unit_single.id}}">{{unit_single.unit}}</option>
-        </select>
-      </ion-col>
-    </ion-row>
-    <!--test Tittle-->
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-label position="stacked">Test Title</ion-label>
-        <ion-input name='title'  value="{{olddata?.title}}"  [(ngModel)]="postData.title" required placeholder="Please Enter Test Title" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
-    <!--Per Question Mark-->
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-label position="stacked">Per Question Mark</ion-label>
-        <ion-input name='per_q_mark' value="{{olddata?.per_q_mark}}"  [(ngModel)]="postData.per_q_mark" required placeholder="Please Enter Question Marks" type="number"></ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-label position="stacked">Test Duration (In minutes)</ion-label>
-        <ion-input name='duration' value="{{olddata?.timer}}"  [(ngModel)]="postData.duration" required placeholder="Please Enter Test Duration" type="number"></ion-input>
-      </ion-col>
-    </ion-row>
-    <!--Discription-->
-    <ion-row>
-      <ion-col>
-        <ion-label position="stacked">Description</ion-label>
-        <ion-textarea name='description' value="{{olddata?.description}}"  [(ngModel)]="postData.description" name='description'  class="text_area" placeholder="Please Enter Test Description"></ion-textarea>
-      </ion-col>
-    </ion-row>
-    <!--Enable Show Answer-->
-    <div class="checkbox">
-      <ion-checkbox name='show_ans' value="{{olddata?.show_ans}}"  [(ngModel)]="postData.show_ans" name='show_ans' ></ion-checkbox>
-      <ion-label> Enable Show Answer</ion-label>
-    </div>
-    <ion-row class='ion-text-center' *ngIf="showloader">
-      <ion-col size-sm="12" >
-        <ion-spinner name="bubbles" class='bubblesloader' style="color:#644699"></ion-spinner>
-      </ion-col>
-    </ion-row>
+          </div>
+        </ion-col>
+      </ion-row>
 
-    <!--btns-->
-    <div class="btns ion-text-center">
-      <button id="add" (click)="createTest()" >Add</button>
-      <!-- <button id="reset">Reset</button> --> 
-    </div>
-  </form>
+      <ion-row>
+        <ion-col>
+          <select class='lectureSelect' value="{{olddata?.unit}}" [(ngModel)]="postData.unit" name='unit' required>
+            <option value='' selected disabled>Select</option>
+            <option *ngFor="let unit_single of units" value="{{unit_single.id}}">{{unit_single.unit}}</option>
+          </select>
+        </ion-col>
+      </ion-row>
+      <!--test Tittle-->
+      <ion-row>
+        <ion-col size="12" >
+          <ion-label position="stacked">Test Title</ion-label>
+          <ion-input name='title' value="{{olddata?.title}}" [(ngModel)]="postData.title" required
+            placeholder="Please Enter Test Title" type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!--Per Question Mark-->
+      <ion-row>
+        <ion-col size="12" >
+          <ion-label position="stacked">Per Question Mark</ion-label>
+          <ion-input name='per_q_mark' value="{{olddata?.per_q_mark}}" [(ngModel)]="postData.per_q_mark" required
+            placeholder="Please Enter Question Marks" type="number"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" >
+          <ion-label position="stacked">Test Duration (In minutes)</ion-label>
+          <ion-input name='duration' value="{{olddata?.timer}}" [(ngModel)]="postData.duration" required
+            placeholder="Please Enter Test Duration" type="number"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!--Discription-->
+      <ion-row>
+        <ion-col>
+          <ion-label position="stacked">Description</ion-label>
+          <ion-textarea name='description' value="{{olddata?.description}}" [(ngModel)]="postData.description"
+            name='description' class="text_area" placeholder="Please Enter Test Description"></ion-textarea>
+        </ion-col>
+      </ion-row>
+      <!--Enable Show Answer-->
+      <div class="checkbox">
+        <ion-checkbox name='show_ans' value="{{olddata?.show_ans}}" [(ngModel)]="postData.show_ans" name='show_ans'>
+        </ion-checkbox>
+        <ion-label> Enable Show Answer</ion-label>
+      </div>
+      <ion-row class='ion-text-center' *ngIf="showloader">
+        <ion-col size-sm="12">
+          <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner>
+        </ion-col>
+      </ion-row>
+
+      <!--btns-->
+      <div class="btns ion-text-center">
+        <button id="add" (click)="createTest()">Add</button>
+        <!-- <button id="reset">Reset</button> -->
+      </div>
+    </form>
   </div>
 </ion-content>

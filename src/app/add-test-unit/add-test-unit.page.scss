@@ -1,11 +1,10 @@
-.assignment_form {
-    padding: 0 18px;
-    margin-top: 15px;
-  }
-  
+.float_start{
+  float: left;
+}
+ 
   .assignment_form ion-label {
     font-size: 16px;
-    color: #717171;
+    color: #ebebeb;
     font-family: "Poppins", sans-serif;
     font-weight: 400 !important;
   }
@@ -13,7 +12,7 @@
   .assignment_form ion-input {
     height: 46px;
     border: 1px solid #bfbfbf;
-    color: #4e4c4c;
+    color: #fcfcfc;
     font-family: "Poppins", sans-serif;
     font-weight: 400 !important;
     font-size: 14px;
@@ -48,7 +47,8 @@
   }
   
   #add {
-    background-color: #644699;
+    background-color: #385169;
+    border: 1px solid #a8a8a8;
     margin-right: 5px;
   }
   

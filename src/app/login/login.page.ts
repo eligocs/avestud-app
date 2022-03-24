@@ -18,6 +18,7 @@ password: ''
 showloader:boolean;
 token:'';
 typepass:any;
+showSplash:boolean;
 constructor(
   public alertCtrl: AlertController,
 private router: Router,
@@ -39,6 +40,9 @@ async ngOnInit() {
   }else if(role == 'student'){
     window.location.href = '/studenthome';
   }
+  setTimeout(() => {
+    this.showSplash = true;
+  }, 2500);
 }
 
   showpassword(){
@@ -111,7 +115,7 @@ let password = this.postData.password.trim();
         this.showloader = false;
       },
       (error: any) => { 
-        this.toastService.presentToast('Un Authorized, Please enter correct email / password');
+        this.toastService.presentToast('Credentials do not match our records');
         this.showloader = false
       }
       );

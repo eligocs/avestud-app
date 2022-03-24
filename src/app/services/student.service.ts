@@ -19,10 +19,11 @@ export class StudentService {
   getcats(token){
     return this.httpService.get('getcats',token);
   }
-  getstudentclass(token,category_id){
-    var data = {
-      category_id : category_id
-    }
+  getstudentclass(token,data){
+    
+    return this.httpService.gettrip('getstudentclass',data,token);
+  }
+  getstudentclassByname(token,data){ 
     return this.httpService.gettrip('getstudentclass',data,token);
   }
   enrollclass(class_id,token){

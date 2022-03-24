@@ -87,9 +87,9 @@ export class SubjectDetailStudentPage implements OnInit {
           await this.homeService.loadstudentdata(iacs,subject,token).subscribe(
             (res: any) => {    
               if(res.status == 200){
-                this.total_attempted = res.total_attempted !='' ? res.total_attempted:'';
-                this.total_unattempted = res.total_unattempted !='' ? res.total_unattempted:'';
-                this.toatalmarks = res.toatalmarks !='' ? res.toatalmarks:'';
+                this.total_attempted = res.total_attempted ? res.total_attempted:0;
+                this.total_unattempted = res.total_unattempted  ? res.total_unattempted:0;
+                this.toatalmarks = res.toatalmarks ? res.toatalmarks:0;
                 this.syllabus = res.syllabus !='' ? res.syllabus:'';
                 this.getSubjectsInfo = res.getSubjectsInfo ? res.getSubjectsInfo:'';
                 this.iac = res.iac ? res.iac:''; 

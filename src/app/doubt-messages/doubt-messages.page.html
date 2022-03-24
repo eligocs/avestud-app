@@ -9,23 +9,25 @@
           </ion-buttons>
         </ion-col>
         <ion-col size="4" class="chats_img">
-          <img src="../../assets/images/Doubts-image2.png">
-          <p class="ion-text-center heading">Doubt Messages</p>
+          <p class="ion-text-center heading">Doubt</p>
         </ion-col>
         <ion-col size="4">
-          <div class="text-rights" ><img class='chaticon' (click)="reloadpage($event)" src="../../assets/images/refresh.png"></div>
+          <div>
+            <img class='icon_refresh' (click)="reloadpage($event)"
+            src="../../assets/images/refresh.svg">
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-toolbar> 
+  </ion-toolbar>
 </ion-header>
 <!--ion-header End-->
 <!--ion-content start-->
-<ion-content  #target >
+<ion-content #target>
   <!--Chats Page Start-->
-  <div class='comman_page_padding'>
-    <div class="chats_page">
-    <!--   <div  *ngFor='let msg of messages.slice().reverse()'>
+  <div class='comman_page_padding chats_page'>
+    <div class="chats_content">
+      <!--   <div  *ngFor='let msg of messages.slice().reverse()'>
         <div *ngIf='msg.sendable_id == this.student'> 
           <div class="left_section"> 
             <img src="{{msg.message ?? '../../assets/images/Chats-image3.png'}}"> 
@@ -37,59 +39,74 @@
           </div>
         </div>
       </div> -->
-      <div *ngIf='showEmpty ' class='mt-5'> 
+      <div *ngIf='showEmpty ' class='mt-5'>
         No message yet !!!
       </div>
-      <div  *ngFor='let msg of messages ' class='chat_div'>
-        <div *ngIf='msg.sendable_id == this.student'> 
-          <div class="left_section"  *ngIf="msg.type == 'file'">
-            <img class='chaticon' src="{{msg.avatar ? msg.avatar:'../../assets/images/cost.png'}}"> &nbsp;&nbsp;
-            <a  href="{{msg.message !='' ? msg.message  : ''}}"> View</a> <br/>
-            <small>{{msg.created_at |  date: 'dd/MM/yyyy h:mm a'}}</small> 
+      <div *ngFor='let msg of messages ' class='chat_div'>
+        <div *ngIf='msg.sendable_id == this.student'>
+          <div class="left_side_chat" *ngIf="msg.type == 'file'">
+            <img class='sender_img' src="{{msg.avatar ? msg.avatar:'../../assets/images/cost.png'}}">
+            <div class="chat_box">
+              <a class="msg_type_view" *ngIf="msg.message" href="{{msg.message !='' ? msg.message  : ''}}"> View</a>
+              <span class="msg_time">{{msg.created_at | date: 'dd/MM/yyyy h:mm a'}}</span>
+            </div>
           </div>
-          <div class="left_section" *ngIf="msg.type == 'text'">
-            <img class='chaticon' src="{{msg.avatar ? msg.avatar:'../../assets/images/cost.png'}}"> &nbsp;&nbsp;
-            {{msg.message !='' ? msg.message  : ''}} <br/>
-            <small>{{msg.created_at |  date: 'dd/MM/yyyy h:mm a'}}</small> 
+          <div class="left_side_chat" *ngIf="msg.type == 'text'">
+            <img class='sender_img' src="{{msg.avatar ? msg.avatar:'../../assets/images/cost.png'}}">
+            <div class="chat_box">
+              <p>{{msg.message !='' ? msg.message : ''}} </p>
+              <span class="msg_time">{{msg.created_at | date: 'dd/MM/yyyy h:mm a'}}</span>
+            </div>
           </div>
         </div>
-        <div *ngIf='msg.sendable_id != this.student'> 
-          <div class="right_section "  *ngIf="msg.type == 'file'">
-            <img class='chaticon' src="{{'../../assets/images/edu.jpg'}}"> &nbsp;&nbsp;
-            <a  href="{{msg.message !='' ? msg.message  : ''}}"> View</a> <br/>
-            <small>{{msg.created_at |  date: 'dd/MM/yyyy h:mm a'}}</small> 
-          </div> 
-          <div class="right_section" *ngIf="msg.type == 'text'">
-            <img class='chaticon' src="{{'../../assets/images/edu.jpg'}}"> &nbsp;&nbsp;
-            {{msg.message !='' ? msg.message  : ''}} <br/>
-            <small>{{msg.created_at |  date: 'dd/MM/yyyy h:mm a'}}</small> 
+        <div *ngIf='msg.sendable_id != this.student'>
+          <div class="right_side_chat " *ngIf="msg.type == 'file'">
+            <img class='sender_img' src="{{'../../assets/images/edu.jpg'}}">
+            <div class="chat_box">
+              <a class="msg_type_view" *ngIf="msg.message" href="{{msg.message !='' ? msg.message  : ''}}"> View</a>
+              <span class="msg_time">{{msg.created_at | date: 'dd/MM/yyyy h:mm a'}}</span>
+              <img class="msg_status" src="../../assets/images/dileverd_msg.svg" alt="check icon">
+            </div>
           </div>
-        </div> 
-      </div> 
+          <div class="right_side_chat" *ngIf="msg.type == 'text'">
+            <img class='sender_img' src="{{'../../assets/images/edu.jpg'}}">
+            <div class="chat_box">
+              <p> {{msg.message !='' ? msg.message : ''}} </p>
+              <span class="msg_time">{{msg.created_at | date: 'dd/MM/yyyy h:mm a'}}</span>
+              <img class="msg_status" src="../../assets/images/seen_msg.svg" alt="Check Icon">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='text_input'></div>
       <ion-row class='ion-text-center' *ngIf="showloader">
-        <ion-col size-sm="12" >Processing request <br>
-          <ion-spinner name="bubbles" class='bubblesloader' style="color:#644699"></ion-spinner>
+        <ion-col size-sm="12">Processing request <br>
+          <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner>
         </ion-col>
       </ion-row>
-      <ion-row class="clearfix " >
-        <ion-col   size="10">
-          <!-- <img src="../../assets/images/chats_camera_icon.png" class="camera_icon"> -->
-          <ion-input type="text"   [(ngModel)]="text_message" name='text_message' placeholder="Enter Message"></ion-input>
-          <div class="image-upload"  id='text_input'>
-            <label for="file-input"> 
-              <img src="../../assets/images/chats_doc.png"  class="se lect_doc">
-            </label> 
-            <input  id="file-input" type="file" (change)="onChange($event)" />
-          </div> 
-        </ion-col>
-        <ion-col size="2" (click)='send_btn()' class="send_btn">
-          <img src="../../assets/images/send_button.png">
-        </ion-col>
-      </ion-row>
-      
+      <div class="send_msg_tab">
+        <div class="tab_inner">
+          <div class="tab_input">
+            <div class="send_emoji">
+              <img src="../../assets/images/send_emoji.svg" alt="Emoji Icon">
+            </div>
+            <textarea class="send_text_msg" type="text" [(ngModel)]="text_message" name='text_message' placeholder="Message" ></textarea>
+            <div class="image_upload" id='text_input'>
+              <label for="file-input">
+                <img src="../../assets/images/chats_doc.png" class="send_docs">
+              </label>
+              <input class="type_file" id="file-input" type="file" (change)="onChange($event)" />
+            </div>
+             <img src="../../assets/images/chats_camera_icon.png" class="camera_icon">
+          </div>
+          <div (click)='send_btn()' class="send_btn">
+            <img class="icon_send" src="../../assets/images/send_button.png">
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </div>
-  
-  <!--Chats Page End-->
 </ion-content>
 <!--Ion-content End-->

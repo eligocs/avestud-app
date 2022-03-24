@@ -1,32 +1,36 @@
- 
-  
-  <ion-content padding='true'>
-    <div class="comman_page_front">
+<ion-content padding='true'>
+  <div class="comman_page_front">
     <div class="register_page">
       <div class="logo_area ion-text-center">
-        <img src="../../assets/images/logo.png" />
+        <img src="../../assets/images/logo.png">
       </div>
       <div class="ion-text-center form_head">
-        <h1>Welcome Back</h1>
-        <span class="form_text_line">Please enter below detials to login to Avestud</span>
+        <span class='ave'>AVE</span><span class='stud'>STUD</span>
       </div>
+      <ion-row>
+        <ion-col size="12">
+          <span class="form_text_line">Signup to Avestud </span>
+        </ion-col>
+      </ion-row>
       <!--======regster page input start=======-->
       <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
+        <ion-col size="12">
           <!--======input phone number======-->
           <ion-item lines="none">
-            <ion-input  [(ngModel)]="postData.name" name='name' required placeholder="Full Name" type="text"></ion-input>
+            <ion-input [(ngModel)]="postData.name" name='name' required placeholder="Full Name" type="text"></ion-input>
           </ion-item>
           <ion-item lines="none">
-            <ion-input  [(ngModel)]="postData.phone" name='phone' required placeholder="Phone Number" type="Number"></ion-input>
+            <ion-input [(ngModel)]="postData.phone" name='phone' required placeholder="Phone Number" type="Number">
+            </ion-input>
           </ion-item>
           <!--input Grade-->
           <ion-item lines="none">
-            <ion-input  [(ngModel)]="postData.grade" name='grade' type="text" required placeholder="your grade  eg: 12th,engineering"></ion-input>
+            <ion-input [(ngModel)]="postData.grade" name='grade' type="text" required
+              placeholder="your grade  eg: 12th,engineering"></ion-input>
           </ion-item>
           <!--======input select state=====-->
           <ion-item lines="none">
-            <ion-select placeholder="Select State"  [(ngModel)]="postData.state" name='state' class="ion_select">
+            <ion-select placeholder="Select State" [(ngModel)]="postData.state" name='state' class="ion_select">
               <ion-select-option value="Andhra Pradesh">Andhra Pradesh</ion-select-option>
               <ion-select-option value="Arunachal Pradesh">Arunachal Pradesh</ion-select-option>
               <ion-select-option value="Assam">Assam</ion-select-option>
@@ -56,32 +60,36 @@
               <ion-select-option value="Uttar Pradesh">Uttar Pradesh</ion-select-option>
               <ion-select-option value="Uttarakhand">Uttarakhand</ion-select-option>
               <ion-select-option value="West Bengal">West Bengal</ion-select-option>
-              <ion-select-option value="Andaman and Nicobar Islands">Andaman and Nicobar Island</ion-select-option> 
+              <ion-select-option value="Andaman and Nicobar Islands">Andaman and Nicobar Island</ion-select-option>
               <ion-select-option value="Chandigarh">Chandigarh</ion-select-option>
               <ion-select-option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</ion-select-option>
               <ion-select-option value="Daman and Diu">Daman and Diu</ion-select-option>
               <ion-select-option value="Lakshadweep">Lakshadweep</ion-select-option>
-              <ion-select-option value="National Capital Territory of Delhi">National Capital Tion-select-optionry of Delhi</ion-select-option>
-              <ion-select-option value="Puducherry">Puducherry</ion-select-option>
+              <ion-select-option value="National Capital Territory of Delhi">National Capital Tion-select-optionry of
+                Delhi</ion-select-option>
+              <ion-select-option value="Puducherry">Pondicherry</ion-select-option>
             </ion-select>
           </ion-item>
           <!--=====input City=====-->
           <ion-item lines="none">
-            <ion-input  [(ngModel)]="postData.city"  name='city' required placeholder="Enter your city name" type="text"></ion-input>
+            <ion-input [(ngModel)]="postData.city" name='city' required placeholder="Enter your city name" type="text">
+            </ion-input>
           </ion-item>
           <!-- =======iput password======== -->
           <ion-item lines="none">
-            <ion-input type="password" [(ngModel)]="postData.password" name='password'  required placeholder="Password"></ion-input>
+            <ion-input type="password" [(ngModel)]="postData.password" name='password' required placeholder="Password">
+            </ion-input>
           </ion-item>
           <!--input confirm password-->
           <ion-item lines="none">
-            <ion-input type="password" required [(ngModel)]="postData.confirm_password" name='confirm_password' placeholder="Confirm Password"></ion-input>
+            <ion-input type="password" required [(ngModel)]="postData.confirm_password" name='confirm_password'
+              placeholder="Confirm Password"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <!--======regster page input End=======-->
       <div class="ion-text-center" id="otp_alert_box">
-        <button class="get_otp comman_login_btn" (click)="register_student()">
+        <button class="get_otp login_btn" (click)="register_student()">
           Get Otp
         </button>
       </div>
@@ -93,8 +101,15 @@
           Login
         </button>
       </div>
+      <ion-row class="register_bottom_logo">
+        <ion-col>
+          <div class="ion-text-center">
+            <img class="logowebsite_icon" src="../assets/images/weblgo.png">
+          </div>
+        </ion-col>
+      </ion-row>
     </div>
-   <!--  <div class="center">
+    <!--  <div class="center">
     <img src="assets/images/logo.png" class="smallLogo"/>
     <h1>Create Account</h1>
     </div>
@@ -121,4 +136,4 @@
     <ion-button expand="block" share="round" color="success" (click)="signAction()">Registration</ion-button>
     </form> -->
   </div>
-  </ion-content>
+</ion-content>

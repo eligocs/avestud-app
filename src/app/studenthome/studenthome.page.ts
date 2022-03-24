@@ -3,9 +3,9 @@ import { StorageService } from '../services/storage.service';
 import { AuthService } from '../services/auth.service';
 import { HomeService } from '../services/home.service';
 import { StudentService } from '../services/student.service';
+import { Router,NavigationExtras,ActivatedRoute } from '@angular/router';
 import { BehaviorSubject,Observable } from 'rxjs';
-import { AuthConstants } from '../../../config/auth-constants';
-import { Router } from '@angular/router';
+import { AuthConstants } from '../../../config/auth-constants'; 
 import { PreviousRouteService } from '../previous-route.service'; 
 @Component({
   selector: 'app-studenthome',
@@ -20,13 +20,16 @@ export class StudenthomePage implements OnInit {
   studentname: any; 
   showEnrolled: any; 
   allClasses:any;
+  categories:any;
+  selected_cat:any;
   constructor(
     private previousRouteService: PreviousRouteService,
     private router: Router,
     private authService: AuthService,
     private storageService: StorageService,
     private StudentService: StudentService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private route: ActivatedRoute,
   ) { }
 
   async ngOnInit() { 
@@ -35,7 +38,16 @@ export class StudenthomePage implements OnInit {
     var userdetails =  await this.storageService.get(AuthConstants.userdetails);  
     if(!userdetails){
       window.location.href = '/';
-    }
+    }else{  
+      await this.StudentService.getcats(token).subscribe(
+        (res: any) => {  
+          if (res.categories) { 
+            this.categories =  res.categories;  
+          }
+        }) 
+      } 
+
+      
     this.showEnrolled =false;
     this.studentname = userdetails.name ? userdetails.name : '';
     var mainThis = this; 
@@ -78,7 +90,13 @@ export class StudenthomePage implements OnInit {
 
   }
   
-
+  oncatChange(){ 
+    let navigationExtras: NavigationExtras = {
+      queryParams: {'selected_cat':this.selected_cat},
+      fragment: 'anchor'
+    };
+    this.router.navigate(['searchclass'],navigationExtras);
+  }
 
   async logoutAction() {   
     this.showloader = true;

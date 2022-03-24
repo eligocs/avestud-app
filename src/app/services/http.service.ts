@@ -41,7 +41,7 @@ export class HttpService {
   postpdf(serviceName: string,data: any,token:any) {  
     var headers = new HttpHeaders(
       {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/pdf',
         'Authorization': 'Bearer ' + token
       }
     );  

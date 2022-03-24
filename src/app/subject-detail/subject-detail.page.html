@@ -1,80 +1,85 @@
 <ion-header>
-  <ion-toolbar>
-     <ion-grid>
-        <ion-row>
-           <ion-col size="2">
-              <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
-           </ion-col>
-           <ion-col size="8">
-              <p class="ion-text-center heading">{{iac?.name}}</p>
-           </ion-col>
-           <ion-col size="2">
-              <div class="avatar_icon" (click)="presentPopover('any')"></div>
-           </ion-col>
-        </ion-row>
-     </ion-grid>
-  </ion-toolbar>
+   <ion-toolbar>
+      <ion-grid>
+         <ion-row> 
+            <ion-col size="3">
+               <div class="d-flex">
+                  <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
+                 <img class="header_icon_1" src="../../assets/images/weblgo.png">
+               </div>
+             </ion-col>
+            <ion-col size="7">
+               <p class="ion-text-center heading">{{iac?.name}}</p>
+            </ion-col>
+            <ion-col size="2">
+               <div class="avatar_icon" (click)="presentPopover('any')"></div>
+            </ion-col>
+         </ion-row>
+      </ion-grid>
+   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div class="page_content">
-     <h1 class="ion-text-center color_pink">{{subject?.name}}</h1>
-     <h2 class="ion-text-center color_pink"></h2>
-     <ion-row>
-        <ion-col class="btn_demo" *ngIf='video'>
-           <ion-button class='text-white' class="btn_view"   href='{{video ?? ""}}'><img src="../../assets/images/btn_red_icon.png"> View Demo </ion-button>
-        </ion-col>
-     </ion-row>
-     <ion-row  class="syllabus_btns ion-text-center">
-        <ion-col *ngIf='syllabus' size="12">
-           <ion-button href='{{syllabus ?? ""}}' class="view_btn">View Syllabus</ion-button>
-        </ion-col>
-        <ion-col>
-         {{syllabus ? 'Update' :'View'}} Syllabus
-           <ion-input class='margin-t14' type="file"  accept="application/pdf"  (change)="onChange($event)"></ion-input>
-        </ion-col>
-     </ion-row>
-     <ion-row class='ion-text-center' *ngIf="showloader">
-        <ion-col size-sm="12" >
-           <ion-spinner name="bubbles" class='bubblesloader' style="color:#644699"></ion-spinner>
-        </ion-col>
-     </ion-row>
-     <ion-row>
-        <ion-col size="8">
-           <p class="comman_font color_violet">Class Shedule</p>
-        </ion-col>
-        <ion-col size="4">
-           <!--  <p class="comman_font font_b">View All</p> -->
-        </ion-col>
-        <ion-col size="12" *ngIf='next_class'>
-         <ion-card class="card">
-           <ion-col class="card3" >
-         
-             <p class="text_white">Next class on {{next_class ?? ''}}</p>
-         
-           </ion-col> 
-         </ion-card> 
-         
+   <div class="subject_details_page">
+      <h1 class="ion-text-center color_pink subject_name">{{subject?.name}}</h1>
+      <h2 class="ion-text-center color_pink"></h2>
+      <ion-row>
+         <ion-col class="btn_demo" *ngIf='video'>
+            <ion-button class='text-white' class="btn_view" defaultHref='{{video ?? ""}}'><img
+               src="../../assets/images/btn_red_icon.png"> View Demo 
+            </ion-button>
          </ion-col>
-     </ion-row>
-     <!--ion row starts-->
-     <ion-row>
-        <ion-col *ngFor="let subjec of getSubjectsInfo;" size="6">
-           <ion-card class="card">
-              <ion-col class="card1 " size="12">
-                 <p class="text_white mt-2 ">{{subjec?.day | titlecase}}</p>
-              </ion-col>
-              <!--   <ion-col class="card2" size="7">
+      </ion-row>
+      <ion-row class="syllabus_btns ion-text-center">
+         <ion-col *ngIf='syllabus' size="12">
+            <a href='{{syllabus ?? ""}}'><button class="grad_sky"  >View Syllabus</button></a>
+         </ion-col>
+         <ion-col size='12'>
+            {{syllabus ? 'Update' :'View'}} Syllabus
+            <ion-input class='margin-t14' type="file" accept="application/pdf" (change)="onChange($event)"></ion-input>
+         </ion-col>
+      </ion-row>
+      <ion-row class='ion-text-center' *ngIf="showloader">
+         <ion-col size-sm="12">
+            <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner>
+         </ion-col>
+      </ion-row>
+      <ion-row>
+         <ion-col size="8">
+            <p class="comman_font color_violet">Class Shedule</p>
+         </ion-col>
+         <ion-col size="4">
+            <!--  <p class="comman_font font_b">View All</p> -->
+         </ion-col>
+         <ion-col size="12" *ngIf='next_class'>
+            <ion-card class="card">
+               <ion-col class="">
+
+                  <p class="text_white">Next class on {{next_class ?? ''}}</p>
+
+               </ion-col>
+            </ion-card>
+
+         </ion-col>
+      </ion-row>
+      <!--ion row starts-->
+      <ion-row>
+         <ion-col *ngFor="let subjec of getSubjectsInfo;" size="6">
+            <ion-card class="card">
+               <ion-col class="card1 " size="12">
+                  <p class="text_white mt-2 ">{{subjec?.day | titlecase}}</p>
+               </ion-col>
+               <!--  <ion-col class="card2" size="7">
                  <p class="day"></p>
                  <p class="time">10:00 Am</p>
                  </ion-col> -->
-           </ion-card>
-           <!--.card-->
-        </ion-col>
-        
-     </ion-row>
-     <!--ion-row Ends-->
-     <!---ion row Starts-->
-     <!-- <ion-row>
+            </ion-card>
+            <!--.card-->
+         </ion-col>
+
+      </ion-row>
+      <!--ion-row Ends-->
+      <!---ion row Starts-->
+      <!-- <ion-row>
         <ion-col size="6">
         
           <ion-card class="card">
@@ -111,45 +116,50 @@
         </ion-col>
         
         </ion-row> -->
-     <!--ion-row Ends-->
-     <div>
-        <h2 class="color_violet comman_font resources">Class Resources</h2>
-        <ion-row class="resources_btns">
-           <ion-col size="6">
-              <button class="grad_sky comman_btn common_anc_btn common_btn_shadow">Live Classes</button>
-           </ion-col>
-           <ion-col size="6">
-              <button [routerLink]="['/lectures']" [queryParams]="{iacs:iacs,subject:subject_id}" class="grad_yellow comman_btn common_anc_btn common_btn_shadow">Lectures</button>
-           </ion-col>
-        </ion-row>
-        <ion-row class="resources_btns">
-           <ion-col size="6">
-              <button [routerLink]="['/assignments']" [queryParams]="{iacs:iacs,subject:subject_id}" class="grad_green comman_btn common_anc_btn common_btn_shadow">Assigments</button>
-           </ion-col>
-           <ion-col size="6">
-              <button [routerLink]="['/doubts']" [queryParams]="{iacs:iacs,subject:subject_id}" class="grad_sky comman_btn common_anc_btn common_btn_shadow">Doubts </button>
-              <div class="border_outside skybleue"><span class="badge badge_skyblue">{{doubtsnotify ?? 0}}</span></div>
-           </ion-col>
-        </ion-row>
-        <ion-row class="resources_btns">
-           <ion-col size="6">
-              <button [routerLink]="['/test']" [queryParams]="{iacs:iacs,subject:subject_id}" class="grad_orange comman_btn common_anc_btn common_btn_shadow">Test</button>
-           </ion-col>
-           <ion-col size="6">
-              <button [routerLink]="['/extraclass']" [queryParams]="{iacs:iacs,subject:subject_id}" class="grad_green comman_btn common_anc_btn common_btn_shadow">Extra Classes</button>
-           </ion-col>
-        </ion-row>
-        <ion-row>
-           <ion-col>
-              <ion-label class="comman_font color_violet ">Class Notification</ion-label>
-              <!-- <ion-textarea  class="text_area"></ion-textarea> -->
-              <ion-textarea [(ngModel)]="notificat" class="text_area"></ion-textarea>
-           </ion-col>
-        </ion-row>
-     </div>
-     <ion-row class='success_msg' *ngIf='loadsuccess'>{{loadsuccess}}</ion-row>
-     <button class="bg_color create common_anc_btn common_btn_shadow" (click)="setText($event)">Create</button>
-  </div>
+      <!--ion-row Ends-->
+      <div>
+         <h2 class="color_violet comman_font resources">Class Resources</h2>
+         <ion-row class="resources_btns">
+            <ion-col size="6">
+               <button class="grad_sky comman_btn  common_btn_shadow">Live Classes</button>
+            </ion-col>
+            <ion-col size="6">
+               <button [routerLink]="['/lectures']" [queryParams]="{iacs:iacs,subject:subject_id}"
+                  class="grad_yellow comman_btn  common_btn_shadow">Lectures</button>
+            </ion-col>
+         </ion-row>
+         <ion-row class="resources_btns">
+            <ion-col size="6">
+               <button [routerLink]="['/assignments']" [queryParams]="{iacs:iacs,subject:subject_id}"
+                  class="grad_green comman_btn  common_btn_shadow">Assigments</button>
+            </ion-col>
+            <ion-col size="6">
+               <button [routerLink]="['/doubts']" [queryParams]="{iacs:iacs,subject:subject_id}"
+                  class="grad_sky comman_btn  common_btn_shadow">Doubts </button>
+               <div class="border_outside skybleue"><span class="badge badge_skyblue">{{doubtsnotify ?? 0}}</span></div>
+            </ion-col>
+         </ion-row>
+         <ion-row class="resources_btns">
+            <ion-col size="6">
+               <button [routerLink]="['/test']" [queryParams]="{iacs:iacs,subject:subject_id}"
+                  class="grad_orange comman_btn  common_btn_shadow">Test</button>
+            </ion-col>
+            <ion-col size="6">
+               <button [routerLink]="['/extraclass']" [queryParams]="{iacs:iacs,subject:subject_id}"
+                  class="grad_green comman_btn  common_btn_shadow">Extra Classes</button>
+            </ion-col>
+         </ion-row>
+         <ion-row>
+            <ion-col>
+               <ion-label class="comman_font color_violet ">Class Notification</ion-label>
+               <!-- <ion-textarea  class="text_area"></ion-textarea> -->
+               <ion-textarea [(ngModel)]="notificat" class="text_area"></ion-textarea>
+            </ion-col>
+         </ion-row>
+      </div>
+      <ion-row class='success_msg' *ngIf='loadsuccess'>{{loadsuccess}}</ion-row>
+      <button class=" create common_anc_btn btn_blue" (click)="setText($event)">Create</button>
+   </div>
 </ion-content>
 <!-- <ion-content>
   <ion-row >

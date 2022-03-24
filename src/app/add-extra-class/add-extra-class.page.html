@@ -20,74 +20,73 @@
 </ion-header>
 <!--Ion-Header Ends-->
 <!--ion-content Start-->
-<ion-content>
-  <h1 class="form_tittle">Add Extra Class</h1>
-  <!--add_lecture_form Start-->
-  <form class="add_lecture_form">
-    <!--Select Unit*-->
-    <ion-row>
-      <ion-col  >
-        <select required class='lectureSelect' value="{{olddata?.unit_id}}" [(ngModel)]="postData.unit" name='unit'>
-          <option   selected value="">Select</option>
-          <option *ngFor="let unit of units" value="{{unit.id}}">{{unit.name}}</option>
-        </select> 
-      </ion-col>
-    </ion-row>
-    <!--Lecture Number*--> 
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-label position="stacked">Extra Class Number*</ion-label>
-        <ion-input    [(ngModel)]="postData.number" value='{{olddata?.extra_class_number}}' autocomplete="off" name="number"  required placeholder="Lecture Number" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
-    <!--Lecture Name*-->
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-label position="stacked">Extra Class Name*</ion-label>
-        <ion-input required placeholder="Lecture Name" value='{{olddata?.extra_class_name}}'  [(ngModel)]="postData.lecturename" autocomplete="off" name="lecturename" type="text"></ion-input>
-      </ion-col>
-    </ion-row>
-    <!--Lecture Date*-->
-    <ion-row>
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-label position="stacked">Extra class Date*</ion-label>
-        <ion-datetime displayFormat="DD MM YYYY" value='{{olddata?.extra_class_date}}'  [(ngModel)]="postData.date" autocomplete="off" name="date" placeholder="Select Date"></ion-datetime>
-        <img class="calender_icon" src="../../assets/images/calender.svg">
-      </ion-col>
-    </ion-row>
-    <!--file upload / drag and-->
-    <ion-row class="mg_top">
-      <ion-col class="pdf_img">
-        <ion-label position="stacked">Upload Notes*</ion-label>
-        <input class="drag_drop"  name="notes" (change)="onChange($event)"  accept="application/pdf"  type="file" id="notes"  /><br />
-        <!-- <img src="../../assets/imgs/pdf_img.svg" class="pdf_img"> -->
-      </ion-col>
-    </ion-row>
-    <ion-row class="mg_top">
-      <div *ngIf='olddata?.notes'>
-        <a href='{{olddata?.notes}}'>View Old</a> 
-      </div>
-    </ion-row>
-    <ion-row class="mg_top">
-      <ion-col class="pdf_img">
-        <ion-label position="stacked">Upload Video (You can add later)</ion-label><br/>
-        <small>Only extra class with video will show to students</small>
-        <input class="drag_drop"  name="video"  accept="video/*" (change)="onChangeVideo($event)"  type="file" id="video"  /><br />
-        <!-- <img src="../../assets/imgs/pdf_img.svg" class="pdf_img"> -->
-      </ion-col>
-    </ion-row>
-    <ion-row class="mg_top">
-      <div *ngIf='olddata?.extra_class_video'>
-        <a href='{{olddata?.extra_class_video}}'>View Old Video</a> 
-      </div>
-    </ion-row>
-    <ion-row class='ion-text-center' *ngIf="showloader">
-      <ion-col size-sm="12" >Please be patient, files are being uploaded <br> 
-        <ion-spinner name="bubbles" class='bubblesloader' style="color:#644699"></ion-spinner>
-      </ion-col>
-    </ion-row>
-    <ion-button expand="block" share="round" color="success" (click)="createExtraClass()">Save</ion-button>
-  </form>
-   <!--add_lecture_form End-->
+<ion-content> 
+  <div class="add_extra_class_page">
+    <form class="add_lecture_form">
+      <!--Select Unit*-->
+      <ion-row>
+        <ion-col  >
+          <select required class='lectureSelect' value="{{olddata?.unit_id}}" [(ngModel)]="postData.unit" name='unit'>
+            <option   selected value="">Select</option>
+            <option *ngFor="let unit of units" value="{{unit.id}}">{{unit.name}}</option>
+          </select> 
+        </ion-col>
+      </ion-row>
+      <!--Lecture Number*--> 
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-label >Extra Class Number*</ion-label>
+          <ion-input    [(ngModel)]="postData.number" value='{{olddata?.extra_class_number}}' autocomplete="off" name="number"  required placeholder="Lecture Number" type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!--Lecture Name*-->
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-label >Extra Class Name*</ion-label>
+          <ion-input required placeholder="Lecture Name" value='{{olddata?.extra_class_name}}'  [(ngModel)]="postData.lecturename" autocomplete="off" name="lecturename" type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <!--Lecture Date*-->
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-label >Extra class Date*</ion-label>
+          <ion-datetime displayFormat="DD MM YYYY" value='{{olddata?.extra_class_date}}'  [(ngModel)]="postData.date" autocomplete="off" name="date" placeholder="Select Date"></ion-datetime> 
+          <img class="calender_icon" src="../../assets/images/calender.svg">
+        </ion-col>
+      </ion-row>
+      <!--file upload / drag and-->
+      <ion-row class="mg_top">
+        <ion-col class="pdf_img">
+          <ion-label >Upload Notes*</ion-label>
+          <input class="drag_drop"  name="notes" (change)="onChange($event)"  accept="application/pdf"  type="file" id="notes"  /><br />
+          <!-- <img src="../../assets/imgs/pdf_img.svg" class="pdf_img"> -->
+        </ion-col>
+      </ion-row>
+      <ion-row class="mg_top">
+        <div *ngIf='olddata?.notes'>
+          <a href='{{olddata?.notes}}'>View Old</a> 
+        </div>
+      </ion-row>
+      <ion-row class="mg_top">
+        <ion-col class="pdf_img">
+          <ion-label >Upload Video (You can add later)</ion-label>
+          <small>Only extra class with video will show to students</small>
+          <input class="drag_drop"  name="video"  accept="video/*" (change)="onChangeVideo($event)"  type="file" id="video"  /><br />
+          <!-- <img src="../../assets/imgs/pdf_img.svg" class="pdf_img"> -->
+        </ion-col>
+      </ion-row>
+      <ion-row class="mg_top">
+        <div *ngIf='olddata?.extra_class_video'>
+          <a href='{{olddata?.extra_class_video}}'>View Old Video</a> 
+        </div>
+      </ion-row>
+      <ion-row class='ion-text-center' *ngIf="showloader">
+        <ion-col size-sm="12" >Please be patient, files are being uploaded <br> 
+          <ion-spinner name="bubbles"   ></ion-spinner>
+        </ion-col>
+      </ion-row>
+      <ion-button expand="block" share="round" color="success" (click)="createExtraClass()">Save</ion-button>
+    </form>
+  </div>
 </ion-content>
  

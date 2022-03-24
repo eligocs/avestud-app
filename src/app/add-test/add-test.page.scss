@@ -1,20 +1,36 @@
 .assignment_form {
-    padding: 0 18px;
+    padding: 0 10px;
     margin-top: 15px;
   }
+
+  .test_radiogroup{
+    display: flex;
+    margin-top: 15px;
+  }
+
+  .test_radiogroup label{
+    margin-right: 10px;
+  }
+
+  .test_radiogroup input[type="radio"]{
+    margin-top: 4px;
+    margin-right: 18px;
+  }
   
+  .assignment_form ion-row {
+    margin: 14px 0;
+  }
+
   .assignment_form ion-label {
-    font-size: 16px;
-    color: #717171;
-    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    color: #ffffff;
     font-weight: 400 !important;
   }
   
   .assignment_form ion-input {
     height: 46px;
     border: 1px solid #bfbfbf;
-    color: #4e4c4c;
-    font-family: "Poppins", sans-serif;
+    color: #ffffff;
     font-weight: 400 !important;
     font-size: 14px;
     border-radius: 6px;
@@ -43,12 +59,11 @@
     color: white;
     border-radius: 5px;
     font-size: 12px;
-    font-family: "Poppins", sans-serif;
     font-weight: 400;
   }
-  
   #add {
-    background-color: #644699;
+    background-color: #385169;
+    // border: 1px solid #a8a8a8;
     margin-right: 5px;
   }
   
@@ -56,8 +71,7 @@
     background-color: #e03e91;
     margin-left: 5px;
   }
-  
-  
+
   // .text_area{
   //     width: 95%;
   //     height: 102px;
@@ -65,7 +79,6 @@
   //     border-radius: 6px;
   //     font-size: 14px;
   //     color: #717171;
-  //     font-family : 'Poppins', sans-serif;
   // }
 
   .lectureSelect {
@@ -73,5 +86,7 @@
     height: 44px;
     border-radius: 4px;
     border: 1px solid #cfcfcf;
+    background: transparent; 
+    font-size: 15px;
 }
   

@@ -1,25 +1,13 @@
 select.category {
-    width: 100%;
-    background: #ffffff;
-    color: rgb(0, 0, 0);
-    border: 1px solid #e03e91;
-    border-radius: 4px;
-    padding: 4px;
+  width: 100%;
+  background: inherit;
+  color: white;
+  border: 1px solid #d1c8cd;
+  border-radius: 4px;
+  padding: 4px;
+  height: 38px;
 }
 
-// =====search_classes_page=====
-
-.search_classes_page {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 0px 8px;
-  }
-  
-  // =======================
-  // header part of the page 
-  // =======================
-  
-  // =====ion-searchbar====
   
   .search-bar{
     height: 36px;
@@ -39,13 +27,13 @@ select.category {
     padding-left: 5px;
   }
 
-  // attendance_page start 
 .attendance_page{
   padding: 0 10px;
+  margin-top: 22px;
 }
 
 h1{
-  font-size: 22px;
+  font-size: 20px;
   margin-left: 26px;
   font-weight: 400;
   margin-bottom: 0;
@@ -194,9 +182,7 @@ width: 45px;
   color: #AAAAAA;
 }
 
-.wel.m-3 {
-  margin-top: 20px;
-}
+
 
 // calender css end 
   

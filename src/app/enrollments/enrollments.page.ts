@@ -86,12 +86,13 @@ export class EnrollmentsPage implements OnInit {
     if(class_id &&  student_id){
       await this.homeService.downloadReceipt(class_id,student_id,token).subscribe(
       (res: any) => {  
-        var blob = new Blob([res.pdfstream], {type: 'application/pdf'}); 
+        console.log(res)
+        /* var blob = new Blob([res.pdfstream], {type: 'application/pdf'}); 
 
         var link = document.createElement('a'); 
 
         var fileURL = window.URL.createObjectURL(blob); 
-        window.open(fileURL);
+        window.open(fileURL); */
         /* link.download = "Sample.pdf"; 
 
         link.click();  */
