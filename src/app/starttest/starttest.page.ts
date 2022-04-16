@@ -30,6 +30,7 @@ export class StarttestPage implements OnInit {
   countDown:any; 
   time: number;
   skipquestion: any;
+  radiovalue: any;
   interval;
   display;
   showLoader: boolean;
@@ -57,11 +58,13 @@ export class StarttestPage implements OnInit {
         this.subject = params['subject'];   
         this.type = params['type'];   
         if(this.test){  
-          this.starttest(this.test,token);    
+          this.starttest(this.test,token);
+          this.showresult = false;    
           this.previousUrl = '/s-test?iacs='+this.iacs+'&subject='+this.subject+'&purchased=1'+'&type='+this.type;  
         }
       }
     ) 
+    
 
 
     var token =  await this.storageService.get(AuthConstants.AUTH)    
@@ -97,7 +100,10 @@ export class StarttestPage implements OnInit {
     }, 30 * i);
   }
 
-  
+  onChangeHandler($event) {
+    this.radiovalue = $event.target.value;
+  }
+
   async StartTimer(){   
     var total_t = this.topic.timer ?? 0;
     var mainthis = this; 
@@ -153,7 +159,7 @@ export class StarttestPage implements OnInit {
         this.showsubmit = true; 
         this.alreadygiven = true;
       }  
-    }else{
+    }else{ 
       this.toastService.presentToast('Select Your Answer');
     }
   }
@@ -222,6 +228,7 @@ export class StarttestPage implements OnInit {
   }
 
   async starttest(test,token){ 
+    clearInterval(this.interval);
     var newData = { 
       assignment:test, 
     } 

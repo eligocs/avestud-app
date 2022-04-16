@@ -1,102 +1,154 @@
 <ion-header>
   <ion-toolbar>
-      <ion-grid>
-          <ion-row>
-              <ion-col size="3">
-                <div class="d-flex">
-                  <ion-buttons>
-                      <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
-                  </ion-buttons>
-                  <img class="header_icon_1" src="../../assets/images/weblgo.png">
-                </div>
-              </ion-col>
-              <ion-col size="7">
-                  <p class="ion-text-center heading">Questions</p>
-              </ion-col>
-              <ion-col size="2">
-                  <div class="avatar_icon"></div>
-              </ion-col>
-          </ion-row>
-      </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2">
+          <div class="d-flex">
+            <ion-buttons>
+              <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
+            </ion-buttons>
+            <img class="header_icon_1" src="../../assets/images/weblgo.png">
+          </div>
+        </ion-col>
+        <ion-col size="8">
+          <p class="ion-text-center heading">Questions</p>
+        </ion-col>
+        <ion-col size="2">
+          <div class="avatar_icon"></div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
 <ion-content>
- <!--questions_page Start-->
-  <div class="comman_page_padding">
-  <div class="questions_page">
-    <ion-row>
-      <ion-col size="9">
+  <!--list_question_page Start-->
+  <div class="comman_page_padding list_question_page">
+
+    <!-- Header section -->
+    <div class="page_header">
+      <div>
         <h1 class="color_violet page_tittle">Questions</h1>
-      </ion-col>
-      <ion-col size="3">
-        <div class="btn_theme">
-          <button [routerLink]="['/add-question']" class='view_btn'   [queryParams]="{iacs:iacs,subject:subject,assignment_id: assignment_id,type:pagetype,questionType:questionType}">Add</button>
+      </div>
+       <div class="btn_theme">
+          <button [routerLink]="['/add-question']" 
+            [queryParams]="{iacs:iacs,subject:subject,assignment_id: assignment_id,type:pagetype,questionType:questionType}">Add
+          </button>
         </div>
-      </ion-col>
-    </ion-row>
-
-    <div *ngIf='showEmptyMsg' class='text-center'><br>No questions added yet !!!</div>
-
-    
-
-    <div *ngFor='let quest of questionsList'>
-    
-    <!--   <ion-row >
-        <ion-col>
-          <p class="comman_font2 color_violet">Questions</p>
-        </ion-col>
-       
-        <ion-col>
-          <p class="comman_font2 font_black">Answer</p>
-        </ion-col>
-
-        <ion-col>
-          <p class="comman_font2 font_black">Explanation</p>
-        </ion-col>
-      </ion-row> -->
-
-      <hr>
-      <ion-row class=''>
-        <p class="d-flex   ">Question : {{quest.question ?? ''}}</p>  
-      </ion-row> 
-      <hr>
-      <ion-row class='fl-right'>
-        <div>
-          <a [routerLink]="['/add-question']" [queryParams]="{iacs:iacs,subject:subject,assignment_id:assignment_id,question_id: quest.id,type:pagetype}"><i class='fa fa-pencil text-white'></i></a>
-        </div>&nbsp;&nbsp;
-      <div >
-          <a (click)="presentAlert(quest.id)"> <i class='fa fa-trash text-white'></i></a>
-        </div> 
-      </ion-row> 
-      <ion-row> 
-        <div class="options">
-          <p>A. {{quest.a ?? ''}}</p>
-          <p>B. {{quest.b ?? ''}}</p>
-          <p>C. {{quest.c ?? ''}}</p>
-          <p>D. {{quest.d ?? ''}}</p>
-        </div>
-        
-      </ion-row>
-      <ion-row *ngIf='quest.question_img'>
-        <a href="{{quest.question_img ?? ''}}" class="sums _imgs">View Question File</a>
-      </ion-row>
-      
-      <ion-row>    
-          <p>Answer : {{quest.answer ?? ''}}</p> 
-      </ion-row>
-      <ion-row> 
-          <p>Explaination : {{quest.answer_exp ?? ''}}</p>  
-      </ion-row> 
-    <!--   <ion-row> 
-          <p>Show Explaination : {{quest.show_ans && quest.show_ans == 1 ? 'Show': 'Dont Show'}}</p>  
-      </ion-row>  -->
     </div>
+    <!-- End Header Section -->
 
-    
+    <!-- row_unit -->
+    <div class="row_unit" *ngIf="questionsList?.length > 0">
+      <div *ngFor='let quest of questionsList;let i = index' id="{{showUnitFor == i ? 'theme_shadow' :''}}" class="question_one">
+        <p (click)="toggleShow(i)">Q {{i+1}}</p>
+      </div>
+    </div>
+    <!--End row_unit  -->
+
+    <div class="popover_relative">
+      <!-- list_questions_tabs -->
+      <div class="list_questions_tabs">
+        <div class="nav_tabs">
+          <span class="tab question active">Question</span>
+          <span class="tab answer">Answer</span>
+          <span class="tab explaination">Explaination</span>
+        </div>
+      </div>
+      <!-- End list_questions_tabs -->
+
+      <div *ngIf='showEmptyMsg' class='text-center'><br>No questions added yet !!!</div>
+
+      <!-- foreach Questions  -->
+      <div *ngFor='let quest of questionsList;let i = index'>
+        <div *ngIf="showUnitFor == i">
+          <!-- custom_popover -->
+          <div class="custom_popover">
+            <span class="dropdown_toggle list_ques_toogle">
+                <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical">
+                </ion-icon>
+            </span>
+            <ul class="dropdown list_ques_dropdown">
+                <li>
+                    <a [routerLink]="['/add-question']"
+                    [queryParams]="{iacs:iacs,subject:subject,assignment_id:assignment_id,question_id: quest.id,type:pagetype}">
+                        Edit
+                        <span><i class='fa fa-pencil text-white'></i> </span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="presentAlert(quest.id)"> Delete
+                        <span><i class='fa fa-trash text-white'></i></span>
+                    </a>
+                </li>
+            </ul>
+          </div>
+          <!-- End custom_popover -->
+
+          <!-- tab_questions -->
+          <div class="tab_questions">
+            <!-- <ion-row *ngIf='quest.question_img'>
+                  <a href="{{quest.question_img ?? ''}}" class="sums _imgs">View Question File</a>
+              </ion-row> -->
+            <!-- question -->
+            <div class='question'>
+              <h3 class="tab_title"><span>Q.</span> {{quest.question ?? ''}}</h3>
+            </div>
+
+            <!-- <div class='fl-right'>
+              <div>
+                <a [routerLink]="['/add-question']"
+                  [queryParams]="{iacs:iacs,subject:subject,assignment_id:assignment_id,question_id: quest.id,type:pagetype}"><i
+                    class='fa fa-pencil text-white'></i></a>
+              </div>
+              <div>
+                <a (click)="presentAlert(quest.id)"> <i class='fa fa-trash text-white'></i></a>
+              </div>
+            </div> -->
+
+            <div class="options">
+              <p> <span>A.</span> {{quest.a ?? ''}}</p>
+              <p> <span>B.</span> {{quest.b ?? ''}}</p>
+              <p> <span>C.</span> {{quest.c ?? ''}}</p>
+              <p> <span>D.</span> {{quest.d ?? ''}}</p>
+            </div>
+            <!-- image Thumbnail -->
+            <div class="question_thumbnail">
+              <img src="../../assets/images/sum_maths.jpeg" alt="Question Image">
+            </div>
+          </div>
+          <!-- End tab_questions -->
+
+          <!-- tab_answeres -->
+          <div class="tab_answeres">
+            <div>
+              <h3 class="tab_title">Answer </h3>
+              <!-- <p>{{quest.answer ?? ''}}</p> -->
+              <p *ngIf="quest.answer == 'A'"> <span>{{quest.answer ?? ''}}.</span> {{quest.a ?? ''}}</p>
+              <p *ngIf="quest.answer == 'B'"> <span>{{quest.answer ?? ''}}.</span> {{quest.b ?? ''}}</p>
+              <p *ngIf="quest.answer == 'C'"> <span>{{quest.answer ?? ''}}.</span> {{quest.c ?? ''}}</p>
+              <p *ngIf="quest.answer == 'D'"> <span>{{quest.answer ?? ''}}.</span> {{quest.d ?? ''}}</p>
+            </div>
+          </div>
+          <!-- End tab_answeres -->
+
+          <!-- tab_explaination -->
+          <div class="tab_explaination">
+            <div>
+              <h3 class="tab_title">Explaination</h3>
+              <p> {{quest.answer_exp ?? ''}}</p>
+            </div>
+          </div>
+          <!-- End tab_explaination -->
+        </div>
+      </div>
+      <!-- End foreach Questions -->
 
 
+      <!--   <ion-row> 
+          <p>Show Explaination : {{quest.show_ans && quest.show_ans == 1 ? 'Show': 'Dont Show'}}</p>  
+        </ion-row>  -->
+
+    </div>
   </div>
-  </div>
-  <!--questions_page Ends-->
-
+  <!--list_question_page Ends-->
 </ion-content>

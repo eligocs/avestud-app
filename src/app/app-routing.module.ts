@@ -165,6 +165,10 @@ const routes: Routes = [
     path: 'starttest',
     loadChildren: () => import('./starttest/starttest.module').then( m => m.StarttestPageModule)
   },
+  {
+    path: 'changetime',
+    loadChildren: () => import('./changetime/changetime.module').then( m => m.ChangetimePageModule)
+  },
 
 ];
 @NgModule({

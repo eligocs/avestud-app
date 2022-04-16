@@ -6,6 +6,7 @@ import { BehaviorSubject,Observable } from 'rxjs';
 import { AuthConstants } from '../../../config/auth-constants';
 import { Router,ActivatedRoute,NavigationExtras } from '@angular/router';
 import * as $ from 'jquery';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 import 'select2';                      
 import 'select2/dist/css/select2.css';
 import { ToastService } from '../services/toast.service';
@@ -28,10 +29,12 @@ export class AddlecturePage implements OnInit {
   units:any;
   showloader:boolean;
   subject:any;
+  progress:any;
   iacs:any;
   previousUrl:any;
   olddata:any;
   lectureid:any; 
+  progressPercent:any; 
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -117,9 +120,50 @@ export class AddlecturePage implements OnInit {
       var token =  await this.storageService.get(AuthConstants.AUTH)   
       var classid= this.iacs; 
       if(classid){
-        await this.homeService.createLecture(newData,token).subscribe(
-          (res: any) => {    
-            if (res.status == 200) {
+        await this.homeService.createLecture(newData,token).subscribe((event: HttpEvent<any>) => { 
+          switch (event.type) {
+            case HttpEventType.Sent:
+              var progressPercent = 2; 
+              console.log('Request has been made!');
+              break;
+            case HttpEventType.ResponseHeader:
+              console.log('Response header has been received!'); 
+              break;
+            case HttpEventType.UploadProgress:
+              var prog = Math.round(event.loaded / event.total * 100);
+              if(prog > 90){
+                this.progress = 90;
+              } 
+                for (let index = 0; index <= 90; index++) {
+                  this.setPercentBar(+index);
+                }
+              
+              console.log(`Uploaded! ${this.progress}%`);
+              break;
+            case HttpEventType.Response:
+              this.progress = 100;
+              console.log('Request complete', event.body);
+              setTimeout(() => {
+                var res = event.body;
+                if (res.status == 200) {
+                  this.toastService.presentToast(res.msg); 
+                  let navigationExtras: NavigationExtras = {
+                    queryParams: { 'iacs': this.iacs },
+                    fragment: 'anchor'
+                  };
+                  this.router.navigate(['lectures'],navigationExtras);
+                }else if(res.status == 205){
+                  this.showloader = false;
+                  this.progress = 0;
+                  this.toastService.presentToast('Please select unit !!!'); 
+                }else{
+                  this.toastService.presentToast('Fail to add lecture!!!'); 
+                } 
+              }, 1500);
+          } 
+        }) 
+      }
+            /* if (res.status == 200) {
               this.toastService.presentToast(res.msg); 
               let navigationExtras: NavigationExtras = {
                 queryParams: { 'iacs': this.iacs },
@@ -128,12 +172,16 @@ export class AddlecturePage implements OnInit {
               this.router.navigate(['lectures'],navigationExtras);
             }else{
               this.toastService.presentToast('Fail to add lecture!!!'); 
-            }
+            } */
           }
-        );
-      }
-      }
-  }
+    }
+    setPercentBar(i) {
+      setTimeout(() => {
+        let apc = (i / 100) 
+        this.progress = apc;
+        this.progressPercent = i;
+      }, 30 * i);
+    }
 
   ngAfterViewInit(){
     $(document).ready(function(){

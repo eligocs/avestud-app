@@ -51,6 +51,7 @@ export class StartassignmentPage implements OnInit {
         this.type = params['type'];   
         if(this.assignment){  
           this.startassignment(this.assignment,token);   
+          this.showresult = false; 
           this.previousUrl = '/s-assignments?iacs='+this.iacs+'&subject='+this.subject+'&purchased=1'; 
           //this.loadstudentAssign(this.iacs,this.subject,token);  
         }

@@ -6,7 +6,7 @@ import { BehaviorSubject,Observable } from 'rxjs';
 import { AuthConstants } from '../../../config/auth-constants';
 import { Router,ActivatedRoute,NavigationExtras } from '@angular/router'; 
 import { ToastService } from '../services/toast.service'; 
-import $ from 'jquery';
+import $ from 'jquery'; 
 @Component({
   selector: 'app-view-attendance',
   templateUrl: './view-attendance.page.html',
@@ -28,7 +28,8 @@ export class ViewAttendancePage implements OnInit {
   attended_lectures_dates:any;
   absentLectureDates:any;
   notAvailable:any;
-  studentName :any;
+  studentName :any; 
+
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -51,21 +52,24 @@ export class ViewAttendancePage implements OnInit {
             this.getStudentSubjects(this.iacs , this.student,this.subject);
         }  
       }
-    )  
+    )   
+    
 
   }
 
+ 
   async onSubChange(){ 
     var token =  await this.storageService.get(AuthConstants.AUTH);  
     if(this.selected_sub){
       var data = {
-        subject:this.selected_sub,
+        subject_id:this.selected_sub,
         student:this.student,
         iacs:this.iacs, 
-      }
+      } 
       await this.homeService.getstudentAttendance(data,token).subscribe(
       (res: any) => {  
-        if (res.status == 200) {      
+        if (res.status == 200) {  
+         /*  $('.attendancehtml').html(res.html);  */   
             this.total_past_lectures = res.total_past_lectures ?? 0;
             this.attended_lectures = res.attended_lectures ?? 0;
             this.total_attended_lectures = res.total_attended_lectures ?? 0;
@@ -73,7 +77,7 @@ export class ViewAttendancePage implements OnInit {
             this.percentage = res.percentage ?? 0;
             this.attended_lectures_dates = res.attended_lectures_dates ?? 0;
             this.absentLectureDates = res.absent_lectures_dates ?? 0;
-            this.notAvailable = res.not_available ?? 0; 
+            this.notAvailable = res.not_available ?? 0;  
         }
       }) 
     } 
@@ -83,10 +87,9 @@ export class ViewAttendancePage implements OnInit {
     if(iacs && student){
       var token =  await this.storageService.get(AuthConstants.AUTH)    
       var data = {
-        iacs:iacs, 
-        student:student,
-        subject:subject
-      }
+        iacs:subject, 
+        student:student, 
+      } 
           await this.homeService.getStudentSubjects(data,token).subscribe(
             (res: any) => {     
               if (res.status == 200) { 

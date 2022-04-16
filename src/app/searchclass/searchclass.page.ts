@@ -6,7 +6,8 @@ import { AuthConstants } from '../../../config/auth-constants';
 import { Router,NavigationExtras,ActivatedRoute } from '@angular/router';
 import { PreviousRouteService } from '../previous-route.service';
 import { AlertController } from '@ionic/angular';
-import { ToastService } from '../services/toast.service';  
+import { ToastService } from '../services/toast.service';   
+import $ from "jquery"
 @Component({
   selector: 'app-searchclass',
   templateUrl: './searchclass.page.html',
@@ -38,6 +39,10 @@ export class SearchclassPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    // $('#search_box').click(function(){
+    //   $('.default_select').addClass("decrease_width");
+    // });
+
     this.showloader = false;
     this.show_default = true;
     var token =  await this.storageService.get(AuthConstants.AUTH);  
@@ -64,9 +69,40 @@ export class SearchclassPage implements OnInit {
         }
       )
     }
-    setName(){
+    async setName(){
       if(this.enteredName.length > 1 && this.enteredName.length < 15){
-         this.oncatChange(); 
+        if(this.enteredName){
+          var detailA = {
+            class : this.enteredName
+          }
+          var token =  await this.storageService.get(AuthConstants.AUTH)
+          await this.StudentService.getstudentclassByname(token,detailA).subscribe(
+            (res: any) => {  
+              if (res.status == 200) {  
+                var result =  res.classes;   
+                var allClasses = []; 
+                if(result.length > 0){
+                  result.forEach((entry,i) => { 
+                    entry.subjects.forEach((subj) => {  
+                      subj.color_code = this.colorLight(i);  
+                    });    
+                    allClasses.push(entry)
+                    if(i == result.length -1){
+                      this.classes = allClasses; 
+                    }
+                  });
+                  console.log(allClasses)
+                  if(this.classes.length > 0){
+                      this.nodata = false;
+                  } else {
+                      this.nodata = true;
+                  } 
+                }     
+              }
+              this.show_default = false;
+              this.showloader = false;
+            }) 
+        }
       } 
     }
     
@@ -88,7 +124,7 @@ export class SearchclassPage implements OnInit {
               if(result.length > 0){
                 result.forEach((entry,i) => { 
                   entry.subjects.forEach((subj) => {  
-                    subj.color_code = colorLight(i);  
+                    subj.color_code = this.colorLight(i);  
                   });    
                   allClasses.push(entry)
                   if(i == result.length -1){
@@ -96,43 +132,11 @@ export class SearchclassPage implements OnInit {
                   }
                 });
                 console.log(allClasses)
-                if(this.classes.length > 0){
+               /*  if(this.classes.length > 0){
                     this.nodata = false;
                 } else {
                     this.nodata = true;
-                } 
-              }     
-            }
-            this.show_default = false;
-            this.showloader = false;
-          }) 
-      }
-      if(this.enteredName){
-        var detailA = {
-          class : this.enteredName
-        }
-        var token =  await this.storageService.get(AuthConstants.AUTH)
-        await this.StudentService.getstudentclassByname(token,detailA).subscribe(
-          (res: any) => {  
-            if (res.status == 200) {  
-              var result =  res.classes;   
-              var allClasses = []; 
-              if(result.length > 0){
-                result.forEach((entry,i) => { 
-                  entry.subjects.forEach((subj) => {  
-                    subj.color_code = colorLight(i);  
-                  });    
-                  allClasses.push(entry)
-                  if(i == result.length -1){
-                    this.classes = allClasses; 
-                  }
-                });
-                console.log(allClasses)
-                if(this.classes.length > 0){
-                    this.nodata = false;
-                } else {
-                    this.nodata = true;
-                } 
+                }  */
               }     
             }
             this.show_default = false;
@@ -140,16 +144,17 @@ export class SearchclassPage implements OnInit {
           }) 
       }
       
+      
    
 
-    function colorLight(i) {  
+      
+      
+      
+    }
+    colorLight(i) {  
        var items = ['grad_sky','grad_yellow','grad_yellow','grad_green','grad_orange']
         return items[Math.floor(Math.random()*items.length)]; 
      }
-     
-     
-     
-    }
     async presentAlert(id) {
      var token = await this.storageService.get(AuthConstants.AUTH);  
      var toast = this.toastService;

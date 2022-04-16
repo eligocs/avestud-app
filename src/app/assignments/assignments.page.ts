@@ -8,7 +8,8 @@ import { PreviousRouteService } from '../previous-route.service';
 import { ToastService } from '../services/toast.service';  
 import { AlertController,ModalController  } from '@ionic/angular';  
 import { ModalPage } from '../modal/modal.page';
-import 'sweetalert2/src/sweetalert2.scss'
+import 'sweetalert2/src/sweetalert2.scss';
+import $ from "jquery";
 @Component({
   selector: 'app-assignments',
   templateUrl: './assignments.page.html',
@@ -36,6 +37,17 @@ export class AssignmentsPage implements OnInit {
   ) { }   
  
   async ngOnInit() {   
+    // Custom_popover / Dropdown Menu 
+    $(document).ready(function(){
+    $(function() { // Dropdown toggle
+      $(document).on('click', '.toggle1', function() { 
+        $(this).next('.dropdown1').slideToggle();
+      });
+      });
+    });
+   // Custom_popover / Dropdown Menu  end
+
+   
     this.assignment = 'assignment';
     var token =  await this.storageService.get(AuthConstants.AUTH);
     this.route.queryParams.subscribe(

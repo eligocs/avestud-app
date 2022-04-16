@@ -20,22 +20,33 @@
 </ion-header>
 <ion-content>
    <div class="subject_details_page">
-      <h1 class="ion-text-center color_pink subject_name">{{subject?.name}}</h1>
+      <h1 class="ion-text-center color_pink subject_name title_font">{{subject?.name}}</h1>
       <h2 class="ion-text-center color_pink"></h2>
       <ion-row>
-         <ion-col class="btn_demo" *ngIf='video'>
-            <ion-button class='text-white' class="btn_view" defaultHref='{{video ?? ""}}'><img
+         <ion-col class="btn_demo position_relative" >
+            <button class='text-white' class="btn_view grad_green" *ngIf='video' defaultHref='{{video ?? ""}}'><img
                src="../../assets/images/btn_red_icon.png"> View Demo 
-            </ion-button>
+            </button>
+            <button class='text-white' class="btn_view grad_green" *ngIf='!video' defaultHref=''><img
+               src="../../assets/images/btn_red_icon.png"> No Demo Video
+            </button>
+            <div class="edit_btn">
+               <a href="#">
+                  <img src="../../assets/images/edit_profile_icon.svg" alt="">
+               </a>
+            </div>
          </ion-col>
       </ion-row>
       <ion-row class="syllabus_btns ion-text-center">
-         <ion-col *ngIf='syllabus' size="12">
-            <a href='{{syllabus ?? ""}}'><button class="grad_sky"  >View Syllabus</button></a>
+         <ion-col class="ion-text-left" *ngIf='syllabus' size="6">
+            <a href='{{syllabus ?? ""}}'><button class="view_btn"  >View Syllabus</button></a>
          </ion-col>
-         <ion-col size='12'>
-            {{syllabus ? 'Update' :'View'}} Syllabus
-            <ion-input class='margin-t14' type="file" accept="application/pdf" (change)="onChange($event)"></ion-input>
+         <ion-col size='6'>
+            <!-- {{syllabus ? 'Update' :'View'}} Syllabus -->
+            <div class="add_syllabus_input">
+               <label for="file">Add Syllabus</label>
+               <ion-input class="grad_orange" type="file" accept="application/pdf" (change)="onChange($event)"></ion-input>
+            </div>
          </ion-col>
       </ion-row>
       <ion-row class='ion-text-center' *ngIf="showloader">
@@ -45,10 +56,14 @@
       </ion-row>
       <ion-row>
          <ion-col size="8">
-            <p class="comman_font color_violet">Class Shedule</p>
+            <p class="comman_font color_violet title_font">Class Shedule</p>
          </ion-col>
          <ion-col size="4">
-            <!--  <p class="comman_font font_b">View All</p> -->
+            <div class="edt_shedule">
+               <a href="#">
+                  <img src="../../assets/images/edit_profile_icon.svg" alt="Edit Icon">
+               </a>
+            </div>
          </ion-col>
          <ion-col size="12" *ngIf='next_class'>
             <ion-card class="card">
@@ -61,23 +76,75 @@
 
          </ion-col>
       </ion-row>
-      <!--ion row starts-->
-      <ion-row>
+         <!-- class Shedule Start -->
+      <ion-row    >
+         <ion-col size="6"  *ngFor="let time of class_time;">
+            <div class="shedule_card"  >
+               <div class="column_1 {{time.color_code}}">
+                  <p>{{time.time}}</p>
+               </div>
+               <div class="column_2">
+                  <p>{{time?.day | titlecase}}</p>
+                  <p>{{time?.name | titlecase}}</p>
+               </div>
+            </div>
+         </ion-col> 
+      </ion-row>
+         <!-- <ion-col size="6">
+            <div class="shedule_card">
+               <div class="column_1 grad_green">
+                  <p>05 <br> June</p>
+               </div>
+               <div class="column_2">
+                  <p>Monday</p>
+                  <p>10:00 Am</p>
+               </div>
+            </div>
+         </ion-col>
+         <ion-col size="6">
+            <div class="shedule_card">
+               <div class="column_1 grad_sky">
+                  <p>07 <br> June</p>
+               </div>
+               <div class="column_2">
+                  <p>Tuesday</p>
+                  <p>09:00 Am</p>
+               </div>
+            </div>
+         </ion-col>
+         <ion-col size="6">
+            <div class="shedule_card">
+               <div class="column_1 grad_orange">
+                  <p>10 <br> June</p>
+               </div>
+               <div class="column_2">
+                  <p>Saturday</p>
+                  <p>12:30 Pm</p>
+               </div>
+            </div>
+         </ion-col>
+         <ion-col size="6">
+            <div class="shedule_card">
+               <div class="column_1 grad_yellow">
+                  <p>14 <br> June</p>
+               </div>
+               <div class="column_2">
+                  <p>Friday</p>
+                  <p>04:00 Pm</p>
+               </div>
+            </div>
+         </ion-col> -->
+    
+      <!-- class Shedule End -->
+      <!-- <ion-row>
          <ion-col *ngFor="let subjec of getSubjectsInfo;" size="6">
             <ion-card class="card">
                <ion-col class="card1 " size="12">
                   <p class="text_white mt-2 ">{{subjec?.day | titlecase}}</p>
                </ion-col>
-               <!--  <ion-col class="card2" size="7">
-                 <p class="day"></p>
-                 <p class="time">10:00 Am</p>
-                 </ion-col> -->
             </ion-card>
-            <!--.card-->
          </ion-col>
-
-      </ion-row>
-      <!--ion-row Ends-->
+      </ion-row> -->
       <!---ion row Starts-->
       <!-- <ion-row>
         <ion-col size="6">
@@ -118,8 +185,10 @@
         </ion-row> -->
       <!--ion-row Ends-->
       <div>
-         <h2 class="color_violet comman_font resources">Class Resources</h2>
          <ion-row class="resources_btns">
+            <ion-col size="12">
+               <p class="color_violet comman_font title_font">Class Resources</p>
+            </ion-col>
             <ion-col size="6">
                <button class="grad_sky comman_btn  common_btn_shadow">Live Classes</button>
             </ion-col>
@@ -149,10 +218,17 @@
                   class="grad_green comman_btn  common_btn_shadow">Extra Classes</button>
             </ion-col>
          </ion-row>
+         <ion-row class="resources_btns">
+            <ion-col size="6">
+               <button class="grad_yellow comman_btn  common_btn_shadow">Attendance </button>
+            </ion-col>
+            <ion-col size="6">
+               <button class="grad_sky comman_btn  common_btn_shadow">Extra Notes</button>
+            </ion-col>
+         </ion-row>
          <ion-row>
             <ion-col>
-               <ion-label class="comman_font color_violet ">Class Notification</ion-label>
-               <!-- <ion-textarea  class="text_area"></ion-textarea> -->
+               <ion-label class="comman_font color_violet title_font">Class Notification</ion-label>
                <ion-textarea [(ngModel)]="notificat" class="text_area"></ion-textarea>
             </ion-col>
          </ion-row>

@@ -3,15 +3,15 @@
   <ion-toolbar>
      <ion-grid>
         <ion-row>
-           <ion-col size="3">
+           <ion-col size="2">
               <ion-buttons>
                 <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
               </ion-buttons>
            </ion-col>
-           <ion-col size="5">
+           <ion-col size="8">
               <p class="ion-text-center heading">Add Extra Class</p>
            </ion-col>
-           <ion-col size="4">
+           <ion-col size="2">
               <div class="avatar_icon" (click)="presentPopover('any')"></div>
            </ion-col>
         </ion-row>
@@ -26,6 +26,7 @@
       <!--Select Unit*-->
       <ion-row>
         <ion-col  >
+          <ion-label>Select Unit</ion-label>
           <select required class='lectureSelect' value="{{olddata?.unit_id}}" [(ngModel)]="postData.unit" name='unit'>
             <option   selected value="">Select</option>
             <option *ngFor="let unit of units" value="{{unit.id}}">{{unit.name}}</option>
@@ -69,8 +70,8 @@
       </ion-row>
       <ion-row class="mg_top">
         <ion-col class="pdf_img">
-          <ion-label >Upload Video (You can add later)</ion-label>
-          <small>Only extra class with video will show to students</small>
+          <ion-label >Upload Video <span class="placeholder_text">(You can add later)</span></ion-label>
+          <span class="placeholder_text">Only extra class with video will show to students</span>
           <input class="drag_drop"  name="video"  accept="video/*" (change)="onChangeVideo($event)"  type="file" id="video"  /><br />
           <!-- <img src="../../assets/imgs/pdf_img.svg" class="pdf_img"> -->
         </ion-col>

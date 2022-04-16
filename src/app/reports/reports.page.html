@@ -4,7 +4,7 @@
             <ion-row>
                 <ion-col size="4">
                     <ion-buttons>
-                        <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
+                        <ion-back-button defaultHref="{{previousUrl ?? ''}}" ></ion-back-button>
                     </ion-buttons>
                 </ion-col>
                 <ion-col size="4">
@@ -20,45 +20,73 @@
 
 
 <ion-content>
-    <div class="comman_page_padding page_reports">
+    <div class="page_reports">
         <!--page_tittle and add button-->
         <ion-row>
-            <h3 class="color_pink comman_font page_heading">{{type | titlecase}} Report</h3>
+            <ion-col size="12">
+                <h3 class="comman_font">{{type | titlecase}} Report</h3>
+            </ion-col>
         </ion-row>
+
         <ion-row class='test_section' *ngFor="let report of reportdata">
             <ion-col size="6">
-                <p class="color_violet">Title</p>
+                <p >Title</p>
+            </ion-col>
+            <ion-col class="right_column" size="6">
+                <p > {{report.title ?? ''}}</p>
             </ion-col>
             <ion-col size="6">
-                <p class="color_violet"> {{report.title ?? ''}}</p>
+                <p >Name</p>
+            </ion-col>
+            <ion-col class="right_column" size="6">
+                <p > {{report.name | titlecase}}</p>
             </ion-col>
             <ion-col size="6">
-                <p class="color_violet">Name</p>
+                <p >Phone</p>
+            </ion-col>
+            <ion-col class="right_column" size="6">
+                <p > {{report.phone ?? ''}}</p>
             </ion-col>
             <ion-col size="6">
-                <p class="color_violet"> {{report.name | titlecase}}</p>
+                <p >Marks Obtained</p>
+            </ion-col>
+            <ion-col class="right_column" size="6">
+                <p > {{report.marks ?? ''}}</p>
             </ion-col>
             <ion-col size="6">
-                <p class="color_violet">Phone</p>
+                <p >Total Marks</p>
             </ion-col>
-            <ion-col size="6">
-                <p class="color_violet"> {{report.phone ?? ''}}</p>
+            <ion-col class="right_column" size="6">
+                <p > {{report.totalmarks ?? ''}}</p>
             </ion-col>
-            <ion-col size="6">
-                <p class="color_violet">Marks Obtained</p>
-            </ion-col>
-            <ion-col size="6">
-                <p class="color_violet"> {{report.marks ?? ''}}</p>
-            </ion-col>
-            <ion-col size="6">
-                <p class="color_violet">Total Marks</p>
-            </ion-col>
-            <ion-col size="6">
-                <p class="color_violet"> {{report.totalmarks ?? ''}}</p>
-            </ion-col>
-            <ion-col size="12">
+            <ion-col class="ion-text-center" size="12">
                 <button class="publish_btn" (click)='resettest(topic.id,report.id)'> Reset </button>
             </ion-col>
         </ion-row>
+
+        <!-- card_reports -->
+        <!-- <div class="card_reports test_section" *ngFor="let report of reportdata">
+            <div class="flex_items">
+                <div class="card_titles">
+                    <p>Title</p>
+                    <p>Name</p>
+                    <p>Phone</p>
+                    <p>Marks Obtained</p>
+                    <p>Total Marks</p>
+                </div>
+                <div class="reports_titles">
+                    <p>{{report.title ?? ''}}</p>
+                    <p>{{report.name | titlecase}}</p>
+                    <p>{{report.phone ?? ''}}</p>
+                    <p>{{report.marks ?? ''}}</p>
+                    <p>{{report.totalmarks ?? ''}}</p>
+                </div>
+            </div>
+            <div class="action_btn ion-text-center">
+                <button class="publish_btn" (click)='resettest(topic.id,report.id)'> Reset </button>
+            </div>
+        </div> -->
+        <!-- End card_reports -->
+
     </div>
 </ion-content>

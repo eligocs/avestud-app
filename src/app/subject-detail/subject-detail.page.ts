@@ -30,6 +30,7 @@ export class SubjectDetailPage implements OnInit {
   loadsuccess:any; 
   syllabus:string; 
   istudent:string; 
+  class_time:string; 
   showloader:boolean;
   syllabusSelected:string; 
   constructor(
@@ -119,8 +120,11 @@ export class SubjectDetailPage implements OnInit {
         if(this.iacs && this.subject_id){
           await this.homeService.openSubject(iacs,subject_id,token).subscribe(
             (res: any) => {    
+              if(res.status == 200){
+                console.log(res)
               this.syllabus = res.data.syllabus ? res.data.syllabus:'';
               this.video = res.data.video ? res.data.video:'';
+              
               this.getSubjectsInfo = res.data.getSubjectsInfo ? res.data.getSubjectsInfo:'';
               this.doubtsnotify = res.data.doubtsnotify ? res.data.doubtsnotify:0;
               this.class_days = res.data.class_days ? res.data.class_days:'';
@@ -129,10 +133,23 @@ export class SubjectDetailPage implements OnInit {
               this.subject = res.data.subject ? res.data.subject:'';  
               this.i_a_c_s_id = res.data.i_a_c_s_id ? res.data.i_a_c_s_id:'';    
               this.next_class = res.data.next_class ? res.data.next_class:''; 
-              console.log(this.video)
+              var class_time = res.data.class_time ? res.data.class_time:''; 
+
+              if(class_time){ 
+                class_time.forEach((entry,i) => {  
+                  entry.color_code = this.colorLight();      
+                });    
+                console.log(class_time)
+                this.class_time =  class_time; 
+              }
+            }
             });
         }   
     }
   }
+  colorLight() { 
+    var items = ['grad_green','grad_sky','grad_orange','grad_yellow']
+    return items[Math.floor(Math.random()*items.length)]; 
+  } 
 
 }

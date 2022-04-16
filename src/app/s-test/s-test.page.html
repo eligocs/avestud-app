@@ -1,22 +1,22 @@
 <!--Ion-Header Start-->
 <ion-header>
   <ion-toolbar>
-     <ion-grid>
-        <ion-row>
-          <ion-col size="3">
-            <div class="d-flex">
-                 <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
-                 <img class="header_icon_1" src="../../assets/images/weblgo.png">
-            </div>
-           </ion-col>
-           <ion-col size="7">
-              <p class="ion-text-center heading">Test</p>
-           </ion-col>
-           <ion-col size="2">
-              <div class="avatar_icon" (click)="presentPopover('any')"></div>
-           </ion-col>
-        </ion-row>
-     </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">
+          <div class="d-flex">
+            <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
+            <img class="header_icon_1" src="../../assets/images/weblgo.png">
+          </div>
+        </ion-col>
+        <ion-col size="7">
+          <p class="ion-text-center heading">Test</p>
+        </ion-col>
+        <ion-col size="2">
+          <div class="avatar_icon" (click)="presentPopover('any')"></div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
 <!--Ion-Header Ends-->
@@ -24,69 +24,116 @@
 <ion-content>
   <div class="assignment_qustion_page">
     <div class="comman_page_padding">
-   <!--  <ion-row class="row_unit">
-      <ion-col id="theme_shadow">
-        <p>Unit 5</p>
-      </ion-col>
-      <ion-col>
-        <p>Unit 4</p>
-      </ion-col>
-      <ion-col>
-        <p>Unit 3</p>
-      </ion-col>
-      <ion-col>
-        <p>Unit 2</p>
-      </ion-col>
-      <ion-col>
-        <p>Unit 1</p>
-      </ion-col>
-    </ion-row> -->
-    <!--assignment_card start-->
-    <div class="text-center mt-4"  *ngIf="nodata" > 
-      No test yet !!
-    </div>
+      <!-- row_unit -->
+      <div class="row_unit">
+        <div (click)="toggleShow()" id="{{!showUnitFor ? 'theme_shadow' :''}}">
+            <p> All</p>
+        </div> 
+        <div *ngFor="let assign of testAll;" id="{{showUnitFor == assign.name ? 'theme_shadow' :''}}">
+            <p (click)="toggleShow(assign.name)">
+                {{assign?.name && assign.name.length > 0 && assign.name.length > 6 ? assign.name.substring(0,6)+'
+                ...' : assign.name.length > 0 && assign.name.length < 6 ? assign.name :''}} </p>
+        </div>
+      </div>
+      <!-- <div class="row_unit">
+        <div id="theme_shadow">
+          <p>Unit 45</p>
+        </div>
+        <div>
+          <p>Unit 2</p>
+        </div>
+        <div>
+          <p>Unit 3</p>
+        </div>
+        <div>
+          <p>Unit 52</p>
+        </div>
+        <div>
+          <p>Unit 10</p>
+        </div>
+      </div> -->
+      <!-- End row_unit -->
 
-    <div class="" *ngFor="let assign of testAll;">
-      <h5 class="text-center">{{assign.name | titlecase}}</h5>
-      <div class="test_section bg_light_yellow" *ngFor="let topicsAll of assign.topics;">
-      <div class="">
-        <ion-row>
+      <div class="text-center mt-4" *ngIf="nodata">
+        No test yet !!
+      </div>
+
+      <div class="" *ngFor="let assign of testAll; ">
+        <div *ngIf="showUnitFor == assign.name || !showUnitFor">
+        <p class="text-center unit_heading">{{assign.name | titlecase}}</p>
+        <div class="test_box" *ngFor="let topicsAll of assign.topics;let i = index;">
+          <div class="box_header">
+            <h1 class="box_heading title_font"> Test No. {{i+1}}</h1>
+            <h2 class="test_title text_light">{{topicsAll.title | titlecase}}</h2>
+            <p class="published_date">
+              {{topicsAll.publish_date ? 'Published' :''}}
+              {{topicsAll.publish_date| date: 'MM/dd/yyyy'}}
+            </p>
+            <h3 class="test_type text_blue">{{topicsAll.testType == 1 ? 'MCQ' :'Theory'}}</h3>
+          </div>
+          <div class="test_box_body">
+            <!-- <ion-row>
           <ion-col>
-            <!-- <h1 class="color_pink comman_font2">Assignment</h1> -->
+            <h1 class="color_pink comman_font2">Assignment</h1>
             <span class="comman_font2 font_b">{{topicsAll.title | titlecase}}</span>
             <p class="comman_font3">{{topicsAll.description ?? ''}}</p>
           </ion-col>
-        </ion-row> 
-        <ion-row class="points_row">
-          <ion-col size="8">
-            <p>Per Question Mark</p>
-          </ion-col>
-          <ion-col size="4">
-            <p>{{topicsAll?.per_q_mark}}</p>
-          </ion-col>
-          <ion-col size="8">
-            <p>Total Questions</p>
-          </ion-col>
-          <ion-col size="4">
-            <p>{{topicsAll.questions}}</p>
-          </ion-col> 
-          <ion-col size="8">
-            <p>Total Marks</p>
-          </ion-col>
-          <ion-col size="4">
-            <p>{{topicsAll.questions > 0 && topicsAll.per_q_mark ? topicsAll.questions * topicsAll.per_q_mark : ''}}</p>
-          </ion-col> 
-          <div class="start_session">
-           <!--  <a *ngIf="type == 'assignment'" [routerLink]="['/startassignment']" [queryParams]="{iacs:iacs,subject:subject,assignment:assign.id,type:type}" class="start_btn">Start</a> -->
-            <a *ngIf="type == 'test' && topicsAll.questions > 0" [routerLink]="['/starttest']" [queryParams]="{iacs:iacs,subject:subject,test:topicsAll.id,type:type}" class="start_btn">Start </a>
+        </ion-row>  -->
+            <div class="question_decription">
+              <p> {{topicsAll.description ?? ''}}</p>
+            </div>
+            <div class="test_details">
+              <div class="left_sec">
+                <p>Per Question Mark</p>
+                <p>Total Questions</p>
+                <p>Total Marks</p>
+                <p>Total Time</p>
+              </div>
+              <div class="right_sec">
+                <p>{{topicsAll?.per_q_mark}}</p>
+                <p>{{topicsAll.questions}}</p>
+                <p>{{topicsAll.questions > 0 && topicsAll.per_q_mark ? topicsAll.questions * topicsAll.per_q_mark : '0'}}
+                </p>
+                <p>{{topicsAll.timer ?? '00:00'}} Min</p>
+              </div>
+            </div>
+            <div class="test_box_btns">
+              <a *ngIf="type == 'test' && topicsAll.questions > 0" [routerLink]="['/starttest']"
+                [queryParams]="{iacs:iacs,subject:subject,test:topicsAll.id,type:type}" class="start_btn">Start </a>
+            </div>
           </div>
-        </ion-row> 
+        </div>
+        </div>
       </div>
+
+      <!-- <ion-row class="points_row">
+      <ion-col size="8">
+        <p>Per Question Mark</p>
+      </ion-col>
+      <ion-col size="4">
+        <p>{{topicsAll?.per_q_mark}}</p>
+      </ion-col>
+      <ion-col size="8">
+        <p>Total Questions</p>
+      </ion-col>
+      <ion-col size="4">
+        <p>{{topicsAll.questions}}</p>
+      </ion-col> 
+      <ion-col size="8">
+        <p>Total Marks</p>
+      </ion-col>
+      <ion-col size="4">
+        <p>{{topicsAll.questions > 0 && topicsAll.per_q_mark ? topicsAll.questions * topicsAll.per_q_mark : ''}}</p>
+      </ion-col> 
+      <div class="start_session">
+        <a *ngIf="type == 'test' && topicsAll.questions > 0" [routerLink]="['/starttest']" [queryParams]="{iacs:iacs,subject:subject,test:topicsAll.id,type:type}" class="start_btn">Start </a>
       </div>
-    </div>
-    <!--assignment_card Ends-->
-    <!--assignment_card End strat (2)-->
-   <!--  <div class="assignment_card">
+    </ion-row>  -->
+
+
+      <!--assignment_card Ends-->
+      <!--assignment_card End strat (2)-->
+      <!--  <div class="assignment_card">
       <ion-row>
         <ion-col>
           <h1 class="color_pink comman_font2">Assignment 2</h1>
@@ -119,7 +166,7 @@
         </div>
       </ion-row> 
     </div>  -->
-  </div>
+    </div>
   </div>
 </ion-content>
 <!--ion-content End-->

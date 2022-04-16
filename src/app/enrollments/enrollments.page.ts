@@ -1,16 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ElementRef, ViewChild } from '@angular/core';
 import { Router,ActivatedRoute,NavigationEnd   } from '@angular/router';
 import { StorageService } from '../services/storage.service'; 
 import { HomeService } from '../services/home.service'; 
 import { AuthConstants } from '../../../config/auth-constants';
 import { filter } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+
+import   jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-enrollments',
   templateUrl: './enrollments.page.html',
   styleUrls: ['./enrollments.page.scss'],
 })
+
+
+
 export class EnrollmentsPage implements OnInit { 
+    @ViewChild('pdfTable')
+  pdfTable!: ElementRef;
+
   iacs:any;
   subject:any;
   total:BigInteger;
@@ -18,11 +27,14 @@ export class EnrollmentsPage implements OnInit {
   previousUrl:any;
   searchName:any;
   showloader:boolean; 
+  class:'';
+  student:'';
+  enrolled_class:'';
   constructor(
     private router: Router,
     private storageService: StorageService,
     private homeService: HomeService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute, 
   ) { }
 
   async ngOnInit() { 
@@ -52,6 +64,18 @@ export class EnrollmentsPage implements OnInit {
         )   
     } 
 
+  }
+
+  exportAsPDF(div_id)
+  {
+    let data = document.getElementById(div_id);  
+    html2canvas(data).then(canvas => {
+      const contentDataURL = canvas.toDataURL('image/png')  
+      let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
+      // let pdf = new jspdf('p', 'cm', 'a4'); Generates PDF in portrait mode
+      pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);  
+      pdf.save('Filename.pdf');   
+    }); 
   }
 
   async searchStudent(){
@@ -87,15 +111,9 @@ export class EnrollmentsPage implements OnInit {
       await this.homeService.downloadReceipt(class_id,student_id,token).subscribe(
       (res: any) => {  
         console.log(res)
-        /* var blob = new Blob([res.pdfstream], {type: 'application/pdf'}); 
-
-        var link = document.createElement('a'); 
-
-        var fileURL = window.URL.createObjectURL(blob); 
-        window.open(fileURL); */
-        /* link.download = "Sample.pdf"; 
-
-        link.click();  */
+        this.class = res.data.class;
+        this.student = res.data.student;
+        this.enrolled_class = res.data.enrolled_class;
       }) 
     }
   }

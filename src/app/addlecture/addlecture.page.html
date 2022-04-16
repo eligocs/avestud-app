@@ -3,15 +3,16 @@
   <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="4">
-          <ion-buttons>
+        <ion-col size="2">
+          <div class="d-flex">
             <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
-          </ion-buttons>
+            <img class="header_icon_1" src="../../assets/images/weblgo.png">
+          </div>
         </ion-col>
-        <ion-col size="4">
+        <ion-col size="8">
           <p class="ion-text-center heading">Add Lecture</p>
         </ion-col>
-        <ion-col size="4">
+        <ion-col size="2">
           <div class="avatar_icon" (click)="presentPopover('any')"></div>
         </ion-col>
       </ion-row>
@@ -87,10 +88,14 @@
         </div>
       </ion-row>
       <ion-row class='ion-text-center' *ngIf="showloader">
+        <div class="text-center">{{progressPercent}} %</div>
+        <ion-progress-bar [value]="progress"></ion-progress-bar> 
+      </ion-row>
+      <!-- <ion-row class='ion-text-center' *ngIf="showloader">
         <ion-col size-sm="12">Please be patient, files are being uploaded <br>
           <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-button expand="block" share="round" color="success" class="btn_bottom_mrgn" (click)="createLecture()">Add
       </ion-button>
     </form>

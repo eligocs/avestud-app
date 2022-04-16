@@ -18,6 +18,7 @@ export class SLecturesPage implements OnInit {
     purchased: any;
     myclasses: any;
     nodata: any;
+    showUnitFor: any;
   constructor( 
     public modalController: ModalController,
     private studentService: StudentService,
@@ -55,6 +56,15 @@ export class SLecturesPage implements OnInit {
       }
     });
  }
+
+ toggleShow(unit) {
+  if(unit){
+    this.showUnitFor = unit;
+  }else{
+    this.showUnitFor = '';
+  } 
+}
+
   async getstudentsubject(iacs_id,lecture){
     var token =  await this.storageService.get(AuthConstants.AUTH);    
     var newData = {

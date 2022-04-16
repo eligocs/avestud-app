@@ -9,10 +9,10 @@
               </ion-buttons> -->
            </ion-col>
            <ion-col size="5">
-              <p class="ion-text-center heading">Publish {{pagetype != '' ? 'Test' : Assignment}}</p>
+              <p class="ion-text-center heading">Publish {{pagetype | titlecase}}</p>
            </ion-col>
            <ion-col size="4">
-              <div class="avatar_icon" (click)="presentPopover('any')"></div>
+            <div class="avatar_icon" (click)="presentPopover('any')"><i class="fa fa-bell"></i> </div>
            </ion-col>
         </ion-row>
      </ion-grid>

@@ -46,7 +46,10 @@ export class VerifyotpPage implements OnInit {
                 this.storageService.store(AuthConstants.AUTH, res.access_token);  
                 this.storageService.removeStorageItem(AuthConstants.phone);
                 this.storageService.removeStorageItem(AuthConstants.pwd); 
-                window.location.href = 'studenthome';
+                this.toastService.presentToast('You have registered successfully');
+                setTimeout(() => {
+                  window.location.href = 'studenthome';
+                }, 2000);
                 //this.router.navigate(['homepage']);
               } else {
                 this.toastService.presentToast('Incorrect email and password.');

@@ -3,8 +3,8 @@
         <ion-grid>
             <ion-row>
                 <ion-col size="3">
-                    <div class="d-flex"> 
-                        <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button> 
+                    <div class="d-flex">
+                        <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
                         <img class="header_icon_1" src="../../assets/images/weblgo.png">
                     </div>
                 </ion-col>
@@ -22,7 +22,20 @@
 <ion-content>
     <div class="institute_assignment_page">
         <!--page_tittle and add button-->
-        <ion-row>
+        <div class="page_header">
+            <div>
+                <h1 class="color_violet page_tittle">Assignments</h1>
+            </div>
+            <div class="btn_theme">
+                <button [routerLink]="['/add-assignment']"
+                [queryParams]="{iacs:iacs,subject:subject,type:assignment}">Add
+                </button>
+                <button [routerLink]="['/add-assignment-unit']" [queryParams]="{iacs:iacs,subject:subject}">
+                    Add Unit
+                </button>
+            </div>
+        </div>
+        <!-- <ion-row>
             <ion-col size="6">
                 <h1 class="color_violet page_tittle">Assignments</h1>
             </ion-col>
@@ -31,7 +44,6 @@
                     <button [routerLink]="['/add-assignment']"
                         [queryParams]="{iacs:iacs,subject:subject,type:assignment}">Add
                     </button>
-                    <!-- &nbsp;&nbsp; -->
                 </div>
             </ion-col>
             <ion-col size="3">
@@ -40,81 +52,112 @@
                         Add Unit
                     </button>
                 </div>
-            </ion-col>
-        </ion-row>
+            </ion-col> 
+        </ion-row>-->
         <!--row_unit start-->
-        <ion-row class="row_unit">
-            <ion-col (click)="toggleShow()" id="{{!showUnitFor ? 'theme_shadow' :''}}">
+        <div class="row_unit">
+            <div (click)="toggleShow()" id="{{!showUnitFor ? 'theme_shadow' :''}}">
                 <p> All</p>
-            </ion-col>
-            <ion-col *ngFor="let assign of assignments;" id="{{showUnitFor == assign.name ? 'theme_shadow' :''}}">
-                <p (click)="toggleShow(assign.name)"> {{assign.name.length > 0 && assign.name.length > 10 ? assign.name.substring(0,10)+' ...' : assign.name.length > 0 && assign.name.length < 10 ? assign.name :''}}</p>
-            </ion-col>
-        </ion-row>
+            </div>
+            <div *ngFor="let assign of assignments;" id="{{showUnitFor == assign.name ? 'theme_shadow' :''}}">
+                <p (click)="toggleShow(assign.name)"> {{assign.name.length > 0 && assign.name.length > 10 ?
+                    assign.name.substring(0,10)+' ...' : assign.name.length > 0 && assign.name.length <= 10 ? assign.name
+                        :''}}</p>
+            </div>
+        </div>
         <!--row_unit End-->
         <!--test_section start-->
         <div class="" *ngFor="let assign of assignments;">
-
             <div *ngIf="showUnitFor == assign.name || !showUnitFor">
-                <h2 class="text-center assignment_heading">{{assign.name | titlecase}}</h2>
-                <div class="test_section bg_light_yellow" *ngFor="let topicsAll of assign.topics;">
+                <p class="text-center unit_heading">{{assign.name | titlecase}}</p>
+                <div class="assign_test_card" *ngFor="let topicsAll of assign.topics;">
                     <!--row_assignment-->
-                    <ion-row class="row_assignment">
-                        <div class="box box1">
-                            <h2 class="assignment_title">{{topicsAll.title | titlecase}}</h2>
-                            
+                    <div class="card_header">
+                        <div class="">
+                            <h2 class="title_font">Assignment No. 56</h2>
                         </div>
-                        <div class="box box2 ion-text-center">
-                            <div>
-                                <a [routerLink]="['/add-assignment']"
-                                    [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id,type:assignment}">
-                                    <i class='fa fa-pencil text-white'></i>
-                                </a>
-                            </div>
-                            <div>
-                                <a (click)="presentAlert(topicsAll.id)"> <i class='fa fa-trash text-white'></i></a>
-                            </div>
+                        <div class="custom_popover">
+                            <span class="dropdown_toggle toggle1">
+                                <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical">
+                                </ion-icon>
+                            </span>
+                            <ul class="dropdown dropdown1">
+                                <li>
+                                    <a [routerLink]="['/add-assignment']"
+                                        [queryParams]="{iacs:iacs,subject:subject,    assignment_id: topicsAll.id,type:assignment}">
+                                        Edit
+                                        <span><i class='fa fa-pencil text-white'></i> </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a (click)="presentAlert(topicsAll.id)"> Delete
+                                        <span><i class='fa fa-trash text-white'></i></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
-                            <button [routerLink]="['/publish-assignment']"
-                                [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id,type:assignment}"
-                                class="{{topicsAll.publish_date ? 'publish_btn' : 'No_publish_btn'}}">
-                                {{topicsAll.publish_date == '' ? 'No Published' :'Published'}}
-                                {{topicsAll.publish_date| date: 'MM/dd/yyyy'}}
-                            </button>
+                    <!-- <div>
+                            <a [routerLink]="['/add-assignment']"
+                                [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id,type:assignment}">
+                                <i class='fa fa-pencil text-white'></i>
+                            </a>
                         </div>
-                    </ion-row>
-                    <!--details_sec-->
-                    <ion-row class="details_sec">
-                        <p> 
-                            {{topicsAll.description.length > 0 && topicsAll.description.length > 180 ? topicsAll.description.substring(0,180)+' ...' : topicsAll.description.length > 0 && topicsAll.description.length < 180 ? topicsAll.description :''}}
+                        <div>
+                            <a (click)="presentAlert(topicsAll.id)"> <i class='fa fa-trash text-white'></i></a>
+                        </div> -->
+
+                        <!-- <div>
+                            <button [routerLink]="['/publish-assignment']"
+                                [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id,type:'test'}"
+                                class="{{topicsAll.publish_date ? 'publish_btn' : 'btn_red'}}">
+                                {{topicsAll.publish_date ? 'Re Publish' :'Publish'}}
+                            </button>
+                            <p class="published_date">
+                                {{topicsAll.publish_date == '' ? '' :'Published'}}
+                                {{topicsAll.publish_date| date: 'MM/dd/yyyy'}}
+                            </p>
+                    </div> -->
+                    </div>
+                    <div class="subheadings">
+                        <h3 class="text_light">{{topicsAll.title | titlecase}}</h3>
+                        <p class="published_date">
+                            {{topicsAll.publish_date ? 'Published' :''}}
+                            {{topicsAll.publish_date| date: 'MM/dd/yyyy'}}
                         </p>
-                    </ion-row>
-                    <ion-row  >
-                        <ion-col size="12">
-                         <h4 class="color_pink">{{topicsAll.testType && topicsAll.testType == 1 ? 'Type : MCQ':''}}</h4>
-                            <h4 class="color_pink">{{topicsAll.testType && topicsAll.testType == 2 ? 'Type : Theory':''}} </h4>
-                        </ion-col>
-                    </ion-row>
+                        <h4 class="text_blue">{{topicsAll.testType && topicsAll.testType == 1 ? 'MCQ':''}}
+                        </h4>
+                        <h4 class="text_blue">{{topicsAll.testType && topicsAll.testType == 2 ? '
+                            Theory':''}} </h4>
+                    </div>
+                    <!--details_sec-->
+                    <div class="details_sec">
+                        <p>
+                            {{topicsAll.description && topicsAll.description.length > 0 && topicsAll.description.length
+                            > 180 ? topicsAll.description.substring(0,180)+' ...' : topicsAll.description &&
+                            topicsAll.description.length > 0 && topicsAll.description.length < 180 ?
+                                topicsAll.description :''}} </p>
+                    </div>
                     <!--question_section start-->
                     <div>
                         <ion-row class="question_section">
                             <ion-col size="8">
                                 <span>Per Question Mark</span>
                             </ion-col>
-                            <ion-col size="4">
+                            <ion-col class="ion-text-center" size="4">
                                 <span>{{topicsAll.per_q_mark}}</span>
                             </ion-col>
                             <ion-col size="8">
                                 <span>Total Questions</span>
                             </ion-col>
-                            <ion-col size="4">
+                            <ion-col class="ion-text-center" size="4">
                                 <span>{{topicsAll.totalQuestions}}</span>
                             </ion-col>
                             <div *ngIf='topicsAll.timer != null'>
                                 <ion-col size='8'>
                                     <span>Time Duration</span>
                                 </ion-col>
-                                <ion-col size='4'>
+                                <ion-col class="ion-text-center" size='4'>
                                     <span>{{topicsAll.timer}}</span>
                                 </ion-col>
                             </div>
@@ -126,6 +169,11 @@
                         <button [routerLink]="['/list-question']"
                             [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id,type:assignment}"
                             class="btn_blue add_q">Add Question</button>
+                        <button [routerLink]="['/publish-assignment']"
+                            [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id,type:'assignment'}"
+                            class="{{topicsAll.publish_date ? 'publish_btn btn_green' : 'btn_red'}}">
+                            {{topicsAll.publish_date ? 'Re Publish' :'Publish'}}
+                        </button>
                         <button [routerLink]="['/reports']"
                             [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id,type:assignment}"
                             class="show_r btn_blue">Show Reports</button>
@@ -135,10 +183,11 @@
             </div>
         </div>
 
+        <!-- Old Assignments -->
 
         <div class="" *ngIf="hideOlds">
             <div *ngIf="showUnitFor == 'old' || !showUnitFor">
-                <h2 class="text-center">Old Assignments</h2>
+                <p class="text-center">Old Assignments</p>
                 <div class="test_section bg_light_yellow" *ngFor="let topicsAll of assignmet_w_n_t;">
                     <!--row_assignment-->
 
@@ -159,7 +208,7 @@
 
                             <button [routerLink]="['/publish-assignment']"
                                 [queryParams]="{iacs:iacs,subject:subject,assignment_id: topicsAll.id,type:assignment}"
-                                class="{{topicsAll.publish_date ? 'publish_btn' : 'No_publish_btn'}}">
+                                class="{{topicsAll.publish_date ? 'publish_btn' : 'btn_red'}}">
                                 {{topicsAll.publish_date ? 'Published on'+topicsAll.publish_date : 'Not Published'}}
                             </button>
                         </div>

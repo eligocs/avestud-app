@@ -1,0 +1,25 @@
+.btn_meet img {
+    height: 31px;
+    width: 31px;
+    margin-right: 8px;
+  }
+  
+  .btn_meet button {
+    height: 44px;
+    width: 145px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    width: 100%;
+  }
+
+  .edt_shedule img {
+    width: 20px;
+    filter: brightness(0) invert(1);
+    float: right;
+    margin-top: 16px;
+}

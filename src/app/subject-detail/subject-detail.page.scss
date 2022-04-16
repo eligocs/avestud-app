@@ -1,0 +1,93 @@
+.view_btn{
+    height: 40px;
+    width: 143px;
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.add_syllabus_input {
+    position: relative;
+    float: right;
+}
+
+.add_syllabus_input label{
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    z-index: 999;
+    font-size: 14px;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+.add_syllabus_input ion-input[type=file] {
+    width: 143px;
+    margin-top: 10px;
+    height: 44px;
+    color: transparent;
+    border: none;
+    width: 100%;
+}
+
+.shedule_card {
+    display: flex;
+    border-radius: 4px;
+    background: #385169;
+    margin: 5px 0;
+    box-shadow: 0px 0px 8px 0px #1e1b1b;
+}
+
+.shedule_card .column_1, 
+.shedule_card .column_2 {
+    padding: 10px 0;
+    text-align: center;
+    line-height: 20px;
+}
+
+.shedule_card .column_2 {
+    margin-left: 5%;
+}
+
+.shedule_card .column_2 p:last-child {
+    font-size: 12px;
+}
+
+.shedule_card .column_1 {
+    width: 46%;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.shedule_card .column_1 p {
+    font-weight: bold;
+}
+
+.shedule_card p {
+    margin: 4px 0;
+}
+
+.edit_btn img {
+    /* height: 55px; */
+    width: 28px;
+    filter: brightness(0) invert(1);
+}
+
+.position_relative{
+    position: relative !important;
+}
+
+.edit_btn {
+    position: absolute;
+    top: 13px;
+    right: 0;
+}
+
+.edt_shedule img {
+    width: 20px;
+    filter: brightness(0) invert(1);
+    float: right;
+    margin-top: 16px;
+}

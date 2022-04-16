@@ -62,17 +62,26 @@ export class StudenthomePage implements OnInit {
       }
       var classroom =  await this.StudentService.studenthome(token).subscribe(
         (res: any) => {   
-          if (res.data) { 
-            var allClasses = res.data;
-            allClasses.institute_assigned_class.forEach((entry,i) => { 
-              entry.institute_assigned_class_subject.forEach((entry1,i) => { 
-                entry1.color_code = colorLight(i);     
-                entry1.color_code2 = colorLight(i);     
+          if (res.data) {  
+            var allClasses = res.data; 
+            if(allClasses){ 
+              allClasses.institute_assigned_class.forEach((entry,i) => { 
+                entry.institute_assigned_class_subject.forEach((entry1,i) => { 
+                  entry1.color_code = colorLight(i);     
+                  entry1.color_code2 = colorLight(i);     
+                });    
               });    
-            });    
-            this.allClasses =  allClasses; 
-            if(allClasses.institute_assigned_class.length > 0){
-              this.showEnrolled = true;    
+              this.allClasses =  allClasses; 
+            } 
+            if(allClasses.institute_assigned_class.length == 0){
+              let navigationExtras: NavigationExtras = {
+                queryParams: {'selected_cat':1},
+                fragment: 'anchor'
+              };
+              this.router.navigate(['searchclass'],navigationExtras);
+              this.showEnrolled =false;
+            }else{
+              this.showEnrolled =true;
             }
           }else{
              /*  mainThis.storageService.removeStorageItem(AuthConstants.AUTH).then(res => { 

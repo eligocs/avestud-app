@@ -19,6 +19,7 @@ export class SExtraclassesPage implements OnInit {
   purchased: any;
   myclasses: any;
   nolectures: any;
+  showUnitFor: any;
   constructor( 
     public modalController: ModalController,
     private studentService: StudentService,
@@ -77,6 +78,15 @@ export class SExtraclassesPage implements OnInit {
         }
       }
     );
+  }
+
+  
+  toggleShow(unit) {
+    if(unit){
+      this.showUnitFor = unit;
+    }else{
+      this.showUnitFor = '';
+    } 
   }
 
 }

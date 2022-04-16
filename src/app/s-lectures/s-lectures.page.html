@@ -25,14 +25,14 @@
   <!--revise lectures page start-->
   <div class="revise_lectures_page">
     <!--Row Unit Start-->
-    <ion-row class="row_unit">
-      <ion-col (click)="toggleShow()" id="{{!showUnitFor ? 'theme_shadow' :''}}" >
+    <div class="row_unit">
+      <div (click)="toggleShow()" id="{{!showUnitFor ? 'theme_shadow' :''}}" >
           <p > All</p>
-      </ion-col>
-      <ion-col *ngFor="let lect of lectures;" id="{{showUnitFor == lect.unit ? 'theme_shadow' :''}}">
+      </div>
+      <div *ngFor="let lect of myclasses;" id="{{showUnitFor == lect.unit ? 'theme_shadow' :''}}">
           <p (click)="toggleShow(lect.unit)">{{lect.unit.length > 0 && lect.unit.length > 12 ? lect.unit.substring(0,12)+' ...' : lect.unit.length > 0 && lect.unit.length < 12 ? lect.unit :''}}</p>
-      </ion-col> 
-  </ion-row>
+      </div> 
+    </div>
     <!--Row Uint End-->
     <div class="text-center mt-4"  *ngIf="nodata" > 
       No lecture yet !!

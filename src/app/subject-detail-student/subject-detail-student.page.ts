@@ -78,7 +78,11 @@ export class SubjectDetailStudentPage implements OnInit {
    
   }
   colorLight() { 
-    var items = ['grad_sky','grad_yellow','grad_green','grad_orange','grad_sky']
+    var items = ['bg_gradient_skyblue','bg_gradient_orange','bg_gradient_green','bg_gradient_yellow']
+    return items[Math.floor(Math.random()*items.length)]; 
+  } 
+   colorLight2() { 
+    var items = ['skyblue_gradient','orange_gradient','green_gradient','yellow_gradient']
     return items[Math.floor(Math.random()*items.length)]; 
   }  
   async loadstudentdata(iacs,subject,token){ 
@@ -106,12 +110,13 @@ export class SubjectDetailStudentPage implements OnInit {
                 this.next_class = res.next_class ? res.next_class:'';  
                 var allclasses = res.class_days ? res.class_days:'';  
                 var classArr = [];
+                console.log(res)
                 if(allclasses){
                     for(var i=0;i<allclasses.length;i++){
                       classArr.push({
                           day: allclasses[i], 
                           color:  this.colorLight(),
-                          color2:  this.colorLight()
+                          color2:  this.colorLight2()
                       });
                     }   
                   this.class_days = classArr;   

@@ -1,80 +1,9 @@
-// assignment_qustion_page
-// .assignment_qustion_page {
-//     padding: 0 15px;
-//   }
-  
-  .assignment_card {
-    box-shadow: 3px 3px 5px #cccbcb;
-    border-radius: 8px;
-    margin-top: 20px;
-  }
-  
- .assignment_qustion_page h1 {
-    font-weight: 500;
-    margin: 0 0 11px 0;
-  }
-  
-  .font_b {
-    font-weight: 600;
-  }
-  
   .text-center.mt-4 {
     margin-top: 40px;
 }
+  
 
-  .comman_font3 {
-    margin-bottom: 0;
-    color: #d1d1d1;
-    font-weight: 500;
-    margin-top: 4px;
-  }
-  
-  .points_row ion-col {
-    height: 25px;
-  }
-  
-  .points_row {
-    line-height: 0;
-  }
-
-  .test_section .question_decription{
-    font-size: 15px;
-    line-height: 20px;
-  }
-  
-  .points_row p {
-    color: #ffffff;
-    font-size: 14px;
-  }
-  
-  // start_btn
-  
-  .start_session {
-    margin: 48px auto 15px auto;
-  }
-  
-  .start_btn {
-    padding: 8px 40px;
-    height: 36px;
-    width: 114px;
-    font-size: 14px;
-    color: white;
-    font-weight: 400;
-    border-radius: 6px;
-    background-color: #e03e91;
-  }
-
-  .test_section{
-    background-color: #385169;
-    box-shadow: 0px 0px 11px -1px black;
-    border-radius: 6px;
-    // border: 1px solid #7c7c7c;
-    padding: 8px 14px;
-    margin-top: 30px;
-  }
-  
-  .test_section h4{
-    font-size: 15px;
-    margin: 8px 0;
-  }
-
+.text_wrap{
+  display: block !important;
+  animation: .5s all ease;
+}

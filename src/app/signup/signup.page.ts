@@ -85,7 +85,7 @@ import { AlertController } from '@ionic/angular';
                 this.router.navigate(['verifyotp']); 
             } else {
               this.toastService.presentToast(
-                'Data already exists, please enter new details.'
+                'Details already exist, please enter new one'
               );
             }
           },

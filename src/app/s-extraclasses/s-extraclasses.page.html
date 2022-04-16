@@ -24,15 +24,15 @@
   <div class="comman_page_padding s_extra_class_page">
     <div class="lectures">
 
-      <ion-row class="row_unit">
-        <ion-col (click)="toggleShow()" id="{{!showUnitFor ? 'theme_shadow' :''}}">
+      <div class="row_unit">
+        <div (click)="toggleShow()" id="{{!showUnitFor ? 'theme_shadow' :''}}">
           <p> All</p>
-        </ion-col>
-        <ion-col *ngFor="let lect of lectures;" id="{{showUnitFor == lect.unit ? 'theme_shadow' :''}}">
+        </div>
+        <div *ngFor="let lect of myclasses;" id="{{showUnitFor == lect.unit ? 'theme_shadow' :''}}">
           <p (click)="toggleShow(lect.unit)">{{lect.unit.length > 0 && lect.unit.length > 12 ?
             lect.unit.substring(0,12)+' ...' : lect.unit.length > 0 && lect.unit.length < 12 ? lect.unit :''}}</p>
-        </ion-col>
-      </ion-row>
+        </div>
+      </div>
       <!--Row Uint End-->
       <div *ngFor="let lect of myclasses;let i=index;">
         <div *ngIf="showUnitFor == lect.unit || !showUnitFor">
@@ -55,13 +55,13 @@
               </ion-col>
           </ion-row> -->
           <ion-row class="class_details bg_light_yellow" *ngFor="let single of lect.lectures;">
-            <ion-col size="10" class="left_col">
-              <h2>{{ single?.extra_class_number }}</h2>
-              <p class="color_pink">{{ single.extra_class_name | titlecase }}</p>
-              <span>{{ single.extra_class_date | date: 'dd/MM/yyyy' }}</span>
+            <ion-col size="8" class="left_col">
+              <h2 class="title_font">{{ single?.extra_class_number }}</h2>
+              <p class="text_light">{{ single.extra_class_name | titlecase }}</p>
+              <span class="text_blue">{{ single.extra_class_date | date: 'dd/MM/yyyy' }}</span>
             </ion-col>
-            <ion-col size="2" class="right_col">
-              <a *ngIf='single.extra_class_video' (click)="markattendance(single.id,single?.extra_class_video)"><img
+            <ion-col size="4" class="right_col">
+              <a class="video_link" *ngIf='single.extra_class_video' (click)="markattendance(single.id,single?.extra_class_video)"><img
                   src="../../assets/images/youtube_icon.svg" class="youtube_icon"></a>
               <div class="download_icons">
                 <a *ngIf='single.notes' href='{{ single.notes ?? "#" }}'><img

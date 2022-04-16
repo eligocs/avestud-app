@@ -37,7 +37,7 @@
                <ion-card class="left_card">
                   <p>Attendance</p>
                   <div class="attendance_staus">
-                     <div class="attendance_per">
+                     <div class="attendance_percentage">
                         <div class="dot_img">
                            <img src="../../assets/images/green_dot.png" alt="green_dot.png">
                         </div>
@@ -45,7 +45,7 @@
                            <span>81-100%</span>
                         </div>
                      </div>
-                     <div class="attendance_per">
+                     <div class="attendance_percentage">
                         <div class="dot_img">
                            <img src="../../assets/images/yellow_dot.png" alt="yellow_dot.png">
                         </div>
@@ -53,7 +53,7 @@
                            <span>61-80%</span>
                         </div>
                      </div>
-                     <div class="attendance_per">
+                     <div class="attendance_percentage">
                         <div class="dot_img">
                            <img src="../../assets/images/red_dot.png" alt="red_dot.png">
                         </div>
@@ -64,7 +64,50 @@
                   </div>
                </ion-card>
             </ion-row>
+
+
+
+
             <h3 class="comman_font2 color_violet">Students</h3>
+            <!-- <div id="MyDIv"   class="main-container"> 
+                  <div class="container">
+                     <div id="pdfTable" #pdfTable>
+                        
+                       <img src="http://localhost:8100/assets/images/Doubts-image2.png" height='100px' width="100px" alt="green_dot.png">
+                       <table class="table">
+                         <thead>
+                           <tr>
+                             <th class="text-green">Firstname</th>
+                             <th>Lastname</th>
+                             <th>Email</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                           <tr>
+                             <td>John</td>
+                             <td>Doe</td>
+                             <td>john@example.com</td>
+                           </tr>
+                           <tr>
+                             <td>Mary</td>
+                             <td>Moe</td>
+                             <td>mary@example.com</td>
+                           </tr>
+                           <tr>
+                             <td>July</td>
+                             <td>Dooley</td>
+                             <td>july@example.com</td>
+                           </tr>
+                         </tbody>
+                       </table>
+                     </div>
+                  </div> 
+               </div>
+               <button class="btn btn-primary"  (click)="exportAsPDF('MyDIv');">Export To PDF</button> -->
+
+
+
+
             <ion-row class='ion-text-center' *ngIf="showloader">
                <ion-col size-sm="12">
                   <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner>
@@ -89,7 +132,7 @@
                   <p class="contact_no">{{data.detail[i].phone ?? ''}}</p>
                   <div class="s_ship">
                      <p class="m_top2">Fee : ₹ {{data.price ?? ''}}</p>
-                     <!--  <img src="../../assets/images/download_icon.png" class='down_img'  (click)="downloadReceipt(data.institute_assigned_class_id,data.student_id)"  alt="download_icon.png">  -->
+                      <img src="../../assets/images/download_icon.png" class='down_img'  (click)="downloadReceipt(data.institute_assigned_class_id,data.student_id)"  alt="download_icon.png"> 
                   </div>
                </ion-col>
             </ion-row>

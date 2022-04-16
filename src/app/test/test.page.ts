@@ -7,6 +7,8 @@ import { AuthConstants } from '../../../config/auth-constants';
 import { PreviousRouteService } from '../previous-route.service';  
 import { ToastService } from '../services/toast.service';  
 import { AlertController } from '@ionic/angular';  
+import $ from 'jquery';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'app-test',
@@ -18,8 +20,8 @@ export class TestPage implements OnInit {
   iacs:string;
   subject:string;
   previousUrl:string;
-  testAll:any; 
-  testWithoutClass:any; 
+  testAll:[]; 
+  testWithoutClass:[]; 
   noTest:boolean; 
   hideOlds:boolean; 
   constructor(
@@ -32,6 +34,18 @@ export class TestPage implements OnInit {
   ) { }
 
   async ngOnInit() { 
+
+     // Custom_popover / Dropdown Menu 
+     $(document).ready(function(){
+      $(function() { // Dropdown toggle
+        $(document).on('click', '.toggle2', function() { 
+          $(this).next('.dropdonw2').slideToggle();
+        });
+        });
+      });
+     // Custom_popover / Dropdown Menu  end
+    
+
     var token =  await this.storageService.get(AuthConstants.AUTH);
     this.route.queryParams.subscribe(
       params => {
@@ -53,19 +67,18 @@ export class TestPage implements OnInit {
     if(iacs && token){    
       await this.homeService.getTests(iacs,token).subscribe(
         (res: any) => {     
-          if(res.status == 200){
-            this.testAll = res.topics ? res.topics:{};  
-            this.testWithoutClass = res.assignmet_w_n_t ? res.assignmet_w_n_t:{};  
+          if(res.status == 200){ 
+            this.testAll = res.topics ? res.topics:'';  
+            this.testWithoutClass = res.assignmet_w_n_t ? res.assignmet_w_n_t:'';  
             if(this.testWithoutClass.length > 0){
               this.hideOlds = true;
             }else{
               this.hideOlds = false;
-            }     
-            console.log(this.testAll)
+            }      
           }else{
-            this.testAll = {};   
-            this.testWithoutClass = {};  
-            this.noTest = true;   
+          /*   this.testAll = '';   
+            this.testWithoutClass = '';  
+            this.noTest = true;   */ 
           }
       }); 
     }  

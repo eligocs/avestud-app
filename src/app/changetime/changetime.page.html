@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+     <ion-grid>
+        <ion-row>
+           <ion-col size="3">
+             <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button> 
+           </ion-col>
+           <ion-col size="5">
+              <p class="ion-text-center heading">Change Class Time</p>
+           </ion-col>
+           <ion-col size="4">
+            <div class="avatar_icon" (click)="presentPopover('any')"><i class="fa fa-bell"></i> </div>
+          </ion-col>
+        </ion-row>
+     </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <form class="assignment_form"  > 
+    <!--Assignment Pubish-->
+    <ion-row>
+      <ion-col size-sm="12" offset-sm="3">
+        <ion-label position="stacked">Select Time</ion-label>   
+        <select class='lectureSelect timing_select timevalues'   required>
+          <option value='' selected disabled>Select</option>
+          <option *ngFor="let single of slots" value='{{single.id}}' >{{single.slot}}</option>
+        </select>
+      </ion-col>
+    </ion-row>
+    <div class="btns ion-text-center">
+       <button id="add" (click)="updateTimings()" >Update</button> 
+     </div>
+  </form> 
+</ion-content>

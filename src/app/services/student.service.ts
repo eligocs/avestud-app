@@ -75,6 +75,9 @@ export class StudentService {
   getstudentsubject(data,token){  
     return this.httpService.gettrip('getstudentsubject',data,token);
   }
+  getTimings(data,token){  
+    return this.httpService.gettrip('getTimings',data,token);
+  }
   getstudentAssignment(data,token){  
     return this.httpService.gettrip('getstudentAssignment',data,token);
   }

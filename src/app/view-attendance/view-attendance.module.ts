@@ -6,10 +6,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { ViewAttendancePageRoutingModule } from './view-attendance-routing.module';
 
-import { ViewAttendancePage } from './view-attendance.page';
+import { ViewAttendancePage } from './view-attendance.page'; 
 
 @NgModule({
-  imports: [
+  imports: [ 
     CommonModule,
     FormsModule,
     IonicModule,

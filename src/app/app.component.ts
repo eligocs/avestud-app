@@ -21,8 +21,6 @@ export class AppComponent implements OnInit {
   async ngOnInit() {     
     var token =  await this.storageService.get(AuthConstants.AUTH)    
     var userdetails =  await this.storageService.get(AuthConstants.userdetails)  
-     
-    console.log(token && userdetails)
     if(token && userdetails){
       if(userdetails.role == 'institute'){
         this.previousUrl = 'institute';

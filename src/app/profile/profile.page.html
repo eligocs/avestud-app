@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-grid>
-      <ion-row>
+      <ion-row class="student_profile_header">
         <ion-col size="3">
           <div class="d-flex"> 
             <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
@@ -15,6 +15,7 @@
           <ion-buttons class="float_end logout_profile">
             <ion-icon class='logout_btn' (click)="logoutAction()" name="log-out-outline"></ion-icon>
            </ion-buttons>
+           <span>Log out</span>
         </ion-col>
       </ion-row>
     </ion-grid>

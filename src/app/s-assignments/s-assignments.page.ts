@@ -3,6 +3,8 @@ import { Router,ActivatedRoute  } from '@angular/router';
 import { StudentService } from '../services/student.service';
 import { StorageService } from '../services/storage.service'; 
 import { AuthConstants } from '../../../config/auth-constants';
+import $ from 'jquery';
+
 @Component({
   selector: 'app-s-assignments',
   templateUrl: './s-assignments.page.html',
@@ -16,6 +18,7 @@ export class SAssignmentsPage implements OnInit {
   previousUrl:any;
   hideOlds:any;
   nodata:any;
+  showUnitFor:any;
   constructor(
     private studentService: StudentService,
     private route: ActivatedRoute,
@@ -23,6 +26,13 @@ export class SAssignmentsPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+
+    $(document).ready(function(){
+      $(document).on("click",".toogle_text",function() {
+        $(this).toggleClass('text_wrap');
+      });
+    });    
+
     var token =  await this.storageService.get(AuthConstants.AUTH);
     this.route.queryParams.subscribe(
       params => { 
@@ -35,7 +45,13 @@ export class SAssignmentsPage implements OnInit {
       }
     ) 
   }
-
+  toggleShow(unit) {
+    if(unit){
+      this.showUnitFor = unit;
+    }else{
+      this.showUnitFor = '';
+    } 
+  }
   async loadstudentAssign(iacs,subject,token){
     var newData = {
       iacs_id:iacs,
@@ -45,7 +61,7 @@ export class SAssignmentsPage implements OnInit {
     await this.studentService.getstudentAssignment(newData,token).subscribe(
       (res: any) => {    
         if (res.status == 200) {  
-          console.log(res)
+          console.log(res.topics)
           this.assignment_old_unit = res.assignment_old_unit;  
           this.topics = res.topics;   
           if(this.topics.length > 0){

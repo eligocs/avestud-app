@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-
+import { catchError } from 'rxjs/operators'; 
+import { Observable, throwError } from 'rxjs';
 @Injectable({
 providedIn: 'root'
 })
@@ -95,14 +96,36 @@ export class HttpService {
     } 
     formDatas.append('i_assigned_class_subject_id', data.i_assigned_class_subject_id);  
     const url = environment.apiUrl + serviceName;  
-    const options = {
-      headers: new HttpHeaders({ 
-        'Authorization': 'Bearer ' + token,  
-      })
-    };
+    /* const options = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token,
+      }) 
+    }; */
   
-    return this.http.post(url, formDatas, options);
+     return this.http.post(url, formDatas,  {
+      reportProgress: true,
+      observe: 'events',
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token,
+      })  
+    });
+    
   }
+  errorMgmt(error: HttpErrorResponse) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(() => {
+      return errorMessage;
+    });
+  }
+
   updateprofile(serviceName: string,data: any,token:any) {         
     const formDatas = new FormData();
     formDatas.append('name', data.name);

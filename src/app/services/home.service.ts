@@ -49,8 +49,8 @@ export class HomeService {
     var postData = {
       class_id:class_id,
       student_id:student_id, 
-    }
-    return this.httpService.postpdf('generate_receipt',postData,token);
+    } 
+    return this.httpService.gettrip('generate_receipt',postData,token);
   }
   loadstudentdata(iacs,subject,token){ 
     var postData = {

@@ -3,13 +3,13 @@
   <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="3">
-          <div class="d-flex"> 
-              <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button> 
-              <img class="header_icon_1" src="../../assets/images/weblgo.png">
+        <ion-col size="2">
+          <div class="d-flex">
+            <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
+            <img class="header_icon_1" src="../../assets/images/weblgo.png">
           </div>
         </ion-col>
-        <ion-col size="7">
+        <ion-col size="8">
           <p class="ion-text-center heading">Search Classes</p>
         </ion-col>
         <ion-col size="2">
@@ -26,59 +26,67 @@
 
   <div class="search_classes_page">
     <ion-row class="category filter_class">
-      <ion-col size="6" class="select_box">
-          <!-- <ion-label class="btn_category">Category<img src="../../assets/images/select_option.png"></ion-label> -->
-          <!-- <ion-select>
-            <ion-select-option *ngFor='let cats of categories'>{{cats.name ?? ''}}</ion-select-option> 
-          </ion-select> --> 
-       
-          <!-- <select class='category' (change)="oncatChange()" placeholder="asd" [(ngModel)]="selected_cat" value='selected_cat'  name='unit' >
-            <option  >Select</option>
-            <option *ngFor="let cats of categories" value="{{cats.id}}">{{cats.name ?? ''}}</option>
-          </select> -->
-          <ion-select multiple="false" (ionChange)="oncatChange()" placeholder="Select class" [(ngModel)]="selected_cat"  > 
-            <ion-select-option class="text-input place-field" *ngFor="let cats of categories" value="{{cats.id}}"> 
-              {{cats.name}}
-            </ion-select-option>
-          </ion-select>
-        </ion-col>
-      <ion-col size="6">
-        <!-- <ion-searchbar></ion-searchbar> -->
-        <ion-input type="search" class="search-bar" (ionChange)="setName()"  placeholder="Search" [(ngModel)]="enteredName" ></ion-input>
+      <ion-col size="12" *ngIf='show_default == true'>
+        <ion-select class="first_time_select" multiple="false" (ionChange)="oncatChange()" placeholder="Select class" [(ngModel)]="selected_cat">
+          <ion-select-option class="text-input place-field" *ngFor="let cats of categories" value="{{cats.id}}">
+            {{cats.name}}
+          </ion-select-option>
+        </ion-select>
       </ion-col>
+      <!-- <ion-col size="8" class="select_box" *ngIf='show_default == false'>
+        <ion-select multiple="false" (ionChange)="oncatChange()" placeholder="Select class" [(ngModel)]="selected_cat">
+          <ion-select-option class="text-input place-field" *ngFor="let cats of categories" value="{{cats.id}}">
+            {{cats.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-col>
+      <ion-col size="4" *ngIf='show_default == false'>
+        <ion-input type="search" class="search_bar" (ionChange)="setName()" placeholder="Search"
+          [(ngModel)]="enteredName">
+        </ion-input>
+      </ion-col> -->
     </ion-row>
-   
-    
+    <!-- expendable_searchbox start -->
+    <div class="expendable_searchbox" *ngIf='show_default == false'>
+        <ion-select class="default_select" multiple="false" (ionChange)="oncatChange()" placeholder="Select class" [(ngModel)]="selected_cat">
+          <ion-select-option class="text-input place-field" *ngFor="let cats of categories" value="{{cats.id}}">
+            {{cats.name}}
+          </ion-select-option>
+        </ion-select>
+        <ion-input id="search_box" type="search" class="search_bar" (ionChange)="setName()" 
+        [(ngModel)]="enteredName">
+        </ion-input>
+    </div>
+    <!-- expendable_searchbox End -->
     <div class="dummy_class_img" *ngIf='show_default == true'>
       <div class="ion-text-center">
         <img src="../../assets/images/searchclass.png">
       </div>
     </div>
     <ion-row class='ion-text-center' *ngIf="showloader">
-      <ion-col size-sm="12" >
-        <ion-spinner name="bubbles" class='bubblesloader'  ></ion-spinner>
+      <ion-col size-sm="12">
+        <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner>
       </ion-col>
     </ion-row>
-    <div  *ngIf='nodata == true'>
-      <div class="content_card" >
+    <div *ngIf='nodata == true'>
+      <div class="content_card">
         <ion-row>
           <ion-col class="ion-text-center page_tittles">
             <h1>Nothing Found !!!</h1>
           </ion-col>
         </ion-row>
       </div>
-    </div> 
-    <div  *ngIf='show_default == false'>
-      <div  *ngFor='let class of classes' >
-      <div class="content_card" >
+    </div>
+    <div *ngIf='show_default == false'>
+      <div *ngFor='let class of classes'>
+        <div class="content_card">
           <ion-row>
             <ion-col class="ion-text-center page_tittles">
-              <h1>{{class.name ?? ''}}</h1>
+              <h1 class="title_font">{{class.name ?? ''}}</h1>
               <p>By: {{class.institute_details.name ?? ''}}</p>
             </ion-col>
           </ion-row>
-        
-          
+
           <div class="details_section">
             <div class="d_flex">
               <div class="left_col">
@@ -105,36 +113,29 @@
               </div>
             </div>
           </div>
-        
-          
+
           <ion-row class="subject_btns ion-text-center">
             <ion-col size="6" *ngFor='let subj of class.subjects'>
-              <button  [routerLink]="['/subject-detail-student']" [queryParams]="{iacs:subj.id,subject:class.institute_details.id,selected_cat:selected_cat}" class="{{subj.color_code ?? grad_orange}}">{{subj.details ? subj.details.name : ''}}</button>
+              <button [routerLink]="['/subject-detail-student']"
+                [queryParams]="{iacs:subj.id,subject:class.institute_details.id,selected_cat:selected_cat}"
+                class="{{subj.color_code ?? grad_orange}}">{{subj.details ? subj.details.name : ''}}</button>
             </ion-col>
-          <!--   <ion-col size="6">
-              <button class="grad_sky">English</button>
-            </ion-col>
-            <ion-col size="6">
-              <button class="grad_green">Science</button>
-            </ion-col>
-            <ion-col size="6">
-              <button class="grad_orange">Hindi</button>
-            </ion-col> -->
           </ion-row>
           <ion-row class="ion-text-center demo_video">
             <ion-col>
               <p>View Class Demo</p>
-              <a *ngIf='class.video' href='{{class.video ?? "#"}}' ><img src="../../assets/images/youtube_icon.svg"></a>
-             <img  *ngIf='!class.video' src="../../assets/images/youtube_icon.svg"> 
+              <a *ngIf='class.video' href='{{class.video ?? "#"}}'><img src="../../assets/images/youtube_icon.svg"></a>
+              <img *ngIf='!class.video' src="../../assets/images/youtube_icon.svg">
             </ion-col>
           </ion-row>
           <div class="spacing">
             <div class="session_time">
               <div class="start_date">
-                <p class="font_bold">Start : <span class="font_light">{{class.start_date | date: 'dd/MM/yyyy'}}</span></p>
+                <p class="font_bold">Start : <span class="font_light">{{class.start_date | date: 'dd/MM/yyyy'}}</span>
+                </p>
               </div>
               <div class="end_time">
-                <p class="font_bold">End  : <span class="font_light">{{class.end_date | date: 'dd/MM/yyyy'}}</span></p>
+                <p class="font_bold">End : <span class="font_light">{{class.end_date | date: 'dd/MM/yyyy'}}</span></p>
               </div>
             </div>
             <div class="enroll_fee">
@@ -147,16 +148,14 @@
             </div>
           </div>
           <div class="options_btns">
-            <button *ngIf='class.classStatus == "Free Trial"' class="btn_enroll" >Free Trial</button>
-            <button *ngIf='class.classStatus == "Enrolled"' class="btn_enroll" >Enrolled</button>
-            <button *ngIf='class.classStatus == "Enroll"' class="btn_enroll" (click)='presentAlert(class.id)'>Enroll Now</button> 
+            <button *ngIf='class.classStatus == "Free Trial"' class="grad_orange">Free Trial</button>
+            <button *ngIf='class.classStatus == "Enrolled"' class="grad_sky">Enrolled</button>
+            <button *ngIf='class.classStatus == "Enroll"' class="grad_green" (click)='presentAlert(class.id)'>Enroll
+              Now</button>
           </div>
         </div>
-        
-        </div>
-
+      </div>
     </div>
-
     <!--===Content_card End====-->
   </div>
   <!--===search_classes_page End===-->

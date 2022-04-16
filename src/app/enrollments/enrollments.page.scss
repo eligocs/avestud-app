@@ -47,6 +47,7 @@ ion-searchbar{
     text-align: center;
     box-shadow: 0 2px 4px #000000;
     border-radius: 10px;
+    margin: 6px;
 }
 
 // right_card
@@ -87,12 +88,12 @@ ion-searchbar{
     margin-top: 8px;
 }
 
-.attendance_per{
+.attendance_percentage{
     display: flex;
     line-height: 10px;
     margin: 0 15%;
 }
-.attendance_per img{
+.attendance_percentage img{
     margin: 3px 5px;
 }
 
@@ -115,7 +116,7 @@ ion-searchbar{
 // right_section
 .right_section img{
     height: 122px;
-    border-radius: 15px;
+    border-radius: 8px;
     max-width: 122px;
     width: 100%;
     vertical-align: middle !important;
@@ -158,6 +159,7 @@ ion-searchbar{
 }
 
 .s_ship img{
+    filter: brightness(0.5) invert(1);
     height: 21px;
 }
 
@@ -184,4 +186,8 @@ img.eye_img {
 img.down_img {
     margin-right: 10px;
     margin-bottom: 4px;
+}
+
+th.text-green {
+    color: #99ff99;
 }
