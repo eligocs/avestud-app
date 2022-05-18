@@ -8,10 +8,10 @@
                  <img class="header_icon_1" src="../../assets/images/weblgo.png">
                </div>
              </ion-col>
-            <ion-col size="7">
+            <ion-col size="6">
                <p class="ion-text-center heading">{{iac?.name}}</p>
             </ion-col>
-            <ion-col size="2">
+            <ion-col size="3">
                <div class="avatar_icon" (click)="presentPopover('any')"></div>
             </ion-col>
          </ion-row>
@@ -24,22 +24,31 @@
       <h2 class="ion-text-center color_pink"></h2>
       <ion-row>
          <ion-col class="btn_demo position_relative" >
-            <button class='text-white' class="btn_view grad_green" *ngIf='video' defaultHref='{{video ?? ""}}'><img
-               src="../../assets/images/btn_red_icon.png"> View Demo 
-            </button>
+            <a  *ngIf='video' href='{{video ?? ""}}'>
+               <button class='text-white' class="btn_view grad_green">
+                  <img  src="../../assets/images/btn_red_icon.png"> View Demo 
+               </button>
+            </a>
+            <div class="ion-text-center text-orange"><small *ngIf='video && videoapproval == 0'  (click)="refreshpage()">Content under approval &nbsp;
+                  <i class="fa fa-refresh"></i> 
+            </small></div>
             <button class='text-white' class="btn_view grad_green" *ngIf='!video' defaultHref=''><img
                src="../../assets/images/btn_red_icon.png"> No Demo Video
             </button>
             <div class="edit_btn">
-               <a href="#">
-                  <img src="../../assets/images/edit_profile_icon.svg" alt="">
-               </a>
+                  <div class="position_relative">
+                     <ion-input class="chosse_flie" type="file" accept="video/*" (change)="updateVideo($event)"></ion-input>
+                     <img src="../../assets/images/edit_profile_icon.svg" alt=""> 
+                   </div>
             </div>
          </ion-col>
       </ion-row>
       <ion-row class="syllabus_btns ion-text-center">
          <ion-col class="ion-text-left" *ngIf='syllabus' size="6">
             <a href='{{syllabus ?? ""}}'><button class="view_btn"  >View Syllabus</button></a>
+         </ion-col>
+         <ion-col class="ion-text-left" *ngIf='!syllabus' size="6">
+            <button class="view_btn"  >No Syllabus</button> 
          </ion-col>
          <ion-col size='6'>
             <!-- {{syllabus ? 'Update' :'View'}} Syllabus -->
@@ -60,20 +69,15 @@
          </ion-col>
          <ion-col size="4">
             <div class="edt_shedule">
-               <a href="#">
+               <!-- <a href="#">
                   <img src="../../assets/images/edit_profile_icon.svg" alt="Edit Icon">
-               </a>
+               </a> -->
             </div>
          </ion-col>
-         <ion-col size="12" *ngIf='next_class'>
-            <ion-card class="card">
-               <ion-col class="">
-
-                  <p class="text_white">Next class on {{next_class ?? ''}}</p>
-
-               </ion-col>
-            </ion-card>
-
+         <ion-col size="12" *ngIf='next_class'> 
+            <div class="next_class_tab"> 
+               <span class="blink_text">Next class on {{next_class ?? ''}}</span> 
+            </div>  
          </ion-col>
       </ion-row>
          <!-- class Shedule Start -->
@@ -89,101 +93,7 @@
                </div>
             </div>
          </ion-col> 
-      </ion-row>
-         <!-- <ion-col size="6">
-            <div class="shedule_card">
-               <div class="column_1 grad_green">
-                  <p>05 <br> June</p>
-               </div>
-               <div class="column_2">
-                  <p>Monday</p>
-                  <p>10:00 Am</p>
-               </div>
-            </div>
-         </ion-col>
-         <ion-col size="6">
-            <div class="shedule_card">
-               <div class="column_1 grad_sky">
-                  <p>07 <br> June</p>
-               </div>
-               <div class="column_2">
-                  <p>Tuesday</p>
-                  <p>09:00 Am</p>
-               </div>
-            </div>
-         </ion-col>
-         <ion-col size="6">
-            <div class="shedule_card">
-               <div class="column_1 grad_orange">
-                  <p>10 <br> June</p>
-               </div>
-               <div class="column_2">
-                  <p>Saturday</p>
-                  <p>12:30 Pm</p>
-               </div>
-            </div>
-         </ion-col>
-         <ion-col size="6">
-            <div class="shedule_card">
-               <div class="column_1 grad_yellow">
-                  <p>14 <br> June</p>
-               </div>
-               <div class="column_2">
-                  <p>Friday</p>
-                  <p>04:00 Pm</p>
-               </div>
-            </div>
-         </ion-col> -->
-    
-      <!-- class Shedule End -->
-      <!-- <ion-row>
-         <ion-col *ngFor="let subjec of getSubjectsInfo;" size="6">
-            <ion-card class="card">
-               <ion-col class="card1 " size="12">
-                  <p class="text_white mt-2 ">{{subjec?.day | titlecase}}</p>
-               </ion-col>
-            </ion-card>
-         </ion-col>
-      </ion-row> -->
-      <!---ion row Starts-->
-      <!-- <ion-row>
-        <ion-col size="6">
-        
-          <ion-card class="card">
-            <ion-col class="card4" size="5">
-        
-              <p class="text_white">26 <br> july</p>
-        
-            </ion-col>
-        
-            <ion-col class="card2" size="7">
-              <p class="day">Monday</p>
-              <p class="time">10:00 Am</p>
-            </ion-col>
-          </ion-card> 
-        
-        
-        </ion-col>
-        
-        <ion-col size="6">
-        
-          <ion-card class="card">
-            <ion-col class="card5" size="5">
-        
-              <p class="text_white">27 <br> july</p>
-        
-            </ion-col>
-        
-            <ion-col class="card2" size="7">
-              <p class="day">Tuesday</p>
-              <p class="time">10:00 Am</p>
-            </ion-col>
-          </ion-card> 
-        
-        </ion-col>
-        
-        </ion-row> -->
-      <!--ion-row Ends-->
+      </ion-row> 
       <div>
          <ion-row class="resources_btns">
             <ion-col size="12">
@@ -220,9 +130,9 @@
          </ion-row>
          <ion-row class="resources_btns">
             <ion-col size="6">
-               <button class="grad_yellow comman_btn  common_btn_shadow">Attendance </button>
+               <button  [routerLink]="['/attendance']" [queryParams]="{iacs:iacs,subject:subject_id,iacId:this.iac?.id,iacInstitute:this.iac?.institute_id}" class="grad_yellow comman_btn  common_btn_shadow">Attendance </button>
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="6" [routerLink]="['/extra-notes']" [queryParams]="{iacs:iacs,subject:subject_id}">
                <button class="grad_sky comman_btn  common_btn_shadow">Extra Notes</button>
             </ion-col>
          </ion-row>
@@ -234,39 +144,22 @@
          </ion-row>
       </div>
       <ion-row class='success_msg' *ngIf='loadsuccess'>{{loadsuccess}}</ion-row>
-      <button class=" create common_anc_btn btn_blue" (click)="setText($event)">Create</button>
+      <ion-row>
+         <ion-col size='4'>
+            <button class=" create common_anc_btn btn_blue" (click)="setText($event)">Create</button>
+         </ion-col>
+         <ion-col size-sm="12" *ngIf="showloader_two">
+            <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner>
+         </ion-col>
+         <ion-col size='8'>
+            <div class="image_upload" id='text_input'>
+               <label for="file-input">
+                  <img src="../../assets/images/chats_doc.png" class="send_docs mt-1">
+               </label>
+               <input class="type_file" id="file-input" type="file" (change)="onChangeAttachment($event)" />
+            </div>
+         </ion-col>
+       </ion-row> 
    </div>
 </ion-content>
-<!-- <ion-content>
-  <ion-row >
-    <ion-title><h4 >{{iac?.name}}</h4></ion-title>
-    <ion-item> 
-      <a href='{{iac?.video}}'><ion-button>Demo</ion-button></a>
-      <ion-label >Add Syllabus :</ion-label>
-      <ion-input type="file" accept="image/*" (change)="changeListener($event)"></ion-input>
-    </ion-item>
-  </ion-row>
-  
-  <ion-card  width='100%'> 
-    <ion-card-header>Class Schedule</ion-card-header> 
-    <ion-row >
-      <ion-button *ngFor="let subjec of getSubjectsInfo;">{{subjec?.day}}</ion-button>
-    </ion-row>
-    <ion-item-divider  ></ion-item-divider>
-    <ion-card-header>Class Resources :</ion-card-header>
-    <ion-row >
-      <ion-button [routerLink]="['/lectures']" [queryParams]="{iacs:i_a_c_s_id}">Lectures</ion-button>
-      <ion-button >Assignments</ion-button>
-      <ion-button >Doubts ({{doubtsnotify}})</ion-button>
-      <ion-button >Test</ion-button>
-      <ion-button >Extra Classes</ion-button>
-    </ion-row>
-    <ion-row >
-      <ion-item>
-        <ion-label >Class Notification :</ion-label>
-        <ion-input placeholder='Type Notification Here' type="text" ></ion-input>
-      </ion-item>
-    </ion-row>
-  </ion-card> 
-  </ion-content>
-  -->
+ 

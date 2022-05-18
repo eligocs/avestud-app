@@ -1,0 +1,155 @@
+<!--Ion-Header Start-->
+<ion-header>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          <div class="d-flex">
+            <!-- <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button> -->
+            <img class="header_icon_1" src="../../assets/images/weblgo.png">
+          </div>
+        </ion-col>
+        <ion-col size="4">
+          <p class="ion-text-center heading">Receipt's</p>
+        </ion-col>
+        <ion-col size="4">
+          <div class="avatar_icon" (click)="presentPopover('any')"></div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<!--Ion-Header Ends-->
+<!--ion-content Start-->
+<ion-content>
+  <div class="comman_page_padding student_assignment_page">
+    <div class="text-center mt-4 unit_heading" *ngIf="nodata">
+      No receipt yet !!
+    </div> 
+    <div class="" *ngFor="let single_recipt of recipts;"> 
+      <p class="  unit_heading">Subject : {{single_recipt.name | titlecase}}</p>
+      <!-- test_box start -->
+      <div class="test_box"  >
+        <div class="box_header">
+          <h1 class="box_heading title_font">{{single_recipt.inst_name ?? ''}}</h1> 
+          <p class="published_date">{{single_recipt.enrolledOn ? "Enrolled on "+single_recipt.enrolledOn : ''}} </p> 
+        </div>
+        <div class="test_box_body">
+          <div class="test_details">
+            <div class="left_sec">
+              <p>Price <span class='text_grey'>({{single_recipt.purchase_type}})</span></p> 
+              <p >Download</p> 
+            </div>
+            <div class="right_sec">
+              <p>₹ {{single_recipt.classprice ?? '0'}}</p> 
+              <p><i class="fa fa-download text_blue" (click)="exportAsPDF('receiptPdf',single_recipt.id,single_recipt.student.student_id);"></i> </p> 
+            </div>
+          </div> 
+        </div> 
+      </div> 
+    </div> 
+  </div>
+
+  <div id="receiptPdf"   class=" main-container payment_receipt"> 
+    <div class="container">
+       <div id="pdfTable" #pdfTable>
+         <table class="table">
+             <tr>
+                <td style="padding-top: 30px;">
+                   <img class="receipt_logo" src="../../assets/images/weblgo.png" height='100px' width="100px" alt="Brand logo">
+                </td>
+             </tr>
+             <tr>
+                <td>
+                   <strong>{{student?.name}}</strong>
+                   <p>{{student?.address_1}} </p>
+                   <p>{{student?.city}}  {{student?.state}}  {{student?.pincode}}  {{student?.phone}}</p>
+                </td>
+                <td style="text-align: right;" >
+                   <p>
+                      <strong>Order Date :</strong>
+                      <span>{{enrolled_class?.created_at | date: 'dd/MM/yyyy' }}</span>
+                   </p>
+                   <p>
+                      <strong>Order Status :</strong>
+                      <span>Confirmed</span>
+                   </p>
+                   <p>
+                      <strong>Order ID :</strong>.
+                      <span>#{{enrolled_class?.id }}</span>
+                   </p>
+                </td>
+             </tr>
+             <tr class="row_flex">
+                <th>Email :</th>
+                <mailto:td>{{student?.email}}</td>
+             </tr>
+             <tr>
+                <td>
+                   <p>
+                      {{text ?? ''}}
+                   </p>
+                </td>
+             </tr>
+             <tr class="row_flex">
+                <th>#</th>
+                <td class="detail_tb">1</td>
+             </tr>
+             <tr class="row_flex">
+                <th>Particulars</th>
+                <td class="detail_tb">{{ class?.name }} by {{ institute_name ?? '' }}</td>
+             </tr>
+             <tr class="row_flex">
+                <th>Sub-Total</th>
+                <td class="detail_tb" *ngIf="pay_id == 'manual_enrollment'">Scholarship</td>
+                <td class="detail_tb" *ngIf="pay_id != 'manual_enrollment' && free_trial == 0">Free Trial</td>
+                <td class="detail_tb" *ngIf="pay_id != 'manual_enrollment' && free_trial != 0">{{class?.price}} /-</td>
+             </tr>
+             <tr class="row_flex">
+                <th>Total</th>
+                <td class="detail_tb" *ngIf="pay_id == 'manual_enrollment'">Scholarship</td>
+                <td class="detail_tb" *ngIf="pay_id != 'manual_enrollment' && free_trial == 0">Free Trial</td>
+                <td class="detail_tb" *ngIf="pay_id != 'manual_enrollment' && free_trial != 0 && enrolled_class && enrolled_class.coupon_applied != 0">{{discount_in_rs}} /-</td>
+                <td class="detail_tb" *ngIf="pay_id != 'manual_enrollment' && free_trial != 0 && enrolled_class && enrolled_class.coupon_applied == 0">{{class?.price}} /-</td>
+             </tr>
+             <tr> 
+                <td style="text-align: right; font-size: 16px; font-weight: bold;" *ngIf="pay_id == 'manual_enrollment'">
+                  Scholarship
+                </td> 
+                <td style="text-align: right; font-size: 16px; font-weight: bold;" *ngIf="pay_id != 'manual_enrollment' && free_trial == 0">
+                  Free Trial
+                </td> 
+                <td style="text-align: right; font-size: 16px; font-weight: bold;" *ngIf="pay_id != 'manual_enrollment' && free_trial != 0 && enrolled_class && enrolled_class.coupon_applied != 0">
+                  Grand Total : RS {{total_amount ?? 0}} /-
+                </td> 
+                <td style="text-align: right; font-size: 16px; font-weight: bold;" *ngIf="pay_id != 'manual_enrollment' && free_trial != 0">
+                   Grand Total : RS {{total_amount ?? 0}} /-
+                </td> 
+             </tr>
+             <tr>
+                <td style="text-align: right;">
+                   <p>For More Help BULDHANA, Maharashtra, India, 443001</p>
+                   <p><strong>Hot Line :</strong> <a style="color: #000; text-decoration: none;" href="tel:+9108421784125">08421784125</a></p>
+                   <p><strong>Email Id :</strong>  <a style="color: #000; text-decoration: none;" href="mailto:support@avestud.com">support@avestud.com</a></p>
+                   <p><strong>website :</strong> <a style="color: #000; text-decoration: none;" href="https://www.avestud.com">https://www.avestud.com</a></p>
+                </td>
+             </tr>
+             <tr>
+                <td>This is an electronically generated invoice and no signature is required.</td>
+                <td style="padding-bottom: 30px;">For Payment Terms and Policies Please visit our website <a style="color: #000; text-decoration: none;" href="https://www.avestud.com">https://www.avestud.com</a></td>
+             </tr>
+         </table>
+       </div>
+    </div> 
+</div>
+
+<div id="page_loader">
+ <ion-row class='ion-text-center' >
+    <ion-col size-sm="12" class="mt-4">Generating Pdf &nbsp;&nbsp;
+      <ion-spinner name="bubbles" class='bubblesloader '></ion-spinner> 
+    </ion-col>
+  </ion-row>
+</div> 
+
+</ion-content>
+<!--ion-content End-->

@@ -105,8 +105,7 @@ export class StudentDoubtsPage implements OnInit {
     
     await this.studentService.loadstudentDoubt(data,token).subscribe(
       (res: any) => {   
-        if (res.status == 200) {
-          console.log(res)
+        if (res.status == 200) { 
           this.student = res.student;
           this.doubt = res.messages.length > 0 ? res.messages[0].doubt_id :'';
           this.messages = res.messages.length > 0 ? res.messages:''; 

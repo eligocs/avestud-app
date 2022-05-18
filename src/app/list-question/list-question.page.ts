@@ -54,22 +54,31 @@ export class ListQuestionPage implements OnInit {
         $(".question").addClass("active");   
       });
 
-      $(".question").click(function(){
+      $(document).on('click','.question',function(){
         $('.tab_questions').show();
         $('.tab_answeres').hide();
         $('.tab_explaination').hide();
+        $(this).addClass('active'); 
+        $('.answer').removeClass('active');
+        $('.explaination').removeClass('active');
       });
       
-      $(".answer").click(function(){
+      $(document).on('click','.answer',function(){
         $('.tab_answeres').show();
         $('.tab_questions').hide();
         $('.tab_explaination').hide();
+        $(this).addClass('active');
+        $('.question').removeClass('active');
+        $('.explaination').removeClass('active');
       });
       
-      $(".explaination").click(function(){
+      $(document).on('click',".explaination",function(){
         $('.tab_explaination').show();
         $('.tab_answeres').hide();
         $('.tab_questions').hide();
+        $(this).addClass('active');
+        $('.question').removeClass('active');
+        $('.answer').removeClass('active');
       });
 
       // Custom_popover / Dropdown Menu 
@@ -119,8 +128,7 @@ export class ListQuestionPage implements OnInit {
       await this.homeService.getQuestions(data,token).subscribe(
         (res: any) => {    
           this.questionsList = res.questions ? res.questions :'';     
-          this.topic = res.topic ? res.topic :'';
-          console.log(this.questionsList);
+          this.topic = res.topic ? res.topic :''; 
           if(this.questionsList.length > 0){ 
              this.showEmptyMsg = false;       
           }else{
@@ -128,8 +136,7 @@ export class ListQuestionPage implements OnInit {
             this.topic = [];
             this.showEmptyMsg = true;       
           }   
-        });
-        console.log(this.showEmptyMsg)
+        }); 
     } 
 
 

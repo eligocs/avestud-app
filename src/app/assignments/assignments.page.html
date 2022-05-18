@@ -8,10 +8,10 @@
                         <img class="header_icon_1" src="../../assets/images/weblgo.png">
                     </div>
                 </ion-col>
-                <ion-col size="7">
+                <ion-col size="6">
                     <p class="ion-text-center heading">Assignments</p>
                 </ion-col>
-                <ion-col size="2">
+                <ion-col size="3">
                     <div class="avatar_icon"></div>
                 </ion-col>
             </ion-row>
@@ -70,11 +70,11 @@
         <div class="" *ngFor="let assign of assignments;">
             <div *ngIf="showUnitFor == assign.name || !showUnitFor">
                 <p class="text-center unit_heading">{{assign.name | titlecase}}</p>
-                <div class="assign_test_card" *ngFor="let topicsAll of assign.topics;">
+                <div class="assign_test_card" *ngFor="let topicsAll of assign.topics;let i = index;">
                     <!--row_assignment-->
                     <div class="card_header">
                         <div class="">
-                            <h2 class="title_font">Assignment No. 56</h2>
+                            <h2 class="title_font">Assignment No. {{i+1}}</h2>
                         </div>
                         <div class="custom_popover">
                             <span class="dropdown_toggle toggle1">
@@ -123,7 +123,7 @@
                         <h3 class="text_light">{{topicsAll.title | titlecase}}</h3>
                         <p class="published_date">
                             {{topicsAll.publish_date ? 'Published' :''}}
-                            {{topicsAll.publish_date| date: 'MM/dd/yyyy'}}
+                            {{topicsAll.publish_date}}
                         </p>
                         <h4 class="text_blue">{{topicsAll.testType && topicsAll.testType == 1 ? 'MCQ':''}}
                         </h4>
@@ -152,6 +152,12 @@
                             </ion-col>
                             <ion-col class="ion-text-center" size="4">
                                 <span>{{topicsAll.totalQuestions}}</span>
+                            </ion-col>
+                            <ion-col size="8">
+                                <span>Total Marks</span>
+                            </ion-col>
+                            <ion-col class="ion-text-center" size="4">
+                                <span>{{topicsAll.totalQuestions * topicsAll.per_q_mark}}</span>
                             </ion-col>
                             <div *ngIf='topicsAll.timer != null'>
                                 <ion-col size='8'>

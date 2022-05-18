@@ -3,15 +3,15 @@
   <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="2">
+        <ion-col size="3">
           <ion-buttons>
             <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
           </ion-buttons>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="6">
           <p class="ion-text-center heading">{{showresult == true ? 'Result' :"Assignment"}}</p>
         </ion-col>
-        <ion-col size="2">
+        <ion-col size="3">
           <div class="avatar_icon" (click)="presentPopover('any')"></div>
         </ion-col>
       </ion-row>
@@ -28,18 +28,18 @@
       
       <ion-row class="align_items_center">
         <ion-col size="6">
-          <p>00: 00 min</p>
+          <!-- <p>00: 00 min</p> -->
         </ion-col>
         <ion-col size="6" class="btn_theme submit_test">
-          <button>Submit</button>
+          <span  *ngIf='!alreadygiven'(click)="next()"><button >Submit</button></span>
         </ion-col>
       </ion-row>
 
       <!-- start row_pagination -->
       <div class="pagination" *ngIf='!alreadygiven'>
         <span (click)="prev()"><i class='fa fa-angle-left'></i></span>
-        <div class="pagination_circle" *ngFor='let quest of questions; let i = index;'>
-          <p (click)="newstep(i)" class="numbering {{this.instep == i ? '':''}} ">{{i+1}}</p>
+        <div  *ngFor='let quest of questions; let i = index;' class="pagination_circle {{this.instep == i ? 'height_light':''}}">
+          <p (click)="newstep(i)" class="numbering  ">{{i+1}}</p>
         </div>
         <span (click)="next()"><i class='fa fa-angle-right'></i></span>
       </div>
@@ -90,17 +90,17 @@
             </ion-radio-group>
           </ion-list>
           <!--======ion-list End====-->
-          <!-- <ion-row *ngIf='quest.question_img'>
+          <ion-row *ngIf='quest.question_img'>
             <ion-col>
-              <a href="{{quest.question_img ?? ''}}" class="sums_img">View File Attached</a>
+              <a href="{{quest.question_img ?? ''}}" class="sums_img  text-white"><i class='fa fa-eye'></i> View File Attached</a>
             </ion-col>
-          </ion-row> -->
+          </ion-row>
           <!-- attachment_thumbnail -->
-          <ion-row class="attachment_thumbnail">
+          <!-- <ion-row class="attachment_thumbnail">
             <ion-col>
               <img src="../../assets/images/sum_maths.jpeg">
             </ion-col>
-          </ion-row>
+          </ion-row> -->
           <!-- End attachment_thumbnail -->
         </div>
       </div>
@@ -118,7 +118,7 @@
       </ion-row>
       <ion-row class="btns_row ion-text-center" *ngIf="showsubmit">
         <ion-col size="12">
-          <button (click)="finish()" class="bg_green">Finish</button>
+          <button (click)="finish()" class="bg_green">{{alreadygiven ? 'View Result':Finish}}</button>
         </ion-col>
       </ion-row>
     </div>
@@ -126,9 +126,9 @@
       <div class="test_assign_results_page">
         <!--progress_bar-->
         <ion-row>
-          <ion-col class="progress_bar" size="6">
+          <ion-col class="progress_bar" size="6" *ngIf="this.percentStatus">
            <span class="result_status"> {{this.percentStatus ?? ''}}</span>
-            <div role="progressbar" aria-valuenow="{{this.report?.percentage}}" aria-valuemin="0" aria-valuemax="100" style="--value:{{this.report?.percentage}}">
+            <div role="progressbar" aria-valuenow="{{report?.percentage}}" aria-valuemin="0" aria-valuemax="100" style="--value:{{Spercent}}">
             </div>
             <!-- <h1 class="color_violet progress_title">
               {{this.percentStatus ?? ''}}
@@ -161,7 +161,7 @@
             </div>
           </ion-col>
         </ion-row>
-        <h2 class="title_font">Answer with Explaination</h2>
+        <h2 class="title_font">Answer with Explanation</h2>
         <!--row_unit-->
         <div class="row_unit">
           <div *ngFor='let quest of report.questions; let i = index;'
@@ -184,8 +184,9 @@
             </ion-row>
             <!-- attachment_thumbnail -->
             <ion-row class="attachment_thumbnail">
-              <ion-col>
-                <img src="../../assets/images/sum_maths.jpeg" alt="Thumbnil Img">
+              <ion-col *ngIf='quest.question_img'>
+               <!--  <img src="../../assets/images/sum_maths.jpeg" alt="Thumbnil Img"> -->
+               <a href="{{quest.question_img ?? ''}}" class="sums _imgs text-white"><i class='fa fa-eye'></i> View Question File</a>
               </ion-col>
             </ion-row>
             <!-- attachment_thumbnail end -->

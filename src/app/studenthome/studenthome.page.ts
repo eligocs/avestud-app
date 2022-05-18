@@ -22,6 +22,7 @@ export class StudenthomePage implements OnInit {
   allClasses:any;
   categories:any;
   selected_cat:any;
+
   constructor(
     private previousRouteService: PreviousRouteService,
     private router: Router,
@@ -62,7 +63,7 @@ export class StudenthomePage implements OnInit {
       }
       var classroom =  await this.StudentService.studenthome(token).subscribe(
         (res: any) => {   
-          if (res.data) {  
+          if (res.data) { 
             var allClasses = res.data; 
             if(allClasses){ 
               allClasses.institute_assigned_class.forEach((entry,i) => { 

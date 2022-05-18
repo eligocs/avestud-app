@@ -70,9 +70,11 @@
 }
 
 .edit_btn img {
-    /* height: 55px; */
     width: 28px;
     filter: brightness(0) invert(1);
+    position: absolute;
+    top: 4px;
+    left: 5px;
 }
 
 .position_relative{
@@ -90,4 +92,17 @@
     filter: brightness(0) invert(1);
     float: right;
     margin-top: 16px;
+}
+
+
+.chosse_flie {height: 25px;width: 25px;opacity: 0;}
+
+.ion-text-center.text-orange {
+    color: #ffbf4a;
+}
+input#file-input {
+    color: transparent;
+}
+img.send_docs.mt-1 {
+    margin-top: 8px;
 }

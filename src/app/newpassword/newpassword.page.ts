@@ -47,8 +47,7 @@ export class NewpasswordPage implements OnInit {
       if(this.postData.password == this.postData.cpassword){
         this.postData.phone = this.phone;
         await this.authService.updatepassword(this.postData).subscribe(
-        (res: any) => { 
-          console.log(res)
+        (res: any) => {  
           if (res.status == 200) {    
             this.showloader = false; 
             this.router.navigate(['/']); 

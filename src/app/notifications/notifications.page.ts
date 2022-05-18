@@ -56,7 +56,7 @@ export class NotificationsPage implements OnInit {
         }
         await this.studentService.getnotification(data,token).subscribe(
           (res: any) => {   
-            if (res) {
+            if (res) { 
               this.notifications = res.messages ?? {}; 
               if(this.notifications.length > 0){
                 this.nomsg = false;

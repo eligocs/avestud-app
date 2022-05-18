@@ -50,6 +50,7 @@ export class SExtraclassesPage implements OnInit {
     var token =  await this.storageService.get(AuthConstants.AUTH);    
     var newData = {
       lecture:lecture,  
+      iacs_id:this.iacs
     } 
     await this.studentService.mark_an_attendence(newData,token).subscribe(
       (res: any) => { 
@@ -69,7 +70,8 @@ export class SExtraclassesPage implements OnInit {
     await this.studentService.getstudentextraclass(newData,token).subscribe(
       (res: any) => {    
         if (res.status == 200) {
-          this.myclasses = res.lecturesGroupedByUnits;  
+          this.myclasses = res.lecturesGroupedByUnits;   
+          console.log(this.myclasses)
           if(this.myclasses.length > 0){
             this.nolectures = false;
           }else{

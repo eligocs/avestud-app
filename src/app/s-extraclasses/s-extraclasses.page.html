@@ -35,7 +35,7 @@
       </div>
       <!--Row Uint End-->
       <div *ngFor="let lect of myclasses;let i=index;">
-        <div *ngIf="showUnitFor == lect.unit || !showUnitFor">
+        <div  *ngIf="showUnitFor == lect.unit || !showUnitFor">
           <p class='text-center'>{{lect?.unit | titlecase}}</p>
           <!-- <ion-row class="row_video" *ngFor="let single of lect.lectures;"> 
               <ion-col size="5">
@@ -48,16 +48,19 @@
                       <p class="comman_font color_violet"></p>
                       <p class="comman color_pink lineHe">{{ single?.extra_class_number }} {{ single.extra_class_name | titlecase }}</p>
                       <p class="date_f">{{ single.extra_class_date | date: 'dd/MM/yyyy' }}</p>
-                  </div>
-                  <div class="icons_set">
+                    </div>
+                    <div class="icons_set">
                       <a href='{{ single.notes }}'><img src="../../assets/images/download_pdf.png"></a> 
-                  </div>
-              </ion-col>
-          </ion-row> -->
-          <ion-row class="class_details bg_light_yellow" *ngFor="let single of lect.lectures;">
+                    </div>
+                  </ion-col>
+                </ion-row> -->
+          <ion-row class="class_details test_box bg_light_yellow" *ngFor="let single of lect.lectures;">
+            <div class="ribbon2"  *ngIf="single.showStrip"><span>New</span></div>
             <ion-col size="8" class="left_col">
               <h2 class="title_font">{{ single?.extra_class_number }}</h2>
-              <p class="text_light">{{ single.extra_class_name | titlecase }}</p>
+              <marquee behavior="scroll" direction="left" width="100%" scrollamount="4">
+                <h6 class="text_light">{{ single.extra_class_name | titlecase }}</h6>
+              </marquee>
               <span class="text_blue">{{ single.extra_class_date | date: 'dd/MM/yyyy' }}</span>
             </ion-col>
             <ion-col size="4" class="right_col">

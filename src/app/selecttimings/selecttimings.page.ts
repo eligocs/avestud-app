@@ -7,7 +7,7 @@ import { Router,NavigationExtras,ActivatedRoute, } from '@angular/router';
 import { PreviousRouteService } from '../previous-route.service';
 import { AlertController } from '@ionic/angular';
 import { ToastService } from '../services/toast.service'; 
-import $ from 'Jquery';
+import $ from 'jquery';
 import { WindowRefService } from '../window-ref.service';
 import { environment } from '../../environments/environment';
 declare var RazorpayCheckout:any;

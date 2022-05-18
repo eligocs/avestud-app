@@ -72,8 +72,7 @@ async getTestunits(id){
   var token =  await this.storageService.get(AuthConstants.AUTH)    
   var classroom = this.homeService.getTestunits(classid,token).subscribe(
     (res: any) => { 
-      if (res) {
-        console.log(res)
+      if (res) { 
         this.units = res.data;   
       } 
     }); 
@@ -97,7 +96,37 @@ async getTestunits(id){
   }
 
   async createTest(){
-    this.showloader = true;
+    this.showloader = true; 
+    if(this.postData.unit == ''){
+      this.toastService.presentToast('Please select unit !!!'); 
+      this.showloader = false;
+      return false;
+    }
+    if(this.postData.title == ''){
+      this.toastService.presentToast('Title is required !!!'); 
+      this.showloader = false;
+      return false;
+    }
+    if(this.postData.per_q_mark == ''){
+      this.toastService.presentToast('Per question mark is required !!!'); 
+      this.showloader = false;
+      return false;
+    }
+    if(this.postData.description == ''){
+      this.toastService.presentToast('Description is required !!!'); 
+      this.showloader = false;
+      return false;
+    }
+    if(this.postData.duration == ''){
+      this.toastService.presentToast('Duration is required !!!'); 
+      this.showloader = false;
+      return false;
+    }
+    if(this.postData.testType == ''){
+      this.toastService.presentToast('Select paper mode !!!'); 
+      this.showloader = false;
+      return false;
+    }
     var newData = {
       unit : this.postData.unit,
       title : this.postData.title,

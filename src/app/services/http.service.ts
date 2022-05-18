@@ -154,7 +154,23 @@ export class HttpService {
     if(data.syllabus){
       formDatas.append('syllabus', data.syllabus); 
     }  
-    formDatas.append('iacs_id', data.i_assigned_class_subject_id);  
+    formDatas.append('i_assigned_class', data.i_assigned_class);  
+    formDatas.append('i_assigned_class_subject_id', data.i_assigned_class_subject_id);  
+    const url = environment.apiUrl + serviceName;  
+    const options = {
+      headers: new HttpHeaders({ 
+        'Authorization': 'Bearer ' + token,  
+      })
+    };
+  
+    return this.http.post(url, formDatas, options);
+  }
+
+  updateDemoVideo(serviceName: string,data: any,token:any) {         
+    const formDatas = new FormData(); 
+   
+      formDatas.append('video', data.video); 
+      formDatas.append('description', data.description);    
     const url = environment.apiUrl + serviceName;  
     const options = {
       headers: new HttpHeaders({ 

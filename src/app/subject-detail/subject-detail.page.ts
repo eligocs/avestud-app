@@ -29,7 +29,10 @@ export class SubjectDetailPage implements OnInit {
   notificat:any; 
   loadsuccess:any; 
   syllabus:string; 
+  attachment:string; 
+  showloader_two:boolean; 
   istudent:string; 
+  videoapproval:any; 
   class_time:string; 
   showloader:boolean;
   syllabusSelected:string; 
@@ -54,12 +57,9 @@ export class SubjectDetailPage implements OnInit {
         this.subject_id = params['subject'];
         this.istudent = params['istudent']; 
        
-        if(this.subject_id && this.iacs && token){
-          /* if(this.istudent){
-            this.loadstudentdata(this.iacs,this.subject_id,token); 
-          }else{ */ 
-            this.loaddata(this.iacs,this.subject_id,token); 
-         /*  } */
+        if(this.subject_id && this.iacs && token){ 
+          this.video = '';
+          this.loaddata(this.iacs,this.subject_id,token);  
         }
       }
     ) 
@@ -77,6 +77,27 @@ export class SubjectDetailPage implements OnInit {
         }  
         await this.homeService.saveSyllabus(newData,token).subscribe(
           (res: any) => {     
+            this.showloader = false;
+            if(res.status == 200){ 
+              window.location.href = 'subject-detail?iacs='+this.iacs+'&subject='+this.subject_id; 
+            }
+            this.toastService.presentToast(res.msg); 
+          })
+        } 
+    } 
+
+  async updateVideo(event) {
+    this.showloader = true;
+    var token =  await this.storageService.get(AuthConstants.AUTH)   
+      if(event.target.files[0]) {
+        var newData = {
+          syllabus : event.target.files[0], 
+          i_assigned_class:this.iac.id,
+          i_assigned_class_subject_id:this.i_a_c_s_id,
+        }   
+        await this.homeService.updateVideo(newData,token).subscribe(
+          (res: any) => {     
+            console.log(res)
             this.showloader = false;
             if(res.status == 200){ 
               window.location.href = 'subject-detail?iacs='+this.iacs+'&subject='+this.subject_id; 
@@ -119,37 +140,67 @@ export class SubjectDetailPage implements OnInit {
     if(this.iacs && this.subject_id){
         if(this.iacs && this.subject_id){
           await this.homeService.openSubject(iacs,subject_id,token).subscribe(
-            (res: any) => {    
-              if(res.status == 200){
-                console.log(res)
-              this.syllabus = res.data.syllabus ? res.data.syllabus:'';
-              this.video = res.data.video ? res.data.video:'';
-              
-              this.getSubjectsInfo = res.data.getSubjectsInfo ? res.data.getSubjectsInfo:'';
-              this.doubtsnotify = res.data.doubtsnotify ? res.data.doubtsnotify:0;
-              this.class_days = res.data.class_days ? res.data.class_days:'';
-              this.iac = res.data.iac ? res.data.iac:'';
-              this.lecture_dates = res.data.lecture_dates ? res.data.lecture_dates:'';
-              this.subject = res.data.subject ? res.data.subject:'';  
-              this.i_a_c_s_id = res.data.i_a_c_s_id ? res.data.i_a_c_s_id:'';    
-              this.next_class = res.data.next_class ? res.data.next_class:''; 
-              var class_time = res.data.class_time ? res.data.class_time:''; 
-
-              if(class_time){ 
-                class_time.forEach((entry,i) => {  
-                  entry.color_code = this.colorLight();      
-                });    
-                console.log(class_time)
-                this.class_time =  class_time; 
+            (res: any) => {     
+              if(res.status == 200){ 
+                this.syllabus = res.data.syllabus ? res.data.syllabus:'';
+                this.video = res.data.video ? res.data.video:''; 
+                this.getSubjectsInfo = res.data.getSubjectsInfo ? res.data.getSubjectsInfo:'';
+                this.doubtsnotify = res.data.doubtsnotify ? res.data.doubtsnotify:0;
+                this.class_days = res.data.class_days ? res.data.class_days:'';
+                this.iac = res.data.iac ? res.data.iac:'';
+                this.lecture_dates = res.data.lecture_dates ? res.data.lecture_dates:'';
+                this.subject = res.data.subject ? res.data.subject:'';  
+                this.i_a_c_s_id = res.data.i_a_c_s_id ? res.data.i_a_c_s_id:'';    
+                this.next_class = res.data.next_class ? res.data.next_class:''; 
+                var class_time = res.data.class_time ? res.data.class_time:'';  
+                this.videoapproval = res.data.videoapproval ? res.data.videoapproval:''; 
+                if(this.videoapproval == 0){
+                  this.toastService.presentToast('Content is under approval !!!'); 
+                } 
+                if(class_time){ 
+                  class_time.forEach((entry,i) => {  
+                    entry.color_code = this.colorLight();      
+                  });     
+                  this.class_time =  class_time; 
+                }
               }
-            }
             });
         }   
     }
   }
+
+  async refreshpage(){
+    var token =  await this.storageService.get(AuthConstants.AUTH) 
+    if(token){
+      this.loaddata(this.iacs,this.subject_id,token); 
+    } 
+  }
+  
   colorLight() { 
     var items = ['grad_green','grad_sky','grad_orange','grad_yellow']
     return items[Math.floor(Math.random()*items.length)]; 
   } 
+
+  async onChangeAttachment(event) {
+    this.showloader_two = true;
+    var token =  await this.storageService.get(AuthConstants.AUTH) 
+    this.attachment = event.target.files[0]; 
+    if(this.attachment ) {
+      var newData = {
+        syllabus : this.attachment , 
+        i_assigned_class:this.iac.id,
+        i_assigned_class_subject_id:this.i_a_c_s_id,
+      }   
+      await this.homeService.onChangeAttachment(newData,token).subscribe(
+        (res: any) => {      
+          this.showloader_two = false;
+          if(res.status == 200){ 
+            this.toastService.presentToast(res.msg); 
+            window.location.href = 'subject-detail?iacs='+this.iacs+'&subject='+this.subject_id; 
+          }
+        })
+      } 
+    
+  }
 
 }

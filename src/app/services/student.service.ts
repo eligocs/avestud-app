@@ -26,6 +26,16 @@ export class StudentService {
   getstudentclassByname(token,data){ 
     return this.httpService.gettrip('getstudentclass',data,token);
   }
+  loadRecipts(token){ 
+    return this.httpService.get('loadRecipts',token);
+  }
+  downloadReceipt(class_id,student_id,token){ 
+    var postData = {
+      class_id:class_id,
+      student_id:student_id, 
+    } 
+    return this.httpService.gettrip('generate_student_receipt',postData,token);
+  }
   enrollclass(class_id,token){
     var data = {
       class_id : class_id
@@ -77,6 +87,9 @@ export class StudentService {
   }
   getTimings(data,token){  
     return this.httpService.gettrip('getTimings',data,token);
+  }
+  editClassTime(data,token){  
+    return this.httpService.gettrip('editClassTime',data,token);
   }
   getstudentAssignment(data,token){  
     return this.httpService.gettrip('getstudentAssignment',data,token);

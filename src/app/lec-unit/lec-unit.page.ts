@@ -34,8 +34,7 @@ export class LecUnitPage implements OnInit {
       params => { 
         this.iacs =  params['iacs'];   
         this.subject =  params['subject'];  
-        this.type =  params['type'];
-        console.log(this.type)
+        this.type =  params['type']; 
         if(this.iacs && this.subject){
           if(this.type == 'extraclass'){
             this.previousUrl = 'extraclass?iacs='+this.iacs+'&subject='+this.subject;  

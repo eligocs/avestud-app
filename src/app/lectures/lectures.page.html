@@ -2,16 +2,16 @@
    <ion-toolbar>
       <ion-grid>
          <ion-row>
-            <ion-col size="2">
+            <ion-col size="3">
                <div class="d-flex">
                   <ion-back-button defaultHref="{{previousUrl}}"></ion-back-button>
                   <img class="header_icon_1" src="../../assets/images/weblgo.png">
                </div>
             </ion-col>
-            <ion-col size="8">
+            <ion-col size="6">
                <p class="ion-text-center heading">Lectures</p>
             </ion-col>
-            <ion-col size="2">
+            <ion-col size="3">
                <div class="avatar_icon" (click)="presentPopover('any')"><i class="fa fa-bell"></i> </div>
             </ion-col>
          </ion-row>
@@ -58,7 +58,7 @@
                   </div>
                </ion-col>
                <ion-col size="7" class="video_details">
-                  <h2 class="title_font">Lecture No. {{ single.lecture_number }} </h2>
+                  <h2 class="title_font">Lecture No : {{ single.lecture_number }} </h2>
                   <marquee behavior="scroll" direction="left" width="100%" scrollamount="4">
                      <h3 class="text_light">{{ single.lecture_name | titlecase }}</h3>
                   </marquee>

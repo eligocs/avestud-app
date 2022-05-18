@@ -1,0 +1,92 @@
+<!--Ion-Header Start-->
+<ion-header>
+  <ion-toolbar>
+     <ion-grid>
+      <ion-row class="home_page_institute">
+        <ion-col size="3">
+           <div class="d-flex">
+              <!-- <ion-buttons>
+            <ion-icon class='logout_btn' (click)="logoutAction()" name="log-out-outline"></ion-icon>
+          </ion-buttons> -->
+              <img class="header_icon_1" src="../../assets/images/weblgo.png">
+           </div>
+        </ion-col>
+        <ion-col size="6">
+           <p class="ion-text-center heading">Information</p>
+        </ion-col>
+        <ion-col size="3">
+           <div class="avatar_icon" (click)="presentPopover('any')"><i class="fa fa-bell"></i> </div>
+        </ion-col>
+     </ion-row>
+     </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<!--Ion-Header Ends-->
+<!--Ion-Content Start-->
+<ion-content>
+  <!--video_page Starts-->
+  <div class="video_page">
+     <div class="header_background">
+        <!-- <img src="../../assets/images/dummy_video.jpeg" alt="dummy_video.jpeg"> -->
+        <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/ol2Cvgtvrhk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+         <a   href='{{ institute?.video }}'>
+           <div class="background_profile_img" style="background: url('../../assets/images/play.jpg');"></div>
+         </a> 
+     </div>
+     <ion-card>
+        <ion-card-content>
+           <!--card_header-->
+           <ion-row  >
+              <ion-col size="10">
+                 <p class="color_violet comman_font2">Institute Description</p> 
+              </ion-col>
+              <!--card_icons-->
+              <ion-col size="2" class="card_icons">
+                 <!-- <h2><i class="fa fa-pencil text-white f-15"></i></h2> -->
+              </ion-col>
+           </ion-row>
+           <ion-row class="card_header">
+            <ion-col size="12">
+            <!--video_discription-->
+            <div class="video_discription">
+               <textarea class="form-control text-white" [(ngModel)]='description' name="description" rows="6">{{institute?.description}}
+               </textarea>
+            </div>
+            </ion-col>
+           </ion-row>
+           <!--drag_drop-->
+           <ion-row>
+              <ion-col>
+                 <p class="color_violet comman_font2">Institute Demo Video</p>
+                 <input class="drag_drop" type="file"  name="video" accept="video/*" (change)="onChangeVideo($event)" type="file"/>
+                 <!-- <img src="../../assets/images/pdf_img.svg" class="pdf_img" alt="pdf_img.svg"> -->
+              </ion-col>
+           </ion-row>
+           <!-- <ion-row class="mg_top">
+               <div *ngIf='institute?.video'>
+               <a class='text-white' href='{{institute?.video}}'><i class='fa fa-eye'></i> View Video</a>
+               </div>
+            </ion-row> -->
+           <ion-row *ngIf="institute?.video"> 
+              <ion-col class=" text-redish"  *ngIf="institute?.videoApproval == 0" size="10" >
+                  Content Under Approval 
+              </ion-col>
+              <ion-col class="text-redish text-right"  *ngIf="institute?.videoApproval == 0" size="2" >
+               <i class="fa fa-refresh" (click)="refreshpage()"></i>
+              </ion-col>
+           </ion-row>
+           <ion-row class='ion-text-center' *ngIf="showloader">
+            <ion-col size-sm="12">Please be patient, files are being uploaded <br>
+              <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner>
+            </ion-col>
+          </ion-row>
+           <!--btn_theme--> 
+           <div class="btn_theme">
+              <button href="#" (click)="updateDemoVideo()">Send For Approval</button>
+           </div>
+        </ion-card-content>
+     </ion-card>
+  </div>
+  <!--video_page Ends-->
+</ion-content>
+<!--Ion-Content Ends-->

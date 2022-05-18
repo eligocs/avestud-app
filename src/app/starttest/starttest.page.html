@@ -3,15 +3,16 @@
   <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="2">
+        <ion-col size="3">
           <ion-buttons *ngIf="showresult">
             <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
+            <img class="header_icon_1" src="../../assets/images/weblgo.png">
           </ion-buttons>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="6">
           <p class="ion-text-center heading">Test</p>
         </ion-col>
-        <ion-col size="2">
+        <ion-col size="3">
           <div class="avatar_icon" (click)="presentPopover('any')"></div>
         </ion-col>
       </ion-row>
@@ -28,19 +29,16 @@
       <!--==content_header==-->
       <ion-row class="align_items_center">
         <ion-col size="6">
-          <p *ngIf="showsubmit">{{display ?? ''}}</p>
+          <p  class='test_percent' *ngIf="!showsubmit">{{display ?? ''}}</p>
         </ion-col>
-        <ion-col size="6" class="btn_theme submit_test" *ngIf="!showsubmit">
-          <button (click)="next()">Submit</button>
-        </ion-col>
-        <ion-col size="6" class="btn_theme submit_test" *ngIf="showsubmit">
-          <button (click)="finish()">Submit</button>
+        <ion-col size="6" class="btn_theme submit_test">
+          <span  *ngIf='!alreadygiven' (click)="next()"><button >Submit</button></span>
         </ion-col>
       </ion-row>
       <!--===pagination start===-->
           <div class="pagination" *ngIf='!alreadygiven;'>
             <span (click)="prev()"><i class='fa fa-angle-left'></i></span>
-            <div class="pagination_circle" *ngFor='let quest of questions; let i = index;'>
+            <div  *ngFor='let quest of questions; let i = index;' class="pagination_circle {{this.instep == i ? 'height_light':''}}">
                 <p (click)="newstep(i)" class="numbering {{this.instep == i ? '':''}} ">{{i+1}}</p>
             </div>
             <span (click)="next()"><i class='fa fa-angle-right'></i></span>
@@ -82,16 +80,16 @@
             </ion-radio-group>
           </ion-list>
           <!--======ion-list End====-->
-          <!-- <ion-row *ngIf='quest.question_img'>
+          <ion-row *ngIf='quest.question_img'>
             <ion-col>
-              <a href="{{quest.question_img ?? ''}}" class="sums_img">View File Attached</a>
+              <a href="{{quest.question_img ?? ''}}" class="sums_img text-white"><i class='fa fa-eye'></i> View File Attached</a>
             </ion-col>
-          </ion-row> -->
-          <ion-row class="attachment_thumbnail">
+          </ion-row>
+          <!-- <ion-row class="attachment_thumbnail">
             <ion-col>
               <img src="../../assets/images/sum_maths.jpeg">
             </ion-col>
-          </ion-row>
+          </ion-row> -->
         </div>
       </div>
       <!--====btns_row====-->
@@ -108,7 +106,7 @@
       </ion-row>
       <ion-row class="btns_row ion-text-center" *ngIf="showsubmit">
         <ion-col size="12">
-          <button (click)="finish()" class="bg_green">Finish</button>
+          <button (click)="finish()" class="bg_green">Show Report</button>
         </ion-col>
       </ion-row>
     </div>
@@ -119,8 +117,8 @@
         <ion-row>
           <ion-col class="progress_bar" size="6">
             <span class="result_status"> {{this.percentStatus ?? ''}}</span>
-            <div role="progressbar" aria-valuenow="{{this.report?.percentage}}" aria-valuemin="0" aria-valuemax="100"
-              style="--value:{{this.report?.percentage}}"></div>
+            <div role="progressbar" aria-valuenow="{{Spercent}}" aria-valuemin="0" aria-valuemax="100"
+              style="--value:{{Spercent}}"></div>
           </ion-col>
          
           <!--correct / Not correct answers card-->
@@ -143,7 +141,7 @@
             </div>
           </ion-col>
         </ion-row>
-        <h2 class="title_font">Answer with Explaination</h2>
+        <h2 class="title_font">Answer with Explanation</h2>
         <!--row_unit-->
         <div class="row_unit">
           <div *ngFor='let quest of report.questions; let i = index;'
@@ -164,9 +162,12 @@
             </ion-row>
             <!-- attachment_thumbnail -->
             <ion-row class="attachment_thumbnail">
-              <ion-col>
+              <!-- <ion-col>
                 <img src="../../assets/images/sum_maths.jpeg" alt="Thumbnil Img">
-              </ion-col>
+              </ion-col> -->
+              <ion-col *ngIf='quest.question_img'> 
+                <a href="{{quest.question_img ?? ''}}" class="sums _imgs text-white"><i class='fa fa-eye'></i> View Question File</a>
+               </ion-col>
             </ion-row>
             <!-- attachment_thumbnail end -->
             <!--answer_btns-->

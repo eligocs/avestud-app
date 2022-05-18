@@ -18,6 +18,7 @@ export class StartassignmentPage implements OnInit {
   previousUrl:any;
   type:any;
   answer:any;
+  Spercent:any;
   question_id:any;
   showsubmit:any;
   alreadygiven:boolean;
@@ -120,7 +121,7 @@ export class StartassignmentPage implements OnInit {
       ); 
   }
 
-  setAnswer(q_id,answer,correct){ 
+  setAnswer(q_id,answer,correct){  
     if(q_id && answer){
       this.question_id = q_id;
       this.answer = answer;
@@ -140,9 +141,10 @@ export class StartassignmentPage implements OnInit {
       var token =  await this.storageService.get(AuthConstants.AUTH)     
       await this.studentService.finishAssign(newData,token).subscribe(
         (res: any) => {       
-          if (res.status == 200) { 
+          if (res.status == 200) {   
             this.report = res; 
             this.showresult = true;
+            this.Spercent = Math.round(res.percentage);
             var totalpercent = res.percentage;
             if(totalpercent < 30){
               this.percentStatus = 'Failed !';
@@ -166,9 +168,9 @@ export class StartassignmentPage implements OnInit {
       assignment:assignment, 
     } 
     await this.studentService.startassignment(newData,token).subscribe(
-      (res: any) => {       
+      (res: any) => {      
         if (res.status == 200) { 
-          this.questions = res.questions ?? '';
+          this.questions = res.questions ?? ''; 
           if(this.questions.length > 0){
             this.alreadygiven = false;  
             this.showsubmit = false; 

@@ -8,10 +8,10 @@
                         <img class="header_icon_1" src="../../assets/images/weblgo.png">
                     </div>
                 </ion-col>
-                <ion-col size="7">
+                <ion-col size="6">
                     <p class="ion-text-center heading">Test</p>
                 </ion-col>
-                <ion-col size="2">
+                <ion-col size="3">
                     <div class="avatar_icon"></div>
                 </ion-col>
             </ion-row>
@@ -73,8 +73,8 @@
             </div> 
             <div *ngFor="let assign of testAll;" id="{{showUnitFor == assign.name ? 'theme_shadow' :''}}">
                 <p (click)="toggleShow(assign.name)">
-                    {{assign?.name && assign.name.length > 0 && assign.name.length > 6 ? assign.name.substring(0,6)+'
-                    ...' : assign.name.length > 0 && assign.name.length < 6 ? assign.name :''}} </p>
+                    {{assign?.name && assign.name.length > 0 && assign.name.length > 10 ? assign.name.substring(0,10)+'
+                    ...' : assign.name.length > 0 && assign.name.length <= 10 ? assign.name :''}} </p>
             </div>
         </div>
         <!--row_unit End-->

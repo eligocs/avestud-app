@@ -68,8 +68,7 @@ export class ViewAttendancePage implements OnInit {
       } 
       await this.homeService.getstudentAttendance(data,token).subscribe(
       (res: any) => {  
-        if (res.status == 200) {  
-         /*  $('.attendancehtml').html(res.html);  */   
+        if (res.status == 200) {   
             this.total_past_lectures = res.total_past_lectures ?? 0;
             this.attended_lectures = res.attended_lectures ?? 0;
             this.total_attended_lectures = res.total_attended_lectures ?? 0;

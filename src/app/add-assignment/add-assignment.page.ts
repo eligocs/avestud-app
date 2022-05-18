@@ -26,6 +26,7 @@ export class AddAssignmentPage implements OnInit {
   olddata:any;
   previousUrl:any;
   iacs:any;
+  showloader:boolean;
   units:any;
   subject:any;
   assignment_id:any;
@@ -90,8 +91,7 @@ export class AddAssignmentPage implements OnInit {
         (res: any) => {     
           if (res.status == 200) { 
             this.olddata = res.data;
-            this.postData =  this.olddata;
-            console.log(this.postData.testType)
+            this.postData =  this.olddata; 
           }else{
             this.toastService.presentToast('Something went wrong,try again later'); 
           }
@@ -101,6 +101,32 @@ export class AddAssignmentPage implements OnInit {
   }
   
     async createAssigment(){
+      this.showloader = true; 
+    if(this.postData.unit == ''){
+      this.toastService.presentToast('Please select unit !!!'); 
+      this.showloader = false;
+      return false;
+    }
+    if(this.postData.title == ''){
+      this.toastService.presentToast('Title is required !!!'); 
+      this.showloader = false;
+      return false;
+    }
+    if(this.postData.per_q_mark == ''){
+      this.toastService.presentToast('Per question mark is required !!!'); 
+      this.showloader = false;
+      return false;
+    }
+    if(this.postData.description == ''){
+      this.toastService.presentToast('Description is required !!!'); 
+      this.showloader = false;
+      return false;
+    } 
+    if(this.postData.testType == ''){
+      this.toastService.presentToast('Select paper mode !!!'); 
+      this.showloader = false;
+      return false;
+    }
       var newData = {
         unit : this.postData.unit,
         title : this.postData.title,

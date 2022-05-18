@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router,ActivatedRoute  } from '@angular/router';
+import { Component, OnInit } from '@angular/core'; 
 import { StudentService } from '../services/student.service';
 import { StorageService } from '../services/storage.service'; 
 import { AuthConstants } from '../../../config/auth-constants';
 import { ToastService } from '../services/toast.service';  
+import { Router,ActivatedRoute,NavigationExtras } from '@angular/router'; 
 @Component({
   selector: 'app-starttest',
   templateUrl: './starttest.page.html',
@@ -31,6 +31,7 @@ export class StarttestPage implements OnInit {
   time: number;
   skipquestion: any;
   radiovalue: any;
+  Spercent: any;
   interval;
   display;
   showLoader: boolean;
@@ -39,7 +40,8 @@ export class StarttestPage implements OnInit {
     private studentService: StudentService,
     private route: ActivatedRoute,
     private storageService: StorageService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router,
   ) { }
 
   async ngOnInit() {
@@ -94,8 +96,7 @@ export class StarttestPage implements OnInit {
 
   setPercentBar(i) {
     setTimeout(() => {
-      let apc = (i / 100)
-      console.log(apc);
+      let apc = (i / 100) 
       this.p_bar_value = apc;
     }, 30 * i);
   }
@@ -105,7 +106,7 @@ export class StarttestPage implements OnInit {
   }
 
   async StartTimer(){   
-    var total_t = this.topic.timer ?? 0;
+    var total_t = this.topic.timer; 
     var mainthis = this; 
     if(total_t){
       this.time = 60*total_t;
@@ -113,14 +114,21 @@ export class StarttestPage implements OnInit {
         if(this.time > 0) {
             this.time--; 
         } else { 
-            mainthis.saveAnswer();
-            this.time= 0;
+          if( this.showresult == false){
+            this.toastService.presentToast('You fail to finish test on time...');
+            let navigationExtras: NavigationExtras = {
+              queryParams: { 'iacs': this.iacs ,'subject':this.subject,'purchased':1,'type':this.type},
+              fragment: 'anchor'
+            };
+            this.router.navigate(['s-test'],navigationExtras);
+          }
+          this.time= 0;
         } 
-        this.display=this.transform( this.time)
+        this.display=this.transform( this.time) 
       },1000)
-    }
-
+    } 
   }
+
   transform(value: number): string {
     const minutes: number = Math.floor(value / 60);
     return minutes + ':' + (value - minutes * 60)+' min';
@@ -210,6 +218,7 @@ export class StarttestPage implements OnInit {
             this.report = res; 
             this.showresult = true;
             var totalpercent = res.percentage;
+            this.Spercent = Math.round(res.percentage);
             if(totalpercent < 30){
               this.percentStatus = 'Failed !';
             }else if(totalpercent > 30 && totalpercent < 70){
@@ -241,7 +250,7 @@ export class StarttestPage implements OnInit {
             this.alreadygiven = false;  
             this.showsubmit = false; 
             this.showresult = false;
-            this.instep = 0; 
+            this.instep = 0;  
             this.StartTimer(); 
           }
           if(this.questions.length == 0){

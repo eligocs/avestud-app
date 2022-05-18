@@ -189,8 +189,7 @@ img.header_icon_1 {
   font-size: 14px;
   color: #ffffff;
   text-align: center;
-  font-weight: 400;
-  margin-left: 40px;
+  font-weight: 400; 
 }
 
 label {
@@ -1158,13 +1157,13 @@ img.header_icon_1 {
   bottom: 0;
   // background: #000000a3;
   // background: #d4d2d2c9;
-  background: #beb1b1c9;
+  //background: #beb1b1c9;
 }
 
 .background_profile_img {
   background-size: cover !important;
   width: 100%;
-  height: 180px;
+  height: 220px;
   background-position: center center !important;
   position: relative;
 }
@@ -2413,6 +2412,23 @@ img.header_icon_1 {
   animation: blinker 1.5s linear infinite;
 }
 
+  .next_class_tab {
+  background: #4b6885;
+  padding: 12px;
+  text-align: center;
+  margin-top: 20px;
+  border-radius: 3px;
+  margin-bottom: 5px;
+}
+
+  .next_class_tab p {
+  margin: 0;
+  font-size: 14px;
+}
+
+  .next_class_tab .blink_text {
+  animation: blinker 1.5s linear infinite;
+}
 // @keyframes blink{
 //   0%{opacity: 0;}
 //   50%{opacity: .5;}
@@ -2912,7 +2928,7 @@ ion-select {
 
 .s_extra_class_page .bg_light_yellow {
   // background-color: #3e5972b0;
-  background: linear-gradient(45deg, #273a4b, #363636) !important;
+  background: #3e5972b0;
 }
 
 .s_extra_class_page .bg_light_pink {
@@ -2938,7 +2954,7 @@ ion-select {
   border-radius: 3px;
   padding: 10px;
   margin: 30px 0;
-  box-shadow: 0 0 4px #89c0d7;
+  box-shadow: 0px 0 15px -3px #000000;
 }
 
 .s_extra_class_page .class_details .left_col h2 {
@@ -3535,10 +3551,48 @@ select:focus-visible {
   text-align: center;
 }
 
-div#pdfTable {
-  background: #385169;
-  padding: 20px;
-  border-radius: 2px;
+
+
+
+// enrollment receipt print css
+
+.payment_receipt{
+  background-color: #fff;
+  color: #000;
+}
+
+.receipt_logo{
+  height: 40px;
+  width: 200px;
+}
+
+.payment_receipt table{
+  border-collapse: separate;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.payment_receipt table tr td{
+  padding: 8px;
+  display: block;
+  border-bottom: 1px solid #d8d1d1;
+}
+
+.payment_receipt table tr td p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.payment_receipt table th{
+  padding: 8px;
+  text-align: left;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #d8d1d1;
+}
+
+.payment_receipt table tr.row_flex {
+  display: flex;
 }
 
 // ---------------------------
@@ -3690,11 +3744,13 @@ div#pdfTable {
 .assignment_test_page .pagination_circle {
   height: 35px;
   width: 35px;
-  border: 2px solid #66CA5E;
+  border: 2px solid #a8a8a8;
   border-radius: 50%;
   position: relative;
 }
-
+.pagination_circle.height_light {
+  border: 2px solid #5ee168; 
+}
 .assignment_test_page .pagination_circle .numbering {
   margin: 0;
   position: absolute;
@@ -3707,8 +3763,8 @@ div#pdfTable {
 
 .assignment_test_page .question {
   margin-bottom: 20px;
-  box-shadow: 0 0 6px #2196f3;
-  border-radius: 4px;
+  box-shadow: 0 0 6px #e6e6e6;
+  border-radius: 2px;
   padding: 15px;
   margin-top: 40px;
 }
@@ -4081,5 +4137,74 @@ div[role="progressbar"]::before {
   margin-top: 12px;
   margin-bottom: 5px;
 }
-
+span.icon_tab {
+  white-space: nowrap;
+}
+i.fa.fa-home {
+  font-size: 26px;
+}
 // ---- End video_lectures_intitute ---
+
+
+
+
+
+.test_box{
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+.ribbon {
+  position: absolute;
+  right: -13px;
+  top: -22px !important;
+  z-index: 1;
+  width: 75px;
+  height: 75px;
+  text-align: right;
+}
+
+.ribbon span {
+  font-size: 10px;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(40deg);
+  width: 100px;
+  display: block;
+  box-shadow: 0 0 8px 0 rgba(50, 58, 70, 0.06), 0 1px 0 0 rgba(50, 58, 70, 0.02);
+  background: #71b6f9;
+  position: absolute;
+  top: 28px;
+  left: -21px;
+  padding: 0 0 0 12px;
+}
+.ribbon2 {
+  position: absolute;
+  right: -28px;
+  top: -30px !important;
+  z-index: 1;
+  width: 75px;
+  height: 75px;
+  text-align: center;
+}
+
+.ribbon2 span {
+  font-size: 10px;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(40deg);
+  width: 100px;
+  display: block;
+  box-shadow: 0 0 8px 0 rgba(50, 58, 70, 0.06), 0 1px 0 0 rgba(50, 58, 70, 0.02);
+  background: #71b6f9;
+  position: absolute;
+  top: 28px;
+  left: -21px;
+  padding: 0 0 0 12px;
+}

@@ -78,8 +78,7 @@ export class DoubtMessagesPage implements OnInit {
         var classid= this.iacs;
           await this.homeService.send_btn(newData,token).subscribe(
             (res: any) => {    
-              if (res.status == 200) { 
-                console.log(res.msg)
+              if (res.status == 200) {  
                 this.toastService.presentToast(res.msg); 
                 mainthis.loadsingleDoubt(newData.iacs,newData.doubt,token);
                 this.text_message = '';

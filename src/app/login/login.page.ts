@@ -52,8 +52,7 @@ async ngOnInit() {
       this.typepass = 'text';
     }else{
       this.typepass = 'password';
-    }
-    console.log(this.typepass)
+    } 
   }
 
   /* launchDialer(n:string){

@@ -38,10 +38,19 @@ export class SearchclassPage implements OnInit {
     private route: ActivatedRoute,
   ) { }
 
-  async ngOnInit() {
-    // $('#search_box').click(function(){
-    //   $('.default_select').addClass("decrease_width");
-    // });
+  async ngOnInit() { 
+
+    $(document).ready(function(){
+      $(document).on('click','.read_more',function(){ 
+        $(this).parent().find('p').toggle();
+        $(this).parent().parent().find('.lessdata').toggle();
+        if ($(this).parent().parent().find('.lessdata').is(":visible")) {
+          $(this).html('<i class="fa fa-arrow-down"></i> Read More');
+        }else{
+          $(this).html('<i class="fa fa-arrow-up"></i> Read Less');
+        }
+      });
+    });
 
     this.showloader = false;
     this.show_default = true;
@@ -70,86 +79,93 @@ export class SearchclassPage implements OnInit {
       )
     }
     async setName(){
-      if(this.enteredName.length > 1 && this.enteredName.length < 15){
-        if(this.enteredName){
+      
+      if(this.enteredName.length > 1 && this.enteredName.length < 15){ 
           var detailA = {
             class : this.enteredName
           }
           var token =  await this.storageService.get(AuthConstants.AUTH)
-          await this.StudentService.getstudentclassByname(token,detailA).subscribe(
+          this.StudentService.getstudentclassByname(token,detailA).subscribe(
             (res: any) => {  
               if (res.status == 200) {  
-                var result =  res.classes;   
-                var allClasses = []; 
-                if(result.length > 0){
-                  result.forEach((entry,i) => { 
-                    entry.subjects.forEach((subj) => {  
-                      subj.color_code = this.colorLight(i);  
-                    });    
-                    allClasses.push(entry)
-                    if(i == result.length -1){
-                      this.classes = allClasses; 
-                    }
-                  });
-                  console.log(allClasses)
-                  if(this.classes.length > 0){
-                      this.nodata = false;
-                  } else {
-                      this.nodata = true;
-                  } 
-                }     
+                var result =  res.classes ? res.classes :'';   
+                var allClasses = [];   
+                
+                  if(result.length > 0){
+                    result.forEach((entry,i) => { 
+                      entry.subjects.forEach((subj) => {  
+                        subj.color_code = this.colorLight(i);  
+                      });    
+                      allClasses.push(entry)
+                      if(i == result.length -1){
+                        if(allClasses){ 
+                          this.classes = allClasses; 
+                        }else{
+                          this.classes = ''; 
+                          this.nodata = false;
+                        }
+                      }
+                    }); 
+                    if(this.classes.length > 0){
+                        this.nodata = false;
+                    } else {
+                        this.nodata = true;
+                      } 
+                  }     
               }
               this.show_default = false;
               this.showloader = false;
-            }) 
-        }
+            })  
+      }else{ 
+        this.classes = [];
+        this.show_default = false;
+        this.showloader = false;
+        this.oncatChange(); 
       } 
     }
     
     async oncatChange(){ 
       this.classes  = {};
       this.showloader = true;
-      this.nodata = false;
-     ;  
+      this.nodata = false; 
       if(this.selected_cat){
         var detail = {
           category_id : this.selected_cat
+        }
+        if(this.selected_cat){
+          this.enteredName = '';
         }
         var token =  await this.storageService.get(AuthConstants.AUTH)
         await this.StudentService.getstudentclass(token,detail).subscribe(
           (res: any) => {  
             if (res.status == 200) {  
               var result =  res.classes;   
-              var allClasses = []; 
+              var allClasses = [];  
+              console.log(res.classes)
               if(result.length > 0){
                 result.forEach((entry,i) => { 
                   entry.subjects.forEach((subj) => {  
                     subj.color_code = this.colorLight(i);  
                   });    
                   allClasses.push(entry)
-                  if(i == result.length -1){
-                    this.classes = allClasses; 
+                  if(i == result.length -1){ 
+                    if(allClasses){ 
+                      this.classes = allClasses; 
+                    }else{
+                      this.classes = ''; 
+                      this.nodata = true;
+                    }
                   }
-                });
-                console.log(allClasses)
-               /*  if(this.classes.length > 0){
-                    this.nodata = false;
-                } else {
-                    this.nodata = true;
-                }  */
-              }     
+                });  
+              }else{
+                this.classes = ''; 
+                this.nodata = true;
+              }   
             }
             this.show_default = false;
             this.showloader = false;
           }) 
-      }
-      
-      
-   
-
-      
-      
-      
+      } 
     }
     colorLight(i) {  
        var items = ['grad_sky','grad_yellow','grad_yellow','grad_green','grad_orange']
@@ -159,17 +175,7 @@ export class SearchclassPage implements OnInit {
      var token = await this.storageService.get(AuthConstants.AUTH);  
      var toast = this.toastService;
      var serv_student = this.StudentService; 
-     var mainthis = this;
-    
-    /*  function enrollclass(id){
-        serv_student.enrollclass(id,token).subscribe(
-        (res: any) => {
-          this.iacsdetails = res.iacsdetails; 
-          this.timeslots = res.timeslots; 
-           mainthis.getallectures(mainthis.iacs,token);
-          toast.presentToast(res.msg);
-        }); 
-     } */
+     var mainthis = this; 
      const alert = await this.alertController.create({
        cssClass: 'my-custom-class',
        header: 'Confirm!',

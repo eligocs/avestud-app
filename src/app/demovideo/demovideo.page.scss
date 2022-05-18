@@ -1,0 +1,91 @@
+// ====demo-vedio-page=====
+
+// ====header_background====
+
+.header_background iframe {
+    height: 300px;
+    max-width: 768px;
+    width: 100%;
+  }
+  
+  // ===card_header===
+  
+  .card_header {
+    margin-bottom: 5px;
+  }
+  
+  .card_icons img {
+    padding: 0 8px;
+  }
+  
+  .edit_icon {
+    height: 19px;
+    width: 38px;
+  }
+  
+  .delete_icon {
+    height: 18px;
+    width: 32px;
+  }
+  
+  // ===comman_font2===
+  
+  .comman_font2 {
+    font-weight: 400 !important;
+  }
+  
+  // ====ion-card and card-content====
+  
+  ion-card {
+    box-shadow: none;
+    border-radius: 30px;
+    width: 100%;
+    margin: -55px 0;
+  }
+  
+  // ====video_discription====
+  
+  .video_discription p {
+    font-size: 14px;
+    color: #c7c7c7;
+    font-weight: 400;
+  }
+  
+  // ====drag_drop====
+  
+  .drag_drop {
+    border: 1px solid #bfbfbf;
+    height: 124px;
+    width: 100% !important; 
+    border-radius: 5px;
+    margin-top: 8px;
+    background: url(../../assets/images/pdf_img.svg);
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-position-x: center;
+    padding-left: 10px;
+  }
+  ion-col.text-orange.md.hydrated {
+    color: orange;
+}
+ion-col.text-green.md.hydrated {
+  color: rgb(0, 255, 55);
+}
+  // ====btn_theme====
+  
+  .btn_theme button {
+    width: 100px !important;
+  }
+  textarea.form-control.text-white {
+    width: 100%;
+    background: black;
+    border-radius: 5px;
+    padding: 6px;
+}
+.text-right {
+  text-align: right;
+}
+.text-redish{
+  color: #ffffff;
+  background: #c23f21;
+}

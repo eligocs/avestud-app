@@ -59,6 +59,16 @@ export class HomeService {
     }
     return this.httpService.gettrip('loadstudentdata',postData,token);
   }
+
+
+
+
+  updateDemoVideo(data,token){  
+    return this.httpService.updateDemoVideo('updateDemoVideo',data,token);
+  }
+
+
+
   readnotification(data,token){  
     return this.httpService.gettrip('readnotification',data,token);
   }
@@ -92,8 +102,17 @@ export class HomeService {
     }
     return this.httpService.gettrip('getTestunits',postData,token);
   }
+  onChangeAttachment(postData,token){   
+    return this.httpService.saveSyllabus('create_notification',postData,token);
+  }
   saveSyllabus(postData,token){   
     return this.httpService.saveSyllabus('saveSyllabus',postData,token);
+  }
+  updateVideo(postData,token){   
+    return this.httpService.saveSyllabus('updateVideo',postData,token);
+  }
+  getstudents(data,token){   
+    return this.httpService.gettrip('getstudents',data,token);
   }
   getTests(iacs,token){  
     var data = {

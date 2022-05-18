@@ -169,6 +169,26 @@ const routes: Routes = [
     path: 'changetime',
     loadChildren: () => import('./changetime/changetime.module').then( m => m.ChangetimePageModule)
   },
+  {
+    path: 'recipt-student',
+    loadChildren: () => import('./recipt-student/recipt-student.module').then( m => m.ReciptStudentPageModule)
+  },
+  {
+    path: 'attendance',
+    loadChildren: () => import('./attendance/attendance.module').then( m => m.AttendancePageModule)
+  },
+  {
+    path: 'extra-notes',
+    loadChildren: () => import('./extra-notes/extra-notes.module').then( m => m.ExtraNotesPageModule)
+  },
+  {
+    path: 'student-extra-notes',
+    loadChildren: () => import('./student-extra-notes/student-extra-notes.module').then( m => m.StudentExtraNotesPageModule)
+  },
+  {
+    path: 'demovideo',
+    loadChildren: () => import('./demovideo/demovideo.module').then( m => m.DemovideoPageModule)
+  },
 
 ];
 @NgModule({

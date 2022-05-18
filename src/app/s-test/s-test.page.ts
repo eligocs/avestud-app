@@ -58,6 +58,7 @@ export class STestPage implements OnInit {
     if(iacs && token){    
       await this.homeService.getSTests(iacs,token).subscribe(
         (res: any) => {     
+          console.log(res)
           if(res.status == 200){
             this.testAll = res.topics ? res.topics:{};  
             this.testWithoutClass = res.assignmet_w_n_t ? res.assignmet_w_n_t:{};  
@@ -74,8 +75,7 @@ export class STestPage implements OnInit {
             this.noTest = true; 
             this.nodata = true;
             this.hideOlds = false;  
-          }
-          console.log(this.testAll)
+          } 
       }); 
     }  
   }

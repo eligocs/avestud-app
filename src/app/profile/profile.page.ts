@@ -58,8 +58,7 @@ export class ProfilePage implements OnInit {
             this.postData.state = res.student.state ? res.student.state :'';  
             this.postData.city = res.student.city ? res.student.city :'';  
             this.postData.grade = res.student.grade ? res.student.grade :'';   
-            this.avatar = res.student.avatar ? res.student.avatar :''; 
-            console.log(this.postData.date_of_birth)  
+            this.avatar = res.student.avatar ? res.student.avatar :'';  
           }  
         });
     }

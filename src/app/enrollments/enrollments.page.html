@@ -39,7 +39,7 @@
                   <div class="attendance_staus">
                      <div class="attendance_percentage">
                         <div class="dot_img">
-                           <img src="../../assets/images/green_dot.png" alt="green_dot.png">
+                           <img src="../../assets/images/green_eye_icon.png" class='eye_img' alt="green_eye_icon.png">
                         </div>
                         <div class="text">
                            <span>81-100%</span>
@@ -47,7 +47,7 @@
                      </div>
                      <div class="attendance_percentage">
                         <div class="dot_img">
-                           <img src="../../assets/images/yellow_dot.png" alt="yellow_dot.png">
+                           <img src="../../assets/images/yellow_eye_icon.png" class='eye_img' alt="yellow_eye_icon.png">
                         </div>
                         <div class="text">
                            <span>61-80%</span>
@@ -55,7 +55,7 @@
                      </div>
                      <div class="attendance_percentage">
                         <div class="dot_img">
-                           <img src="../../assets/images/red_dot.png" alt="red_dot.png">
+                           <img src="../../assets/images/red_eye_icon.png" class='eye_img' alt="red_eye_icon.png.png">
                         </div>
                         <div class="text">
                            <span>0-60%</span>
@@ -68,42 +68,108 @@
 
 
 
+            <div id="receiptPdf"   class=" main-container payment_receipt"> 
+               <div class="container">
+                  <div id="pdfTable" #pdfTable>
+                     <table class="table">
+                        <tr>
+                           <td style="padding-top: 30px;">
+                              <img class="receipt_logo" src="../../assets/images/weblgo.png" height='100px' width="100px" alt="Brand logo">
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <strong>{{student?.name}}</strong>
+                              <p>{{student?.address_1}} </p>
+                              <p>{{student?.city}}  {{student?.state}}  {{student?.pincode}}  {{student?.phone}}</p>
+                           </td>
+                           <td style="text-align: right;" >
+                              <p>
+                                 <strong>Order Date :</strong>
+                                 <span>{{enrolled_class?.created_at | date: 'dd/MM/yyyy' }}</span>
+                              </p>
+                              <p>
+                                 <strong>Order Status :</strong>
+                                 <span>Confirmed</span>
+                              </p>
+                              <p>
+                                 <strong>Order ID :</strong>.
+                                 <span>#{{enrolled_class?.id }}</span>
+                              </p>
+                           </td>
+                        </tr>
+                        <tr class="row_flex">
+                           <th>Email :</th>
+                           <mailto:td>{{student?.email}}</td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <p>
+                                 {{text ?? ''}}
+                              </p>
+                           </td>
+                        </tr>
+                        <tr class="row_flex">
+                           <th>#</th>
+                           <td class="detail_tb">1</td>
+                        </tr>
+                        <tr class="row_flex">
+                           <th>Particulars</th>
+                           <td class="detail_tb">{{ class?.name }} by {{ institute_name ?? '' }}</td>
+                        </tr>
+                        <tr class="row_flex">
+                           <th>Sub-Total</th>
+                           <td class="detail_tb" *ngIf="pay_id == 'manual_enrollment'">Scholarship</td>
+                           <td class="detail_tb" *ngIf="pay_id != 'manual_enrollment' && free_trial == 0">Free Trial</td>
+                           <td class="detail_tb" *ngIf="pay_id != 'manual_enrollment' && free_trial != 0">{{class?.price}} /-</td>
+                        </tr>
+                        <tr class="row_flex">
+                           <th>Total</th>
+                           <td class="detail_tb" *ngIf="pay_id == 'manual_enrollment'">Scholarship</td>
+                           <td class="detail_tb" *ngIf="pay_id != 'manual_enrollment' && free_trial == 0">Free Trial</td>
+                           <td class="detail_tb" *ngIf="pay_id != 'manual_enrollment' && free_trial != 0 && enrolled_class && enrolled_class.coupon_applied != 0">{{discount_in_rs}} /-</td>
+                           <td class="detail_tb" *ngIf="pay_id != 'manual_enrollment' && free_trial != 0 && enrolled_class && enrolled_class.coupon_applied == 0">{{class?.price}} /-</td>
+                        </tr>
+                        <tr> 
+                           <td style="text-align: right; font-size: 16px; font-weight: bold;" *ngIf="pay_id == 'manual_enrollment'">
+                             Scholarship
+                           </td> 
+                           <td style="text-align: right; font-size: 16px; font-weight: bold;" *ngIf="pay_id != 'manual_enrollment' && free_trial == 0">
+                             Free Trial
+                           </td> 
+                           <td style="text-align: right; font-size: 16px; font-weight: bold;" *ngIf="pay_id != 'manual_enrollment' && free_trial != 0 && enrolled_class && enrolled_class.coupon_applied != 0">
+                             Grand Total : RS {{total_amount ?? 0}} /-
+                           </td> 
+                           <td style="text-align: right; font-size: 16px; font-weight: bold;" *ngIf="pay_id != 'manual_enrollment' && free_trial != 0">
+                              Grand Total : RS {{total_amount ?? 0}} /-
+                           </td> 
+                        </tr>
+                        <tr>
+                           <td style="text-align: right;">
+                              <p>For More Help BULDHANA, Maharashtra, India, 443001</p>
+                              <p><strong>Hot Line :</strong> <a style="color: #000; text-decoration: none;" href="tel:+9108421784125">08421784125</a></p>
+                              <p><strong>Email Id :</strong>  <a style="color: #000; text-decoration: none;" href="mailto:support@avestud.com">support@avestud.com</a></p>
+                              <p><strong>website :</strong> <a style="color: #000; text-decoration: none;" href="https://www.avestud.com">https://www.avestud.com</a></p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>This is an electronically generated invoice and no signature is required.</td>
+                           <td style="padding-bottom: 30px;">For Payment Terms and Policies Please visit our website <a style="color: #000; text-decoration: none;" href="https://www.avestud.com">https://www.avestud.com</a></td>
+                        </tr>
+                    </table>
+                  </div>
+               </div> 
+         </div>
+
+         <div id="page_loader">
+            <ion-row class='ion-text-center' >
+               <ion-col size-sm="12" class="mt-4">Generating Pdf &nbsp;&nbsp;
+                 <ion-spinner name="bubbles" class='bubblesloader '></ion-spinner> 
+               </ion-col>
+             </ion-row>
+         </div> 
+          
             <h3 class="comman_font2 color_violet">Students</h3>
-            <!-- <div id="MyDIv"   class="main-container"> 
-                  <div class="container">
-                     <div id="pdfTable" #pdfTable>
-                        
-                       <img src="http://localhost:8100/assets/images/Doubts-image2.png" height='100px' width="100px" alt="green_dot.png">
-                       <table class="table">
-                         <thead>
-                           <tr>
-                             <th class="text-green">Firstname</th>
-                             <th>Lastname</th>
-                             <th>Email</th>
-                           </tr>
-                         </thead>
-                         <tbody>
-                           <tr>
-                             <td>John</td>
-                             <td>Doe</td>
-                             <td>john@example.com</td>
-                           </tr>
-                           <tr>
-                             <td>Mary</td>
-                             <td>Moe</td>
-                             <td>mary@example.com</td>
-                           </tr>
-                           <tr>
-                             <td>July</td>
-                             <td>Dooley</td>
-                             <td>july@example.com</td>
-                           </tr>
-                         </tbody>
-                       </table>
-                     </div>
-                  </div> 
-               </div>
-               <button class="btn btn-primary"  (click)="exportAsPDF('MyDIv');">Export To PDF</button> -->
 
 
 
@@ -132,7 +198,8 @@
                   <p class="contact_no">{{data.detail[i].phone ?? ''}}</p>
                   <div class="s_ship">
                      <p class="m_top2">Fee : ₹ {{data.price ?? ''}}</p>
-                      <img src="../../assets/images/download_icon.png" class='down_img'  (click)="downloadReceipt(data.institute_assigned_class_id,data.student_id)"  alt="download_icon.png"> 
+                   <!--    <img src="../../assets/images/download_icon.png" class='down_img'  (click)="downloadReceipt(data.institute_assigned_class_id,data.student_id)"  alt="download_icon.png">  -->
+                      <img src="../../assets/images/download_icon.png" class='down_img'  (click)="exportAsPDF('receiptPdf',data.institute_assigned_class_id,data.student_id);" alt="download_icon.png"> 
                   </div>
                </ion-col>
             </ion-row>

@@ -4,15 +4,14 @@
             <ion-row>
                 <ion-col size="3">
                     <div class="d-flex">  
-                        <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
-                        <img class="header_icon_I ml-2" src="../../assets/images/weblgo.png">
+                        <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button> 
                     </div>
                 </ion-col>
-                <ion-col size="5">
+                <ion-col size="6">
                     <p class="ion-text-center heading">{{iac | titlecase}}</p>
                 </ion-col>
-                <ion-col size="4">
-                    <div class="avatar_icon" (click)="presentPopover('any')"><i class="fa fa-bell"></i> </div>
+                <ion-col size="3">
+                    <img class="header_icon_I ml-2" src="../../assets/images/weblgo.png"> 
                   </ion-col>
             </ion-row>
         </ion-grid>
@@ -23,7 +22,7 @@
     <div class="subject_detail_student">
         <div>
             <h1 class="ion-text-center color_pink subject_name title_font">{{subjectname | titlecase}}</h1>
-            <h2 class="ion-text-center color_pink"></h2>
+            <div class='ion-text-center'><small class=" color_pink">{{description ?? ''}}</small></div>
             <!-- <ion-row>
                 <ion-col class="btn_demo" *ngIf='video'>
                     <button class="btn_view grad_green" href='{{video ?? ""}}'>
@@ -31,14 +30,16 @@
                     </button>
                 </ion-col>
             </ion-row> -->
+ 
 
-            <ion-row class="syllabus_btns ion-text-center" *ngIf='syllabus'>
+
+            <ion-row class="syllabus_btns ion-text-center" >
                 <ion-col size="6">
                     <div class="btn_meet" *ngIf='video'>
-                        <a href='{{video ?? "#"}}'><button class="grad_orange" > <img src="../../assets/images/btn_red_icon.png" alt="btn_red_icon.png"> Meet</button></a>
+                        <a href='{{video}}'><button class="grad_orange" > <img src="../../assets/images/btn_red_icon.png" alt="btn_red_icon.png"> Demo</button></a>
                     </div>
                     <div class="btn_meet" *ngIf='!video'>
-                        <button class="grad_orange" > <img src="../../assets/images/btn_red_icon.png" alt="btn_red_icon.png"> Meet</button>
+                        <button class="grad_orange" > <img src="../../assets/images/btn_red_icon.png" alt="btn_red_icon.png"> Demo</button>
                     </div>
                 </ion-col>
                 <ion-col size="6">
@@ -62,28 +63,20 @@
                 </ion-col>
                 <ion-col size="4">
                     <div class="edt_shedule">
-                        <a class='link_subject ' [routerLink]="['/changetime']"  [queryParams]="{iacs:iacs,subject:subject}">
+                        <a *ngIf='purchased == 1' class='link_subject ' [routerLink]="['/changetime']"  [queryParams]="{iacs:iacs,subject:subject,student_subjects_info_id:student_subjects_info_id}">
+                          <img src="../../assets/images/edit_profile_icon.svg" alt="Edit Icon">
+                       </a>
+                        <a *ngIf='purchased != 1' class='link_subject '>
                           <img src="../../assets/images/edit_profile_icon.svg" alt="Edit Icon">
                        </a>
                     </div>
                  </ion-col>
             </ion-row>
-
+            <ion-row>
             <!--class schedule starts-->
             <div class="circle">
-                <!-- circle_item strat -->
-                <div class="circle_item"   *ngFor="let day of class_days; let i = index;">
-                        <div   *ngIf='purchased == 1'>
-                        <div class="outter_border ">
-                            <div class=" inner_background">
-                                <p>{{class_time[i]}} <!-- <span>pm</span> --></p>
-                            </div>
-                        </div>
-                        <div class="scheduled_day"><span>{{day.day.substring(0,3) | titlecase}}</span></div>
-                    </div>
-                </div>
                 <div class="circle_item"  *ngFor="let day of class_days; let i = index;">
-                        <div   *ngIf='purchased != 1'>
+                    <div   *ngIf='purchased != 1'>
                         <div class="outter_border ">
                             <div class=" inner_background">
                                 <p>1{{i}}  <br>Am</p>
@@ -92,8 +85,23 @@
                         <div class="scheduled_day"><span>{{day.day.substring(0,3) | titlecase}}</span></div>
                     </div>
                 </div>
+            </div>
+            <div class="circle">
+                <!-- circle_item strat -->
+              
+                <div class="circle_item"   *ngFor="let day of class_days; let i = index;">
+                    <div   *ngIf='purchased == 1'>
+                        <div class="outter_border ">
+                            <div class=" inner_background">
+                                <p>{{class_time[i]}} <!-- <span>pm</span> --></p>
+                            </div>
+                        </div>
+                        <div class="scheduled_day"><span>{{day.day.substring(0,3) | titlecase}}</span></div>
+                    </div>
+                </div>
                 <!-- circle_item End -->
             </div>
+            </ion-row>
             <!--class schedule End-->
 
             <!-- Class Resources Start -->
@@ -127,6 +135,14 @@
                                 Classes</button>
                         </ion-col>
                     </ion-row>
+                    <ion-row class="resources_btns">
+                        <ion-col size="6">
+                           <button   class="grad_yellow comman_btn  common_btn_shadow">Attendance </button>
+                        </ion-col>
+                        <ion-col size="6" >
+                           <button class="grad_sky comman_btn  common_btn_shadow">Extra Notes</button>
+                        </ion-col>
+                     </ion-row>
                 </div>
 
                 <div class="btns_container" *ngIf='purchased == 1'>
@@ -179,11 +195,19 @@
                         </ion-col>
                     </ion-row>
                     <ion-row class="resources_btns ion-text-center">
-                        <ion-col size="6">
-                            <a class='link_subject '>
+                        <!-- <ion-col size="6">
+                            <a class='link_subject ' routerLink]="['/student-extra-notes']" [queryParams]="{iacs:iacs,subject:subject_id}">
                                 <button class="grad_green comman_btn  common_btn_shadow">Extra Notes</button>
                             </a>
-                            <div class="border_outside skybleue"><span class="badge badge_skyblue">12</span></div>
+                            <div class="border_outside skybleue"><span class="badge badge_skyblue">0</span></div>
+                        </ion-col> -->
+                        <ion-col size="6">
+                            <a class='link_subject ' [routerLink]="['/student-extra-notes']"
+                                [queryParams]="{iacs:iacs,subject:subject}"><button
+                                    class="grad_green comman_btn  common_btn_shadow">Extra
+                                    Notes</button></a>
+                            <div class="border_outside skybleue"><span class="badge badge_skyblue">{{extraNotesnotifications
+                                    ?? 0}}</span></div>
                         </ion-col>
                     </ion-row>
                 </div>
@@ -193,7 +217,7 @@
             <!-- <ion-row class='success_msg' *ngIf='loadsuccess'>{{loadsuccess}}</ion-row>
            <button class="bg_color create common_anc_btn common_btn_shadow" (click)="setText($event)">Create</button> -->
 
-            <ion-row class="ion-text-center test_results">
+            <ion-row class="ion-text-center test_results" *ngIf='purchased == 1'>
                 <ion-card class="shadow">
                     <span class="color_redish mr_top">{{total_attempted ?? 0}}</span>
                     <p> Total
@@ -217,8 +241,8 @@
             </ion-row>
             <!--test_results Ends-->
             <!--Attendance Section start-->
-            <h4 class="comman_font color_violet title_font">Attendance</h4>
-            <div class="attendance_status">
+            <h4 class="comman_font color_violet title_font" *ngIf='purchased == 1'>Attendance</h4>
+            <div class="attendance_status"  *ngIf='purchased == 1'>
                 <div class="present">
                     <img src="../../assets/images/green_dot.png" alt="green_dot.png">
                     <p>Present</p>

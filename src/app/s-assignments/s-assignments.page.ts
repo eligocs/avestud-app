@@ -61,7 +61,6 @@ export class SAssignmentsPage implements OnInit {
     await this.studentService.getstudentAssignment(newData,token).subscribe(
       (res: any) => {    
         if (res.status == 200) {  
-          console.log(res.topics)
           this.assignment_old_unit = res.assignment_old_unit;  
           this.topics = res.topics;   
           if(this.topics.length > 0){

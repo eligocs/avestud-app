@@ -51,8 +51,7 @@ export class DoubtsPage implements OnInit {
         }
     }
     
-    onCancel(e){
-      console.log(e)
+    onCancel(e){ 
     }
 
     async loadDoubts(iacs,token){

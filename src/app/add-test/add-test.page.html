@@ -2,16 +2,16 @@
   <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="2">
+        <ion-col size="3">
           <ion-buttons>
             <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
             <img class="header_icon_1" src="../../assets/images/weblgo.png">
           </ion-buttons>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="6">
           <p class="ion-text-center heading">Add Test</p>
         </ion-col>
-        <ion-col size="2">
+        <ion-col size="3">
           <div class="avatar_icon" (click)="presentPopover('any')"></div>
         </ion-col>
       </ion-row>
@@ -90,7 +90,7 @@
           <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner>
         </ion-col>
       </ion-row>
-
+     
       <!--btns-->
       <div class="btns ion-text-center">
         <button id="add" (click)="createTest()">Add</button>

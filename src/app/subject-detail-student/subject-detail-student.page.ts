@@ -31,6 +31,7 @@ export class SubjectDetailStudentPage implements OnInit {
   purchased:any; 
   class_time:any; 
   showteacher:any;
+  description:any;
   selected_cat:any;
   dnotifications:any;
   notifications:any;
@@ -40,7 +41,8 @@ export class SubjectDetailStudentPage implements OnInit {
   next_class:any;
   toatalmarks:any;
   total_unattempted:any;
-  total_attempted:any;
+  total_attempted:any; 
+  student_subjects_info_id:any;
   constructor(
     private previousRouteService: PreviousRouteService,
     private router: Router,
@@ -76,6 +78,9 @@ export class SubjectDetailStudentPage implements OnInit {
       }
     ) 
    
+ /*    setInterval(()=> { 
+      this.updatenotification();
+    }, 5 * 1000); */
   }
   colorLight() { 
     var items = ['bg_gradient_skyblue','bg_gradient_orange','bg_gradient_green','bg_gradient_yellow']
@@ -85,11 +90,30 @@ export class SubjectDetailStudentPage implements OnInit {
     var items = ['skyblue_gradient','orange_gradient','green_gradient','yellow_gradient']
     return items[Math.floor(Math.random()*items.length)]; 
   }  
+
+  async updatenotification(){
+    var token =  await this.storageService.get(AuthConstants.AUTH)  
+    if(this.iacs && this.subject){
+      if(this.iacs && this.subject){
+        await this.homeService.loadstudentdata(this.iacs,this.subject,token).subscribe(
+          (res: any) => {     
+            if(res.status == 200){
+              this.notifications = res.notifications ? res.notifications:0; 
+              this.assignmentnotifications = res.assignmentnotifications ? res.assignmentnotifications:0;    
+              this.dnotifications = res.dnotifications ? res.dnotifications:0;   
+              this.testsnotification = res.testsnotification ? res.testsnotification:0;  
+              this.extranotifications = res.extranotifications ? res.extranotifications:0;     
+            }
+          })
+        }
+      }
+  }
+
   async loadstudentdata(iacs,subject,token){ 
     if(this.iacs && this.subject){
         if(this.iacs && this.subject){
           await this.homeService.loadstudentdata(iacs,subject,token).subscribe(
-            (res: any) => {    
+            (res: any) => {     
               if(res.status == 200){
                 this.total_attempted = res.total_attempted ? res.total_attempted:0;
                 this.total_unattempted = res.total_unattempted  ? res.total_unattempted:0;
@@ -101,16 +125,17 @@ export class SubjectDetailStudentPage implements OnInit {
                 this.i_a_c_s_id = res.i_a_c_s_id ? res.i_a_c_s_id:'';   
                 this.teacher = res.teacher ? res.teacher:''; 
                 this.class_time = res.class_time ? res.class_time:''; 
-                this.video = res.video ? res.video:''; 
+                this.video = res.video ? res.video:'';  
                 this.notifications = res.notifications ? res.notifications:0; 
                 this.assignmentnotifications = res.assignmentnotifications ? res.assignmentnotifications:0;    
                 this.dnotifications = res.dnotifications ? res.dnotifications:0;   
                 this.testsnotification = res.testsnotification ? res.testsnotification:0;  
                 this.extranotifications = res.extranotifications ? res.extranotifications:0;    
                 this.next_class = res.next_class ? res.next_class:'';  
-                var allclasses = res.class_days ? res.class_days:'';  
-                var classArr = [];
-                console.log(res)
+                var allclasses = res.class_days ? res.class_days:''; 
+                this.description = res.description ? res.description:''; 
+                this.student_subjects_info_id =  res?.student_subjects_info_id ?? '';
+                var classArr = []; 
                 if(allclasses){
                     for(var i=0;i<allclasses.length;i++){
                       classArr.push({
@@ -120,7 +145,7 @@ export class SubjectDetailStudentPage implements OnInit {
                       });
                     }   
                   this.class_days = classArr;   
-                }  
+                }   
               } 
             });
         }   

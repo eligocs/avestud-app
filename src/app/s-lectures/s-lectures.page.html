@@ -9,10 +9,10 @@
                  <img class="header_icon_I ml-2" src="../../assets/images/weblgo.png">
             </div>
            </ion-col>
-           <ion-col size="7">
+           <ion-col size="6">
               <p class="ion-text-center heading">Revise Lectures</p>
            </ion-col>
-           <ion-col size="2">
+           <ion-col size="3">
             <div class="avatar_icon" (click)="presentPopover('any')"><i class="fa fa-bell"></i> </div>
            </ion-col>
         </ion-row>
@@ -42,9 +42,11 @@
           <p class='text-center'> {{lect?.unit | titlecase}}</p> 
           <ion-row class="class_details bg_light_yellow" *ngFor="let single of lect.lectures;">
             <ion-col size="10" class="left_col">
-              <h2>{{ single?.lecture_number }}</h2>
-              <p class="color_pink">{{ single.lecture_name | titlecase }}</p>
-              <span>{{ single.lecture_date | date: 'dd/MM/yyyy' }}</span>
+               <h2 class="title_font f-15">Lecture No. {{ single.lecture_number }} </h2>
+              <marquee behavior="scroll" direction="left" width="100%" scrollamount="4">
+                <h6 class="text_light">{{ single.lecture_name | titlecase }}</h6>
+             </marquee>
+             <p class="text_blue">{{ single?.lecture_date | date: 'dd/MM/yyyy' }}</p>
             </ion-col>
             <ion-col size="2" class="right_col">
               <a *ngIf='single.lecture_video' (click)="markattendance(single.id,single?.lecture_video)"><img src="../../assets/images/youtube_icon.svg"  class="youtube_icon"></a>

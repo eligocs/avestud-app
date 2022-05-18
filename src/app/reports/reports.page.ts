@@ -62,8 +62,7 @@ export class ReportsPage implements OnInit {
       var postData = {
         topic_id:topic,
         student:student,
-      }
-      console.log(postData);  
+      } 
       serv_home.resettest(postData,token).subscribe(
         (res: any) => {    
           toast.presentToast(res.msg);
@@ -104,6 +103,7 @@ export class ReportsPage implements OnInit {
       (res: any) => {    
          this.reportdata = res.allstudents;
          this.topic = res.topic;
+          
       }); 
     }
   }

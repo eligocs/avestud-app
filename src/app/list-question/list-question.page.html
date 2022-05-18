@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="2">
+        <ion-col size="3">
           <div class="d-flex">
             <ion-buttons>
               <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
@@ -10,10 +10,10 @@
             <img class="header_icon_1" src="../../assets/images/weblgo.png">
           </div>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="6">
           <p class="ion-text-center heading">Questions</p>
         </ion-col>
-        <ion-col size="2">
+        <ion-col size="3">
           <div class="avatar_icon"></div>
         </ion-col>
       </ion-row>
@@ -47,11 +47,11 @@
 
     <div class="popover_relative">
       <!-- list_questions_tabs -->
-      <div class="list_questions_tabs">
+      <div class="list_questions_tabs" *ngIf='!showEmptyMsg'>
         <div class="nav_tabs">
           <span class="tab question active">Question</span>
           <span class="tab answer">Answer</span>
-          <span class="tab explaination">Explaination</span>
+          <span class="tab explaination">Explanation</span>
         </div>
       </div>
       <!-- End list_questions_tabs -->
@@ -112,8 +112,11 @@
               <p> <span>D.</span> {{quest.d ?? ''}}</p>
             </div>
             <!-- image Thumbnail -->
-            <div class="question_thumbnail">
+           <!--  <div class="question_thumbnail">
               <img src="../../assets/images/sum_maths.jpeg" alt="Question Image">
+            </div> -->
+            <div class="question_thumbnail" *ngIf='quest.question_img'>  
+              <a href="{{quest.question_img ?? ''}}" class="sums_img ">View File Attached</a>
             </div>
           </div>
           <!-- End tab_questions -->
@@ -134,7 +137,7 @@
           <!-- tab_explaination -->
           <div class="tab_explaination">
             <div>
-              <h3 class="tab_title">Explaination</h3>
+              <h3 class="tab_title">Explanation</h3>
               <p> {{quest.answer_exp ?? ''}}</p>
             </div>
           </div>

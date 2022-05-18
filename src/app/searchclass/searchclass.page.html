@@ -3,17 +3,16 @@
   <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="2">
+        <ion-col size="3">
           <div class="d-flex">
-            <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
-            <img class="header_icon_1" src="../../assets/images/weblgo.png">
+            <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button> 
           </div>
         </ion-col>
-        <ion-col size="8">
+        <ion-col size="6">
           <p class="ion-text-center heading">Search Classes</p>
         </ion-col>
-        <ion-col size="2">
-          <div class="avatar_icon" (click)="presentPopover('any')"><i class="fa fa-bell"></i></div>
+        <ion-col size="3">
+          <img class="header_icon_1" src="../../assets/images/weblgo.png">
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -77,7 +76,7 @@
         </ion-row>
       </div>
     </div>
-    <div *ngIf='show_default == false'>
+    <div *ngIf='show_default == false && classes != ""'>
       <div *ngFor='let class of classes'>
         <div class="content_card">
           <ion-row>
@@ -124,8 +123,22 @@
           <ion-row class="ion-text-center demo_video">
             <ion-col>
               <p>View Class Demo</p>
-              <a *ngIf='class.video' href='{{class.video ?? "#"}}'><img src="../../assets/images/youtube_icon.svg"></a>
-              <img *ngIf='!class.video' src="../../assets/images/youtube_icon.svg">
+              <a *ngIf='class.insvideo' href='{{class.insvideo ?? "#"}}'><img src="../../assets/images/youtube_icon.svg"></a>
+              <img *ngIf='!class.insvideo' src="../../assets/images/youtube_icon.svg">
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="class.institute_details.description">
+            <ion-col> 
+              <div class="p-3">
+                <p class="lessdata">
+                {{class.institute_details.description.length > 0 && class.institute_details.description.length > 110 ?
+                  class.institute_details.description.substring(0,110)+' ...' : class.institute_details.description.length > 0 && class.institute_details.description.length <= 110 ? class.institute_details.description
+                    :''}} </p>
+                    <span class='fulldata'>
+                      <p style="display:none;">{{class.institute_details.description.length > 0 ? class.institute_details.description :''}}</p>
+                      <a *ngIf='class.institute_details.description.length > 0 && class.institute_details.description.length > 110' class='text-white read_more'><i class='fa fa-arrow-down'></i> Read More</a>
+                    </span>
+              </div>
             </ion-col>
           </ion-row>
           <div class="spacing">

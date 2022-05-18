@@ -9,10 +9,10 @@
               <img class="header_icon_I ml-2" src="../../assets/images/weblgo.png">
             </div>
           </ion-col>
-          <ion-col size="7">
+          <ion-col size="6">
             <p class="ion-text-center heading">Notifications</p>
           </ion-col>
-          <ion-col size="2">
+          <ion-col size="3">
             <div class="avatar_icon" (click)="presentPopover('any')"><i class="fa fa-bell"></i> </div>
           </ion-col>
         </ion-row>
@@ -26,9 +26,17 @@
         <h4 class="wel">Nothing to show !!!</h4>
       </div>
       <div *ngFor="let data of notifications; let i = index">
-        <ion-card [ngStyle]="{ background: 'grey' }" no-lines class="card_notification">
+        <ion-card *ngIf="data.type =='text'" [ngStyle]="{ background: 'grey' }" no-lines class="card_notification">
           <ion-card-content class="card_body">
             <p>{{data.message ?? ''}}</p>
+
+            <span class="notification_time text_blue">{{data.created_at | date:'MM/dd/yyyy hh:mm a'}}</span>
+            &nbsp;&nbsp;<i class="fa fa-check-circle text-red" title="Mark as read" (click)="delete(data.id)"></i>
+          </ion-card-content>
+        </ion-card>
+        <ion-card *ngIf="data.type =='pdf'" [ngStyle]="{ background: 'grey' }" no-lines class="card_notification">
+          <ion-card-content class="card_body">
+            <p><a class="text-blue" href="{{data.message ?? ''}}" >View File <i class="fa fa-eye"></i></a></p>
 
             <span class="notification_time text_blue">{{data.created_at | date:'MM/dd/yyyy hh:mm a'}}</span>
             &nbsp;&nbsp;<i class="fa fa-check-circle text-red" title="Mark as read" (click)="delete(data.id)"></i>

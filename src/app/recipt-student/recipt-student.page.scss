@@ -1,0 +1,28 @@
+i.fa.fa-download {
+    font-size: 20px; 
+}
+span.text_grey {
+    color: #ababab;
+}
+.print_receipt {
+    width: 600px; 
+    padding: 10px; 
+}
+#receiptPdf {
+    display: none;  
+}
+div#page_loader {
+    padding-top: 250px !important;
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #272525e6;
+    z-index: 99; 
+    height: auto !important;
+  }
+td.detail_tb {
+    white-space: nowrap;
+}

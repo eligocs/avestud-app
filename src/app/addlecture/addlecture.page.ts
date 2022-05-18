@@ -84,6 +84,7 @@ export class AddlecturePage implements OnInit {
 
   }
   async getOlddata(id) {
+    this.showloader = false; 
     if(id){
       var token =  await this.storageService.get(AuthConstants.AUTH)   
       var lectureid= id; 
@@ -104,7 +105,28 @@ export class AddlecturePage implements OnInit {
       this.video = event.target.files[0]; 
   }
   async createLecture(){
+    this.progressPercent =  0 ;
     this.showloader = true;
+    if(this.postData.unit == ''){
+      this.toastService.presentToast('Please select unit !!!'); 
+      this.showloader = false;
+      return false;
+    }
+    if(this.postData.number == ''){
+      this.toastService.presentToast('Lecture number is required !!!'); 
+      this.showloader = false;
+      return false;
+    }
+    if(this.postData.lecturename == ''){
+      this.toastService.presentToast('Lecture name is required !!!'); 
+      this.showloader = false;
+      return false;
+    }
+    if(this.postData.date == ''){
+      this.toastService.presentToast('Lecture date is required !!!'); 
+      this.showloader = false;
+      return false;
+    }
     var newData = {
       unit : this.postData.unit,
       number : this.postData.number,
@@ -123,32 +145,26 @@ export class AddlecturePage implements OnInit {
         await this.homeService.createLecture(newData,token).subscribe((event: HttpEvent<any>) => { 
           switch (event.type) {
             case HttpEventType.Sent:
-              var progressPercent = 2; 
-              console.log('Request has been made!');
+               
               break;
-            case HttpEventType.ResponseHeader:
-              console.log('Response header has been received!'); 
+            case HttpEventType.ResponseHeader: 
               break;
             case HttpEventType.UploadProgress:
               var prog = Math.round(event.loaded / event.total * 100);
-              if(prog > 90){
-                this.progress = 90;
-              } 
-                for (let index = 0; index <= 90; index++) {
-                  this.setPercentBar(+index);
-                }
-              
-              console.log(`Uploaded! ${this.progress}%`);
+              if(prog > 97){
+                prog = 98;
+              }  
+                this.progress =  prog /100;
+                this.progressPercent =  prog ; 
               break;
             case HttpEventType.Response:
-              this.progress = 100;
-              console.log('Request complete', event.body);
+              this.progress = 100; 
               setTimeout(() => {
                 var res = event.body;
                 if (res.status == 200) {
                   this.toastService.presentToast(res.msg); 
                   let navigationExtras: NavigationExtras = {
-                    queryParams: { 'iacs': this.iacs },
+                    queryParams: { 'iacs': this.iacs,'subject':this.subject },
                     fragment: 'anchor'
                   };
                   this.router.navigate(['lectures'],navigationExtras);
@@ -178,8 +194,8 @@ export class AddlecturePage implements OnInit {
     setPercentBar(i) {
       setTimeout(() => {
         let apc = (i / 100) 
-        this.progress = apc;
-        this.progressPercent = i;
+       // this.progress = apc;
+        //this.progressPercent = i;
       }, 30 * i);
     }
 
