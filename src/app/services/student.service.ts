@@ -42,10 +42,11 @@ export class StudentService {
     }
     return this.httpService.gettrip('enrollclass',data,token);
   }
-  enrollthisclass(slotsarr,class_id,token){ 
+  enrollthisclass(slotsarr,class_id,class_mode,token){ 
     var data = {
       slotsarr : slotsarr,
-      class_id : class_id
+      class_id : class_id,
+      class_mode : class_mode,
     }
     return this.httpService.gettrip('enrollthisclass',data,token);
   }
@@ -57,10 +58,11 @@ export class StudentService {
     }
     return this.httpService.gettrip('paynow',data,token);
   }
-  verifyPayment(response,classid,token){ 
+  verifyPayment(response,classid,class_mode,token){ 
     var data = {
       razorpay_payment_id : response.razorpay_payment_id,  
       class_id : classid,  
+      class_mode : class_mode,
     }
     return this.httpService.gettrip('verifyPayment',data,token);
   }

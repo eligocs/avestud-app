@@ -16,3 +16,24 @@ select.category {
 a.text-white.read_more {
   color: rgb(0, 0, 0);
 }
+select.grad_orange.select_mode {
+  z-index: 99999;
+  height: 42px;
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 3px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  width: 96%;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+label.mode_label {
+  position: absolute;
+  margin-top: 22px;
+  margin-left: 18px;
+}
+.ion-text-center.pos_rel {
+  position: relative;
+}

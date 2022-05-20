@@ -160,11 +160,20 @@
               </div>
             </div>
           </div>
+          <div class="ion-text-center pos_rel" *ngIf='class.classStatus != "Enrolled"'>
+            <label *ngIf="showtext" class="mode_label ">Select Class Mode</label> 
+            <select   class="grad_orange select_mode" (change)="changeMode()" placeholder="Select Mode"  [(ngModel)]="class_mode" name='unit'>
+              <option value="" selected disabled>Select</option> 
+              <option value="1"  >Live</option> 
+              <option value="2"  >Recorded</option> 
+            </select>
+          </div>
           <div class="options_btns">
-            <button *ngIf='class.classStatus == "Free Trial"' class="grad_orange">Free Trial</button>
+       <!--      <button   >Free Trial -->
+         <!--    </button> -->
             <button *ngIf='class.classStatus == "Enrolled"' class="grad_sky">Enrolled</button>
-            <button *ngIf='class.classStatus == "Enroll"' class="grad_green" (click)='presentAlert(class.id)'>Enroll
-              Now</button>
+            <button *ngIf='class.classStatus == "Enroll"' class="grad_green" (click)='presentAlert(class.id)'>Enroll Now</button>
+            <button *ngIf='class.freetrial == "1" && class.classStatus == "Enroll"' class="grad_green" (click)='presentAlert(class.id)'>Free Trial</button>
           </div>
         </div>
       </div>

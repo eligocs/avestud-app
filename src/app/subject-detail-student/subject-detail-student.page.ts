@@ -26,6 +26,7 @@ export class SubjectDetailStudentPage implements OnInit {
   subjectname:any;  
   notificat:any; 
   loadsuccess:any; 
+  mode_of_class:any; 
   syllabus:string; 
   istudent:string; 
   purchased:any; 
@@ -119,6 +120,7 @@ export class SubjectDetailStudentPage implements OnInit {
                 this.total_unattempted = res.total_unattempted  ? res.total_unattempted:0;
                 this.toatalmarks = res.toatalmarks ? res.toatalmarks:0;
                 this.syllabus = res.syllabus !='' ? res.syllabus:'';
+                this.mode_of_class = res.mode_of_class !='' ? res.mode_of_class:'';
                 this.getSubjectsInfo = res.getSubjectsInfo ? res.getSubjectsInfo:'';
                 this.iac = res.iac ? res.iac:''; 
                 this.subjectname = res.subject ? res.subject:'';  

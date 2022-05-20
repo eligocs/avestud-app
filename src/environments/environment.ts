@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   //apiUrl: 'https://avestud.com/'+api_prefix,
   //apiUrl: 'https://av.madlipz.ch/'+api_prefix,
-  apiUrl: 'http://127.0.0.1:8000/'+api_prefix,
+  //apiUrl: 'http://127.0.0.1:8000/'+api_prefix,
+  apiUrl: 'http://101.53.133.121:80/'+api_prefix,
   s3url: 'https://aaradhanaclasses.s3.ap-south-1.amazonaws.com/',
   razorpay_key: 'rzp_test_dEB5l9lXVz5Hbo',
 };

@@ -8,6 +8,7 @@ import { PreviousRouteService } from '../previous-route.service';
 import { AlertController } from '@ionic/angular';
 import { ToastService } from '../services/toast.service';   
 import $ from "jquery"
+import { empty } from 'rxjs';
 @Component({
   selector: 'app-searchclass',
   templateUrl: './searchclass.page.html',
@@ -26,6 +27,8 @@ export class SearchclassPage implements OnInit {
   timeslots:any;
   showloader:boolean;
   show_default:boolean;
+  class_mode:any;
+  showtext:boolean;
   enteredName:any
   constructor( 
     private previousRouteService: PreviousRouteService,
@@ -39,7 +42,7 @@ export class SearchclassPage implements OnInit {
   ) { }
 
   async ngOnInit() { 
-
+    this.showtext = true;
     $(document).ready(function(){
       $(document).on('click','.read_more',function(){ 
         $(this).parent().find('p').toggle();
@@ -140,8 +143,7 @@ export class SearchclassPage implements OnInit {
           (res: any) => {  
             if (res.status == 200) {  
               var result =  res.classes;   
-              var allClasses = [];  
-              console.log(res.classes)
+              var allClasses = [];   
               if(result.length > 0){
                 result.forEach((entry,i) => { 
                   entry.subjects.forEach((subj) => {  
@@ -171,7 +173,24 @@ export class SearchclassPage implements OnInit {
        var items = ['grad_sky','grad_yellow','grad_yellow','grad_green','grad_orange']
         return items[Math.floor(Math.random()*items.length)]; 
      }
-    async presentAlert(id) {
+    changeMode() {  
+      if(!this.class_mode){ 
+        this.showtext = true; 
+      }else{
+        this.showtext = false;
+      }
+     }
+    async presentAlert(id) { 
+      var modeselected = this.class_mode;
+      if(!modeselected){
+        this.toastService.presentToast('Class mode is required !!!');  
+        return false;
+      } 
+      if(modeselected == 1){
+        var $msg = 'Are you sure you want to enroll live class!!!'; 
+      }else if(modeselected == 2){
+        var $msg = 'Are you sure you want to enroll recorded class!!!'; 
+      }
      var token = await this.storageService.get(AuthConstants.AUTH);  
      var toast = this.toastService;
      var serv_student = this.StudentService; 
@@ -179,7 +198,7 @@ export class SearchclassPage implements OnInit {
      const alert = await this.alertController.create({
        cssClass: 'my-custom-class',
        header: 'Confirm!',
-       message: 'Are you sure you want to enroll this class!!!',
+       message: $msg,
        buttons: [
          {
            text: 'No',
@@ -191,7 +210,7 @@ export class SearchclassPage implements OnInit {
          }, {
            text: 'Yes',
            handler: function() {   
-              window.location.href = 'selecttimings/?id='+id;
+              window.location.href = 'selecttimings/?id='+id+'&mode='+modeselected;
            }
          }
        ]

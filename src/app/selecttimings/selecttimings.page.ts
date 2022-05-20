@@ -36,6 +36,7 @@ export class SelecttimingsPage implements OnInit {
   amount : any;
   class : any;
   student : any;
+  mode : any;
   cart : any; 
   showpaybutton : any; 
   constructor( 
@@ -58,6 +59,7 @@ export class SelecttimingsPage implements OnInit {
     this.route.queryParams.subscribe(
       params => {
         this.id =  params['id'];  
+        this.mode =  params['mode'];  
         this.getTimeslots(this.id,token);
         this.previousUrl = '/searchclass';  
       }
@@ -101,7 +103,7 @@ export class SelecttimingsPage implements OnInit {
       slotsArr.push({'day_id':day_id,'day':name,'time_slot_id':time_slot_id}); 
     });  
     if(slotsArr && err == 0){
-      this.StudentService.enrollthisclass(slotsArr,this.id,token).subscribe(
+      this.StudentService.enrollthisclass(slotsArr,this.id,this.mode,token).subscribe(
         (res: any) => { 
           if(res.status == 400){    
             this.toastService.presentToast(res.msg); 
@@ -171,7 +173,7 @@ export class SelecttimingsPage implements OnInit {
       options.handler = ((response, error) => {
         
         options.response = response; 
-        this.StudentService.verifyPayment(response,classid,token).subscribe(
+        this.StudentService.verifyPayment(response,classid,this.mode,token).subscribe(
           (res: any) => {
             if(res.status == 200){    
               window.location.href = 'studenthome'; 

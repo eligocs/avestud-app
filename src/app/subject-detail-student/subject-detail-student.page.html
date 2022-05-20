@@ -114,7 +114,11 @@
                                 Notifications
                             </button>
                         </ion-col>
-                        <ion-col size="6">
+                        
+                        <ion-col size="6" *ngIf="mode_of_class == 1">
+                            <button class="grad_yellow">Live Lectures</button>
+                        </ion-col>
+                        <ion-col size="6" *ngIf="mode_of_class == 2">
                             <button class="grad_yellow">Lectures</button>
                         </ion-col>
                     </ion-row>
@@ -155,10 +159,15 @@
                             <div class="border_outside skybleue"><span class="badge badge_skyblue">{{notifications ??
                                     0}}</span></div>
                         </ion-col>
-                        <ion-col size="6">
+                        <ion-col size="6" *ngIf="mode_of_class == 2">
                             <a class='link_subject ' [routerLink]="['/s-lectures']"
                                 [queryParams]="{iacs:iacs,subject:subject}"><button
                                     class="grad_yellow comman_btn  common_btn_shadow">Lectures</button></a>
+                        </ion-col>
+                        <ion-col size="6" *ngIf="mode_of_class == 1">
+                            <a class='link_subject '  
+                                [queryParams]="{iacs:iacs,subject:subject}"><button
+                                    class="grad_yellow comman_btn  common_btn_shadow">Live Lectures</button></a>
                         </ion-col>
                     </ion-row>
                     <ion-row class="resources_btns ion-text-center">

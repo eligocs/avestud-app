@@ -47,9 +47,9 @@ export class StudenthomePage implements OnInit {
           }
         }) 
       } 
-
       
-    this.showEnrolled =false;
+      
+      this.showEnrolled =false;
     this.studentname = userdetails.name ? userdetails.name : '';
     var mainThis = this; 
    
@@ -60,44 +60,47 @@ export class StudenthomePage implements OnInit {
         mainThis.router.navigate(['/studenthome']);
       }else if(userdetails.role == 'institute'){
         mainThis.router.navigate(['/homepage']);
-      }
-      var classroom =  await this.StudentService.studenthome(token).subscribe(
-        (res: any) => {   
-          if (res.data) { 
-            var allClasses = res.data; 
-            if(allClasses){ 
-              allClasses.institute_assigned_class.forEach((entry,i) => { 
-                entry.institute_assigned_class_subject.forEach((entry1,i) => { 
-                  entry1.color_code = colorLight(i);     
-                  entry1.color_code2 = colorLight(i);     
-                });    
+      } 
+    }
+    if(token){
+      this.loadData(token);
+      console.log('yes')  
+    }
+     
+
+  }
+  
+  async loadData(token){
+   
+    var classroom =  await this.StudentService.studenthome(token).subscribe(
+      (res: any) => {   
+        if (res.data) { 
+          var allClasses = res.data; 
+          if(allClasses){ 
+            allClasses.institute_assigned_class.forEach((entry,i) => { 
+              entry.institute_assigned_class_subject.forEach((entry1,i) => { 
+                entry1.color_code = colorLight(i);     
+                entry1.color_code2 = colorLight(i);     
               });    
-              this.allClasses =  allClasses; 
-            } 
-            if(allClasses.institute_assigned_class.length == 0){
-              let navigationExtras: NavigationExtras = {
-                queryParams: {'selected_cat':1},
-                fragment: 'anchor'
-              };
-              this.router.navigate(['searchclass'],navigationExtras);
-              this.showEnrolled =false;
-            }else{
-              this.showEnrolled =true;
-            }
+            });    
+            this.allClasses =  allClasses; 
+          } 
+          if(allClasses.institute_assigned_class.length == 0){
+            let navigationExtras: NavigationExtras = {
+              queryParams: {'selected_cat':1},
+              fragment: 'anchor'
+            };
+            this.router.navigate(['searchclass'],navigationExtras);
+            this.showEnrolled =false;
           }else{
-             /*  mainThis.storageService.removeStorageItem(AuthConstants.AUTH).then(res => { 
-              mainThis.storageService.removeStorageItem(AuthConstants.Role); 
-              mainThis.storageService.removeStorageItem(AuthConstants.userdetails);
-              mainThis.router.navigate(['/']);
-            }); */
-          }  
-        });
-      }
+            this.showEnrolled =true;
+          }
+        } 
+      });
       function colorLight(i) { 
         var items = ['grad_sky','grad_yellow','grad_green','grad_orange','grad_sky']
         return items[Math.floor(Math.random()*items.length)]; 
       }  
-
   }
   
   oncatChange(){ 
