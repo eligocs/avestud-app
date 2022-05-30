@@ -37,6 +37,7 @@ export class SelecttimingsPage implements OnInit {
   class : any;
   student : any;
   mode : any;
+  free_trial : any;
   cart : any; 
   showpaybutton : any; 
   constructor( 
@@ -60,6 +61,7 @@ export class SelecttimingsPage implements OnInit {
       params => {
         this.id =  params['id'];  
         this.mode =  params['mode'];  
+        this.free_trial =  params['free_trial'];  
         this.getTimeslots(this.id,token);
         this.previousUrl = '/searchclass';  
       }
@@ -103,7 +105,7 @@ export class SelecttimingsPage implements OnInit {
       slotsArr.push({'day_id':day_id,'day':name,'time_slot_id':time_slot_id}); 
     });  
     if(slotsArr && err == 0){
-      this.StudentService.enrollthisclass(slotsArr,this.id,this.mode,token).subscribe(
+      this.StudentService.enrollthisclass(slotsArr,this.id,this.mode,this.free_trial,token).subscribe(
         (res: any) => { 
           if(res.status == 400){    
             this.toastService.presentToast(res.msg); 
@@ -112,7 +114,7 @@ export class SelecttimingsPage implements OnInit {
             this.classes = res.classes;
             this.sessiondata = res.sessiondata;
             this.data = res.data;
-            this.isfreetrial = res.isfreetrial;
+            this.isfreetrial = res.isfreetrial == 1 ? 'yes':'';
             this.colors = res.colors;
             this.instdata = res.instdata;
             this.subjects = res.subjects;
@@ -127,9 +129,10 @@ export class SelecttimingsPage implements OnInit {
     var coupencode = this.coupencode;
     var sessiondata = this.sessiondata;
     var session_key = this.session_key; 
+    var isfreetrial = this.isfreetrial; 
     var token =  await this.storageService.get(AuthConstants.AUTH);
     if(sessiondata){
-      this.StudentService.paynow(sessiondata,coupencode,session_key,token).subscribe(
+      this.StudentService.paynow(sessiondata,coupencode,session_key,isfreetrial,token).subscribe(
         (res: any) => {
           if(res.status == 200){   
             this.form_data = res.form_data;
@@ -138,12 +141,20 @@ export class SelecttimingsPage implements OnInit {
             this.student = res.student;
             this.cart = res.cart; 
             this.showpaybutton = true;
-            if(res.coupenAppl){
-              this.amount = res.coupenAppl.data.amount; 
-              this.toastService.presentToast('Coupen Applied Successfully, Proceed To Pay');  
-            }else{
-              this.amount = res.amount; 
-              this.toastService.presentToast('No Coupen Apllied !!! Proceed To Pay');  
+            if(res.freetrial){
+              this.toastService.presentToast(res.msg);   
+              setTimeout(() => {
+                window.location.href = 'studenthome';  
+                
+              }, 6000);
+            }else{ 
+              if(res.coupenAppl){
+                this.amount = res.coupenAppl.data.amount; 
+                this.toastService.presentToast('Coupen Applied Successfully, Proceed To Pay');  
+              }else{
+                this.amount = res.amount; 
+                this.toastService.presentToast('No Coupen Apllied !!! Proceed To Pay');  
+              }
             }
           }
         }); 

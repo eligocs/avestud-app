@@ -44,6 +44,11 @@ export class AddExtraClassPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    console.log('asd')
+    $('#notes').value = '';
+   $(document).ready(function(){
+    $('#video').val('');
+   });
     this.olddata = {};  
     var token =  await this.storageService.get(AuthConstants.AUTH)   
     this.route.queryParams.subscribe(
@@ -98,7 +103,7 @@ export class AddExtraClassPage implements OnInit {
   }
 
   onChange(event) {
-      this.notes = event.target.files[0]; 
+      this.notes = event.target.files[0];   
   }
   onChangeVideo(event) { 
       this.video = event.target.files[0]; 

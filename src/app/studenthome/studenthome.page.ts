@@ -74,6 +74,7 @@ export class StudenthomePage implements OnInit {
    
     var classroom =  await this.StudentService.studenthome(token).subscribe(
       (res: any) => {   
+        console.log(res.data)
         if (res.data) { 
           var allClasses = res.data; 
           if(allClasses){ 

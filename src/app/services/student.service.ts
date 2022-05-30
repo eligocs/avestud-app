@@ -42,19 +42,21 @@ export class StudentService {
     }
     return this.httpService.gettrip('enrollclass',data,token);
   }
-  enrollthisclass(slotsarr,class_id,class_mode,token){ 
+  enrollthisclass(slotsarr,class_id,class_mode,free_trial,token){ 
     var data = {
       slotsarr : slotsarr,
       class_id : class_id,
       class_mode : class_mode,
+      freetrial : free_trial,
     }
     return this.httpService.gettrip('enrollthisclass',data,token);
   }
-  paynow(sessiondata,coupencode,session_key,token){ 
+  paynow(sessiondata,coupencode,session_key,isfreetrial,token){ 
     var data = {
       coupencode : coupencode, 
       form_data : sessiondata, 
       session_key : session_key, 
+      free_trial : isfreetrial, 
     }
     return this.httpService.gettrip('paynow',data,token);
   }

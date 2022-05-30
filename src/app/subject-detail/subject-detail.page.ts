@@ -154,7 +154,7 @@ export class SubjectDetailPage implements OnInit {
                 this.next_class = res.data.next_class ? res.data.next_class:''; 
                 var class_time = res.data.class_time ? res.data.class_time:'';  
                 this.videoapproval = res.data.videoapproval ? res.data.videoapproval:''; 
-                if(this.videoapproval == 0){
+                if(this.videoapproval == 0 && res.data.video){
                   this.toastService.presentToast('Content is under approval !!!'); 
                 } 
                 if(class_time){ 

@@ -56,7 +56,8 @@
     </div>
     <!--====main div / box shadow====-->
     <div *ngIf='showEnrolled'>
-      <div class="box_shadow student_subject_card" *ngFor='let class of allClasses.institute_assigned_class'>
+      <div class="test_box box_shadow student_subject_card" *ngFor='let class of allClasses.institute_assigned_class'>
+        <div class="ribbon3" *ngIf="class.freetrial ==1"><span>Free Trial</span></div>
         <!--  <ion-row class="">
         <ion-col class="ion-text-center standared" size="12">
           <h3 class="color_pink comman_font">{{class.name | titlecase}}</h3>
@@ -73,7 +74,7 @@
           </ion-col>
         </ion-row>
 
-        <div *ngFor='let subj of class.institute_assigned_class_subject;  let ind = index;'>
+        <div  *ngFor='let subj of class.institute_assigned_class_subject;  let ind = index;'>
           <a *ngIf="ind == 0 && subj?.next_class" [routerLink]="['/subject-detail-student']"
             [queryParams]="{iacs:subj.id,subject:subj.subject_id,purchased:1}" class=" text-white ">
             <ion-row class="">

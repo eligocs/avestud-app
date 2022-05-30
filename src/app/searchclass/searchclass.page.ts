@@ -180,16 +180,22 @@ export class SearchclassPage implements OnInit {
         this.showtext = false;
       }
      }
-    async presentAlert(id) { 
+    async presentAlert(id,free=null) { 
       var modeselected = this.class_mode;
+      var freemsg = '';
+      var free_trial = '';
+      if(free){
+        var freemsg = 'free trial';
+        var free_trial = '1';
+      }
       if(!modeselected){
         this.toastService.presentToast('Class mode is required !!!');  
         return false;
       } 
       if(modeselected == 1){
-        var $msg = 'Are you sure you want to enroll live class!!!'; 
+        var $msg = 'Are you sure you want to enroll '+freemsg+' live class!!!'; 
       }else if(modeselected == 2){
-        var $msg = 'Are you sure you want to enroll recorded class!!!'; 
+        var $msg = 'Are you sure you want to enroll '+freemsg+' recorded class!!!'; 
       }
      var token = await this.storageService.get(AuthConstants.AUTH);  
      var toast = this.toastService;
@@ -210,7 +216,7 @@ export class SearchclassPage implements OnInit {
          }, {
            text: 'Yes',
            handler: function() {   
-              window.location.href = 'selecttimings/?id='+id+'&mode='+modeselected;
+              window.location.href = 'selecttimings/?id='+id+'&mode='+modeselected+'&free_trial='+free_trial;
            }
          }
        ]

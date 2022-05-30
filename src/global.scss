@@ -4208,3 +4208,29 @@ i.fa.fa-home {
   left: -21px;
   padding: 0 0 0 12px;
 }
+.ribbon3 {
+  position: absolute;
+  right: -28px;
+  top: -30px !important;
+  z-index: 1;
+  width: 75px;
+  height: 75px;
+  text-align: center;
+}
+
+.ribbon3 span {
+  font-size: 10px;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(40deg);
+  width: 100px;
+  display: block;
+  box-shadow: 0 0 8px 0 rgba(50, 58, 70, 0.06), 0 1px 0 0 rgba(50, 58, 70, 0.02);
+  background: #f7722a;
+  position: absolute;
+  top: 42px;
+  left: -34px;
+  padding: 0 0 0 12px;
+}
