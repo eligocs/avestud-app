@@ -153,8 +153,8 @@ export class AddExtraClassPage implements OnInit {
               break;
             case HttpEventType.UploadProgress:
               var prog = Math.round(event.loaded / event.total * 100);
-              if(prog > 97){
-                prog = 98;
+              if(prog > 95){
+                prog = 95;
               } 
                /*  for (let index = 0; index <= 90; index++) {
                   this.setPercentBar(+index);

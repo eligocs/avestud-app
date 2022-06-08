@@ -83,9 +83,12 @@
       </ion-row>
       <ion-row class='ion-text-center' *ngIf="showloader">
         <ion-col size="12">
+          Please be patient, files are uploading to secure servers...
+        </ion-col>
+        <ion-col size="12">
           <div class="text-center">{{progressPercent}} %</div>
         </ion-col>
-        <ion-progress-bar type="indeterminate" [value]="progress"></ion-progress-bar> 
+        <ion-progress-bar  [value]="progress"></ion-progress-bar> 
       </ion-row>
       <!-- <ion-row class='ion-text-center' *ngIf="showloader">
         <ion-col size-sm="12" >Please be patient, files are being uploaded <br> 
