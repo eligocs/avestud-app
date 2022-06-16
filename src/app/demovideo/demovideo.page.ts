@@ -40,11 +40,11 @@ export class DemovideoPage implements OnInit {
         if(res.status == 200){  
           this.institute = res.institute ? res.institute :'';   
           this.description = res.institute.description ? res.institute.description :'';   
-          if(this.institute.videoApproval == 0){
+         /*  if(this.institute.videoApproval == 0 && this.institute.video){
             this.toastService.presentToast('Content is under approval !!!'); 
-          }else{
+          }else if(this.institute.videoApproval == 1 && this.institute.video){
             this.toastService.presentToast('Content approved !!!');  
-          }
+          } */
         }
       })
   }

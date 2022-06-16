@@ -3,9 +3,10 @@ import { StorageService } from '../services/storage.service';
 import { AuthService } from '../services/auth.service';
 import { HomeService } from '../services/home.service';
 import { BehaviorSubject,Observable } from 'rxjs';
-import { AuthConstants } from '../../../config/auth-constants';
-import { Router } from '@angular/router';
+import { AuthConstants } from '../../../config/auth-constants'; 
 import { PreviousRouteService } from '../previous-route.service';
+import { Router,ActivatedRoute,NavigationExtras } from '@angular/router'; 
+import { ToastService } from '../services/toast.service'; 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.page.html',
@@ -24,7 +25,8 @@ export class HomepagePage implements OnInit {
     private router: Router,
     private authService: AuthService,
     private storageService: StorageService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private toastService: ToastService
     ) {  } 
   async ngOnInit() {  
     var token =  await this.storageService.get(AuthConstants.AUTH);  
@@ -43,6 +45,16 @@ export class HomepagePage implements OnInit {
         (res: any) => {  
           if (res.data) {
             var result =  res.data;
+            var firstTimeLogin =  res.firstTimeLogin;
+            var phone =  res.phone;
+            if (firstTimeLogin == 1) {
+              this.toastService.presentToast('Update your password before proceeding...'); 
+              let navigationExtras: NavigationExtras = {
+                queryParams: { 'firstTimeLogin': firstTimeLogin,'phone':phone },
+                fragment: 'anchor'
+              };
+              this.router.navigate(['newpassword'],navigationExtras);
+            }
             var allClasses = [];
             result.forEach((entry,i) => { 
               entry.subjects.forEach((subj) => {  

@@ -15,8 +15,9 @@ export class NewpasswordPage implements OnInit {
     password:'',
     cpassword:'',
     phone:'',
+    firstTimeLogin:'',
   }
-  phone:string;
+  phone:string; 
   showloader:boolean;
   constructor(
     public alertCtrl: AlertController,
@@ -31,6 +32,7 @@ export class NewpasswordPage implements OnInit {
     this.route.queryParams.subscribe(
       params => { 
           this.phone =  params['phone'];    
+          this.postData.firstTimeLogin  =  params['firstTimeLogin'];    
       }
     ) 
   }
@@ -45,14 +47,25 @@ export class NewpasswordPage implements OnInit {
     this.showloader = true;
     if (this.validateInputs()) {
       if(this.postData.password == this.postData.cpassword){
-        this.postData.phone = this.phone;
+        this.postData.phone = this.phone; 
         await this.authService.updatepassword(this.postData).subscribe(
         (res: any) => {  
-          if (res.status == 200) {    
-            this.showloader = false; 
-            this.router.navigate(['/']); 
-          } else { 
-            this.storageService.removeStorageItem(AuthConstants.otp);  
+          if (res.access_token) { 
+            this.storageService.store(AuthConstants.AUTH, res.access_token);   
+            this.storageService.store(AuthConstants.userdetails, res.userdetails);  
+             if(res.role == 'student'){
+               window.location.href = 'studenthome';
+             } else if(res.role == 'institute'){
+               window.location.href = 'homepage'; 
+             }
+              
+          }else{
+            if (res.status == 200) {    
+              this.showloader = false; 
+              this.router.navigate(['/']); 
+            } else {  
+              this.storageService.removeStorageItem(AuthConstants.otp);  
+            }
           }
           this.toastService.presentToast(
             res.message
