@@ -196,6 +196,8 @@ export class SearchclassPage implements OnInit {
         var $msg = 'Are you sure you want to enroll '+freemsg+' live class!!!'; 
       }else if(modeselected == 2){
         var $msg = 'Are you sure you want to enroll '+freemsg+' recorded class!!!'; 
+      }else if(modeselected == 3){
+        var $msg = 'Are you sure you want to enroll '+freemsg+' offline class!!!'; 
       }
      var token = await this.storageService.get(AuthConstants.AUTH);  
      var toast = this.toastService;

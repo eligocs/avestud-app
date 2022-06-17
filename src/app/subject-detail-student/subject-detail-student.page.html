@@ -86,9 +86,19 @@
                     </div>
                 </div>
             </div>
-            <div class="circle">
-                <!-- circle_item strat -->
-              
+            <div class="circle" *ngIf="class_mode == 3"> 
+                <div class="circle_item"   >
+                    <div   *ngIf='purchased == 1'>
+                        <div class="outter_border ">
+                            <div class=" inner_background">
+                                <p>{{class_time[0]}} <!-- <span>pm</span> --></p>
+                            </div>
+                        </div>
+                        <div class="scheduled_day"><span>EveryDay</span></div>
+                    </div>
+                </div> 
+            </div>
+            <div class="circle" *ngIf="class_mode == 1 || class_mode == 2"> 
                 <div class="circle_item"   *ngFor="let day of class_days; let i = index;">
                     <div   *ngIf='purchased == 1'>
                         <div class="outter_border ">
@@ -98,8 +108,7 @@
                         </div>
                         <div class="scheduled_day"><span>{{day.day.substring(0,3) | titlecase}}</span></div>
                     </div>
-                </div>
-                <!-- circle_item End -->
+                </div> 
             </div>
             </ion-row>
             <!--class schedule End-->
@@ -159,7 +168,7 @@
                             <div class="border_outside skybleue"><span class="badge badge_skyblue">{{notifications ??
                                     0}}</span></div>
                         </ion-col>
-                        <ion-col size="6" *ngIf="mode_of_class == 2">
+                        <ion-col size="6" *ngIf="mode_of_class == 2 || mode_of_class == 3">
                             <a class='link_subject ' [routerLink]="['/s-lectures']"
                                 [queryParams]="{iacs:iacs,subject:subject}"><button
                                     class="grad_yellow comman_btn  common_btn_shadow">Lectures</button></a>

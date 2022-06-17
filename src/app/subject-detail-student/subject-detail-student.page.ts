@@ -30,6 +30,7 @@ export class SubjectDetailStudentPage implements OnInit {
   syllabus:string; 
   istudent:string; 
   purchased:any; 
+  class_mode:any; 
   class_time:any; 
   showteacher:any;
   description:any;
@@ -116,6 +117,7 @@ export class SubjectDetailStudentPage implements OnInit {
           await this.homeService.loadstudentdata(iacs,subject,token).subscribe(
             (res: any) => {     
               if(res.status == 200){
+                console.log(res)
                 this.total_attempted = res.total_attempted ? res.total_attempted:0;
                 this.total_unattempted = res.total_unattempted  ? res.total_unattempted:0;
                 this.toatalmarks = res.toatalmarks ? res.toatalmarks:0;
@@ -127,6 +129,7 @@ export class SubjectDetailStudentPage implements OnInit {
                 this.i_a_c_s_id = res.i_a_c_s_id ? res.i_a_c_s_id:'';   
                 this.teacher = res.teacher ? res.teacher:''; 
                 this.class_time = res.class_time ? res.class_time:''; 
+                this.class_mode = res.class_mode ? res.class_mode:''; 
                 this.video = res.video ? res.video:'';  
                 this.notifications = res.notifications ? res.notifications:0; 
                 this.assignmentnotifications = res.assignmentnotifications ? res.assignmentnotifications:0;    
