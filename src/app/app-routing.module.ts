@@ -189,6 +189,10 @@ const routes: Routes = [
     path: 'demovideo',
     loadChildren: () => import('./demovideo/demovideo.module').then( m => m.DemovideoPageModule)
   },
+  {
+    path: 'updateofflinetime',
+    loadChildren: () => import('./updateofflinetime/updateofflinetime.module').then( m => m.UpdateofflinetimePageModule)
+  },
 
 ];
 @NgModule({

@@ -5,14 +5,13 @@
             <ion-col size="3">
                <div class="d-flex">
                   <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
-                 <img class="header_icon_1" src="../../assets/images/weblgo.png">
                </div>
-             </ion-col>
+            </ion-col>
             <ion-col size="6">
                <p class="ion-text-center heading">{{iac?.name}}</p>
             </ion-col>
             <ion-col size="3">
-               <div class="avatar_icon" (click)="presentPopover('any')"></div>
+               <img class="header_icon_1" src="../../assets/images/weblgo.png"> 
             </ion-col>
          </ion-row>
       </ion-grid>
@@ -64,8 +63,14 @@
          </ion-col>
       </ion-row>
       <ion-row>
+         <ion-col size="6">
+            <p class="comman_font color_violet title_font">Offline Class Time</p> 
+         </ion-col>
+         <ion-col size="6">
+            <p class="comman_font color_violet title_font">{{offlinetime ? '( '+offlinetime+' )' : ''}}&nbsp; <i [routerLink]="['/updateofflinetime']" [queryParams]="{iacs:iacs,subject:subject_id}" class="fa fa-edit"></i></p>
+         </ion-col>
          <ion-col size="8">
-            <p class="comman_font color_violet title_font">Class Shedule</p>
+            <p class="comman_font color_violet title_font">Class Schedule</p>
          </ion-col>
          <ion-col size="4">
             <div class="edt_shedule">

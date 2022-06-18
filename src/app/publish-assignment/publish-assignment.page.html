@@ -5,14 +5,13 @@
           <ion-col size="3">
             <div class="d-flex">
               <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
-              <img class="header_icon_I ml-2" src="../../assets/images/weblgo.png">
             </div>
           </ion-col>
-           <ion-col size="6">
-              <p class="ion-text-center heading">Publish {{pagetype | titlecase}}</p>
-           </ion-col>
-           <ion-col size="3">
-            <div class="avatar_icon" (click)="presentPopover('any')"><i class="fa fa-bell"></i> </div>
+          <ion-col size="6">
+            <p class="ion-text-center heading">Publish {{pagetype | titlecase}}</p>
+          </ion-col>
+          <ion-col size="3">
+             <img class="header_icon_I ml-2" src="../../assets/images/weblgo.png"> 
            </ion-col>
         </ion-row>
      </ion-grid>

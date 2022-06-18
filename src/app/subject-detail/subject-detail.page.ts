@@ -18,6 +18,7 @@ export class SubjectDetailPage implements OnInit {
   getSubjectsInfo:any;
   doubtsnotify:number;
   class_days:any;
+  offlinetime:any;
   next_class:any;
   iac:any;
   video:any;
@@ -140,7 +141,7 @@ export class SubjectDetailPage implements OnInit {
     if(this.iacs && this.subject_id){
         if(this.iacs && this.subject_id){
           await this.homeService.openSubject(iacs,subject_id,token).subscribe(
-            (res: any) => {     
+            (res: any) => {      
               if(res.status == 200){ 
                 this.syllabus = res.data.syllabus ? res.data.syllabus:'';
                 this.video = res.data.video ? res.data.video:''; 
@@ -152,6 +153,7 @@ export class SubjectDetailPage implements OnInit {
                 this.subject = res.data.subject ? res.data.subject:'';  
                 this.i_a_c_s_id = res.data.i_a_c_s_id ? res.data.i_a_c_s_id:'';    
                 this.next_class = res.data.next_class ? res.data.next_class:''; 
+                this.offlinetime = res.data.offlinetime ? res.data.offlinetime:''; 
                 var class_time = res.data.class_time ? res.data.class_time:'';  
                 this.videoapproval = res.data.videoapproval ? res.data.videoapproval:''; 
                 if(this.videoapproval == 0 && res.data.video){

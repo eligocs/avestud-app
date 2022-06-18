@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+     <ion-grid>
+        <ion-row> 
+           <ion-col size="3">
+              <div class="d-flex">
+                 <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
+                </div>
+              </ion-col>
+              <ion-col size="6">
+                <p class="ion-text-center heading">Offline Time</p>
+              </ion-col>
+              <ion-col size="3">
+             <img class="header_icon_1" src="../../assets/images/weblgo.png"> 
+           </ion-col>
+        </ion-row>
+     </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- <ion-row>
+    <ion-col size-sm="6" offset-sm="3">
+      <ion-label position="stacked">Offline Time</ion-label>   
+      <select class='timing_select timevalues'   required>
+        <option value='' selected disabled>Select</option>
+        <option *ngFor="let slots of timeslots" value="{{slots.id ?? ''}}">{{slots.slot ? slots.slot : ''}}
+        </option>
+      </select> 
+  </ion-col>
+  <ion-col size="12">
+    <div class="btns ion-text-center">
+      <button id="add" (click)="enrollthisclass()">Enroll Now</button>
+    </div>
+  </ion-col>
+</ion-row> -->
+<form class="assignment_form"  >  
+  <ion-row>
+    <ion-col size-sm="6" offset-sm="3">
+      <ion-label position="stacked">Offline Time</ion-label>  
+      <div>
+        <select class='timing_select timevalues wid' >
+          <option value='' selected disabled>Select</option>
+          <option *ngFor="let slots of timeslots" value="{{slots.id ?? ''}}">{{slots.slot ? slots.slot : ''}}
+          </option>
+        </select>
+      </div>
+    </ion-col>
+  </ion-row>
+  <div class="btns ion-text-center">
+     <button id="add" (click)="publishAssigment()" >Publish</button> 
+   </div>
+</form>
+</ion-content>
