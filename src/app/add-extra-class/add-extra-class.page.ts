@@ -43,8 +43,7 @@ export class AddExtraClassPage implements OnInit {
     private toastService: ToastService
   ) { }
 
-  async ngOnInit() {
-    console.log('asd')
+  async ngOnInit() {  
     $('#notes').value = '';
    $(document).ready(function(){
     $('#video').val('');

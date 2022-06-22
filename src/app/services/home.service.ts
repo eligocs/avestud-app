@@ -105,6 +105,9 @@ export class HomeService {
   onChangeAttachment(postData,token){   
     return this.httpService.saveSyllabus('create_notification',postData,token);
   }
+  updateTimings(postData,token){   
+    return this.httpService.gettrip('updateTimings',postData,token);
+  }
   saveSyllabus(postData,token){   
     return this.httpService.saveSyllabus('saveSyllabus',postData,token);
   }

@@ -23,13 +23,15 @@
         <div>
             <h1 class="ion-text-center color_pink subject_name title_font">{{subjectname | titlecase}}</h1>
             <div class='ion-text-center'><small class=" color_pink">{{description ?? ''}}</small></div>
-            <!-- <ion-row>
-                <ion-col class="btn_demo" *ngIf='video'>
-                    <button class="btn_view grad_green" href='{{video ?? ""}}'>
-                        <img src="../../assets/images/btn_red_icon.png"> View Demo 
-                    </button>
+
+            
+            <ion-row>
+                <ion-col class="btn_demo" *ngIf='class_status'>
+                    <a class="btn_view grad_green" (click)="markattendance(livelecture,lecture_url)"  >
+                        <img src="../../assets/images/btn_red_icon.png"> Your Class is live
+                    </a>
                 </ion-col>
-            </ion-row> -->
+            </ion-row>
  
 
 
@@ -270,6 +272,26 @@
                     <p>Absent</p>
                 </div>
             </div>
+            <ion-row class="ion-text-center test_results" *ngIf='purchased == 1'>
+                <ion-card class="shadow">
+                    <span class="color_redish mr_top">{{total_classes ?? 0}}</span>
+                    <p> Total
+                        <br /> Classes 
+                    </p>
+                </ion-card>
+                <ion-card class="shadow">
+                    <span class="color_green mr_top">{{total_present ?? 0}}</span>
+                    <p> Total
+                        <br /> Present 
+                    </p>
+                </ion-card>
+                <ion-card class="shadow">
+                    <span class="color_redish mr_top">{{total_absent ?? 0}}</span>
+                    <p> Total
+                        <br /> Absent
+                    </p>
+                </ion-card>
+            </ion-row>
         </div>
     </div>
     <!-- Teacher Details Section -->

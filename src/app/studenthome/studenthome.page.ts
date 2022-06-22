@@ -63,8 +63,7 @@ export class StudenthomePage implements OnInit {
       } 
     }
     if(token){
-      this.loadData(token);
-      console.log('yes')  
+      this.loadData(token); 
     }
      
 
@@ -73,8 +72,7 @@ export class StudenthomePage implements OnInit {
   async loadData(token){
    
     var classroom =  await this.StudentService.studenthome(token).subscribe(
-      (res: any) => {   
-        console.log(res.data)
+      (res: any) => {    
         if (res.data) { 
           var allClasses = res.data; 
           if(allClasses){ 

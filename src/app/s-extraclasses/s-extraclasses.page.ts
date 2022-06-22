@@ -70,8 +70,7 @@ export class SExtraclassesPage implements OnInit {
     await this.studentService.getstudentextraclass(newData,token).subscribe(
       (res: any) => {    
         if (res.status == 200) {
-          this.myclasses = res.lecturesGroupedByUnits;   
-          console.log(this.myclasses)
+          this.myclasses = res.lecturesGroupedByUnits;    
           if(this.myclasses.length > 0){
             this.nolectures = false;
           }else{

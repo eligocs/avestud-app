@@ -97,8 +97,7 @@ export class SubjectDetailPage implements OnInit {
           i_assigned_class_subject_id:this.i_a_c_s_id,
         }   
         await this.homeService.updateVideo(newData,token).subscribe(
-          (res: any) => {     
-            console.log(res)
+          (res: any) => {   
             this.showloader = false;
             if(res.status == 200){ 
               window.location.href = 'subject-detail?iacs='+this.iacs+'&subject='+this.subject_id; 
@@ -143,12 +142,12 @@ export class SubjectDetailPage implements OnInit {
           await this.homeService.openSubject(iacs,subject_id,token).subscribe(
             (res: any) => {      
               if(res.status == 200){ 
-                this.syllabus = res.data.syllabus ? res.data.syllabus:'';
+                this.syllabus = res.data.syllabus ? res.data.syllabus:''; 
                 this.video = res.data.video ? res.data.video:''; 
                 this.getSubjectsInfo = res.data.getSubjectsInfo ? res.data.getSubjectsInfo:'';
                 this.doubtsnotify = res.data.doubtsnotify ? res.data.doubtsnotify:0;
                 this.class_days = res.data.class_days ? res.data.class_days:'';
-                this.iac = res.data.iac ? res.data.iac:'';
+                this.iac = res.data.iac ? res.data.iac:''; 
                 this.lecture_dates = res.data.lecture_dates ? res.data.lecture_dates:'';
                 this.subject = res.data.subject ? res.data.subject:'';  
                 this.i_a_c_s_id = res.data.i_a_c_s_id ? res.data.i_a_c_s_id:'';    

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router,ActivatedRoute  } from '@angular/router';
+import { Router,ActivatedRoute,NavigationExtras  } from '@angular/router';
 import { StorageService } from '../services/storage.service'; 
 import { HomeService } from '../services/home.service';
 import { BehaviorSubject,Observable } from 'rxjs';
@@ -17,8 +17,12 @@ export class UpdateofflinetimePage implements OnInit {
   iacs:any;
   timeslots:any;
   subject:any;
+  iac:any;
   previousUrl:any;
+  newTime:any; 
+  student_subjects_info_id:any; 
   constructor(
+    private router: Router,
     public modalController: ModalController,
     private previousRouteService: PreviousRouteService,
     private storageService: StorageService,
@@ -35,6 +39,7 @@ export class UpdateofflinetimePage implements OnInit {
       params => {
         this.iacs =  params['iacs']; 
         this.subject =  params['subject'];  
+        this.iac =  params['iac'];  
         this.getTimeslots(this.iacs,token);
         this.previousUrl = 'subject-detail?iacs='+this.iacs+'&subject='+this.subject;  
       }
@@ -46,6 +51,30 @@ export class UpdateofflinetimePage implements OnInit {
       (res: any) => {
         if(res.status == 200){ 
           this.timeslots = res.timeslots;   
+        }
+      }); 
+  }
+
+  async updateTimings(){ 
+    var token =  await this.storageService.get(AuthConstants.AUTH)  
+    var data = {
+      institute_assigned_class_id:this.iac,
+      subject_id:this.iacs,
+      newTime:this.newTime, 
+    }
+    this.homeService.updateTimings(data,token).subscribe(
+      (res: any) => {
+        if(res.status == 200){    
+          this.toastService.presentToast(res.msg);
+          let navigationExtras: NavigationExtras = {
+            queryParams: { 'iacs': this.iacs ,'subject':this.subject,'purchased':1},
+            fragment: 'anchor'
+          };
+          setTimeout(() => {
+            this.router.navigate(['subject-detail'],navigationExtras);
+          }, 2000);
+        }else{
+          this.toastService.presentToast(res.msg);
         }
       }); 
   }

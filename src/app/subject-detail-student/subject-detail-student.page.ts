@@ -6,6 +6,7 @@ import { PreviousRouteService } from '../previous-route.service';
 import { AuthConstants } from '../../../config/auth-constants';
 import { ToastService } from '../services/toast.service';
 import { AlertController } from '@ionic/angular'; 
+import { StudentService } from '../services/student.service';
 @Component({
   selector: 'app-subject-detail-student',
   templateUrl: './subject-detail-student.page.html',
@@ -16,6 +17,7 @@ export class SubjectDetailStudentPage implements OnInit {
   getSubjectsInfo:any;
   doubtsnotify:number;
   class_days:any;
+  lecture_url:any;
   iac:any;
   teacher:any;
   lecture_dates:any;
@@ -30,8 +32,12 @@ export class SubjectDetailStudentPage implements OnInit {
   syllabus:string; 
   istudent:string; 
   purchased:any; 
+  total_classes:any; 
+  total_present:any; 
+  total_absent:any; 
   class_mode:any; 
   class_time:any; 
+  livelecture:any; 
   showteacher:any;
   description:any;
   selected_cat:any;
@@ -41,6 +47,7 @@ export class SubjectDetailStudentPage implements OnInit {
   testsnotification:any;
   extranotifications:any;
   next_class:any;
+  class_status:any;
   toatalmarks:any;
   total_unattempted:any;
   total_attempted:any; 
@@ -52,7 +59,8 @@ export class SubjectDetailStudentPage implements OnInit {
     private storageService: StorageService,
     private homeService: HomeService,
     private route: ActivatedRoute,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private studentService: StudentService
   ) { }
 
 
@@ -84,6 +92,19 @@ export class SubjectDetailStudentPage implements OnInit {
       this.updatenotification();
     }, 5 * 1000); */
   }
+  async markattendance(lecture,link){
+  var token =  await this.storageService.get(AuthConstants.AUTH);    
+  var newData = {
+    lecture:lecture,  
+  } 
+  await this.studentService.mark_an_attendence(newData,token).subscribe(
+    (res: any) => { 
+      if(res.status = 200){
+        window.location.href = link;
+      }
+    });
+ }
+ 
   colorLight() { 
     var items = ['bg_gradient_skyblue','bg_gradient_orange','bg_gradient_green','bg_gradient_yellow']
     return items[Math.floor(Math.random()*items.length)]; 
@@ -116,8 +137,7 @@ export class SubjectDetailStudentPage implements OnInit {
         if(this.iacs && this.subject){
           await this.homeService.loadstudentdata(iacs,subject,token).subscribe(
             (res: any) => {     
-              if(res.status == 200){
-                console.log(res)
+              if(res.status == 200){ 
                 this.total_attempted = res.total_attempted ? res.total_attempted:0;
                 this.total_unattempted = res.total_unattempted  ? res.total_unattempted:0;
                 this.toatalmarks = res.toatalmarks ? res.toatalmarks:0;
@@ -137,10 +157,16 @@ export class SubjectDetailStudentPage implements OnInit {
                 this.testsnotification = res.testsnotification ? res.testsnotification:0;  
                 this.extranotifications = res.extranotifications ? res.extranotifications:0;    
                 this.next_class = res.next_class ? res.next_class:'';  
+                this.class_status = res.class_status ? res.class_status:'';   
                 var allclasses = res.class_days ? res.class_days:''; 
                 this.description = res.description ? res.description:''; 
+                this.lecture_url = res.lecture_url ? res.lecture_url:''; 
+                this.livelecture = res.livelecture ? res.livelecture:'';  
                 this.student_subjects_info_id =  res?.student_subjects_info_id ?? '';
-                var classArr = []; 
+                this.total_classes =  res?.total_classes ?? '';
+                this.total_present =  res?.total_present ?? '';
+                this.total_absent =  res?.total_absent ?? '';
+                var classArr = [];  
                 if(allclasses){
                     for(var i=0;i<allclasses.length;i++){
                       classArr.push({

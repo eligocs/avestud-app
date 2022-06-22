@@ -38,7 +38,7 @@
     <ion-col size-sm="6" offset-sm="3">
       <ion-label position="stacked">Offline Time</ion-label>  
       <div>
-        <select class='timing_select timevalues wid' >
+        <select class='timing_select timevalues wid' [(ngModel)]="newTime" name="newTime" required>
           <option value='' selected disabled>Select</option>
           <option *ngFor="let slots of timeslots" value="{{slots.id ?? ''}}">{{slots.slot ? slots.slot : ''}}
           </option>
@@ -47,7 +47,7 @@
     </ion-col>
   </ion-row>
   <div class="btns ion-text-center">
-     <button id="add" (click)="publishAssigment()" >Publish</button> 
+     <button id="add" (click)="updateTimings()" >Publish</button> 
    </div>
 </form>
 </ion-content>

@@ -66,8 +66,8 @@
          <ion-col size="6">
             <p class="comman_font color_violet title_font">Offline Class Time</p> 
          </ion-col>
-         <ion-col size="6">
-            <p class="comman_font color_violet title_font">{{offlinetime ? '( '+offlinetime+' )' : ''}}&nbsp; <i [routerLink]="['/updateofflinetime']" [queryParams]="{iacs:iacs,subject:subject_id}" class="fa fa-edit"></i></p>
+         <ion-col size="6" *ngIf="iac">
+            <p class="comman_font color_violet font_time">{{offlinetime ? '( '+offlinetime+' )' : ''}}&nbsp; <i [routerLink]="['/updateofflinetime']" [queryParams]="{iacs:iacs,subject:subject_id,iac:iac.id}" class="fa fa-edit"></i></p>
          </ion-col>
          <ion-col size="8">
             <p class="comman_font color_violet title_font">Class Schedule</p>
