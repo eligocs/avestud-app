@@ -159,9 +159,10 @@ export class SubjectDetailPage implements OnInit {
                   this.toastService.presentToast('Content is under approval !!!'); 
                 } 
                 if(class_time){ 
-                  class_time.forEach((entry,i) => {  
+                  /* class_time.forEach((entry,i) => {  
                     entry.color_code = this.colorLight();      
-                  });     
+                  });  */    
+                  console.log(class_time)
                   this.class_time =  class_time; 
                 }
               }

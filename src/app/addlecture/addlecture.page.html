@@ -6,14 +6,14 @@
         <ion-col size="3">
           <div class="d-flex">
             <ion-back-button defaultHref="{{previousUrl ?? ''}}" class="color_violet"></ion-back-button>
-            <img class="header_icon_1" src="../../assets/images/weblgo.png">
           </div>
         </ion-col>
         <ion-col size="6">
           <p class="ion-text-center heading">Add Lecture</p>
         </ion-col>
         <ion-col size="3">
-          <div class="avatar_icon" (click)="presentPopover('any')"></div>
+          <img class="header_icon_1" src="../../assets/images/weblgo.png">
+          <!-- <div class="avatar_icon" (click)="presentPopover('any')"></div> -->
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -31,6 +31,7 @@
           <select class='lectureSelect' value="{{olddata?.unit_id}}" [(ngModel)]="postData.unit" name='unit' required>
             <option value="" selected disabled>Select</option>
             <option *ngFor="let unit of units" value="{{unit.id}}">{{unit.name}}</option>
+            <option *ngFor="let unit of liveunits" value="{{unit.id}}">{{unit.unitName}}</option>
           </select>
         </ion-col>
       </ion-row>
@@ -51,7 +52,7 @@
         </ion-col>
       </ion-row>
       <!--Lecture Date*-->
-      <ion-row>
+      <ion-row >
         <ion-col>
           <ion-label>Lecture Date*</ion-label>
           <ion-datetime displayFormat="DD MM YYYY" value='{{olddata?.lecture_date}}' [(ngModel)]="postData.date"
@@ -59,8 +60,27 @@
           <img class="calender_icon" src="../../assets/images/calender.svg">
         </ion-col>
       </ion-row>
+      <!--Lecture Time*-->
+      <ion-row *ngIf="type == 'live'">
+        <ion-col>
+          <ion-label>Lecture Time*</ion-label>
+          <ion-input type="time" displayFormat="H:i A"  value='{{olddata?.time}}' [(ngModel)]="postData.time"
+            autocomplete="off" name="time" placeholder="Select Time" ></ion-input> 
+            
+          <!-- <img class="calender_icon" src="../../assets/images/calender.svg"> -->
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="type == 'live'">
+        <ion-col>
+          <ion-label>Lecture Duration* (In minutes)</ion-label>
+          <ion-input type="number"  value='{{olddata?.duration}}' [(ngModel)]="postData.duration"
+          autocomplete="off" name="duration" placeholder="Select Duration" ></ion-input> 
+          
+          <!-- <img class="calender_icon" src="../../assets/images/calender.svg"> --> 
+        </ion-col>
+      </ion-row>
       <!--file upload / drag and-->
-      <ion-row class="mg_top">
+      <ion-row class="mg_top" *ngIf="type == ''">
         <ion-col class="pdf_img">
           <ion-label>Upload Notes*</ion-label>
           <input class="drag_drop" name="notes" accept="application/pdf" (change)="onChange($event)" type="file"
@@ -68,12 +88,12 @@
           <!-- <img src="../../assets/imgs/pdf_img.svg" class="pdf_img"> -->
         </ion-col>
       </ion-row>
-      <ion-row class="mg_top">
+      <ion-row class="mg_top" >
         <div *ngIf='olddata?.notes'>
           <a href='{{olddata?.notes}}'>View Old Notes</a>
         </div>
       </ion-row>
-      <ion-row class="mg_top">
+      <ion-row class="mg_top" *ngIf="type == ''">
         <ion-col class="pdf_img">
           <ion-label>Upload Video (You can add later)</ion-label>
           <small>Only lecture with video will show to students</small>

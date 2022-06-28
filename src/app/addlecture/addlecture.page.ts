@@ -7,8 +7,9 @@ import { AuthConstants } from '../../../config/auth-constants';
 import { Router,ActivatedRoute,NavigationExtras } from '@angular/router';
 import * as $ from 'jquery';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import 'select2';                      
-import 'select2/dist/css/select2.css';
+/* import 'select2';                      
+import 'select2/dist/css/select2.css'; */
+import { AlertController  } from '@ionic/angular';  
 import { ToastService } from '../services/toast.service';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 @Component({
@@ -23,6 +24,9 @@ export class AddlecturePage implements OnInit {
     lecturename: '',
     date: '',  
     old_id: '',  
+    time: '',  
+    duration: '',  
+    islive: '',  
   };
   notes:File=null;
   video:File=null;
@@ -34,6 +38,8 @@ export class AddlecturePage implements OnInit {
   previousUrl:any;
   olddata:any;
   lectureid:any; 
+  liveunits:any; 
+  type:any; 
   progressPercent:any; 
   constructor(
     private router: Router,
@@ -41,7 +47,8 @@ export class AddlecturePage implements OnInit {
     private storageService: StorageService,
     private homeService: HomeService,
     private route: ActivatedRoute,
-    private toastService: ToastService
+    private toastService: ToastService,
+    public alertCtrl: AlertController,
   ) { }
 
   async ngOnInit() {
@@ -51,8 +58,13 @@ export class AddlecturePage implements OnInit {
         this.iacs =  params['iacs']; 
         this.subject =  params['subject']; 
         this.lectureid =  params['lectureid'];  
+        this.type =  params['type'];  
         if(this.iacs && this.subject){
-          this.previousUrl = 'lectures?iacs='+this.iacs+'&subject='+this.subject;  
+          if(this.type == 'live'){
+            this.previousUrl = 'liveclasses?iacs='+this.iacs+'&subject='+this.subject;  
+          }else{
+            this.previousUrl = 'lectures?iacs='+this.iacs+'&subject='+this.subject;  
+          }
         }
         if(this.lectureid){
           this.getOlddata(this.lectureid);
@@ -64,21 +76,32 @@ export class AddlecturePage implements OnInit {
             lecturename: '',
             date: '',  
             old_id: '',  
+            time: '',  
+            duration: '', 
+            islive: '', 
           };
           this.showloader = false;
         }
       }
     ) 
      
-    if(this.iacs){
-    var token =  await this.storageService.get(AuthConstants.AUTH)   
-    var classid= this.iacs;
-    var classroom =  await this.homeService.getClassunits(classid,token).subscribe(
-      (res: any) => { 
-        if (res) {
-          this.units = res.data;   
-        } 
-      });
+    var classid= this.iacs; 
+    if(this.iacs && this.type == 'live'){
+      var token =  await this.storageService.get(AuthConstants.AUTH)   
+      var classroom =  await this.homeService.getLiveunits(classid,token).subscribe(
+        (res: any) => { 
+          if (res) { 
+            this.liveunits = res.data;   
+          } 
+        });
+    }else{ 
+      var token =  await this.storageService.get(AuthConstants.AUTH)   
+      var classroom =  await this.homeService.getClassunits(classid,token).subscribe(
+        (res: any) => { 
+          if (res) {
+            this.units = res.data;   
+          } 
+        });
     } 
     
 
@@ -92,6 +115,7 @@ export class AddlecturePage implements OnInit {
       (res: any) => { 
         if (res) { 
           this.olddata = res.data;  
+          console.log(this.olddata)
           this.postData.unit = res.data.unit_id ? res.data.unit_id : '';  
         } 
       });
@@ -127,17 +151,32 @@ export class AddlecturePage implements OnInit {
       this.showloader = false;
       return false;
     }
-    var newData = {
-      unit : this.postData.unit,
-      number : this.postData.number,
-      lecturename : this.postData.lecturename,
-      old_id : this.lectureid,
-      date : this.postData.date,
-      notes : this.notes,
-      video : this.video,
-      i_assigned_class_subject_id:this.iacs
-    }  
-    
+    var newData = {};
+    if(this.iacs && this.type == 'live'){
+      newData = { 
+        unit : this.postData.unit,
+        number : this.postData.number,
+        lecturename : this.postData.lecturename,
+        old_id : this.lectureid,
+        date : this.postData.date, 
+        time : this.postData.time, 
+        duration : this.postData.duration, 
+        type : this.type,
+        i_assigned_class_subject_id:this.iacs
+      }
+    }else if(this.iacs && this.type == ''){
+      newData = {
+        unit : this.postData.unit,
+        number : this.postData.number,
+        lecturename : this.postData.lecturename,
+        old_id : this.lectureid,
+        date : this.postData.date,
+        notes : this.notes,
+        video : this.video,
+        type : this.type,
+        i_assigned_class_subject_id:this.iacs
+      }  
+    } 
     if(newData){
       var token =  await this.storageService.get(AuthConstants.AUTH)   
       var classid= this.iacs; 
@@ -167,7 +206,7 @@ export class AddlecturePage implements OnInit {
                     queryParams: { 'iacs': this.iacs,'subject':this.subject },
                     fragment: 'anchor'
                   };
-                  this.router.navigate(['lectures'],navigationExtras);
+                  this.router.navigate(['liveclasses'],navigationExtras);
                 }else if(res.status == 205){
                   this.showloader = false;
                   this.progress = 0;

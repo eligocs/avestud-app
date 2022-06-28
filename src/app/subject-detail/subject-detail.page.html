@@ -89,12 +89,12 @@
       <ion-row    >
          <ion-col size="6"  *ngFor="let time of class_time;">
             <div class="shedule_card"  >
-               <div class="column_1 {{time.color_code}}">
-                  <p>{{time.time}}</p>
+               <div class="column_1 grad_orange {{time.color_code}}">
+                  <p><!-- {{time.time ?? ""}} --><i class='fa fa-book'></i></p>
                </div>
                <div class="column_2">
-                  <p>{{time?.day | titlecase}}</p>
-                  <p>{{time?.name | titlecase}}</p>
+                  <p>{{time | titlecase}}</p>
+              <!--     <p>{{time?.name | titlecase}}</p> -->
                </div>
             </div>
          </ion-col> 
@@ -105,7 +105,7 @@
                <p class="color_violet comman_font title_font">Class Resources</p>
             </ion-col>
             <ion-col size="6">
-               <button class="grad_sky comman_btn  common_btn_shadow">Live Classes</button>
+               <button class="grad_sky comman_btn  common_btn_shadow"  [routerLink]="['/liveclasses']" [queryParams]="{iacs:iacs,subject:subject_id}">Live Classes</button>
             </ion-col>
             <ion-col size="6">
                <button [routerLink]="['/lectures']" [queryParams]="{iacs:iacs,subject:subject_id}"

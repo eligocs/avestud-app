@@ -85,6 +85,13 @@ export class HttpService {
     formDatas.append('number', data.number);
     formDatas.append('lecturename', data.lecturename);
     formDatas.append('date', data.date); 
+    formDatas.append('type', data.type); 
+    if(data.time){
+      formDatas.append('time', data.time); 
+    }
+    if(data.duration){
+      formDatas.append('duration', data.duration); 
+    }
     if(data.old_id){
       formDatas.append('last_id', data.old_id); 
     }

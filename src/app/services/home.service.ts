@@ -38,6 +38,15 @@ export class HomeService {
   resettest(postData,token){  
     return this.httpService.gettrip('resettest',postData,token);
   }
+  getLiveClasses(postData,token){  
+    return this.httpService.gettrip('getLiveClasses',postData,token);
+  }
+  getLiveunits(iacs,token){  
+    var postData = {
+      iacs:iacs, 
+    }
+    return this.httpService.gettrip('getLiveunits',postData,token);
+  }
   openSubject(iacs,subject,token){ 
     var postData = {
       iacs:iacs,

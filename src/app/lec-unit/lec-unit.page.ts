@@ -21,6 +21,7 @@ export class LecUnitPage implements OnInit {
   units:any;
   subject:any; 
   type:any; 
+  classtype:any; 
   previousUrl:any; 
   constructor( private router: Router,
     private authService: AuthService,
@@ -38,6 +39,8 @@ export class LecUnitPage implements OnInit {
         if(this.iacs && this.subject){
           if(this.type == 'extraclass'){
             this.previousUrl = 'extraclass?iacs='+this.iacs+'&subject='+this.subject;  
+          }else if(this.type == 'live'){
+            this.previousUrl = 'liveclasses?iacs='+this.iacs+'&subject='+this.subject;   
           }else{
             this.previousUrl = 'lectures?iacs='+this.iacs+'&subject='+this.subject;   
           }
@@ -51,17 +54,20 @@ export class LecUnitPage implements OnInit {
     var newData = {
       name : this.postData.unitName, 
       i_assigned_class_subject_id : this.iacs, 
-    }     
-   
+      type : this.type, 
+    }      
     if(newData){
       var token =  await this.storageService.get(AuthConstants.AUTH)    
         await this.homeService.createLectureUnit(newData,token).subscribe(
           (res: any) => {    
             if (res.status == 200) {
               this.toastService.presentToast(res.msg);  
+              console.log(this.type)
               setTimeout(() => {
                 if(this.type == 'extraclass'){
                   window.location.href = 'extraclass?iacs='+this.iacs+'&subject='+this.subject;
+                }else if(this.type == 'live'){
+                  window.location.href = 'liveclasses?iacs='+this.iacs+'&subject='+this.subject; 
                 }else{
                   window.location.href = 'lectures?iacs='+this.iacs+'&subject='+this.subject;
                 }

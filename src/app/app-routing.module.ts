@@ -193,6 +193,14 @@ const routes: Routes = [
     path: 'updateofflinetime',
     loadChildren: () => import('./updateofflinetime/updateofflinetime.module').then( m => m.UpdateofflinetimePageModule)
   },
+  {
+    path: 'liveclasses',
+    loadChildren: () => import('./liveclasses/liveclasses.module').then( m => m.LiveclassesPageModule)
+  },
+  {
+    path: 'livestream',
+    loadChildren: () => import('./livestream/livestream.module').then( m => m.LivestreamPageModule)
+  },
 
 ];
 @NgModule({
