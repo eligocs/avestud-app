@@ -4,7 +4,9 @@ import { AuthConstants } from '../../../config/auth-constants';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { ToastService } from '../services/toast.service';
-import { AlertController } from '@ionic/angular';  /* 
+import { AlertController } from '@ionic/angular'; 
+import { LocalNotificationService } from '../local-notification.service';
+ /* 
 import { CallNumber } from '@ionic-native/call-number/ngx'; */
 @Component({
 selector: 'app-login',
@@ -26,10 +28,16 @@ private router: Router,
 private authService: AuthService,
 private storageService: StorageService,
 private toastService: ToastService,
+private localNotification : LocalNotificationService
 /* private callNumber: CallNumber */
 ) {}
 
-async ngOnInit() { 
+// sendLocalNotification (time) {
+//   var time = '2022-6-30 15:17:00';   
+//   this.localNotification.showLocalNotification( 1,'Avestud' ,"Today is your class1.",time ); 
+// }
+async ngOnInit() {  
+
   this.typepass = 'password';
   this.showloader = false;
   if(AuthConstants.Role){

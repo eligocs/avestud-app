@@ -80,7 +80,7 @@
         </ion-col>
       </ion-row>
       <!--file upload / drag and-->
-      <ion-row class="mg_top" *ngIf="type == ''">
+      <ion-row class="mg_top" *ngIf="type == 'recorded'">
         <ion-col class="pdf_img">
           <ion-label>Upload Notes*</ion-label>
           <input class="drag_drop" name="notes" accept="application/pdf" (change)="onChange($event)" type="file"
@@ -93,7 +93,7 @@
           <a href='{{olddata?.notes}}'>View Old Notes</a>
         </div>
       </ion-row>
-      <ion-row class="mg_top" *ngIf="type == ''">
+      <ion-row class="mg_top" *ngIf="type == 'recorded'">
         <ion-col class="pdf_img">
           <ion-label>Upload Video (You can add later)</ion-label>
           <small>Only lecture with video will show to students</small>

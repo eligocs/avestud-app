@@ -63,6 +63,7 @@ export class AddlecturePage implements OnInit {
           if(this.type == 'live'){
             this.previousUrl = 'liveclasses?iacs='+this.iacs+'&subject='+this.subject;  
           }else{
+            this.type = 'recorded';
             this.previousUrl = 'lectures?iacs='+this.iacs+'&subject='+this.subject;  
           }
         }
@@ -164,7 +165,7 @@ export class AddlecturePage implements OnInit {
         type : this.type,
         i_assigned_class_subject_id:this.iacs
       }
-    }else if(this.iacs && this.type == ''){
+    }else if(this.iacs && this.type == 'recorded'){
       newData = {
         unit : this.postData.unit,
         number : this.postData.number,
@@ -206,7 +207,11 @@ export class AddlecturePage implements OnInit {
                     queryParams: { 'iacs': this.iacs,'subject':this.subject },
                     fragment: 'anchor'
                   };
-                  this.router.navigate(['liveclasses'],navigationExtras);
+                  if(this.type == 'live'){
+                    this.router.navigate(['liveclasses'],navigationExtras);
+                  }else{
+                    this.router.navigate(['lectures'],navigationExtras);
+                  }
                 }else if(res.status == 205){
                   this.showloader = false;
                   this.progress = 0;

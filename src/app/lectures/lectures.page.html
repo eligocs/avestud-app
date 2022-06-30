@@ -80,7 +80,7 @@
          </div>
       </div>
       <!-- End card_video_lecture -->
-      <ion-row>
+      <ion-row *ngIf="!lectures">
          <ion-col size="12" class='ion-text-center'>No Lectures Added Yet !!!
          </ion-col>
       </ion-row>
