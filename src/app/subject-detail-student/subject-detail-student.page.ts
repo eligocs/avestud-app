@@ -168,14 +168,15 @@ export class SubjectDetailStudentPage implements OnInit {
                 this.total_classes =  res?.total_classes ?? '';
                 this.total_present =  res?.total_present ?? '';
                 this.total_absent =  res?.total_absent ?? '';
-                var classArr = [];  
-               /*  console.log(this.next_class+' '+this.class_time[0]) 
-                console.log('06/30/2022 04:56 PM')  */
-
+                var classArr = [];   
+               
                 if(this.next_class && this.class_time){
                   var nextNotification = this.next_class+' '+this.class_time[0];
-                  //var nextNotification = '06/30/2022 05:30 PM';
-                  this.localNotification.showLocalNotification( 1,'Avestud' ,"Today is your class at "+this.class_time[0]+" .",nextNotification );  
+                  //var nextNotification = '07/01/2022 01:20 PM';
+                  //console.log(nextNotification)
+                  var currentDate = new Date(nextNotification); 
+                  var futureDate = new Date(currentDate.getTime() - 5*60000);    
+                  this.localNotification.showLocalNotification( 1,'Avestud' ,"Your class is about to start at "+this.class_time[0]+" .",futureDate );  
                 }
                 if(allclasses){
                     for(var i=0;i<allclasses.length;i++){

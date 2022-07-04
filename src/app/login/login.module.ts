@@ -6,8 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { LoginPageRoutingModule } from './login-routing.module';
 
-import { LoginPage } from './login.page';
-import { CallNumber } from '@ionic-native/call-number/ngx';
+import { LoginPage } from './login.page'; 
 @NgModule({
   imports: [
     CommonModule,
@@ -16,8 +15,7 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
     LoginPageRoutingModule
   ],
   declarations: [LoginPage],
-  providers: [ 
-    CallNumber, 
+  providers: [   
   ] 
 })
 export class LoginPageModule {}

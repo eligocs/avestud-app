@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { ToastService } from '../services/toast.service';
 import { AlertController } from '@ionic/angular'; 
-import { LocalNotificationService } from '../local-notification.service';
+import { LocalNotificationService } from '../local-notification.service'; 
  /* 
 import { CallNumber } from '@ionic-native/call-number/ngx'; */
 @Component({
@@ -53,6 +53,11 @@ async ngOnInit() {
   setTimeout(() => {
     this.showSplash = true;
   }, 2500);
+
+  var currentDate = new Date(); 
+  var futureDate = new Date(currentDate.getTime() + 1*5000);
+  this.localNotification.showLocalNotification( 1,'Avestud' ,"Welcome To Avestud | The Perfect Study Room ",futureDate );  
+
 }
 
   showpassword(){

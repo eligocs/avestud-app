@@ -1,6 +1,6 @@
 {
 	"appId": "io.ionic.starter",
-	"appName": "avestud-app",
+	"appName": "avestud",
 	"webDir": "www",
 	"bundledWebRuntime": false
 }
