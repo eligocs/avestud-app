@@ -8,10 +8,10 @@
                     </div>
                 </ion-col>
                 <ion-col size="6">
-                    <p class="ion-text-center heading">Live Classes</p>
+                    <p class="ion-text-center heading">Live Lectures</p>
                 </ion-col>
                 <ion-col size="3">
-                    <img class="header_icon_1" src="../../assets/images/weblgo.png">
+                    <img class="header_icon_I ml-2" src="../../assets/images/weblgo.png">
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -22,18 +22,8 @@
     <div class="comman_page_padding video_lectures_intitute">
         <div class="page_header">
             <div>
-                <h1 class="color_violet page_tittle">Live Classes</h1>
+                <h1 class="color_violet page_tittle">Live Lectures</h1>
             </div>
-            <div class="btn_theme">
-                <button [routerLink]="['/addlecture']" [queryParams]="{iacs:iacs,subject:subject,type:'live'}" class='btn_blue'>
-         Add </button>
-                <button [routerLink]="['/lec-unit']" [queryParams]="{iacs:iacs,subject:subject,type:'live'}" class='btn_blue'> Add Unit</button>
-            </div>
-            <!-- <div class="btn_theme">
-         <button [routerLink]="['/start-live']" [queryParams]="{iacs:iacs,subject:subject,type:'live'}"
-         class='btn_blue'>
-         Start </button>
-      </div> -->
         </div>
 
         <div *ngFor="let lect of lectures;let i=index;">
@@ -42,9 +32,10 @@
                 <ion-row class="card_video_lecture" *ngFor="let single of lect.meeting;">
                     <ion-col size="5">
                         <div class="video_img">
-                            <!-- <a *ngIf='single.lecture_video' href='{{ single?.lecture_video }}'><img src="../../assets/images/video_img2.png" class="youtube_icon"></a> -->
-                            <div class="btn_theme "> <button [routerLink]="['/start-live']" class="btn_blue startstream" [queryParams]="{iacs:iacs,subject:subject,type:'live',lectureid:single.id}">Start Stream <i class="fa fa-play"></i>
-                  <!-- img   src="../../assets/images/video_img2.png" class="youtube_icon"> --></button></div>
+                            <div class="btn_theme ">
+                                <button [routerLink]="['/start-live']" class="btn_blue startstream"
+                                 [queryParams]="{iacs:iacs,subject:subject,type:'live'}">Join Class <i class="fa fa-play"></i>
+                          </button></div>
                         </div>
                     </ion-col>
                     <ion-col size="7" class="video_details">
@@ -52,17 +43,14 @@
                         <marquee behavior="scroll" direction="left" width="100%" scrollamount="4">
                             <h3 class="text_light">{{ single.lecture_name | titlecase }}</h3>
                         </marquee>
-                        <!-- <h3 class="text_light">{{ single.lecture_name | titlecase }}</h3> -->
                         <p class="text_blue">{{ single?.lecture_date | date: 'dd/MM/yyyy' }} {{ single?.lecture_time}}</p>
-                        <div class="icons_set">
-                            <!--  <a *ngIf='single.notes' href='{{ single.notes ?? "#" }}'><i class='fa fa-download text-white'></i> </a>
-                  <i class='fa fa-download text-white' *ngIf='!single.notes'></i> -->
+                        <!--  <div class="icons_set">
                             <a [routerLink]="['/addlecture']" [queryParams]="{iacs:this.iacs,subject:subject,lectureid:single.id,type:'live'}"><i
-                        class='fa fa-pencil text-white'></i>
-                     <!-- <img src="../../assets/images/edit_icon.png"> --></a>
+                    class='fa fa-pencil text-white'></i>
+                 </a>
                             <a (click)="presentAlert(single.id)"><i class='fa fa-trash text-white'></i>
-                     <!-- <img src="../../assets/images/delete_icon.png"> --></a>
-                        </div>
+                 </a>
+                        </div> -->
                     </ion-col>
                 </ion-row>
             </div>

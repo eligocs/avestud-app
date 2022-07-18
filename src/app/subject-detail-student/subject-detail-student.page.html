@@ -3,16 +3,16 @@
         <ion-grid>
             <ion-row>
                 <ion-col size="3">
-                    <div class="d-flex">  
-                        <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button> 
+                    <div class="d-flex">
+                        <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
                     </div>
                 </ion-col>
                 <ion-col size="6">
                     <p class="ion-text-center heading">{{iac | titlecase}}</p>
                 </ion-col>
                 <ion-col size="3">
-                    <img class="header_icon_I ml-2" src="../../assets/images/weblgo.png"> 
-                  </ion-col>
+                    <img class="header_icon_I ml-2" src="../../assets/images/weblgo.png">
+                </ion-col>
             </ion-row>
         </ion-grid>
     </ion-toolbar>
@@ -24,32 +24,32 @@
             <h1 class="ion-text-center color_pink subject_name title_font">{{subjectname | titlecase}}</h1>
             <div class='ion-text-center'><small class=" color_pink">{{description ?? ''}}</small></div>
 
-            
+
             <ion-row>
                 <ion-col class="btn_demo" *ngIf='class_status'>
-                    <a class="btn_view grad_green" (click)="markattendance(livelecture,lecture_url)"  >
+                    <a class="btn_view grad_green" (click)="markattendance(livelecture,lecture_url)">
                         <img src="../../assets/images/btn_red_icon.png"> Your Class is live
                     </a>
                 </ion-col>
             </ion-row>
- 
 
 
-            <ion-row class="syllabus_btns ion-text-center" >
+
+            <ion-row class="syllabus_btns ion-text-center">
                 <ion-col size="6">
                     <div class="btn_meet" *ngIf='video'>
                         <a href='{{video}}'><button class="grad_orange" > <img src="../../assets/images/btn_red_icon.png" alt="btn_red_icon.png"> Demo</button></a>
                     </div>
                     <div class="btn_meet" *ngIf='!video'>
-                        <button class="grad_orange" > <img src="../../assets/images/btn_red_icon.png" alt="btn_red_icon.png"> Demo</button>
+                        <button class="grad_orange"> <img src="../../assets/images/btn_red_icon.png" alt="btn_red_icon.png"> Demo</button>
                     </div>
                 </ion-col>
                 <ion-col size="6">
                     <div class="btn_meet" *ngIf='syllabus'>
-                        <a href='{{syllabus ?? ""}}' ><button  class="view_btn grad_sky">View Syllabus</button></a>
+                        <a href='{{syllabus ?? ""}}'><button  class="view_btn grad_sky">View Syllabus</button></a>
                     </div>
                     <div class="btn_meet" *ngIf='!syllabus'>
-                        <button  class="view_btn grad_sky">View Syllabus</button>
+                        <button class="view_btn grad_sky">View Syllabus</button>
                     </div>
                 </ion-col>
             </ion-row>
@@ -65,53 +65,55 @@
                 </ion-col>
                 <ion-col size="4">
                     <div class="edt_shedule">
-                        <a *ngIf='purchased == 1' class='link_subject ' [routerLink]="['/changetime']"  [queryParams]="{iacs:iacs,subject:subject,student_subjects_info_id:student_subjects_info_id}">
-                          <img src="../../assets/images/edit_profile_icon.svg" alt="Edit Icon">
-                       </a>
+                        <a *ngIf='purchased == 1' class='link_subject ' [routerLink]="['/changetime']" [queryParams]="{iacs:iacs,subject:subject,student_subjects_info_id:student_subjects_info_id}">
+                            <img src="../../assets/images/edit_profile_icon.svg" alt="Edit Icon">
+                        </a>
                         <a *ngIf='purchased != 1' class='link_subject '>
-                          <img src="../../assets/images/edit_profile_icon.svg" alt="Edit Icon">
-                       </a>
+                            <img src="../../assets/images/edit_profile_icon.svg" alt="Edit Icon">
+                        </a>
                     </div>
-                 </ion-col>
+                </ion-col>
             </ion-row>
             <ion-row>
-            <!--class schedule starts-->
-            <div class="circle">
-                <div class="circle_item"  *ngFor="let day of class_days; let i = index;">
-                    <div   *ngIf='purchased != 1'>
-                        <div class="outter_border ">
-                            <div class=" inner_background">
-                                <p>1{{i}}  <br>Am</p>
+                <!--class schedule starts-->
+                <div class="circle">
+                    <div class="circle_item" *ngFor="let day of class_days; let i = index;">
+                        <div *ngIf='purchased != 1'>
+                            <div class="outter_border ">
+                                <div class=" inner_background">
+                                    <p>1{{i}} <br>Am</p>
+                                </div>
                             </div>
+                            <div class="scheduled_day"><span>{{day.day.substring(0,3) | titlecase}}</span></div>
                         </div>
-                        <div class="scheduled_day"><span>{{day.day.substring(0,3) | titlecase}}</span></div>
                     </div>
                 </div>
-            </div>
-            <div class="circle" *ngIf="class_mode == 3"> 
-                <div class="circle_item"   >
-                    <div   *ngIf='purchased == 1'>
-                        <div class="outter_border ">
-                            <div class=" inner_background">
-                                <p>{{class_time[0]}} <!-- <span>pm</span> --></p>
+                <div class="circle" *ngIf="class_mode == 3">
+                    <div class="circle_item">
+                        <div *ngIf='purchased == 1'>
+                            <div class="outter_border ">
+                                <div class=" inner_background">
+                                    <p>{{class_time[0]}}
+                                        <!-- <span>pm</span> --></p>
+                                </div>
                             </div>
+                            <div class="scheduled_day"><span>EveryDay</span></div>
                         </div>
-                        <div class="scheduled_day"><span>EveryDay</span></div>
                     </div>
-                </div> 
-            </div>
-            <div class="circle" *ngIf="class_mode == 1 || class_mode == 2"> 
-                <div class="circle_item"   *ngFor="let day of class_days; let i = index;">
-                    <div   *ngIf='purchased == 1'>
-                        <div class="outter_border ">
-                            <div class=" inner_background">
-                                <p>{{class_time[i]}} <!-- <span>pm</span> --></p>
+                </div>
+                <div class="circle" *ngIf="class_mode == 1 || class_mode == 2">
+                    <div class="circle_item" *ngFor="let day of class_days; let i = index;">
+                        <div *ngIf='purchased == 1'>
+                            <div class="outter_border ">
+                                <div class=" inner_background">
+                                    <p>{{class_time[i]}}
+                                        <!-- <span>pm</span> --></p>
+                                </div>
                             </div>
+                            <div class="scheduled_day"><span>{{day.day.substring(0,3) | titlecase}}</span></div>
                         </div>
-                        <div class="scheduled_day"><span>{{day.day.substring(0,3) | titlecase}}</span></div>
                     </div>
-                </div> 
-            </div>
+                </div>
             </ion-row>
             <!--class schedule End-->
 
@@ -125,7 +127,7 @@
                                 Notifications
                             </button>
                         </ion-col>
-                        
+
                         <ion-col size="6" *ngIf="mode_of_class == 1">
                             <button class="grad_yellow">Live Lectures</button>
                         </ion-col>
@@ -152,46 +154,40 @@
                     </ion-row>
                     <ion-row class="resources_btns">
                         <ion-col size="6">
-                           <button   class="grad_yellow comman_btn  common_btn_shadow">Attendance </button>
+                            <button class="grad_yellow comman_btn  common_btn_shadow">Attendance </button>
                         </ion-col>
-                        <ion-col size="6" >
-                           <button class="grad_sky comman_btn  common_btn_shadow">Extra Notes</button>
+                        <ion-col size="6">
+                            <button class="grad_sky comman_btn  common_btn_shadow">Extra Notes</button>
                         </ion-col>
-                     </ion-row>
+                    </ion-row>
                 </div>
 
                 <div class="btns_container" *ngIf='purchased == 1'>
                     <ion-row class="resources_btns ion-text-center">
                         <ion-col size="6">
-                            <a class='link_subject ' [routerLink]="['/notifications']"
-                                [queryParams]="{iacs:iacs,subject:subject}"><button
+                            <a class='link_subject ' [routerLink]="['/notifications']" [queryParams]="{iacs:iacs,subject:subject}"><button
                                     class="grad_sky comman_btn  common_btn_shadow">Notifications
                                 </button></a>
                             <div class="border_outside skybleue"><span class="badge badge_skyblue">{{notifications ??
                                     0}}</span></div>
                         </ion-col>
                         <ion-col size="6" *ngIf="mode_of_class == 2 || mode_of_class == 3">
-                            <a class='link_subject ' [routerLink]="['/s-lectures']"
-                                [queryParams]="{iacs:iacs,subject:subject}"><button
+                            <a class='link_subject ' [routerLink]="['/s-lectures']" [queryParams]="{iacs:iacs,subject:subject}"><button
                                     class="grad_yellow comman_btn  common_btn_shadow">Lectures</button></a>
                         </ion-col>
                         <ion-col size="6" *ngIf="mode_of_class == 1">
-                            <a class='link_subject '  
-                                [queryParams]="{iacs:iacs,subject:subject}"><button
+                            <a class='link_subject ' [routerLink]="['/s-livelectures']" [queryParams]="{iacs:iacs,subject:subject}"><button
                                     class="grad_yellow comman_btn  common_btn_shadow">Live Lectures</button></a>
                         </ion-col>
                     </ion-row>
                     <ion-row class="resources_btns ion-text-center">
                         <ion-col size="6">
-                            <a class='link_subject ' [routerLink]="['/s-assignments']"
-                                [queryParams]="{iacs:iacs,subject:subject,type:'assignment'}"><button
+                            <a class='link_subject ' [routerLink]="['/s-assignments']" [queryParams]="{iacs:iacs,subject:subject,type:'assignment'}"><button
                                     class="grad_green comman_btn  common_btn_shadow">Assigments</button></a>
-                            <div class="border_outside skybleue"><span
-                                    class="badge badge_skyblue">{{assignmentnotifications ?? 0}}</span></div>
+                            <div class="border_outside skybleue"><span class="badge badge_skyblue">{{assignmentnotifications ?? 0}}</span></div>
                         </ion-col>
                         <ion-col size="6">
-                            <a class='link_subject ' [routerLink]="['/student-doubts']"
-                                [queryParams]="{iacs:iacs,subject:subject}"><button
+                            <a class='link_subject ' [routerLink]="['/student-doubts']" [queryParams]="{iacs:iacs,subject:subject}"><button
                                     class="grad_sky comman_btn  common_btn_shadow">Doubts</button></a>
                             <div class="border_outside skybleue"><span class="badge badge_skyblue">{{dnotifications ??
                                     0}}</span></div>
@@ -199,15 +195,13 @@
                     </ion-row>
                     <ion-row class="resources_btns ion-text-center">
                         <ion-col size="6">
-                            <a class='link_subject ' [routerLink]="['/s-test']"
-                                [queryParams]="{iacs:iacs,subject:subject,type:'test'}"><button
+                            <a class='link_subject ' [routerLink]="['/s-test']" [queryParams]="{iacs:iacs,subject:subject,type:'test'}"><button
                                     class="grad_orange comman_btn  common_btn_shadow">Test</button></a>
                             <div class="border_outside skybleue"><span class="badge badge_skyblue">{{testsnotification
                                     ?? 0}}</span></div>
                         </ion-col>
                         <ion-col size="6">
-                            <a class='link_subject ' [routerLink]="['/s-extraclasses']"
-                                [queryParams]="{iacs:iacs,subject:subject}"><button
+                            <a class='link_subject ' [routerLink]="['/s-extraclasses']" [queryParams]="{iacs:iacs,subject:subject}"><button
                                     class="grad_green comman_btn  common_btn_shadow">Extra
                                     Classes</button></a>
                             <div class="border_outside skybleue"><span class="badge badge_skyblue">{{extranotifications
@@ -222,8 +216,7 @@
                             <div class="border_outside skybleue"><span class="badge badge_skyblue">0</span></div>
                         </ion-col> -->
                         <ion-col size="6">
-                            <a class='link_subject ' [routerLink]="['/student-extra-notes']"
-                                [queryParams]="{iacs:iacs,subject:subject}"><button
+                            <a class='link_subject ' [routerLink]="['/student-extra-notes']" [queryParams]="{iacs:iacs,subject:subject}"><button
                                     class="grad_green comman_btn  common_btn_shadow">Extra
                                     Notes</button></a>
                             <div class="border_outside skybleue"><span class="badge badge_skyblue">{{extraNotesnotifications
@@ -262,7 +255,7 @@
             <!--test_results Ends-->
             <!--Attendance Section start-->
             <h4 class="comman_font color_violet title_font" *ngIf='purchased == 1'>Attendance</h4>
-            <div class="attendance_status"  *ngIf='purchased == 1'>
+            <div class="attendance_status" *ngIf='purchased == 1'>
                 <div class="present">
                     <img src="../../assets/images/green_dot.png" alt="green_dot.png">
                     <p>Present</p>
@@ -276,13 +269,13 @@
                 <ion-card class="shadow">
                     <span class="color_redish mr_top">{{total_classes ?? 0}}</span>
                     <p> Total
-                        <br /> Classes 
+                        <br /> Classes
                     </p>
                 </ion-card>
                 <ion-card class="shadow">
                     <span class="color_green mr_top">{{total_present ?? 0}}</span>
                     <p> Total
-                        <br /> Present 
+                        <br /> Present
                     </p>
                 </ion-card>
                 <ion-card class="shadow">
@@ -300,7 +293,7 @@
         <div class="background_area">
             <div class="avatar_teacher">
                 <img src="../../assets/images/avatar_teacher.jpg" alt="Teacher Profile Image">
-            </div>    
+            </div>
         </div>
         <ion-row>
             <ion-col class='ion-text-center'>

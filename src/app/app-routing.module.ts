@@ -201,6 +201,18 @@ const routes: Routes = [
     path: 'livestream',
     loadChildren: () => import('./livestream/livestream.module').then( m => m.LivestreamPageModule)
   },
+  {
+    path: 'start-live',
+    loadChildren: () => import('./start-live/start-live.module').then( m => m.StartLivePageModule)
+  },
+  {
+    path: 'call',
+    loadChildren: () => import('./call/call.module').then( m => m.CallPageModule)
+  },
+  {
+    path: 's-livelectures',
+    loadChildren: () => import('./s-livelectures/s-livelectures.module').then( m => m.SLivelecturesPageModule)
+  },
 
 ];
 @NgModule({

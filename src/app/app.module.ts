@@ -11,11 +11,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component'; 
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
+import { WebrtcService } from '../app/providers/webrtc.service';
+/* import { WebrtcService } from '../app/providers/webrtc.service'; */
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [ReactiveFormsModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,FormsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [WebrtcService,AndroidPermissions,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
