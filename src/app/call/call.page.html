@@ -32,7 +32,9 @@
                     </div>
                 </ion-col>
                 <ion-col size="6">
-                    <p class="ion-text-center heading">Class Is Live</p>
+                    <p class="ion-text-center heading">
+                        {{this.usertype | titlecase}}
+                    </p>
                 </ion-col>
                 <ion-col size="3">
                     <img class="header_icon_1" src="../../assets/images/weblgo.png">
@@ -42,41 +44,71 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <div class="comman_page_padding video_lectures_intitute">
-        <div class="page_header">
-            <div id="errorMsg"></div> 
-            <ion-row nowrap > 
-                <ion-col size='12'>
-                    <video id="my-video" (click)="swapVideo('partner-video')" autoplay playsinline [ngClass]="{'top-video': topVideoFrame === 'my-video', 'main-video': topVideoFrame != 'my-video'}">
+    <div class="video-lectures-page">
+        <div id="errorMsg"></div>
+        <ion-row>
+            <ion-col size="12" class="padding_zero">
+
+                <video id="my-video" (click)="swapVideo('partner-video')" autoplay playsinline [ngClass]="{'': topVideoFrame === 'my-video', 'main-video': topVideoFrame != 'my-video'}">
                     </video>
-                </ion-col>
-            
-                <ion-col size='12'>
-                <video id="partner-video" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'top-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
-                </video>
+            </ion-col>
+        </ion-row>
+
+        <div class="student-video-section">
+            <ion-row>
+                <ion-col size="12">
+                    <div #studentContainer class="shedule_card"></div>
                 </ion-col>
             </ion-row>
+            <!-- <ion-row>
+                <ion-col size="3">
 
+                    <div class="shedule_card">
+                         <video id="partner-video" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'student-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
+                        </video>
+                    </div>
+                </ion-col>
+                <ion-col size="9">
+                    <div class="student-details">
+                        <h4>Ashish Gautam</h4>
+                        <div class="btns-menu">
+                            <button>
+                                <i class="fa fa-camera"></i>
+                            </button>
+                            <button>
+                                <i class="fa fa-video-camera"></i>
+                            </button>
+                            <button>
+                                <i class="fa fa-microphone"></i> 
+                            </button>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row> -->
         </div>
-    <!--     <ion-row nowrap>
+
+        <!--  <ion-row nowrap>
             <div class="btn_theme">
-            <button class="btn_bottom_mrgn" (click)="call()">Start </button>
+                <button class="btn_bottom_mrgn" (click)="call()">Start </button>
             </div>
             <div class="btn_theme">
-            <button class="btn_blue" (click)="stop()">Stop </button>
+                <button class="btn_blue" (click)="stop()">Stop </button>
             </div>x
         </ion-row> -->
     </div>
-    <ion-row nowrap>
+    <!--   <ion-row nowrap>
         <ion-button (click)="init()">Set: </ion-button>
-          <ion-item>
+        <ion-item>
             <ion-input type="text" [(ngModel)]="userId" placeholder="enter your nick name"></ion-input>
         </ion-item>
+    </ion-row> -->
+    <ion-row nowrap *ngIf="this.usertype == 'institute'">
+        <ion-button (click)="reset()">Open Camera: </ion-button>
+        <ion-button (click)="call()">Start: </ion-button>
+        <ion-button (click)="stop()">Stop: </ion-button>
     </ion-row>
-    <ion-row nowrap>
-        <ion-button (click)="call()">Call TO: </ion-button>
-        <ion-item>
-            <ion-input type="text" [(ngModel)]="partnerId" placeholder="your partner nick name"></ion-input>
-        </ion-item>
-    </ion-row> 
+    <ion-row nowrap *ngIf="this.usertype == 'student'">
+        <ion-button (click)="hand()">Raise Hand: </ion-button>
+        <ion-button (click)="init()">Reset: </ion-button>
+    </ion-row>
 </ion-content>

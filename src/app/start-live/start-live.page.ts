@@ -3,7 +3,8 @@ import { Platform } from '@ionic/angular';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { NavController } from '@ionic/angular'; 
 import { Router,ActivatedRoute,NavigationExtras } from '@angular/router'; 
-
+import { StorageService } from '../services/storage.service';
+import { AuthConstants } from '../../../config/auth-constants';
 @Component({
     selector: 'app-start-live',
     templateUrl: './start-live.page.html',
@@ -23,7 +24,14 @@ export class StartLivePage implements AfterViewInit {
   type:any;
   previousUrl:any;
   buttontext:any; 
-  constructor(private platform: Platform, private androidPermissions: AndroidPermissions,public navCtrl: NavController,private router: Router, private route: ActivatedRoute) {
+  constructor(
+     private platform: Platform,
+     private androidPermissions: AndroidPermissions,
+     public navCtrl: NavController,
+     private router: Router, 
+     private route: ActivatedRoute,
+     private storageService: StorageService,
+     ) {
     this.video = document.createElement('video');
     this.video.width = 300;
     this.video.height = 400;
@@ -60,7 +68,13 @@ export class StartLivePage implements AfterViewInit {
     this.router.navigate(['call'],navigationExtras);
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
+    var userdetails =  await this.storageService.get(AuthConstants.userdetails);
+    if(userdetails.role == 'institute'){
+      this.buttontext = 'Stream';
+    }else{
+      this.buttontext = 'Join';
+    } 
     setTimeout(() => {
       this.initWebRTC() 
     }, 2000);
@@ -85,7 +99,7 @@ export class StartLivePage implements AfterViewInit {
     this.videoContainer.nativeElement.appendChild(this.video);  
   }
 
-  initWebRTC() {
+  async initWebRTC() {
     const constraints = {
       video: true,
       audio: false
@@ -101,16 +115,19 @@ export class StartLivePage implements AfterViewInit {
     //   p.innerHTML = 'navigator.getUserMedia error: ' + error.name + ', ' + error.message;
     //    this.videoContainer.nativeElement.appendChild(p);
     // };
-    // navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError); 
-    navigator.getUserMedia({ audio: true, video: true }, (stream) => { 
-        (<any>window).stream = stream; // make stream available to browser console
-        this.video.srcObject = stream; 
-        // this.video.src = URL.createObjectURL(stream); 
-        this.startstream(); 
-    }, (error) => {
-      alert(error)
-      console.error('[getMedia] cannot get user media'); 
-    }); 
+    // navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+   /*  var userdetails =  await this.storageService.get(AuthConstants.userdetails); 
+    if(userdetails.role == 'institute'){  */
+      navigator.getUserMedia({ audio: true, video: true }, (stream) => { 
+          (<any>window).stream = stream; // make stream available to browser console
+          this.video.srcObject = stream; 
+          // this.video.src = URL.createObjectURL(stream); 
+          this.startstream(); 
+      }, (error) => {
+        alert(error)
+        console.error('[getMedia] cannot get user media'); 
+      }); 
+   /*  } */
     
   }
 }

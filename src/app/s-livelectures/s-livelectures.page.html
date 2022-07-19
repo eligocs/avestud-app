@@ -33,8 +33,7 @@
                     <ion-col size="5">
                         <div class="video_img">
                             <div class="btn_theme ">
-                                <button [routerLink]="['/start-live']" class="btn_blue startstream"
-                                 [queryParams]="{iacs:iacs,subject:subject,type:'live'}">Join Class <i class="fa fa-play"></i>
+                                <button [routerLink]="['/call']" class="btn_blue startstream" [queryParams]="{iacs:iacs,subject:subject,type:'live',lectureid:single.id}">Join Class <i class="fa fa-play"></i>
                           </button></div>
                         </div>
                     </ion-col>

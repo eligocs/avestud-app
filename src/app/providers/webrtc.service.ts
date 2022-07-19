@@ -21,14 +21,25 @@ export class WebrtcService {
   }
 
   getMedia() {
-    navigator.getUserMedia({ audio: true, video: {
+    navigator.getUserMedia({ audio: true, video: {facingMode: 'user'} }, (stream) => { 
+      this.handleSuccess(stream); 
+  }, (error) => {
+    this.handleError(error);
+  });
+    /* navigator.getUserMedia({ audio: true, video: {
         width: {  ideal: 380 },
         height: {  ideal: 350 }
       } }, (stream) => {
       this.handleSuccess(stream); 
     }, (error) => {
       this.handleError(error);
-    });
+    }); */
+  }
+  stop(){
+    var stream = this.myStream;
+    if(stream){
+      stream.getTracks().forEach(function(track) { track.stop(); }) ;
+    }
   }
 
   listAll(){
@@ -47,8 +58,7 @@ export class WebrtcService {
   }
 
   async createPeer(userId: string) {
-    this.peer = new Peer(userId);
-    console.log(this.peer)
+    this.peer = new Peer(userId); 
     this.peer.on('open', () => {
       this.wait();
     });
@@ -57,24 +67,35 @@ export class WebrtcService {
   call(students: any) {
     var mainThis = this; 
     students.forEach(function(student){
-      var call = mainThis.peer.call(student, mainThis.myStream); 
+      var call = mainThis.peer.call(student, mainThis.myStream);  
       call.on('stream', (stream) => {
-        mainThis.partnerEl.srcObject = stream;
+        // mainThis.partnerEl.srcObject = stream; 
+        document.getElementById('partner-video153')[0].srcObject = stream;
+        document.getElementById('partner-video165')[0].srcObject = stream; 
       }); 
     })
   }
-  /* call(partnerId: string) {
+  hand(user){
+    console.log('streaming'+user)
+    var call = this.peer.call('152', this.myStream);  
+  }
+ /*  call(partnerId: string) {
     const call = this.peer.call(partnerId, this.myStream);
-    console.log(this.partnerEl)
+    console.log(partnerId)
     call.on('stream', (stream) => {
       this.partnerEl.srcObject = stream;
     });
   } */
 
   wait() {
+    var students = ['165','158'];
     this.peer.on('call', (call) => {
       call.answer(this.myStream);
       call.on('stream', (stream) => {
+      /*   students.forEach(function(student){
+
+          document.getElementById('partner-video')[0].srcObject = stream;
+        }); */
         this.partnerEl.srcObject = stream;
       });
     });

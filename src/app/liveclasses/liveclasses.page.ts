@@ -5,6 +5,7 @@ import { AlertController  } from '@ionic/angular';
 import { StorageService } from '../services/storage.service'; 
 import { HomeService } from '../services/home.service';
 import { ActivatedRoute  } from '@angular/router';
+import { WebrtcService } from '../providers/webrtc.service';
 @Component({
   selector: 'app-liveclasses',
   templateUrl: './liveclasses.page.html',
@@ -17,6 +18,7 @@ export class LiveclassesPage implements OnInit {
   lectures:any;
   nolectures:any;
   constructor(
+    public webRTC: WebrtcService,
     private storageService: StorageService,
     private homeService: HomeService,
     private route: ActivatedRoute, 
@@ -34,6 +36,10 @@ export class LiveclassesPage implements OnInit {
         this.previousUrl = 'subject-detail?iacs='+this.iacs+'&subject='+this.subject;  
       }
     )
+    this.stop();
+  }
+  stop() {  
+    this.webRTC.stop(); 
   }
   getLiveClasses(iacs,token){
     if(iacs && token){   

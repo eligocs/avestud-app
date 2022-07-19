@@ -24,7 +24,7 @@
             <div class="col-md-12" #videoContainer></div>
         </ion-row>
         <div class="page_header">
-            <div class=" "> 
+            <div class=" ">
                 <div class="btn_theme">
                     <button (click)="flipcamera()" class='btn_blue {{!this.front ? "back_btn" :"front_btn" }}'>
                   <i class="fa fa-camera"></i></button>
@@ -44,11 +44,11 @@
                     <i class="fa fa-circle"></i></button>
                 </div>
                 <div class="btn_theme">
-                    <button (click)="login()" class='btn_green' > {{buttontext ?? ''}}</button>
+                    <button (click)="login()" class='btn_green' *ngIf="buttontext == 'Stream'"> {{buttontext ?? ''}}</button>
                     <button (click)="login()" class='btn_green' *ngIf="buttontext == 'Join'"> {{buttontext ?? ''}}</button>
                 </div>
             </div>
-            <video id="my-video"   autoplay playsinline >
+            <video id="my-video" autoplay playsinline>
             </video>
         </div>
     </div>
