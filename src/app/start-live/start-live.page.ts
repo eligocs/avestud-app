@@ -13,7 +13,17 @@ export class StartLivePage implements AfterViewInit {
   @ViewChild('videoContainer') videoContainer;
   private video: HTMLVideoElement;
   userId: string;
-  constructor(private platform: Platform, private androidPermissions: AndroidPermissions,public navCtrl: NavController,private router: Router) {
+  front: boolean;
+  mutestate: boolean;
+  streaming:any;
+  videoStatus:any;
+  subject:any;
+  iacs:any;
+  lectureid:any;
+  type:any;
+  previousUrl:any;
+  buttontext:any; 
+  constructor(private platform: Platform, private androidPermissions: AndroidPermissions,public navCtrl: NavController,private router: Router, private route: ActivatedRoute) {
     this.video = document.createElement('video');
     this.video.width = 300;
     this.video.height = 400;
@@ -34,20 +44,41 @@ export class StartLivePage implements AfterViewInit {
   }
 
   
-  login() {
-    // this.navCtrl.navigateForward('Call/'+this.userId);
+ 
+
+  login() { 
+    this.initWebRTC();
     let navigationExtras: NavigationExtras = {
-      queryParams: { 'userName': this.userId},
+      queryParams: { 
+        'lectureid': this.lectureid,
+        'iacs': this.iacs,
+        'subject': this.subject,
+        'type': this.type,
+      },
       fragment: 'anchor'
     };
     this.router.navigate(['call'],navigationExtras);
-
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.initWebRTC() 
     }, 2000);
+
+    this.route.queryParams.subscribe(
+      params => { 
+        this.iacs =  params['iacs']; 
+        this.subject =  params['subject']; 
+        this.lectureid =  params['lectureid'];  
+        this.type =  params['type'];
+        if(this.type == 'live'){
+          this.previousUrl = 'liveclasses?iacs='+this.iacs+'&subject='+this.subject;  
+        }
+        if(this.lectureid){
+          this.lectureid = this.lectureid; 
+        }  
+      }); 
+
   }
   
   startstream(){
@@ -73,7 +104,8 @@ export class StartLivePage implements AfterViewInit {
     // navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError); 
     navigator.getUserMedia({ audio: true, video: true }, (stream) => { 
         (<any>window).stream = stream; // make stream available to browser console
-        this.video.src = URL.createObjectURL(stream); 
+        this.video.srcObject = stream; 
+        // this.video.src = URL.createObjectURL(stream); 
         this.startstream(); 
     }, (error) => {
       alert(error)

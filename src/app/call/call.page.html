@@ -1,4 +1,4 @@
- 
+<!--  
 <ion-content>
     <div id="errorMsg"></div>
 
@@ -21,4 +21,62 @@
             <ion-input type="text" [(ngModel)]="partnerId" placeholder="your partner nick name"></ion-input>
         </ion-item>
     </ion-row>
+</ion-content> -->
+<ion-header>
+    <ion-toolbar>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="3">
+                    <div class="d-flex">
+                        <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
+                    </div>
+                </ion-col>
+                <ion-col size="6">
+                    <p class="ion-text-center heading">Class Is Live</p>
+                </ion-col>
+                <ion-col size="3">
+                    <img class="header_icon_1" src="../../assets/images/weblgo.png">
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div class="comman_page_padding video_lectures_intitute">
+        <div class="page_header">
+            <div id="errorMsg"></div> 
+            <ion-row nowrap > 
+                <ion-col size='12'>
+                    <video id="my-video" (click)="swapVideo('partner-video')" autoplay playsinline [ngClass]="{'top-video': topVideoFrame === 'my-video', 'main-video': topVideoFrame != 'my-video'}">
+                    </video>
+                </ion-col>
+            
+                <ion-col size='12'>
+                <video id="partner-video" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'top-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
+                </video>
+                </ion-col>
+            </ion-row>
+
+        </div>
+    <!--     <ion-row nowrap>
+            <div class="btn_theme">
+            <button class="btn_bottom_mrgn" (click)="call()">Start </button>
+            </div>
+            <div class="btn_theme">
+            <button class="btn_blue" (click)="stop()">Stop </button>
+            </div>x
+        </ion-row> -->
+    </div>
+    <ion-row nowrap>
+        <ion-button (click)="init()">Set: </ion-button>
+          <ion-item>
+            <ion-input type="text" [(ngModel)]="userId" placeholder="enter your nick name"></ion-input>
+        </ion-item>
+    </ion-row>
+    <ion-row nowrap>
+        <ion-button (click)="call()">Call TO: </ion-button>
+        <ion-item>
+            <ion-input type="text" [(ngModel)]="partnerId" placeholder="your partner nick name"></ion-input>
+        </ion-item>
+    </ion-row> 
 </ion-content>

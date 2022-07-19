@@ -7,7 +7,7 @@ export class WebrtcService {
   options:any;
   stun = 'stun.l.google.com:19302';
  /*  mediaConnection: Peer.MediaConnection;
-  options: Peer.PeerJSOption; */
+  options: Peer.PeerJSOption; */ 
   stunServer: RTCIceServer = {
     urls: 'stun:' + this.stun,
   };
@@ -31,6 +31,10 @@ export class WebrtcService {
     });
   }
 
+  listAll(){
+    this.peer.listAllPeers(list => console.log(list)); 
+  }
+
   async init(userId: string, myEl: HTMLMediaElement, partnerEl: HTMLMediaElement) {
     this.myEl = myEl;
     this.partnerEl = partnerEl;
@@ -44,18 +48,28 @@ export class WebrtcService {
 
   async createPeer(userId: string) {
     this.peer = new Peer(userId);
+    console.log(this.peer)
     this.peer.on('open', () => {
       this.wait();
     });
   }
 
-  call(partnerId: string) {
+  call(students: any) {
+    var mainThis = this; 
+    students.forEach(function(student){
+      var call = mainThis.peer.call(student, mainThis.myStream); 
+      call.on('stream', (stream) => {
+        mainThis.partnerEl.srcObject = stream;
+      }); 
+    })
+  }
+  /* call(partnerId: string) {
     const call = this.peer.call(partnerId, this.myStream);
     console.log(this.partnerEl)
     call.on('stream', (stream) => {
       this.partnerEl.srcObject = stream;
     });
-  }
+  } */
 
   wait() {
     this.peer.on('call', (call) => {
