@@ -4,6 +4,7 @@ import { WebrtcService } from '../providers/webrtc.service';
 import { Router,ActivatedRoute  } from '@angular/router'; 
 import { StorageService } from '../services/storage.service';
 import { AuthConstants } from '../../../config/auth-constants'; 
+import $ from 'jquery';
 @Component({
   selector: 'app-call',
   templateUrl: './call.page.html',
@@ -19,9 +20,11 @@ export class CallPage  implements OnInit {
   type: string;
   usertype: string;
   subject: string;
+  myvideo: boolean;
   iacs: string;
   previousUrl: string;
   partnerId: string;
+  mainElement: HTMLMediaElement;
   myEl: HTMLMediaElement;
   partnerEl: HTMLMediaElement;
   private video: HTMLMediaElement;
@@ -38,63 +41,52 @@ export class CallPage  implements OnInit {
    var mThis = this;
 
     var userdetails =  await this.storageService.get(AuthConstants.userdetails);
-    this.userId = userdetails.id; 
-    console.log(this.userId)
+    this.userId = userdetails.id;  
     if(userdetails.role == 'institute'){
-      this.myEl = this.elRef.nativeElement.querySelector('#my-video');
-      this.usertype = 'institute';
-      
-      this.students = ['165','153'];
-      this.students.forEach(function(std){
+        this.myvideo = true; 
+        this.mainElement = document.querySelector('#demoicon');
+        this.mainElement.setAttribute('style','padding-top:0px');
         var video = document.createElement('video'); 
         video.setAttribute('autoplay', '');
-        video.setAttribute('height', '100');
+        video.setAttribute('height', '350');
         video.setAttribute('width', '100%');
         video.setAttribute('playsinline', '');
-        video.setAttribute('class', 'student-video');
-        video.setAttribute('id', 'partner-video'+std); 
-        mThis.studentContainer.nativeElement.appendChild(video);  
-        mThis.partnerEl = mThis.elRef.nativeElement.querySelector('#partner-video'+std);  
-       // mThis.webRTC.init(mThis.userId, mThis.myEl, mThis.partnerEl);
-
-      });
+        video.setAttribute('class', 'my-video');
+        video.setAttribute('id', 'my-video'); 
+        $('#demoicon').html(video);
+        this.usertype = 'institute';
+        this.myEl = document.querySelector('#my-video'); 
+        this.webRTC.init(this.userId, this.myEl,this.partnerEl);  
+      }else{ 
+      //this.myEl = document.querySelector('#my-video'); 
+      this.mainElement = document.querySelector('#demoicon');
+      this.mainElement.setAttribute('style','padding-top:0px');
+      var video = document.createElement('video'); 
+      video.setAttribute('autoplay', '');
+      video.setAttribute('height', '350');
+      video.setAttribute('width', '100%');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('class', 'partner-video');
+      video.setAttribute('id', 'partner-video'); 
+      $('#demoicon').html(video);
+      this.partnerEl = document.querySelector('#partner-video');
       this.webRTC.init(this.userId, this.myEl, this.partnerEl);
-      
-    }else{
-      this.video = document.createElement('video'); 
-      this.video.setAttribute('autoplay', '');
-      this.video.setAttribute('height', '100');
-      this.video.setAttribute('width', '100%');
-      this.video.setAttribute('playsinline', '');
-      this.video.setAttribute('class', 'student-video');
-      this.video.setAttribute('id', 'partner-video'+this.userId); 
-      this.studentContainer.nativeElement.appendChild(this.video);  
-      
-      this.myEl = this.elRef.nativeElement.querySelector('#partner-video'+this.userId);
-      this.partnerEl = this.elRef.nativeElement.querySelector('#my-video');
       this.usertype = 'student'; 
-      this.webRTC.init(this.userId, this.myEl, this.partnerEl);
-    } 
-    /* this.students.push(this.userId)  */
-    /* 
-    console.log(list); */
-    //var list = this.webRTC.listAll();
-  }
+      this.myvideo = false;   
+    }  
+  } 
   
   reset(){
     window.location.reload();
   }
-  ngOnInit(): void {
-    /* this.route.queryParams.subscribe(
-      params => {    
-        this.userId =  params['userName'];
-        if(this.userId){
-          this.init();
-          this.students.push(this.userId)
-          console.log(this.students)
-        }
-      }
-    ) */
+
+  openCam(){
+      this.myEl = document.querySelector('#my-video-el');
+      this.partnerEl = document.querySelector('#partner-video');
+      this.webRTC.init(this.userId, this.myEl, this.partnerEl);
+  }
+
+  ngOnInit(): void { 
     this.route.queryParams.subscribe(
       params => {    
         this.lectureid =  params['lectureid'];
@@ -103,26 +95,28 @@ export class CallPage  implements OnInit {
         this.iacs =  params['iacs'];
         if(this.type == 'live'){
           this.previousUrl = 'liveclasses?iacs='+this.iacs+'&subject='+this.subject; 
-        }
-       /*  if(this.lectureid){
-          this.init();
-        } */  
-        
-          this.init(); 
-           
+        } 
+        this.init();  
       }
     )
   }
   stop() {  
     this.webRTC.stop(); 
   }
+  mutevideo() {  
+    this.webRTC.mutevideo(); 
+  }
+
+  startRecord(){
+
+  }
+
   hand() {  
-    this.webRTC.hand(this.userId); 
+    this.webRTC.hand('152'); 
   }
   call() { 
      this.students = ['165','153'];
     this.webRTC.call(this.students);
-    //this.swapVideo('my-video');
   }
 
   swapVideo(topVideo: string) {

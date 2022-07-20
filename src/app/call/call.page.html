@@ -48,25 +48,30 @@
         <div id="errorMsg"></div>
         <ion-row>
             <ion-col size="12" class="padding_zero">
-
-                <video id="my-video" (click)="swapVideo('partner-video')" autoplay playsinline [ngClass]="{'': topVideoFrame === 'my-video', 'main-video': topVideoFrame != 'my-video'}">
-                    </video>
+                <div class="black_bg" id="demoicon">
+                    <img class="header_icon_1" src="../../assets/images/weblgo.png">
+                </div>
+                <!-- <video id="my-video" *ngIf="myvideo" (click)="swapVideo('partner-video')" autoplay playsinline [ngClass]="{'': topVideoFrame === 'my-video', 'main-video': topVideoFrame != 'my-video'}">
+                </video> -->
             </ion-col>
         </ion-row>
+        <div class="comman_page_padding video_lectures_intitute">
+            <ion-row nowrap *ngIf="this.usertype == 'institute'" class="text-right">
+                <button class='btn_theme_live' (click)="reset()">Reset Camera</button>
+                <button class='btn_theme_live' (click)="call()"> <i class="fa fa-play"></i></button>
+                <button class='btn_theme_live' (click)="stop()"> <i class="fa fa-stop"></i></button>
+                <button (click)="mutevideo()" class='btn_theme_live {{!this.mutestate ? "muted_btn" :"" }}'> <i class="fa fa-microphone"></i></button>
+                <button (click)="startRecord()" class='btn_theme_live {{this.videoStatus == false ? "muted_btn" :"" }}'>
+                <i class="fa fa-circle"></i></button>
+            </ion-row>
+        </div>
 
         <div class="student-video-section">
-            <ion-row>
-                <ion-col size="12">
-                    <div #studentContainer class="shedule_card"></div>
-                </ion-col>
-            </ion-row>
+
+            <div #studentContainer class="shedule_card"></div>
             <!-- <ion-row>
                 <ion-col size="3">
-
-                    <div class="shedule_card">
-                         <video id="partner-video" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'student-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
-                        </video>
-                    </div>
+                    <div #studentContainer class="shedule_card"></div>
                 </ion-col>
                 <ion-col size="9">
                     <div class="student-details">
@@ -81,6 +86,42 @@
                             <button>
                                 <i class="fa fa-microphone"></i> 
                             </button>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row> -->
+            <ion-row>
+                <ion-col size="3">
+                    <div class="shedule_card">
+                        <video id="my-video-el" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'student-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
+                        </video>
+                    </div>
+                </ion-col>
+                <ion-col size="9">
+                    <div class="student-details">
+                        <h4>Ashish Gautam</h4>
+                        <div class="btns-m ">
+                            <button class='btn_theme_live' (click)="openCam()">Open Cam</button>
+                            <button class='btn_theme_live' (click)="hand()">Raise Hand</button>
+                            <button class='btn_theme_live' (click)="reset()">Reset</button>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <!--  <ion-row *ngIf="this.usertype == 'institute'">
+                <ion-col size="3">
+                    <div class="shedule_card">
+                        <video id="partner-video" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'student-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
+                        </video>
+                    </div>
+                </ion-col>
+                <ion-col size="9">
+                    <div class="student-details">
+                        <h4>Ashish Gautam</h4>
+                        <div class="btns-m " *ngIf="this.usertype == 'student'">
+                            <button class='btn_theme_live' (click)="init()">Allow Cam</button>
+                            <button class='btn_theme_live' (click)="hand()">Allow Audio</button>
+                            <button class='btn_theme_live' (click)="reset()">Reset</button>
                         </div>
                     </div>
                 </ion-col>
@@ -102,13 +143,5 @@
             <ion-input type="text" [(ngModel)]="userId" placeholder="enter your nick name"></ion-input>
         </ion-item>
     </ion-row> -->
-    <ion-row nowrap *ngIf="this.usertype == 'institute'">
-        <ion-button (click)="reset()">Open Camera: </ion-button>
-        <ion-button (click)="call()">Start: </ion-button>
-        <ion-button (click)="stop()">Stop: </ion-button>
-    </ion-row>
-    <ion-row nowrap *ngIf="this.usertype == 'student'">
-        <ion-button (click)="hand()">Raise Hand: </ion-button>
-        <ion-button (click)="init()">Reset: </ion-button>
-    </ion-row>
+
 </ion-content>

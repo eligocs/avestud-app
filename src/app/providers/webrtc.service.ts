@@ -22,23 +22,22 @@ export class WebrtcService {
 
   getMedia() {
     navigator.getUserMedia({ audio: true, video: {facingMode: 'user'} }, (stream) => { 
-      this.handleSuccess(stream); 
-  }, (error) => {
-    this.handleError(error);
-  });
-    /* navigator.getUserMedia({ audio: true, video: {
-        width: {  ideal: 380 },
-        height: {  ideal: 350 }
-      } }, (stream) => {
-      this.handleSuccess(stream); 
+      this.handleSuccess(stream);  
     }, (error) => {
       this.handleError(error);
-    }); */
+    }); 
   }
   stop(){
     var stream = this.myStream;
     if(stream){
-      stream.getTracks().forEach(function(track) { track.stop(); }) ;
+      // stream.getTracks().forEach(function(track) { track.stop(); }) ;
+      stream.getVideoTracks()[0].enabled = !(stream.getVideoTracks()[0].enabled);
+    } 
+  }
+  mutevideo(){
+    var stream = this.myStream;
+    if(stream){
+      stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled); 
     }
   }
 
@@ -46,19 +45,22 @@ export class WebrtcService {
     this.peer.listAllPeers(list => console.log(list)); 
   }
 
-  async init(userId: string, myEl: HTMLMediaElement, partnerEl: HTMLMediaElement) {
+  async init(userId: string, myEl: HTMLMediaElement, partnerEl: HTMLMediaElement) { 
     this.myEl = myEl;
     this.partnerEl = partnerEl;
-    try {
-      this.getMedia();
-    } catch (e) {
-      this.handleError(e);
+    if(myEl){
+      try {
+        this.getMedia();
+      } catch (e) {
+        this.handleError(e);
+      }
     }
     await this.createPeer(userId);
   }
 
   async createPeer(userId: string) {
     this.peer = new Peer(userId); 
+    console.log(this.peer)
     this.peer.on('open', () => {
       this.wait();
     });
@@ -68,16 +70,23 @@ export class WebrtcService {
     var mainThis = this; 
     students.forEach(function(student){
       var call = mainThis.peer.call(student, mainThis.myStream);  
-      call.on('stream', (stream) => {
-        // mainThis.partnerEl.srcObject = stream; 
+      /* call.on('stream', (stream) => {
+          mainThis.partnerEl.srcObject = stream; 
         document.getElementById('partner-video153')[0].srcObject = stream;
         document.getElementById('partner-video165')[0].srcObject = stream; 
-      }); 
-    })
+      }); */ 
+    }) 
   }
   hand(user){
-    console.log('streaming'+user)
-    var call = this.peer.call('152', this.myStream);  
+    navigator.getUserMedia({ audio: true, video: {facingMode: 'user'} }, (stream) => {  
+      var call = this.peer.call(user, stream);   
+      console.log(this.myEl)
+      call.on('stream', (stream) => { 
+        this.myEl.srcObject = stream;
+      });
+    }, (error) => {
+      this.handleError(error);
+    }); 
   }
  /*  call(partnerId: string) {
     const call = this.peer.call(partnerId, this.myStream);
@@ -87,15 +96,10 @@ export class WebrtcService {
     });
   } */
 
-  wait() {
-    var students = ['165','158'];
+  wait() { 
     this.peer.on('call', (call) => {
       call.answer(this.myStream);
-      call.on('stream', (stream) => {
-      /*   students.forEach(function(student){
-
-          document.getElementById('partner-video')[0].srcObject = stream;
-        }); */
+      call.on('stream', (stream) => { 
         this.partnerEl.srcObject = stream;
       });
     });
