@@ -44,12 +44,11 @@ export class CallPage  implements OnInit {
     private renderer:Renderer2
   ) {}
 
-  async init() {
-   var mThis = this;
-
+  async init() { 
     var userdetails =  await this.storageService.get(AuthConstants.userdetails); 
     this.userdetails = userdetails; 
     this.userId = userdetails.id 
+    console.log(this.userId)
     if(userdetails.role == 'institute'){
       this.studentEl = document.querySelector('#my-video-el');
       this.myvideo = true; 
@@ -67,8 +66,7 @@ export class CallPage  implements OnInit {
       this.usertype = 'institute';
       this.myEl = document.querySelector('#my-video'); 
       this.webRTC.init(this.userId, this.myEl,this.partnerEl,this.studentEl,'institute',this.students);  
-    }else{ 
-        this.students.push(this.userId);  
+    }else{  
       this.myEl = document.querySelector('#my-video-el'); 
       this.mainElement = document.querySelector('#demoicon');
       this.mainElement.setAttribute('style','padding-top:0px');

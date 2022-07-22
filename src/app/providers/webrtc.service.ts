@@ -7,7 +7,7 @@ export class WebrtcService {
   studentEl: HTMLMediaElement;
   partnerEl: HTMLMediaElement;
   options:any; 
-  students:any;
+  students:any[] = [];
   type:any;
   userId:any;
   stun = 'stun.l.google.com:19302';
@@ -54,8 +54,7 @@ export class WebrtcService {
     this.myEl = myEl;
     this.partnerEl = partnerEl;
     this.studentEl = studentEl;
-    this.type = type; 
-    this.students = students;
+    this.type = type;  
     
     if(myEl){
       try {
@@ -64,16 +63,16 @@ export class WebrtcService {
         this.handleError(e);
       }
     }    
-     
     this.peer = new Peer(userId);  
+    console.log(this.peer)
+    console.log(userId)
     this.peer.on('open', () => {
       this.peer.on('call', (call) => {
         call.answer(this.myStream);
         call.on('stream', (stream) => {  
           if(this.partnerEl){
             this.partnerEl.srcObject = stream;
-          }
-          this.students = this.students;
+          } 
           if(this.studentEl){
             this.studentEl.srcObject = stream; 
           }  
@@ -90,6 +89,7 @@ export class WebrtcService {
   }
 
   appendStudent(data){
+    this.students.push(data.userdetails.id) 
     var image = data.userdetails.avatar ? data.userdetails.avatar : ""; 
     $('#studentdiv').append('<ion-row><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;" src='+image+' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="student-details"><h4>'+data.userdetails.name+'</h4><div class="btns-m " ><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-microphone"></i> Audio</button><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-play"></i> Video</button><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-thumb"></i> Raise Hand</button></div></div></ion-col></ion-row>');
   }
@@ -140,6 +140,7 @@ export class WebrtcService {
       userdetails:userdetails,
       userimage:userimage
     }
+    console.log(this.peer)
     var conn = this.peer.connect(teacher);
     conn.on('open', function(){
       conn.send(data);
