@@ -1,7 +1,7 @@
 .student-video {
     width: 100px;
     height: 100px;
-    border-radius: 100%;
+    border-radius: 2px;
     object-fit: cover;
 }
 
@@ -21,4 +21,43 @@ button.btn_theme_live {
     height: 350px;
     background: #00000070;
     padding-top: 150px;
+}
+
+.comman_page_padding.video_lectures_intitute {
+    background: #1a1a1a;
+}
+
+.muted_btn {
+    background: #ac0808;
+}
+
+.pausevideo {
+    background: #ac0808;
+}
+
+button.btn_theme_live.streaming_btn {
+    background: #0f710f;
+}
+
+.videoStream {
+    transition: transform 0.8s;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.video_dummy {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+}
+
+video#my-video-el {
+    position: absolute;
+    z-index: 999;
+    background: #d3d3d330;
+}
+
+video#my-video-el {
+    right: 5px;
+    bottom: 5px;
 }

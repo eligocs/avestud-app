@@ -1,10 +1,15 @@
 import Peer from 'peerjs'; 
+import $ from 'jquery';
 export class WebrtcService {
   peer: Peer;
   myStream: any;
   myEl: HTMLMediaElement;
+  studentEl: HTMLMediaElement;
   partnerEl: HTMLMediaElement;
-  options:any;
+  options:any; 
+  students:any;
+  type:any;
+  userId:any;
   stun = 'stun.l.google.com:19302';
  /*  mediaConnection: Peer.MediaConnection;
   options: Peer.PeerJSOption; */ 
@@ -15,7 +20,7 @@ export class WebrtcService {
   constructor() {
 
     this.options = {  // not used, by default it'll use peerjs server
-      key: 'cd1ft79ro8g833di',
+      key: '907e35f4142ca0ec0373a1e36e80bd378aab0718',
       debug: 3
     };
   }
@@ -45,45 +50,113 @@ export class WebrtcService {
     this.peer.listAllPeers(list => console.log(list)); 
   }
 
-  async init(userId: string, myEl: HTMLMediaElement, partnerEl: HTMLMediaElement) { 
+  async init(userId: string, myEl: HTMLMediaElement, partnerEl: HTMLMediaElement,studentEl:HTMLMediaElement,type:string,students:any) { 
     this.myEl = myEl;
     this.partnerEl = partnerEl;
+    this.studentEl = studentEl;
+    this.type = type; 
+    this.students = students;
+    
     if(myEl){
       try {
         this.getMedia();
       } catch (e) {
         this.handleError(e);
       }
-    }
-    await this.createPeer(userId);
-  }
-
-  async createPeer(userId: string) {
-    this.peer = new Peer(userId); 
-    console.log(this.peer)
+    }    
+     
+    this.peer = new Peer(userId);  
     this.peer.on('open', () => {
-      this.wait();
+      this.peer.on('call', (call) => {
+        call.answer(this.myStream);
+        call.on('stream', (stream) => {  
+          if(this.partnerEl){
+            this.partnerEl.srcObject = stream;
+          }
+          this.students = this.students;
+          if(this.studentEl){
+            this.studentEl.srcObject = stream; 
+          }  
+        });
+      });
+    }); 
+    var mainThis = this;
+    this.peer.on('connection', function(conn) {
+      conn.on('data', function(data){ 
+        mainThis.appendStudent(data);
+      });
     });
+   
   }
 
-  call(students: any) {
-    var mainThis = this; 
-    students.forEach(function(student){
-      var call = mainThis.peer.call(student, mainThis.myStream);  
+  appendStudent(data){
+    var image = data.userdetails.avatar ? data.userdetails.avatar : ""; 
+    $('#studentdiv').append('<ion-row><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;" src='+image+' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="student-details"><h4>'+data.userdetails.name+'</h4><div class="btns-m " ><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-microphone"></i> Audio</button><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-play"></i> Video</button><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-thumb"></i> Raise Hand</button></div></div></ion-col></ion-row>');
+  }
+
+  async studentPeer(userId: string) { 
+    this.peer = new Peer(userId);   
+    this.peer.on('open', () => {
+      this.waitstudent(); 
+    });    
+  }
+  async createPeer(userId: string) { 
+    this.peer = new Peer(userId);   
+    this.peer.on('open', () => {
+      this.wait();  
+    });    
+  }
+
+
+  refreshStudents(){
+    console.log(this.students)
+  }
+
+  call(students: any) { 
+    var mainThis = this;  
+    
+   /*  this.peer.on('open', () => {
+      this.peer.on('call', (call) => {
+        call.answer(this.myStream);
+        call.on('stream', (stream) => { 
+          this.partnerEl.srcObject = stream;
+        });
+      });
+    }); */
+    students.forEach(function(student){ 
+      
+      var call = mainThis.peer.call(student, mainThis.myStream);   
       /* call.on('stream', (stream) => {
           mainThis.partnerEl.srcObject = stream; 
         document.getElementById('partner-video153')[0].srcObject = stream;
         document.getElementById('partner-video165')[0].srcObject = stream; 
       }); */ 
-    }) 
+    })  
+   
   }
-  hand(user){
-    navigator.getUserMedia({ audio: true, video: {facingMode: 'user'} }, (stream) => {  
-      var call = this.peer.call(user, stream);   
-      console.log(this.myEl)
-      call.on('stream', (stream) => { 
-        this.myEl.srcObject = stream;
-      });
+
+  streamToTeacher(stream,teacher,userdetails,userimage){ 
+    var data = {
+      userdetails:userdetails,
+      userimage:userimage
+    }
+    var conn = this.peer.connect(teacher);
+    conn.on('open', function(){
+      conn.send(data);
+    });
+    var call = this.peer.call(teacher, stream);      
+    call.on('stream', (stream) => {  
+      if(this.studentEl){
+        this.studentEl.srcObject = stream;
+      }
+    });
+    
+  }
+
+
+  hand(teacher,userdetails,userimage){  
+    navigator.getUserMedia({ audio: true, video: {facingMode: 'user'} }, (stream) => { 
+      this.streamToTeacher(stream,teacher,userdetails,userimage)  
     }, (error) => {
       this.handleError(error);
     }); 
@@ -96,7 +169,18 @@ export class WebrtcService {
     });
   } */
 
+  waitstudent() {  
+    this.peer.on('call', (call) => {
+      call.answer(this.myStream);
+      call.on('stream', (stream) => { 
+        this.studentEl.srcObject = stream;
+      });
+    });
+  }
+
   wait() { 
+    console.log(this.partnerEl)
+    console.log('this.partnerEl')
     this.peer.on('call', (call) => {
       call.answer(this.myStream);
       call.on('stream', (stream) => { 

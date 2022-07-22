@@ -5,5 +5,5 @@ export class AuthConstants {
     public static readonly pwd = 'pwd'
     public static readonly Role = 'role'
     public static readonly userdetails = 'userdetails'
-    public static readonly TIMER = 'timer'
+    public static readonly TIMER = 'timer' 
 };

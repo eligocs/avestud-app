@@ -121,7 +121,7 @@ let password = this.postData.password.trim();
       (res: any) => { 
         if (res.access_token) { 
           this.storageService.store(AuthConstants.AUTH, res.access_token);   
-          this.storageService.store(AuthConstants.userdetails, res.userdetails);  
+          this.storageService.store(AuthConstants.userdetails, res.userdetails);   
            if(res.role == 'student'){
              window.location.href = 'studenthome';
            } else if(res.role == 'institute'){
