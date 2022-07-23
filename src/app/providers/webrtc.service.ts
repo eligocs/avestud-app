@@ -29,7 +29,11 @@ export class WebrtcService {
 
   getMedia() {
     var mainthis = this;
-    navigator.mediaDevices.getUserMedia({audio:true,video:true})
+    const constraints = {
+      'audio': {'echoCancellation': true},
+      'video': true
+      }
+    navigator.mediaDevices.getUserMedia(constraints)
     .then(function(stream) {
       mainthis.myStream = stream; 
       mainthis.myEl.srcObject = stream; 
