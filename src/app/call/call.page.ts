@@ -85,6 +85,10 @@ export class CallPage  implements OnInit {
     }   
   } 
   
+  closeConnection(){
+    this.webRTC.closeConnection()
+  }
+  
   refreshStudents(){
     this.webRTC.refreshStudents()
   }
