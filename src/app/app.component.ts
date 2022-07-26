@@ -24,12 +24,12 @@ export class AppComponent implements OnInit {
     if(token && userdetails){
       if(userdetails.role == 'institute'){
         this.previousUrl = 'institute';
-      }else if(userdetails.role == 'student'){
+      }else/*  if(userdetails.role == 'student') */{
         this.previousUrl = 'student';
       }
     }else{
       this.previousUrl = '';
-    }
+    } 
   }
   
  

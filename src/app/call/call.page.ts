@@ -5,6 +5,7 @@ import { Router,ActivatedRoute  } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 import { AuthConstants } from '../../../config/auth-constants'; 
 import $ from 'jquery';
+import { ToastService } from '../services/toast.service'; 
 @Component({
   selector: 'app-call',
   templateUrl: './call.page.html',
@@ -22,6 +23,7 @@ export class CallPage  implements OnInit {
   userimage: string;
   students: any[] = [];
   usertype: string;
+  joined: boolean;
   subject: string;
   studentEl: HTMLMediaElement;
   myvideo: boolean;
@@ -41,14 +43,15 @@ export class CallPage  implements OnInit {
     public elRef: ElementRef,
     private route: ActivatedRoute,
     private storageService: StorageService,
-    private renderer:Renderer2
+    private renderer:Renderer2,
+    private toastService: ToastService
   ) {}
 
   async init() { 
     var userdetails =  await this.storageService.get(AuthConstants.userdetails); 
     this.userdetails = userdetails; 
-    this.userId = userdetails.id 
-    console.log(this.userId)
+    this.userId = userdetails.id  
+    
     if(userdetails.role == 'institute'){
       this.studentEl = document.querySelector('#my-video-el');
       this.myvideo = true; 
@@ -59,13 +62,14 @@ export class CallPage  implements OnInit {
       video.setAttribute('height', '350');
       video.setAttribute('width', '100%');
       video.setAttribute('playsinline', '');
-      video.setAttribute('class', 'my-video');
+      video.setAttribute('class', 'my-video videoStream');
       video.setAttribute('id', 'my-video'); 
       video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);'); 
       $('#demoicon').html(video);
       this.usertype = 'institute';
       this.myEl = document.querySelector('#my-video'); 
       this.webRTC.init(this.userId, this.myEl,this.partnerEl,this.studentEl,'institute',this.students);  
+      this.previousUrl = 'liveclasses?iacs='+this.iacs+'&subject='+this.subject; 
     }else{  
       this.myEl = document.querySelector('#my-video-el'); 
       this.mainElement = document.querySelector('#demoicon');
@@ -75,18 +79,22 @@ export class CallPage  implements OnInit {
       video.setAttribute('height', '350');
       video.setAttribute('width', '100%');
       video.setAttribute('playsinline', '');
-      video.setAttribute('class', 'partner-video');
+      video.setAttribute('class', 'partner-video videoStream');
       video.setAttribute('id', 'partner-video'); 
       $('#demoicon').html(video);
-      this.partnerEl = document.querySelector('#partner-video'); 
+      this.partnerEl = document.querySelector('#partner-video');  
       this.webRTC.init(this.userId, this.myEl, this.partnerEl,this.studentEl,'student',this.students);
       this.usertype = 'student'; 
       this.myvideo = false;  
+      this.previousUrl = 's-livelectures?iacs='+this.iacs+'&subject='+this.subject; 
     }   
   } 
   
   closeConnection(){
-    this.webRTC.closeConnection()
+    if(this.joined == true){
+      this.joined = false;
+      this.webRTC.closeConnection('152')
+    }
   }
   
   refreshStudents(){
@@ -94,6 +102,7 @@ export class CallPage  implements OnInit {
   }
   
   reset(){
+    this.webRTC.destroyPeer();
     window.location.reload();
   }
 
@@ -112,17 +121,26 @@ export class CallPage  implements OnInit {
         this.type =  params['type'];
         this.subject =  params['subject'];
         this.iacs =  params['iacs'];
-        if(this.type == 'live'){
+       /*  if(this.type == 'live'){
           this.previousUrl = 'liveclasses?iacs='+this.iacs+'&subject='+this.subject; 
-        } 
+        }  */
         this.init();  
       }
     )
   }
+
+  stopMedia(){
+    //this.webRTC.stop();
+    window.location.href=this.previousUrl;
+  }
+  
   stop() {  
+    var teacher = '152';
     if(this.pausevideo == true){
-      this.pausevideo = false;
+      this.pausevideo = false; 
+      this.webRTC.pauseVideo(false,teacher); 
     }else{
+      this.webRTC.pauseVideo(true,teacher); 
       this.pausevideo = true;
     }
     this.webRTC.stop(); 
@@ -133,7 +151,7 @@ export class CallPage  implements OnInit {
     }else{
       this.mutestate = true;
     }
-    this.webRTC.mutevideo(); 
+    this.webRTC.mutevideo(this.mutestate); 
   }
 
   startRecord(){
@@ -141,7 +159,12 @@ export class CallPage  implements OnInit {
   }
 
   join() {     
-    this.webRTC.hand('152',this.userdetails,this.userimage); 
+    if(this.joined == true){
+      this.joined = false;
+    }else{
+      this.joined = true;
+      this.webRTC.hand('152',this.userdetails,this.userimage); 
+    }
   }
   call() { 
     if(this.pausevideo == true){
@@ -158,10 +181,13 @@ export class CallPage  implements OnInit {
         this.showreset = false;
         this.webRTC.stop(); 
       }else{   
-        this.streaming = true; 
-        this.students = ['398','153'];  
-        this.webRTC.call(this.students);
-      }
+        var callok = this.webRTC.call(); 
+        if(callok){
+          this.streaming = true;   
+        }else{
+          this.toastService.presentToast("No student joined yet !"); 
+        } 
+      } 
     }
   }
 

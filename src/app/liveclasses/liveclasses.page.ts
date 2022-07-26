@@ -35,12 +35,9 @@ export class LiveclassesPage implements OnInit {
         this.getLiveClasses(this.iacs,token);
         this.previousUrl = 'subject-detail?iacs='+this.iacs+'&subject='+this.subject;  
       }
-    )
-    this.stop();
+    ) 
   }
-  stop() {  
-    this.webRTC.stop(); 
-  }
+  
   getLiveClasses(iacs,token){
     if(iacs && token){   
       var data = {

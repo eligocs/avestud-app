@@ -28,7 +28,7 @@
             <ion-row>
                 <ion-col size="3">
                     <div class="d-flex">
-                        <ion-back-button defaultHref="{{previousUrl}}" class="color_violet"></ion-back-button>
+                        <button (click)="stopMedia()" class="color_violet1"><i class='fa fa-arrow-left'></i></button>
                     </div>
                 </ion-col>
                 <ion-col size="6">
@@ -48,11 +48,15 @@
         <div id="errorMsg"></div>
         <ion-row>
             <ion-col size="12" class="padding_zero">
-                <div class="ion-text-center video_dummy">
+                <div class="ion-text-center video_dummy d-flex">
                     <img class="header_icon_1 " src="../../assets/images/weblgo.png">
-                </div>
-                <video id="my-video-el" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'student-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
+                    <div class="onlineEl">
+                        <a style="color: #cf3b1e; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>
+                    </div>
+                </div> 
+                <video id="my-video-el" class="videoStream" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'student-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
                 </video>
+                <div class="audioMute" style="position: absolute;bottom: 50px;z-index: 2;margin-left: 18px;"></div>
                 <div class="black_bg" id="demoicon">
                 </div>
                 <!-- <video id="my-video" *ngIf="myvideo" (click)="swapVideo('partner-video')" autoplay playsinline [ngClass]="{'': topVideoFrame === 'my-video', 'main-video': topVideoFrame != 'my-video'}">
@@ -63,13 +67,13 @@
             <ion-row nowrap *ngIf="this.usertype == 'institute'" class="text-right">
                 <button *ngIf="showreset" class='btn_theme_live {{this.streaming ? "streaming_btn" :"" }}' (click)="call()"> <i class="fa fa-play"></i> Stream</button>
                 <button *ngIf="!showreset" class='btn_theme_live {{this.streaming ? "streaming_btn" :"" }}' (click)="reset()"> <i class="fa fa-play"></i> Reset</button>
-                <button class='btn_theme_live {{this.pausevideo ? "muted_btn" :"" }}' (click)="stop()"> <i class="fa fa-stop"></i> Stop</button>
+                <button class='btn_theme_live {{this.pausevideo ? "muted_btn" :"" }}' (click)="stop()"> <i class="fa fa-stop"></i> Stop / Pause</button>
                 <button (click)="mutevideo()" class='btn_theme_live {{this.mutestate ? "muted_btn" :"" }}'>
                      <i class="fa fa-microphone"></i> Audio</button>
                 <button (click)="startRecord()" class='btn_theme_live {{this.videoStatus == false ? "muted_btn" :"" }}'>
                 <i class="fa fa-circle"></i> Record</button>
                 <button class='btn_theme_live' (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
-                <!-- <button class='btn_theme_live' (click)="refreshStudents()"><i class="fa fa-refresh"></i> Students</button> -->
+                <!-- <button class='btn_theme_live' (click)="refreshStudents()"><i class="fa fa-refresh"></i> Students</button> --> 
             </ion-row>
         </div>
 
@@ -110,16 +114,25 @@
                 </ion-col>
                 <ion-col size="9">
                     <div class="student-details">
-                        <h4>{{this.userdetails.name ?? ''}}</h4>
+                        <h4>{{this.userdetails.name ?? ''}} <span class="myonlinestatus"></span></h4>
                         <div class="btns-m " *ngIf="this.usertype == 'student'">
-                            <button class='btn_theme_live' (click)="join()">Join</button>
-                            <button class='btn_theme_live' (click)="reset()">Reset</button>
-                            <button class='btn_theme_live' (click)="closeConnection()">Stop</button>
+                            <button class='btn_theme_live {{this.joined ? "streaming_btn" :"" }}' disabled='{{this.joined ? "disabled" :"" }}' (click)="join()"><i class='fa fa-user'></i> Join</button>
+                            <button class='btn_theme_live ' disabled='{{!this.joined ? "disabled" :"" }}' (click)="closeConnection()"><i class="fa fa-stop"></i> Stop</button>
+                            <button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-hand"></i> Raise Hand</button>
+                            <button class='btn_theme_live'  (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
                         </div>
                     </div>
                 </ion-col>
             </ion-row>
+           
             <div id="studentdiv">
+                <ion-row *ngIf="this.usertype == 'institute'">
+                    <ion-col size="12">
+                        <div class="shedule_card ion-text-center"> 
+                            No students Yet !
+                        </div>
+                    </ion-col>
+                </ion-row>  
             </div>
             <!--  <ion-row *ngIf="this.usertype == 'institute'">
                 <ion-col size="3">

@@ -36,7 +36,8 @@ button.btn_theme_live {
 }
 
 button.btn_theme_live.streaming_btn {
-    background: #0f710f;
+    background: #17b117;
+    color:white;
 }
 
 .videoStream {
@@ -47,8 +48,9 @@ button.btn_theme_live.streaming_btn {
 
 .video_dummy {
     position: absolute;
-    left: 20px;
-    top: 20px;
+    left: 14px;
+    top: 14px;
+    z-index: 5;
 }
 
 video#my-video-el {
@@ -60,4 +62,16 @@ video#my-video-el {
 video#my-video-el {
     right: 5px;
     bottom: 5px;
+}
+ 
+.audioMute {
+    position: absolute;
+    bottom: 50px;
+    z-index: 2;
+    margin-left: 18px;
+}
+.color_violet1{
+    color: #fff;
+    font-size: 18px;
+    background: #f5f5dc00;
 }
