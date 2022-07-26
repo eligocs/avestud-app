@@ -32,6 +32,9 @@ export class HomeService {
   profile(token){  
     return this.httpService.get('profile',token);
   }
+  getTeacher(postData,token){  
+    return this.httpService.gettrip('getTeacher',postData,token);
+  }
   getReport(postData,token){  
     return this.httpService.gettrip('getReport',postData,token);
   }

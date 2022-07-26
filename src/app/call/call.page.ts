@@ -6,6 +6,7 @@ import { StorageService } from '../services/storage.service';
 import { AuthConstants } from '../../../config/auth-constants'; 
 import $ from 'jquery';
 import { ToastService } from '../services/toast.service'; 
+import { HomeService } from '../services/home.service'; 
 @Component({
   selector: 'app-call',
   templateUrl: './call.page.html',
@@ -32,6 +33,7 @@ export class CallPage  implements OnInit {
   showreset: boolean;
   iacs: string;
   previousUrl: string;
+  teacher: string;
   partnerId: string;
   userdetails: any;
   mainElement: HTMLMediaElement;
@@ -44,14 +46,14 @@ export class CallPage  implements OnInit {
     private route: ActivatedRoute,
     private storageService: StorageService,
     private renderer:Renderer2,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private homeService: HomeService,
   ) {}
 
   async init() { 
     var userdetails =  await this.storageService.get(AuthConstants.userdetails); 
     this.userdetails = userdetails; 
-    this.userId = userdetails.id  
-    
+    this.userId = userdetails.id   
     if(userdetails.role == 'institute'){
       this.studentEl = document.querySelector('#my-video-el');
       this.myvideo = true; 
@@ -112,27 +114,39 @@ export class CallPage  implements OnInit {
       this.webRTC.init(this.userId, this.myEl, this.myEl,this.studentEl);
   } */
 
-  ngOnInit(): void { 
+  async ngOnInit(){ 
     this.streaming = false;
     this.showreset = true;
+    var token =  await this.storageService.get(AuthConstants.AUTH)
     this.route.queryParams.subscribe(
       params => {    
         this.lectureid =  params['lectureid'];
         this.type =  params['type'];
         this.subject =  params['subject'];
-        this.iacs =  params['iacs'];
-       /*  if(this.type == 'live'){
-          this.previousUrl = 'liveclasses?iacs='+this.iacs+'&subject='+this.subject; 
-        }  */
+        this.iacs =  params['iacs']; 
         this.init();  
+        this.getTeacher(this.iacs,token);  
       }
     )
   }
 
   stopMedia(){
-    //this.webRTC.stop();
+    this.webRTC.stop();
     window.location.href=this.previousUrl;
   }
+
+  async getTeacher(iacs,token){
+    var newData = {
+      iacs :iacs,  
+    }  
+    await this.homeService.getTeacher(newData,token).subscribe(
+      (res: any) => {     
+        console.log(res)
+        if(res.status == 200){
+          this.teacher = res.teacher; 
+        }
+      })
+  } 
   
   stop() {  
     var teacher = '152';
