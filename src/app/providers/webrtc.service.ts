@@ -2,6 +2,7 @@ import Peer from 'peerjs';
 import $ from 'jquery';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable'; 
 import { ComponentFactoryResolver } from '@angular/core';
+import * as RecordRTC from 'recordrtc';
 export class WebrtcService {
   peer: Peer;
   myStream: any;
@@ -15,6 +16,7 @@ export class WebrtcService {
   type:any;
   userId:any;
   conn:any; 
+  recorder:any; 
   stun = 'stun.l.google.com:19302';
  /*  mediaConnection: Peer.MediaConnection;
   options: Peer.PeerJSOption; */ 
@@ -42,25 +44,17 @@ export class WebrtcService {
     })
     .catch(function(err) {
       
-    });
-    
-    
-    /* navigator.getUserMedia({ audio: true, video: {facingMode: 'user'} }, (stream) => { 
-      this.handleSuccess(stream);  
-    }, (error) => {
-      this.handleError(error);
-    }); */ 
-   /*  const supports = navigator.mediaDevices.getSupportedConstraints();
-    console.log(supports) */
+    }); 
   }
+
   stop(){
     var stream = this.myStream;  
-    if(stream){ 
-      // stream.getTracks().forEach(function(track) { track.stop(); }) ;
+    if(stream){  
       stream.getVideoTracks()[0].enabled = !(stream.getVideoTracks()[0].enabled);
       stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled); 
     } 
   }
+
   mutevideo(status){ 
       var mainThis = this;
       this.students.forEach(function(std){ 
@@ -103,8 +97,7 @@ export class WebrtcService {
         this.handleError(e);
       }
     }    
-    this.peer = new Peer(userId);    
-    /* this.peer.destroy() */ 
+    this.peer = new Peer(userId); 
    
   this.peer.on('open', () => { 
     this.peer.on('call', (call) => {
@@ -211,12 +204,84 @@ export class WebrtcService {
     }
   }
 
+  startRecord(){
+    var videoPreview = document.getElementById('video-preview');
+    var logoImage = document.getElementById('logo-image');
+    var waitImage = document.getElementById('logo-image');
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');  
+    // canvas.style = 'position: absolute; top: 0; left: 0; opacity: 0; margin-top: -9999999999; margin-left: -9999999999; top: -9999999999; left: -9999999999; z-index: -1;';
+    document.body.appendChild(canvas);
+    var canvasStream = canvas.captureStream(15);
+    var audioPlusCanvasStream = new MediaStream();
+    this.myStream.getAudioTracks().forEach(function(track) {
+      // merge microphone into canvas stream
+      audioPlusCanvasStream.addTrack(track);
+    });
+    this.myStream.getVideoTracks().forEach(function(track) {
+      // merge microphone into canvas stream
+      audioPlusCanvasStream.addTrack(track);
+    }); 
+
+    var recorder = RecordRTC(audioPlusCanvasStream, {
+        type: 'video'
+    });
+    this.recorder = recorder;
+    recorder.startRecording();
+    recorder.setRecordingDuration(10 * 1000).onRecordingStopped(function() {
+      var blob = recorder.getBlob();
+      recorder = null;
+      this.myStream.stop();
+
+      alert(blob)
+      //videoPreview.srcObject = canvasStream;
+
+      var tries = 0;
+    (function looper() {
+        if(!recorder) return; // ignore/skip on stop-recording
+
+        tries += 100;
+
+        canvas.width = 320;
+        canvas.height = 240;
+
+        // show hello.png for one second
+        if(tries < 5000 || tries > 6000) {
+            context.drawImage(this.myEl, 0, 0, canvas.width, canvas.height);
+
+            // context.drawImage(logoImage, parseInt(canvas.width / 2) - parseInt(logoImage.width / 2), canvas.height - logoImage.height - 10);
+            // context.drawImage(logoImage, parseInt(canvas.width / 2) - parseInt(32 / 2), canvas.height - 32 - 10, 32, 32);
+            //context.drawImage(logoImage, 10, 10, 32, 32);
+        }
+        else {
+            //context.drawImage(waitImage, 0, 0, canvas.width, canvas.height);
+        }
+
+        // repeat (looper)
+        setTimeout(looper, 100);
+    })();
+
+  });
+
+  }
+
+
+  raiseHand(){
+    
+  }
+
+  async stopRecording(){
+    await this.recorder.stopRecording();
+  }
+
   async studentPeer(userId: string) { 
     this.peer = new Peer(userId);   
     this.peer.on('open', () => {
       this.waitstudent(); 
     });    
   }
+
+
   async createPeer(userId: string) { 
     this.peer = new Peer(userId);   
     this.peer.on('open', () => {
@@ -258,12 +323,6 @@ export class WebrtcService {
     });  
     this.conn = conn; 
     $('.myonlinestatus').html('<a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a>');
-   /*  var call = this.peer.call(teacher, stream);      
-    call.on('stream', (stream) => {  
-      if(this.studentEl){
-        this.studentEl.srcObject = stream;
-      }
-    }); */
     
   }
 
@@ -276,9 +335,7 @@ export class WebrtcService {
     }
     conn.on('open', function(){
       conn.send(data);
-    }); 
-   // var conn = this.peer.connect(teacher); 
-    //this.conn.close();    
+    });   
   }
 
 
@@ -289,13 +346,7 @@ export class WebrtcService {
       this.handleError(error);
     }); 
   }
- /*  call(partnerId: string) {
-    const call = this.peer.call(partnerId, this.myStream);
-    console.log(partnerId)
-    call.on('stream', (stream) => {
-      this.partnerEl.srcObject = stream;
-    });
-  } */
+
 
   waitstudent() {  
     this.peer.on('call', (call) => {

@@ -1,27 +1,3 @@
-<!--  
-<ion-content>
-    <div id="errorMsg"></div>
-
-    <video id="partner-video" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'top-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
-  </video>
-    <video id="my-video" (click)="swapVideo('partner-video')" autoplay playsinline [ngClass]="{'top-video': topVideoFrame === 'my-video', 'main-video': topVideoFrame != 'my-video'}">
-  </video>
-
-
-    <ion-row nowrap>
-        <ion-button (click)="init()">Start: </ion-button>
-        <ion-item>
-            <ion-input type="text" [(ngModel)]="userId" placeholder="enter your nick name"></ion-input>
-        </ion-item>
-    </ion-row>
-
-    <ion-row nowrap>
-        <ion-button (click)="call()">Call To: </ion-button>
-        <ion-item>
-            <ion-input type="text" [(ngModel)]="partnerId" placeholder="your partner nick name"></ion-input>
-        </ion-item>
-    </ion-row>
-</ion-content> -->
 <ion-header>
     <ion-toolbar>
         <ion-grid>
@@ -49,7 +25,7 @@
         <ion-row>
             <ion-col size="12" class="padding_zero">
                 <div class="ion-text-center video_dummy d-flex">
-                    <img class="header_icon_1 " src="../../assets/images/weblgo.png">
+                    <img class="header_icon_1 " id="logo-image" src="../../assets/images/weblgo.png">
                     <div class="onlineEl">
                         <a style="color: #cf3b1e; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>
                     </div>
@@ -63,6 +39,7 @@
                 </video> -->
             </ion-col>
         </ion-row>
+        <div id="video-preview"></div>
         <div class="comman_page_padding video_lectures_intitute">
             <ion-row nowrap *ngIf="this.usertype == 'institute'" class="text-right">
                 <button *ngIf="showreset" class='btn_theme_live {{this.streaming ? "streaming_btn" :"" }}' (click)="call()"> <i class="fa fa-play"></i> Stream</button>
@@ -77,38 +54,12 @@
             </ion-row>
         </div>
 
-        <div class="student-video-section">
-            <!--  <ion-row nowrap *ngIf="this.usertype == 'institute'" class="text-right">
-                <button class='btn_theme_live' (click)="refreshStudents()"><i class="fa fa-users"></i> Load Students</button>
-            </ion-row> -->
+        <div class="student-video-section"> 
 
-            <div #studentContainer class="shedule_card"></div>
-            <!-- <ion-row>
-                <ion-col size="3">
-                    <div #studentContainer class="shedule_card"></div>
-                </ion-col>
-                <ion-col size="9">
-                    <div class="student-details">
-                        <h4>Ashish Gautam</h4>
-                        <div class="btns-menu">
-                            <button>
-                                <i class="fa fa-camera"></i>
-                            </button>
-                            <button>
-                                <i class="fa fa-video-camera"></i>
-                            </button>
-                            <button>
-                                <i class="fa fa-microphone"></i> 
-                            </button>
-                        </div>
-                    </div>
-                </ion-col>
-            </ion-row> -->
+            <div #studentContainer class="shedule_card"></div> 
             <ion-row *ngIf="this.usertype == 'student'">
                 <ion-col size="3">
-                    <div class="shedule_card">
-                        <!-- <video id="my-video-el" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'student-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
-                        </video> -->
+                    <div class="shedule_card"> 
                         <img style='min-height:100px;' src="{{this.userdetails.avatar ? this.userdetails.avatar : '../../assets/images/teachers_profile.png'}}" alt="student_img.jpg">
                     </div>
                 </ion-col>
@@ -118,7 +69,7 @@
                         <div class="btns-m " *ngIf="this.usertype == 'student'">
                             <button class='btn_theme_live {{this.joined ? "streaming_btn" :"" }}' disabled='{{this.joined ? "disabled" :"" }}' (click)="join()"><i class='fa fa-user'></i> Join</button>
                             <button class='btn_theme_live ' disabled='{{!this.joined ? "disabled" :"" }}' (click)="closeConnection()"><i class="fa fa-stop"></i> Stop</button>
-                            <button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-hand"></i> Raise Hand</button>
+                            <button style="height: 36px;margin: 4px;" (click)="raiseHand()" class="btn_theme_live"  ><i class="fa fa-hand"></i> Raise Hand</button>
                             <button class='btn_theme_live'  (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
                         </div>
                     </div>
@@ -133,41 +84,9 @@
                         </div>
                     </ion-col>
                 </ion-row>  
-            </div>
-            <!--  <ion-row *ngIf="this.usertype == 'institute'">
-                <ion-col size="3">
-                    <div class="shedule_card">
-                        <video id="partner-video" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'student-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
-                        </video>
-                    </div>
-                </ion-col>
-                <ion-col size="9">
-                    <div class="student-details">
-                        <h4>Ashish Gautam</h4>
-                        <div class="btns-m " *ngIf="this.usertype == 'student'">
-                            <button class='btn_theme_live' (click)="init()">Allow Cam</button>
-                            <button class='btn_theme_live' (click)="hand()">Allow Audio</button>
-                            <button class='btn_theme_live' (click)="reset()">Reset</button>
-                        </div>
-                    </div>
-                </ion-col>
-            </ion-row> -->
-        </div>
-
-        <!--  <ion-row nowrap>
-            <div class="btn_theme">
-                <button class="btn_bottom_mrgn" (click)="call()">Start </button>
-            </div>
-            <div class="btn_theme">
-                <button class="btn_blue" (click)="stop()">Stop </button>
-            </div>x
-        </ion-row> -->
+            </div> 
+        </div> 
     </div>
-    <!--   <ion-row nowrap>
-        <ion-button (click)="init()">Set: </ion-button>
-        <ion-item>
-            <ion-input type="text" [(ngModel)]="userId" placeholder="enter your nick name"></ion-input>
-        </ion-item>
-    </ion-row> -->
+     
 
 </ion-content>

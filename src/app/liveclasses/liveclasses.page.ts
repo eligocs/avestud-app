@@ -35,7 +35,7 @@ export class LiveclassesPage implements OnInit {
         this.getLiveClasses(this.iacs,token);
         this.previousUrl = 'subject-detail?iacs='+this.iacs+'&subject='+this.subject;  
       }
-    ) 
+    )  
   }
   
   getLiveClasses(iacs,token){

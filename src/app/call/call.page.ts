@@ -1,5 +1,4 @@
-import { Component, OnInit,ElementRef,AfterViewInit,ViewChild,Renderer2  } from '@angular/core'; 
-// import { WebRTCProvider } from '../../providers/webrtc';
+import { Component, OnInit,ElementRef,AfterViewInit,ViewChild,Renderer2  } from '@angular/core';  
 import { WebrtcService } from '../providers/webrtc.service';
 import { Router,ActivatedRoute  } from '@angular/router'; 
 import { StorageService } from '../services/storage.service';
@@ -95,7 +94,7 @@ export class CallPage  implements OnInit {
   closeConnection(){
     if(this.joined == true){
       this.joined = false;
-      this.webRTC.closeConnection('152')
+      this.webRTC.closeConnection(this.teacher)
     }
   }
   
@@ -108,11 +107,6 @@ export class CallPage  implements OnInit {
     window.location.reload();
   }
 
-  /* openCam(){
-      this.myEl = document.querySelector('#my-video-el');
-      this.partnerEl = document.querySelector('#partner-video'); 
-      this.webRTC.init(this.userId, this.myEl, this.myEl,this.studentEl);
-  } */
 
   async ngOnInit(){ 
     this.streaming = false;
@@ -124,7 +118,7 @@ export class CallPage  implements OnInit {
         this.type =  params['type'];
         this.subject =  params['subject'];
         this.iacs =  params['iacs']; 
-        this.init();  
+        //this.init();  
         this.getTeacher(this.iacs,token);  
       }
     )
@@ -140,16 +134,15 @@ export class CallPage  implements OnInit {
       iacs :iacs,  
     }  
     await this.homeService.getTeacher(newData,token).subscribe(
-      (res: any) => {     
-        console.log(res)
+      (res: any) => { 
         if(res.status == 200){
-          this.teacher = res.teacher; 
+          this.teacher = res.teacher.id; 
         }
       })
   } 
   
   stop() {  
-    var teacher = '152';
+    var teacher = this.teacher;
     if(this.pausevideo == true){
       this.pausevideo = false; 
       this.webRTC.pauseVideo(false,teacher); 
@@ -169,7 +162,7 @@ export class CallPage  implements OnInit {
   }
 
   startRecord(){
-
+    this.webRTC.startRecord();
   }
 
   join() {     
@@ -177,7 +170,7 @@ export class CallPage  implements OnInit {
       this.joined = false;
     }else{
       this.joined = true;
-      this.webRTC.hand('152',this.userdetails,this.userimage); 
+      this.webRTC.hand(this.teacher,this.userdetails,this.userimage); 
     }
   }
   call() { 
@@ -205,42 +198,14 @@ export class CallPage  implements OnInit {
     }
   }
 
+  raiseHand(){
+    this.webRTC.raiseHand();
+
+  }
+
+
   swapVideo(topVideo: string) {
     this.topVideoFrame = topVideo;
   }
 }
-/* export class CallPage implements OnInit {
-  userId: string;
-  partnerId: string;
-  myEl: HTMLMediaElement;
-  partnerEl: HTMLMediaElement;
 
-  constructor(  
-      public webRTC: WebRTCProvider,
-      public elRef: ElementRef,
-      private route: ActivatedRoute,
-  ) { }
-
-  ngOnInit() {
-
-    this.route.queryParams.subscribe(
-      params => {
-        this.userId =  params['userName'];   
-      }
-    )
-      if(this.userId){
-        this.ionViewDidLoad();
-      }
-  }
-
-  ionViewDidLoad() {
-    this.myEl = this.elRef.nativeElement.querySelector('#my-video');
-    this.myEl = this.elRef.nativeElement.querySelector('#partner-video');
-    this.webRTC.init(this.userId, this.myEl, this.partnerEl);
-  }
-
-  call() {
-      this.webRTC.call(this.partnerId);
-  }
-
-} */
