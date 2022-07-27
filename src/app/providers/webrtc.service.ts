@@ -3,6 +3,9 @@ import $ from 'jquery';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable'; 
 import { ComponentFactoryResolver } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
+interface CanvasElement extends HTMLCanvasElement {
+  captureStream(frameRate?: number): MediaStream;
+}
 export class WebrtcService {
   peer: Peer;
   myStream: any;
@@ -208,7 +211,7 @@ export class WebrtcService {
     var videoPreview = document.getElementById('video-preview');
     var logoImage = document.getElementById('logo-image');
     var waitImage = document.getElementById('logo-image');
-    var canvas = document.createElement('canvas');
+    var canvas = <CanvasElement> document.createElement('canvas');
     var context = canvas.getContext('2d');  
     // canvas.style = 'position: absolute; top: 0; left: 0; opacity: 0; margin-top: -9999999999; margin-left: -9999999999; top: -9999999999; left: -9999999999; z-index: -1;';
     document.body.appendChild(canvas);
@@ -234,6 +237,7 @@ export class WebrtcService {
       this.myStream.stop();
 
       alert(blob)
+    });
       //videoPreview.srcObject = canvasStream;
 
       var tries = 0;
@@ -261,13 +265,13 @@ export class WebrtcService {
         setTimeout(looper, 100);
     })();
 
-  });
+  
 
   }
 
 
   raiseHand(){
-    
+
   }
 
   async stopRecording(){
