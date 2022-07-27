@@ -30,6 +30,7 @@ export class CallPage  implements OnInit {
   pausevideo: boolean;
   streaming: boolean;
   showreset: boolean;
+  isRecording: boolean;
   iacs: string;
   previousUrl: string;
   teacher: string;
@@ -110,6 +111,7 @@ export class CallPage  implements OnInit {
 
   async ngOnInit(){ 
     this.streaming = false;
+    this.isRecording = false;
     this.showreset = true;
     var token =  await this.storageService.get(AuthConstants.AUTH)
     this.route.queryParams.subscribe(
@@ -118,7 +120,7 @@ export class CallPage  implements OnInit {
         this.type =  params['type'];
         this.subject =  params['subject'];
         this.iacs =  params['iacs']; 
-        //this.init();  
+        this.init();  
         this.getTeacher(this.iacs,token);  
       }
     )
@@ -134,9 +136,9 @@ export class CallPage  implements OnInit {
       iacs :iacs,  
     }  
     await this.homeService.getTeacher(newData,token).subscribe(
-      (res: any) => { 
-        if(res.status == 200){
-          this.teacher = res.teacher.id; 
+      (res: any) => {  
+        if(res.data){
+          this.teacher = res.data.id; 
         }
       })
   } 
@@ -162,15 +164,20 @@ export class CallPage  implements OnInit {
   }
 
   startRecord(){
+    this.isRecording = true;
     this.webRTC.startRecord();
   }
+  stopRecording(){
+    this.isRecording = false;
+    this.webRTC.stopRecording();
+  }
 
-  join() {     
+  join() {      
     if(this.joined == true){
       this.joined = false;
     }else{
       this.joined = true;
-      this.webRTC.hand(this.teacher,this.userdetails,this.userimage); 
+      this.webRTC.hand(/* this.teacher */'152',this.userdetails,this.userimage); 
     }
   }
   call() { 

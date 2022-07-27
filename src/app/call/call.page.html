@@ -25,7 +25,7 @@
         <ion-row>
             <ion-col size="12" class="padding_zero">
                 <div class="ion-text-center video_dummy d-flex">
-                    <img class="header_icon_1 " id="logo-image" src="../../assets/images/weblgo.png">
+                    <img class="header_icon_1 "  src="../../assets/images/weblgo.png">
                     <div class="onlineEl">
                         <a style="color: #cf3b1e; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>
                     </div>
@@ -39,7 +39,8 @@
                 </video> -->
             </ion-col>
         </ion-row>
-        <div id="video-preview"></div>
+        <img class="header_icon_1 " id="logo-image" style="display:none;" src="../../assets/images/weblgo.png">
+      <!--   <video id="video-preview"></video> -->
         <div class="comman_page_padding video_lectures_intitute">
             <ion-row nowrap *ngIf="this.usertype == 'institute'" class="text-right">
                 <button *ngIf="showreset" class='btn_theme_live {{this.streaming ? "streaming_btn" :"" }}' (click)="call()"> <i class="fa fa-play"></i> Stream</button>
@@ -47,8 +48,12 @@
                 <button class='btn_theme_live {{this.pausevideo ? "muted_btn" :"" }}' (click)="stop()"> <i class="fa fa-stop"></i> Stop / Pause</button>
                 <button (click)="mutevideo()" class='btn_theme_live {{this.mutestate ? "muted_btn" :"" }}'>
                      <i class="fa fa-microphone"></i> Audio</button>
-                <button (click)="startRecord()" class='btn_theme_live {{this.videoStatus == false ? "muted_btn" :"" }}'>
-                <i class="fa fa-circle"></i> Record</button>
+
+                <button *ngIf="!isRecording" (click)="startRecord()" class='btn_theme_live {{this.videoStatus == false ? "muted_btn" :"" }}'>
+                <i class="fa fa-circle recordbtn"></i> Record</button>
+                <button *ngIf="isRecording" (click)="stopRecording()" class='btn_theme_live stoprecordbtn {{this.videoStatus == false ? "muted_btn" :"" }}'>
+                <i class="fa fa-circle"></i> Stop</button>
+
                 <button class='btn_theme_live' (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
                 <!-- <button class='btn_theme_live' (click)="refreshStudents()"><i class="fa fa-refresh"></i> Students</button> --> 
             </ion-row>

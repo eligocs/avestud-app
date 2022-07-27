@@ -29,10 +29,12 @@ button.btn_theme_live {
 
 .muted_btn {
     background: #ac0808;
+    color: #fff;
 }
 
 .pausevideo {
     background: #ac0808;
+    color: #fff;
 }
 
 button.btn_theme_live.streaming_btn {
@@ -74,4 +76,11 @@ video#my-video-el {
     color: #fff;
     font-size: 18px;
     background: #f5f5dc00;
+}
+.recordbtn {
+    color: #bf0000;
+}
+.stoprecordbtn {
+    background: #da0000;
+    color: white;
 }

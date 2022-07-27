@@ -1,4 +1,3 @@
-
 var videoPreview = document.getElementById('video-preview');
 var logoImage = document.getElementById('logo-image');
 var waitImage = document.getElementById('wait-image');
