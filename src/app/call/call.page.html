@@ -45,7 +45,7 @@
             <ion-row nowrap *ngIf="this.usertype == 'institute'" class="text-right">
                 <button *ngIf="showreset" class='btn_theme_live {{this.streaming ? "streaming_btn" :"" }}' (click)="call()"> <i class="fa fa-play"></i> Stream</button>
                 <button *ngIf="!showreset" class='btn_theme_live {{this.streaming ? "streaming_btn" :"" }}' (click)="reset()"> <i class="fa fa-play"></i> Reset</button>
-                <button class='btn_theme_live {{this.pausevideo ? "muted_btn" :"" }}' (click)="stop()"> <i class="fa fa-stop"></i> Stop / Pause</button>
+                <button class='btn_theme_live {{this.pausevideo ? "muted_btn" :"" }}' (click)="stop()"> <i class="fa fa-stop"></i> Pause</button>
                 <button (click)="mutevideo()" class='btn_theme_live {{this.mutestate ? "muted_btn" :"" }}'>
                      <i class="fa fa-microphone"></i> Audio</button>
 
@@ -81,6 +81,10 @@
                 </ion-col>
             </ion-row>
            
+            
+            <div id="raiseHand"></div> 
+
+
             <div id="studentdiv">
                 <ion-row *ngIf="this.usertype == 'institute'">
                     <ion-col size="12">

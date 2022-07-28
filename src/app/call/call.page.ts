@@ -214,13 +214,13 @@ export class CallPage  implements OnInit {
     }
   }
 
-  raiseHand(){
+  raiseHand(){ 
     if(this.handRaised == false){
       this.handRaised = true;
-      this.webRTC.raiseHand(this.teacher); 
+      this.webRTC.raiseHand(this.teacher,this.userdetails); 
     }else{
       this.handRaised = false;
-      this.webRTC.pauseStudent(this.teacher); 
+      this.webRTC.pauseStudent(this.teacher,this.userdetails); 
     }
 
   }

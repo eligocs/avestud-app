@@ -55,6 +55,7 @@ export class WebrtcService {
     var stream = this.myStream;
     if (stream) {
       stream.getVideoTracks()[0].enabled = !(stream.getVideoTracks()[0].enabled); 
+      stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled); 
     }
   }
 
@@ -163,19 +164,8 @@ export class WebrtcService {
     this.peer.destroy()
     this.peer.disconnect()
   }
-  appendStudent(data) { 
+  appendStudent(data) {  
 
-   /*  if (data.raiseHand == true) { 
-      if (data.status == true) {
-         var studentEl = $('#my-video-el')
-         studentEl.srcObject = this.myStream
-      } else {
-        this.audioMute.html('');
-      }
-      return;
-    } */
-
-    console.log(data)
     if (data.stopRaisehand == true) {
       this.studentEl.srcObject = null;
       return;
@@ -211,22 +201,41 @@ export class WebrtcService {
         this.students.splice(index, 1);
       };
     } else {
-      this.students.push(data.userdetails)
+      if(data.handRaised == true){ }else{
+        if(data.userdetails){ 
+          this.students.push(data.userdetails)
+        }
+      }
     }
 
+    /* if (data.handRaised == true) { 
+      var imageAvatar = data.userdetails.avatar ? data.userdetails.avatar : "";
+      $('#raiseHand').html('<ion-row ><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;"            src='+imageAvatar+' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="shedule_card ion-text-center">'+data.userdetails.name+' raised hand !</div></ion-col></ion-row>'); 
+      return;
+    } */
 
     $('#studentdiv').html('')
     var mainThis = this;
     var html = "";
     var itemsProcessed = 0;
+    console.log(this.students)
     if (this.students.length > 0) {
 
       this.students.forEach(function (std) {
         itemsProcessed++;
         var image = std.avatar ? std.avatar : "";
-        html += '<ion-row class="student-' + std.id + '"><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="student-details"><h4>' + std.name + ' <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4><div class="btns-m " ><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-microphone"></i> Audio</button><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-play"></i> Video</button></div></div></ion-col></ion-row>';
+        
+          /* html += '<ion-row class="student-' + std.id + '"><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="student-details"><h4>' + std.name + ' <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4><div class="btns-m " ><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-microphone"></i> Audio</button><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-play"></i> Video</button><button style="height: 36px;margin: 4px;background:#ffe700;" class="btn_theme_live"  ><i class="fa fa-question"></i> Raised Hand</button></div></div></ion-col></ion-row>'; */
+        /* }else{ */
+          html += '<ion-row class="student-' + std.id + '"><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="student-details "><h4>' + std.name + ' <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4><div class="btns-m addRaised" ><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-microphone"></i> Audio</button><button style="height: 36px;margin: 4px;" class="btn_theme_live"  ><i class="fa fa-play"></i> Video</button></div></div></ion-col></ion-row>';
+        /* }  */
         if (itemsProcessed === mainThis.students.length) {
           $('#studentdiv').html(html);
+        }
+        if (data.handRaised == true && data.userdetails.id == std.id) {  
+          $('.student-'+data.userdetails.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background:#ffe700;" class="btn_theme_live studentRaised"  ><i class="fa fa-question"></i> Raised Hand</button>'); 
+        }else if(data.handRaised == false && data.userdetails.id == std.id){
+          $('.student-'+data.userdetails.id).find('.addRaised').find('.studentRaised').removed();
         }
       })
     } else {
@@ -303,26 +312,41 @@ export class WebrtcService {
  
   }
 
-  pauseStudent(teacher){ 
-    var stream = this.myStream; 
-    if (stream) { 
-      // stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
-      // stream.getVideoTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
-
-      var conn = this.peer.connect(teacher.toString());
-      var data = {
-        stopRaisehand: true
-      }
-      conn.on('open', function () {
-        conn.send(data);
-      });
-      
-    }
+  pauseStudent(teacher,userdetails){ 
+    var conn = this.peer.connect(teacher.toString());
+    var data = {
+      handRaised: false, 
+      userdetails:userdetails
+    } 
+    conn.on('open', function () {
+      conn.send(data);
+    });
+    // var stream = this.myStream; 
+    // if (stream) { 
+    //   // stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
+    //   // stream.getVideoTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled); 
+    //   var conn = this.peer.connect(teacher.toString());
+    //   var data = {
+    //     stopRaisehand: true
+    //   } 
+    //   conn.on('open', function () {
+    //     conn.send(data);
+    //   }); 
+    // }
   }
 
 
-  raiseHand(teacher) {   
-    this.peer.call(teacher.toString(), this.myStream);   
+  raiseHand(teacher,userdetails) {   
+    var conn = this.peer.connect(teacher.toString());
+    var data = {
+      handRaised: true,
+      userdetails:userdetails
+    } 
+    conn.on('open', function () {
+      conn.send(data);
+    });
+      
+    //this.peer.call(teacher.toString(), this.myStream);   
   }
 
   stopRecording() {
@@ -399,7 +423,7 @@ export class WebrtcService {
     conn.on('open', function () {
       conn.send(data);
     });
-    this.myStream.stop();
+    //this.myStream.stop();
   }
 
 
