@@ -30,7 +30,7 @@
                         <a style="color: #cf3b1e; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>
                     </div>
                 </div> 
-                <video id="my-video-el" class="videoStream" (click)="swapVideo('my-video')" autoplay playsinline [ngClass]="{'student-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}">
+                <video id="my-video-el" class="videoStream student-video" (click)="swapVideo('my-video')" autoplay playsinline  >
                 </video>
                 <div class="audioMute" style="position: absolute;bottom: 50px;z-index: 2;margin-left: 18px;"></div>
                 <div class="black_bg" id="demoicon">
@@ -73,8 +73,8 @@
                         <h4>{{this.userdetails.name ?? ''}} <span class="myonlinestatus"></span></h4>
                         <div class="btns-m " *ngIf="this.usertype == 'student'">
                             <button class='btn_theme_live {{this.joined ? "streaming_btn" :"" }}' disabled='{{this.joined ? "disabled" :"" }}' (click)="join()"><i class='fa fa-user'></i> Join</button>
-                            <button class='btn_theme_live ' disabled='{{!this.joined ? "disabled" :"" }}' (click)="closeConnection()"><i class="fa fa-stop"></i> Stop</button>
-                            <button style="height: 36px;margin: 4px;" (click)="raiseHand()" class="btn_theme_live"  ><i class="fa fa-hand"></i> Raise Hand</button>
+                            <button class='btn_theme_live ' disabled='{{!this.joined ? "disabled" :"" }}' (click)="closeConnection()"><i class="fa fa-stop"></i> Leave</button>
+                            <button style="height: 36px;margin: 4px;" (click)="raiseHand()" class="btn_theme_live {{this.handRaised == true ? 'orange_btn' : ''}}"  ><i class="fa fa-question" aria-hidden="true"></i> Raise</button>
                             <button class='btn_theme_live'  (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
                         </div>
                     </div>

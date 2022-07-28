@@ -28,6 +28,7 @@ export class CallPage  implements OnInit {
   studentEl: HTMLMediaElement;
   myvideo: boolean;
   pausevideo: boolean;
+  handRaised: boolean;
   streaming: boolean;
   showreset: boolean;
   isRecording: boolean;
@@ -53,7 +54,7 @@ export class CallPage  implements OnInit {
   async init() { 
     var userdetails =  await this.storageService.get(AuthConstants.userdetails); 
     this.userdetails = userdetails; 
-    this.userId = userdetails.id   
+    this.userId = userdetails.id 
     if(userdetails.role == 'institute'){
       this.studentEl = document.querySelector('#my-video-el');
       this.myvideo = true; 
@@ -62,7 +63,7 @@ export class CallPage  implements OnInit {
       var video = document.createElement('video'); 
       video.setAttribute('autoplay', '');
       video.setAttribute('height', '350');
-      video.setAttribute('width', '100%');
+      video.setAttribute('width', '90%');
       video.setAttribute('playsinline', '');
       video.setAttribute('class', 'my-video videoStream');
       video.setAttribute('id', 'my-video'); 
@@ -112,6 +113,7 @@ export class CallPage  implements OnInit {
   async ngOnInit(){ 
     this.streaming = false;
     this.isRecording = false;
+    this.handRaised = false;
     this.showreset = true;
     var token =  await this.storageService.get(AuthConstants.AUTH)
     this.route.queryParams.subscribe(
@@ -120,10 +122,17 @@ export class CallPage  implements OnInit {
         this.type =  params['type'];
         this.subject =  params['subject'];
         this.iacs =  params['iacs']; 
-        this.init();  
         this.getTeacher(this.iacs,token);  
+        this.init();  
       }
     )
+
+
+    $(document).ready(function(){
+      $('#my-video-el').click(function(){ 
+        $(this).toggleClass('inc_size'); 
+      }); 
+    });
   }
 
   stopMedia(){
@@ -172,12 +181,12 @@ export class CallPage  implements OnInit {
     this.webRTC.stopRecording();
   }
 
-  join() {      
+  join() {       
     if(this.joined == true){
       this.joined = false;
     }else{
       this.joined = true;
-      this.webRTC.hand(/* this.teacher */'152',this.userdetails,this.userimage); 
+      this.webRTC.join(this.teacher,this.userdetails,this.userimage); 
     }
   }
   call() { 
@@ -206,7 +215,13 @@ export class CallPage  implements OnInit {
   }
 
   raiseHand(){
-    this.webRTC.raiseHand();
+    if(this.handRaised == false){
+      this.handRaised = true;
+      this.webRTC.raiseHand(this.teacher); 
+    }else{
+      this.handRaised = false;
+      this.webRTC.pauseStudent(this.teacher); 
+    }
 
   }
 

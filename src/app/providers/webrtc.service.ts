@@ -39,11 +39,12 @@ export class WebrtcService {
     var mainthis = this;
     var constraints = {
       audio: true, video: { facingMode: 'user' }
-    };
+    }; 
     navigator.mediaDevices.getUserMedia(constraints)
-      .then(function (stream) {
+    .then(function (stream) { 
         mainthis.myStream = stream;
         mainthis.myEl.srcObject = stream;
+        console.log(mainthis.myStream)
       })
       .catch(function (err) {
 
@@ -53,8 +54,7 @@ export class WebrtcService {
   stop() {
     var stream = this.myStream;
     if (stream) {
-      stream.getVideoTracks()[0].enabled = !(stream.getVideoTracks()[0].enabled);
-      stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
+      stream.getVideoTracks()[0].enabled = !(stream.getVideoTracks()[0].enabled); 
     }
   }
 
@@ -94,7 +94,7 @@ export class WebrtcService {
     this.partnerEl = partnerEl;
     this.studentEl = studentEl;
     this.userId = userId;
-    this.type = type;
+    this.type = type; 
     if (myEl) {
       try {
         this.getMedia();
@@ -102,19 +102,25 @@ export class WebrtcService {
         this.handleError(e);
       }
     }
-    this.peer = new Peer(userId);
-    console.log(this.peer)
+    this.peer = new Peer(userId); 
     this.peer.on('open', () => {
       this.peer.on('call', (call) => {
         call.answer(this.myStream);
-        call.on('stream', (stream) => {
+        call.on('stream', (stream) => { 
           this.onlineEl.html('<a style="color: #00bc35; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>');
           if (this.partnerEl) {
             this.partnerEl.srcObject = stream;
           }
+         
           if (this.studentEl) {
             this.studentEl.srcObject = stream;
-          }
+          } 
+          $('#partner-video').css({  
+            'transform': 'scaleX(-1)'
+          });
+        });
+        call.on('close', () => {
+          console.log('closs')
         });
       });
     });
@@ -157,8 +163,24 @@ export class WebrtcService {
     this.peer.destroy()
     this.peer.disconnect()
   }
-  appendStudent(data) {
+  appendStudent(data) { 
+
+   /*  if (data.raiseHand == true) { 
+      if (data.status == true) {
+         var studentEl = $('#my-video-el')
+         studentEl.srcObject = this.myStream
+      } else {
+        this.audioMute.html('');
+      }
+      return;
+    } */
+
     console.log(data)
+    if (data.stopRaisehand == true) {
+      this.studentEl.srcObject = null;
+      return;
+    }
+
     if (data.ismuted == true) {
       if (data.status == true) {
         this.audioMute.html('<span style="background: #9f0202;border-radius: 3px;padding: 3px;"><i class="fa fa-microphone"></i> Audio Muted</span>');
@@ -278,14 +300,29 @@ export class WebrtcService {
       setTimeout(looper, 100);
     })();
 
+ 
+  }
 
+  pauseStudent(teacher){ 
+    var stream = this.myStream; 
+    if (stream) { 
+      // stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
+      // stream.getVideoTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
 
-
+      var conn = this.peer.connect(teacher.toString());
+      var data = {
+        stopRaisehand: true
+      }
+      conn.on('open', function () {
+        conn.send(data);
+      });
+      
+    }
   }
 
 
-  raiseHand() {
-
+  raiseHand(teacher) {   
+    this.peer.call(teacher.toString(), this.myStream);   
   }
 
   stopRecording() {
@@ -326,6 +363,7 @@ export class WebrtcService {
       this.students.forEach(function (student) {
         var call = mainThis.peer.call(student.id.toString(), mainThis.myStream);
       })
+     
       /* call.on('stream', (stream) => {
         mainThis.partnerEl.srcObject = stream; 
         document.getElementById('partner-video153')[0].srcObject = stream;
@@ -339,7 +377,7 @@ export class WebrtcService {
 
   streamToTeacher(stream, teacher, userdetails, userimage) {
     var mainThis = this;
-    var conn = this.peer.connect(teacher);
+    var conn = this.peer.connect(teacher.toString());
     var data = {
       userdetails: userdetails
     }
@@ -353,7 +391,7 @@ export class WebrtcService {
 
   closeConnection(teacher) {
     $('.myonlinestatus').html('<a style="color: #cf3b1e; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a>');
-    var conn = this.peer.connect(teacher);
+    var conn = this.peer.connect(teacher.toString());
     var data = {
       diconnect: true,
       student: this.userId,
@@ -361,10 +399,11 @@ export class WebrtcService {
     conn.on('open', function () {
       conn.send(data);
     });
+    this.myStream.stop();
   }
 
 
-  hand(teacher, userdetails, userimage) {
+  join(teacher, userdetails, userimage) {
     navigator.getUserMedia({ audio: true, video: { facingMode: 'user' } }, (stream) => {
       this.streamToTeacher(stream, teacher, userdetails, userimage)
     }, (error) => {
@@ -392,6 +431,7 @@ export class WebrtcService {
   }
 
   handleSuccess(stream: MediaStream) {
+    
     this.myStream = stream;
     //this.myEl.src = URL.createObjectURL(this.myStream);
     this.myEl.srcObject = stream;
