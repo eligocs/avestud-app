@@ -111,6 +111,7 @@ export class CallPage  implements OnInit {
 
 
   async ngOnInit(){ 
+    var mainThis = this;
     this.streaming = false;
     this.isRecording = false;
     this.handRaised = false;
@@ -131,7 +132,30 @@ export class CallPage  implements OnInit {
     $(document).ready(function(){
       $('#my-video-el').click(function(){ 
         $(this).toggleClass('inc_size'); 
-      }); 
+      });
+      $(document).on('click','.studentRaised',function(){
+        var id = $(this).data('id');
+        if(id){
+          mainThis.allowStudent(id);
+        }
+      });
+      $(document).on('click','.streamFromstudent',function(){
+        var id = $(this).data('id');
+        if(id){
+          mainThis.streamFromstudent(id);
+          $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: #cf3b1e;color: white;" class="btn_theme_live streamStopstudent"  data-id="'+id+'"><i class="fa fa-desktop"></i> Stop</button>')
+        }
+      });
+      $(document).on('click','.raiseHand',function(){ 
+        mainThis.raiseHand();  
+      });
+      $(document).on('click','.streamStopstudent',function(){
+        var id = $(this).data('id');
+        if(id){
+          mainThis.streamStopstudent(id);
+          $('.student_has_question').html('<button style="height: 36px;margin: 4px;" data-id="'+id+'" class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>')
+        }
+      });
     });
   }
 
@@ -214,15 +238,32 @@ export class CallPage  implements OnInit {
     }
   }
 
-  raiseHand(){ 
+  raiseHand(){  
     if(this.handRaised == false){
       this.handRaised = true;
-      this.webRTC.raiseHand(this.teacher,this.userdetails); 
+      this.userdetails.handRaised='1';
+      this.webRTC.raiseHand(this.teacher,this.userdetails);  
+      $('.onRaiseHand').css({'background':'#ffe700'}).html('<i class="fa fa-info" aria-hidden="true"></i> Please wait...');
     }else{
       this.handRaised = false;
+      this.userdetails.handRaised='';
       this.webRTC.pauseStudent(this.teacher,this.userdetails); 
-    }
+      $('.onRaiseHand').css({'background':'#f0f0f0'}).html('<i class="fa fa-question" aria-hidden="true"></i> Ask Question').removeClass('orange_btn');
+    } 
+  }
 
+  allowStudent(id){
+    this.webRTC.allowStudent(id,this.teacher);
+    $('.student-'+id).find('.addRaised').find('.studentRaised').html('<i class="fa fa-desktop" aria-hidden="true"></i> Presenting...')
+  }
+
+  streamFromstudent(id){
+    this.webRTC.streamFromstudent(id,this.teacher);
+  }
+
+  streamStopstudent(id){
+    this.webRTC.streamStopstudent(id,this.teacher);
+    this.handRaised = false;
   }
 
 

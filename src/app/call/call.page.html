@@ -74,7 +74,9 @@
                         <div class="btns-m " *ngIf="this.usertype == 'student'">
                             <button class='btn_theme_live {{this.joined ? "streaming_btn" :"" }}' disabled='{{this.joined ? "disabled" :"" }}' (click)="join()"><i class='fa fa-user'></i> Join</button>
                             <button class='btn_theme_live ' disabled='{{!this.joined ? "disabled" :"" }}' (click)="closeConnection()"><i class="fa fa-stop"></i> Leave</button>
-                            <button style="height: 36px;margin: 4px;" (click)="raiseHand()" class="btn_theme_live {{this.handRaised == true ? 'orange_btn' : ''}}"  ><i class="fa fa-question" aria-hidden="true"></i> Raise</button>
+                            <div class="student_has_question">
+                                <button style="height: 36px;margin: 4px;" data-id="{{userId ?? ''}}" disabled='{{!this.joined ? "disabled" :"" }}'   class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>
+                            </div>
                             <button class='btn_theme_live'  (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
                         </div>
                     </div>
