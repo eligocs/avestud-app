@@ -96,8 +96,8 @@ export class CallPage  implements OnInit {
   closeConnection(){
     if(this.joined == true){
       this.joined = false;
-      this.webRTC.closeConnection(this.teacher)
-    }
+      this.webRTC.closeConnection(this.teacher) 
+    } 
   }
   
   refreshStudents(){
@@ -153,7 +153,7 @@ export class CallPage  implements OnInit {
         var id = $(this).data('id');
         if(id){
           mainThis.streamStopstudent(id);
-          $('.student_has_question').html('<button style="height: 36px;margin: 4px;" data-id="'+id+'" class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>')
+          $('.student_has_question').html('<button style="height: 36px;margin: 4px;" data-id="'+id+'"  class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask</button>'); 
         }
       });
     });
@@ -243,26 +243,29 @@ export class CallPage  implements OnInit {
       this.handRaised = true;
       this.userdetails.handRaised='1';
       this.webRTC.raiseHand(this.teacher,this.userdetails);  
-      $('.onRaiseHand').css({'background':'#ffe700'}).html('<i class="fa fa-info" aria-hidden="true"></i> Please wait...');
+      $('.onRaiseHand').css({'background':'#ffe700'}).html('<i class="fa fa-info" aria-hidden="true"></i> Wait...');
     }else{
       this.handRaised = false;
       this.userdetails.handRaised='';
       this.webRTC.pauseStudent(this.teacher,this.userdetails); 
-      $('.onRaiseHand').css({'background':'#f0f0f0'}).html('<i class="fa fa-question" aria-hidden="true"></i> Ask Question').removeClass('orange_btn');
+      $('.onRaiseHand').css({'background':'#f0f0f0'}).html('<i class="fa fa-question" aria-hidden="true"></i> Ask').removeClass('orange_btn');
     } 
   }
-
+  
   allowStudent(id){
     this.webRTC.allowStudent(id,this.teacher);
     $('.student-'+id).find('.addRaised').find('.studentRaised').html('<i class="fa fa-desktop" aria-hidden="true"></i> Presenting...')
   }
-
+  
   streamFromstudent(id){
-    this.webRTC.streamFromstudent(id,this.teacher);
+    this.userdetails.isPresenting='1';
+    this.webRTC.streamFromstudent(this.userdetails,this.teacher);
   }
-
+  
   streamStopstudent(id){
-    this.webRTC.streamStopstudent(id,this.teacher);
+    this.userdetails.isPresenting='';
+    this.userdetails.handRaised='';
+    this.webRTC.streamStopstudent(this.userdetails,this.teacher);
     this.handRaised = false;
   }
 

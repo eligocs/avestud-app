@@ -59,8 +59,17 @@
             </ion-row>
         </div>
 
+        <div class="comman_page_padding video_lectures_intitute" *ngIf="this.usertype == 'student'">
+            <ion-row nowrap  class="text-right">
+                <button class='btn_theme_live {{this.joined ? "streaming_btn" :"" }}' disabled='{{this.joined ? "disabled" :"" }}' (click)="join()"><i class='fa fa-user'></i> Join</button>
+                <button class='btn_theme_live ' disabled='{{!this.joined ? "disabled" :"" }}' (click)="closeConnection()"><i class="fa fa-stop"></i> Leave</button>
+                <div class="student_has_question">
+                    <button style="height: 36px;margin: 4px;" data-id="{{userId ?? ''}}" disabled='{{!this.joined ? "disabled" :"" }}'   class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask</button>
+                </div>
+                <button class='btn_theme_live'  (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
+            </ion-row>
+        </div>
         <div class="student-video-section"> 
-
             <div #studentContainer class="shedule_card"></div> 
             <ion-row *ngIf="this.usertype == 'student'">
                 <ion-col size="3">
@@ -69,6 +78,11 @@
                     </div>
                 </ion-col>
                 <ion-col size="9">
+                    <div class="student-details">
+                        <h4>{{this.userdetails.name ?? ''}} <span class="myonlinestatus"></span></h4>
+                    </div>
+                </ion-col>
+                <!-- <ion-col size="9">
                     <div class="student-details">
                         <h4>{{this.userdetails.name ?? ''}} <span class="myonlinestatus"></span></h4>
                         <div class="btns-m " *ngIf="this.usertype == 'student'">
@@ -80,7 +94,7 @@
                             <button class='btn_theme_live'  (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
                         </div>
                     </div>
-                </ion-col>
+                </ion-col> -->
             </ion-row>
            
             
@@ -91,7 +105,7 @@
                 <ion-row *ngIf="this.usertype == 'institute'">
                     <ion-col size="12">
                         <div class="shedule_card ion-text-center"> 
-                            No students Yet !
+                            No student joined yet !
                         </div>
                     </ion-col>
                 </ion-row>  

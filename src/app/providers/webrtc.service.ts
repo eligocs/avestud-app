@@ -39,11 +39,11 @@ export class WebrtcService {
     var mainthis = this;
     var constraints = {
       audio: true, video: { facingMode: 'user' }
-    }; 
+    };
     navigator.mediaDevices.getUserMedia(constraints)
-    .then(function (stream) { 
+      .then(function (stream) {
         mainthis.myStream = stream;
-        mainthis.myEl.srcObject = stream; 
+        mainthis.myEl.srcObject = stream;
       })
       .catch(function (err) {
 
@@ -53,8 +53,8 @@ export class WebrtcService {
   stop() {
     var stream = this.myStream;
     if (stream) {
-      stream.getVideoTracks()[0].enabled = !(stream.getVideoTracks()[0].enabled); 
-      stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled); 
+      stream.getVideoTracks()[0].enabled = !(stream.getVideoTracks()[0].enabled);
+      stream.getAudioTracks()[0].enabled = !(stream.getAudioTracks()[0].enabled);
     }
   }
 
@@ -95,7 +95,7 @@ export class WebrtcService {
     this.partnerEl = partnerEl;
     this.studentEl = studentEl;
     this.userId = userId;
-    this.type = type; 
+    this.type = type;
     if (myEl) {
       try {
         this.getMedia();
@@ -103,20 +103,20 @@ export class WebrtcService {
         this.handleError(e);
       }
     }
-    this.peer = new Peer(userId); 
+    this.peer = new Peer(userId);
     this.peer.on('open', () => {
       this.peer.on('call', (call) => {
         call.answer(this.myStream);
-        call.on('stream', (stream) => { 
+        call.on('stream', (stream) => {
           this.onlineEl.html('<a style="color: #00bc35; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>');
           if (this.partnerEl) {
             this.partnerEl.srcObject = stream;
           }
-         
+
           if (this.studentEl) {
             this.studentEl.srcObject = stream;
-          } 
-          $('#partner-video').css({  
+          }
+          $('#partner-video').css({
             'transform': 'scaleX(-1)'
           });
         });
@@ -164,26 +164,17 @@ export class WebrtcService {
     this.peer.destroy()
     this.peer.disconnect()
   }
-  appendStudent(data) {  
+  appendStudent(data) {
 
-    if (data.isPresenting == true) {
-      var student_id = data.student_id;
-      $('.student-'+student_id).find('.addRaised').html('<button style="height: 36px;margin: 4px;background: #c023ae;color: white;" class="btn_theme_live studentRaised"  data-id="'+student_id+'"><i class="fa fa-desktop"></i> Student is presenting ...</button>');
-      return;
-    }
+
 
     if (data.allowStudent == true) {
       var student_id = data.student_id;
-      $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: #c023ae;color: white;" class="btn_theme_live  streamFromstudent"  data-id="'+student_id+'"><i class="fa fa-desktop"></i> Present Question</button>');
+      $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: #c023ae;color: white;" class="btn_theme_live  streamFromstudent"  data-id="' + student_id + '"><i class="fa fa-desktop"></i> Present Question</button>');
       return;
     }
+
     
-    if (data.stopRaisehand == true) {
-      var student_id = data.student_id;
-      this.studentEl.srcObject = null;
-      $('.student-'+student_id).find('.addRaised').find('.studentRaised').remove();
-      return;
-    }
 
     if (data.ismuted == true) {
       if (data.status == true) {
@@ -205,87 +196,105 @@ export class WebrtcService {
       return;
     }
 
-    
-    if (data.diconnect == true) {
-      var student = data.student;
+    if (data.isPresenting == true) {
+      var student = data.userdetails.id;
       var index = this.students.findIndex(function (o) {
         return o.id === student;
       })
       if (index !== -1) {
         this.students.splice(index, 1);
       };
+      this.students.push(data.userdetails)
     } else {
-      if(data.handRaised == true){ 
-        var student = data.userdetails.id;
-        var index = this.students.findIndex(function (o) { 
+      if (data.diconnect == true) {
+        var student = data.student;
+        var index = this.students.findIndex(function (o) {
           return o.id === student;
         })
         if (index !== -1) {
           this.students.splice(index, 1);
-        }; 
-        this.students.push(data.userdetails) 
-      }else if(data.handRaised == false){
-        var student = data.userdetails.id;
-        var index = this.students.findIndex(function (o) { 
-          return o.id === student;
-        })
-        if (index !== -1) {
-          this.students.splice(index, 1);
-        }; 
-        this.students.push(data.userdetails) 
-      }else{
-        if(data.userdetails){ 
+        };
+      } else {
+        if (data.handRaised == true) {
+          var student = data.userdetails.id;
+          var index = this.students.findIndex(function (o) {
+            return o.id === student;
+          })
+          if (index !== -1) {
+            this.students.splice(index, 1);
+          };
           this.students.push(data.userdetails)
+        } else if (data.handRaised == false) {
+          var student = data.userdetails.id;
+          var index = this.students.findIndex(function (o) {
+            return o.id === student;
+          })
+          if (index !== -1) {
+            this.students.splice(index, 1);
+          };
+          this.students.push(data.userdetails)
+        } else {
+          if (data.userdetails) {
+            this.students.push(data.userdetails)
+          }
         }
       }
-    } 
-   
+    }
+
 
     /* if (data.handRaised == true) { 
       var imageAvatar = data.userdetails.avatar ? data.userdetails.avatar : "";
       $('#raiseHand').html('<ion-row ><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;"            src='+imageAvatar+' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="shedule_card ion-text-center">'+data.userdetails.name+' raised hand !</div></ion-col></ion-row>'); 
       return;
     } */
+    if (data.stopRaisehand == true) { 
+      this.studentEl.srcObject = null; 
+    }
 
     $('#studentdiv').html('')
     var mainThis = this;
     var html = "";
-    var itemsProcessed = 0; 
-    if (this.students.length > 0) { 
-      if(data.handRaised == true){ 
-        var stds = this.students.reverse(); 
-      }else{
-        var stds = this.students; 
+    var itemsProcessed = 0;
+    if (this.students.length > 0) {
+      if (data.handRaised == true || data.isPresenting == true) {
+        var stds = this.students.reverse();
+      } else {
+        var stds = this.students;
       }
       stds.forEach(function (std) {
         itemsProcessed++;
-        var image = std.avatar ? std.avatar : ""; 
-        html += '<ion-row class="student-' + std.id + '"><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="student-details "><h4>' + std.name + ' <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4><div class="btns-m addRaised" ></div></div></ion-col></ion-row>'; 
+        var image = std.avatar ? std.avatar : "";
+        html += '<ion-row class="student-' + std.id + '"><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="student-details "><h4>' + std.name + ' <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4><div class="btns-m addRaised" ></div></div></ion-col></ion-row>';
         if (itemsProcessed === mainThis.students.length) {
           $('#studentdiv').html(html);
-        }   
-        setTimeout(() => { 
-          if(std.handRaised == 1){ 
-            $('.student-'+std.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background:#ffe700;" class="btn_theme_live studentRaised"  data-id="'+std.id+'"><i class="fa fa-eye"></i> I have a question</button>');  
-          }else{
-            $('.student-'+std.id).find('.addRaised').find('.studentRaised').remove();
-          } 
+        }
+        setTimeout(() => {
+          if (std.isPresenting == 1) {
+            $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background: #c023ae;color: white;" class="btn_theme_live studentRaised"  data-id="' + student_id + '"><i class="fa fa-desktop"></i> Student is presenting ...</button>');
+          } else {
+            if (std.handRaised == 1) {
+              $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background:#ffe700;" class="btn_theme_live studentRaised"  data-id="' + std.id + '">Hi, I have a question <i class="fa fa-eye"></i></button>');
+            } else {
+              $('.student-' + std.id).find('.addRaised').find('.studentRaised').remove();
+            }
+          }
         }, 500);
       })
+      
     } else {
       $('#studentdiv').html('<ion-row "><ion-col size="12"><div class="shedule_card ion-text-center">No students Yet !</div></ion-col></ion-row>');
     }
   }
 
-  allowStudent(id,teacher){
+  allowStudent(id, teacher) {
     var conn = this.peer.connect(id.toString());
     var data = {
-      allowStudent: true, 
-      student_id:id
-    } 
+      allowStudent: true,
+      student_id: id
+    }
     conn.on('open', function () {
       conn.send(data);
-    }); 
+    });
   }
 
   startRecord() {
@@ -354,55 +363,57 @@ export class WebrtcService {
       setTimeout(looper, 100);
     })();
 
- 
+
   }
 
-  pauseStudent(teacher,userdetails){ 
+  pauseStudent(teacher, userdetails) {
     var conn = this.peer.connect(teacher.toString());
     var data = {
-      handRaised: false, 
-      userdetails:userdetails
-    } 
-    conn.on('open', function () {
-      conn.send(data);
-    }); 
-  }
-
-
-  raiseHand(teacher,userdetails) {   
-    var conn = this.peer.connect(teacher.toString()); 
-    var data = {
-      handRaised: true,
-      userdetails:userdetails
-    } 
+      handRaised: false,
+      userdetails: userdetails
+    }
     conn.on('open', function () {
       conn.send(data);
     });
-      
+  }
+
+
+  raiseHand(teacher, userdetails) {
+    var conn = this.peer.connect(teacher.toString());
+    var data = {
+      handRaised: true,
+      userdetails: userdetails
+    }
+    conn.on('open', function () {
+      conn.send(data);
+    });
+
     //this.peer.call(teacher.toString(), this.myStream);   
   }
 
-  streamFromstudent(student,teacher) {    
-      this.peer.call(teacher.toString(), this.myStream); 
-      var conn = this.peer.connect(teacher.toString());
-      var data = {
-        isPresenting: true, 
-        student_id:student 
-      } 
-      conn.on('open', function () {
-        conn.send(data);
-      });  
-  }
+  streamFromstudent(userdetails, teacher) {
 
-  streamStopstudent(id,teacher) {    
+    this.peer.call(teacher.toString(), this.myStream);
     var conn = this.peer.connect(teacher.toString());
     var data = {
-      stopRaisehand: true, 
-      student_id:id 
-    } 
+      isPresenting: true,
+      userdetails: userdetails
+    }
     conn.on('open', function () {
       conn.send(data);
-    });    
+    });
+  }
+
+  streamStopstudent(userdetails, teacher) {
+    var conn = this.peer.connect(teacher.toString());
+    var data = {
+      isPresenting: true,
+      stopRaisehand: true,
+      userdetails: userdetails
+    }
+    conn.on('open', function () {
+      conn.send(data);
+    });
   }
 
   stopRecording() {
@@ -412,7 +423,7 @@ export class WebrtcService {
       var blob = recorder.getBlob();
       recorder = null;
       mainThis.myStream.stop();
-      window.location.href=URL.createObjectURL(blob); 
+      window.location.href = URL.createObjectURL(blob);
     });
   }
 
@@ -443,7 +454,7 @@ export class WebrtcService {
       this.students.forEach(function (student) {
         var call = mainThis.peer.call(student.id.toString(), mainThis.myStream);
       })
-     
+
       /* call.on('stream', (stream) => {
         mainThis.partnerEl.srcObject = stream; 
         document.getElementById('partner-video153')[0].srcObject = stream;
@@ -511,7 +522,7 @@ export class WebrtcService {
   }
 
   handleSuccess(stream: MediaStream) {
-    
+
     this.myStream = stream;
     //this.myEl.src = URL.createObjectURL(this.myStream);
     this.myEl.srcObject = stream;
