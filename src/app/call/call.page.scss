@@ -102,3 +102,14 @@ video#my-video-el {
 button.btn_theme_live.onRaiseHand.raiseHand.orange_btn {
     background: #ffe700;
 }
+
+.message_box {
+    position: absolute;
+    right: 20px;
+    z-index: 1;
+    top: 22px;
+    background: #0c0c0c61;
+    border-radius: 4px;
+    padding: 4px;
+    text-transform:capitalize;
+}

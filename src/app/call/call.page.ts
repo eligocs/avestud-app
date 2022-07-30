@@ -63,11 +63,11 @@ export class CallPage  implements OnInit {
       var video = document.createElement('video'); 
       video.setAttribute('autoplay', '');
       video.setAttribute('height', '350');
-      video.setAttribute('width', '90%');
+      video.setAttribute('width', '100%'); 
       video.setAttribute('playsinline', '');
       video.setAttribute('class', 'my-video videoStream');
       video.setAttribute('id', 'my-video'); 
-      video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);'); 
+      video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);');  
       $('#demoicon').html(video);
       this.usertype = 'institute';
       this.myEl = document.querySelector('#my-video'); 
@@ -89,14 +89,14 @@ export class CallPage  implements OnInit {
       this.webRTC.init(this.userId, this.myEl, this.partnerEl,this.studentEl,'student',this.students);
       this.usertype = 'student'; 
       this.myvideo = false;  
-      this.previousUrl = 's-livelectures?iacs='+this.iacs+'&subject='+this.subject; 
+      this.previousUrl = 's-livelectures?iacs='+this.iacs+'&subject='+this.subject;  
     }   
   } 
   
   closeConnection(){
     if(this.joined == true){
       this.joined = false;
-      this.webRTC.closeConnection(this.teacher) 
+      this.webRTC.closeConnection(this.teacher,this.userdetails) 
     } 
   }
   

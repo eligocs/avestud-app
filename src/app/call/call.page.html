@@ -31,12 +31,12 @@
                     </div>
                 </div> 
                 <video id="my-video-el" class="videoStream student-video" (click)="swapVideo('my-video')" autoplay playsinline  >
-                </video>
+                </video> 
+                <div *ngIf="this.usertype == 'institute'" class="message_box"  id="total_students" ></div> 
+                <div *ngIf="this.usertype == 'student'" class="message_box"  id="student_msg" ></div> 
                 <div class="audioMute" style="position: absolute;bottom: 50px;z-index: 2;margin-left: 18px;"></div>
                 <div class="black_bg" id="demoicon">
-                </div>
-                <!-- <video id="my-video" *ngIf="myvideo" (click)="swapVideo('partner-video')" autoplay playsinline [ngClass]="{'': topVideoFrame === 'my-video', 'main-video': topVideoFrame != 'my-video'}">
-                </video> -->
+                </div> 
             </ion-col>
         </ion-row>
         <img class="header_icon_1 " id="logo-image" style="display:none;" src="../../assets/images/weblgo.png">
@@ -58,6 +58,7 @@
                 <!-- <button class='btn_theme_live' (click)="refreshStudents()"><i class="fa fa-refresh"></i> Students</button> --> 
             </ion-row>
         </div>
+        
 
         <div class="comman_page_padding video_lectures_intitute" *ngIf="this.usertype == 'student'">
             <ion-row nowrap  class="text-right">
@@ -79,7 +80,7 @@
                 </ion-col>
                 <ion-col size="9">
                     <div class="student-details">
-                        <h4>{{this.userdetails.name ?? ''}} <span class="myonlinestatus"></span></h4>
+                        <h4>{{this.userdetails?.name | titlecase}} <span class="myonlinestatus"></span></h4>
                     </div>
                 </ion-col>
                 <!-- <ion-col size="9">

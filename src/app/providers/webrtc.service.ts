@@ -38,7 +38,8 @@ export class WebrtcService {
   getMedia() {
     var mainthis = this;
     var constraints = {
-      audio: true, video: { facingMode: 'user' }
+      audio: true
+      , video: { facingMode: 'user' }
     };
     navigator.mediaDevices.getUserMedia(constraints)
       .then(function (stream) {
@@ -169,6 +170,10 @@ export class WebrtcService {
 
 
     if (data.allowStudent == true) {
+        $('#student_msg').html('present your question'); 
+        setTimeout(() => { 
+          $('#student_msg').html(''); 
+        }, 6000);   
       var student_id = data.student_id;
       $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: #c023ae;color: white;" class="btn_theme_live  streamFromstudent"  data-id="' + student_id + '"><i class="fa fa-desktop"></i> Present Question</button>');
       return;
@@ -194,8 +199,7 @@ export class WebrtcService {
         this.audioMute.html('');
       }
       return;
-    }
-
+    } 
     if (data.isPresenting == true) {
       var student = data.userdetails.id;
       var index = this.students.findIndex(function (o) {
@@ -204,7 +208,7 @@ export class WebrtcService {
       if (index !== -1) {
         this.students.splice(index, 1);
       };
-      this.students.push(data.userdetails)
+      this.students.push(data.userdetails) 
     } else {
       if (data.diconnect == true) {
         var student = data.student;
@@ -214,6 +218,7 @@ export class WebrtcService {
         if (index !== -1) {
           this.students.splice(index, 1);
         };
+        $('#total_students').html(data.userdetails.name+' left the class');
       } else {
         if (data.handRaised == true) {
           var student = data.userdetails.id;
@@ -223,7 +228,8 @@ export class WebrtcService {
           if (index !== -1) {
             this.students.splice(index, 1);
           };
-          this.students.push(data.userdetails)
+          this.students.push(data.userdetails) 
+          $('#total_students').html(data.userdetails.name+' has a question ?'); 
         } else if (data.handRaised == false) {
           var student = data.userdetails.id;
           var index = this.students.findIndex(function (o) {
@@ -234,8 +240,9 @@ export class WebrtcService {
           };
           this.students.push(data.userdetails)
         } else {
+          $('#total_students').html(data.userdetails.name+' joined the class');
           if (data.userdetails) {
-            this.students.push(data.userdetails)
+            this.students.push(data.userdetails) 
           }
         }
       }
@@ -250,6 +257,10 @@ export class WebrtcService {
     if (data.stopRaisehand == true) { 
       this.studentEl.srcObject = null; 
     }
+    setTimeout(() => {
+      var total_students = this.students.length;
+      $('#total_students').html(total_students);  
+    }, 6000);
 
     $('#studentdiv').html('')
     var mainThis = this;
@@ -270,10 +281,11 @@ export class WebrtcService {
         }
         setTimeout(() => {
           if (std.isPresenting == 1) {
+            $('#total_students').html(data.userdetails.name+' is presenting');
             $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background: #c023ae;color: white;" class="btn_theme_live studentRaised"  data-id="' + student_id + '"><i class="fa fa-desktop"></i> Student is presenting ...</button>');
           } else {
             if (std.handRaised == 1) {
-              $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background:#ffe700;" class="btn_theme_live studentRaised"  data-id="' + std.id + '">Hi, I have a question <i class="fa fa-eye"></i></button>');
+              $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background:#ffe700;" class="btn_theme_live studentRaised"  data-id="' + std.id + '">I have a question <i class="fa fa-eye"></i></button>');
             } else {
               $('.student-' + std.id).find('.addRaised').find('.studentRaised').remove();
             }
@@ -376,8 +388,8 @@ export class WebrtcService {
       conn.send(data);
     });
   }
-
-
+  
+  
   raiseHand(teacher, userdetails) {
     var conn = this.peer.connect(teacher.toString());
     var data = {
@@ -387,8 +399,11 @@ export class WebrtcService {
     conn.on('open', function () {
       conn.send(data);
     });
-
-    //this.peer.call(teacher.toString(), this.myStream);   
+    $('#student_msg').html('wait for teacher approval'); 
+    setTimeout(() => {
+      var total_students = this.students.length; 
+      $('#student_msg').html(''); 
+    }, 6000);   
   }
 
   streamFromstudent(userdetails, teacher) {
@@ -480,12 +495,13 @@ export class WebrtcService {
 
   }
 
-  closeConnection(teacher) {
+  closeConnection(teacher,userdetails) {
     $('.myonlinestatus').html('<a style="color: #cf3b1e; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a>');
     var conn = this.peer.connect(teacher.toString());
     var data = {
       diconnect: true,
       student: this.userId,
+      userdetails:userdetails
     }
     conn.on('open', function () {
       conn.send(data);
