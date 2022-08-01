@@ -33,8 +33,12 @@
                     <ion-col size="5">
                         <div class="video_img">
                             <div class="btn_theme ">
-                                <button [routerLink]="['/call']" class="btn_blue startstream" [queryParams]="{iacs:iacs,subject:subject,type:'live',lectureid:single.id}">Join Class <i class="fa fa-play"></i>
-                          </button></div>
+                               <!--  <button [routerLink]="['/call']" class="btn_blue startstream" [queryParams]="{iacs:iacs,subject:subject,type:'live',lectureid:single.id}">Join Class <i class="fa fa-play"></i> -->
+                                <button *ngIf="single.lectureIsOn" [routerLink]="['/call']" class="btn_blue startstream" [queryParams]="{iacs:iacs,subject:subject,type:'live',lectureid:single.id}">Join Class <i class="fa fa-play"></i> 
+                                </button>
+                                <button *ngIf="!single.lectureIsOn"  class="btn_blue startstream"  ><i class="fa fa-info"></i><br>Class has<br>time yet  
+                                </button>
+                          <!-- </button> --></div>
                         </div>
                     </ion-col>
                     <ion-col size="7" class="video_details">

@@ -46,9 +46,27 @@ export class SLivelecturesPage implements OnInit {
       } 
       this.homeService.getLiveClasses(data,token).subscribe(
         (res: any) => {    
-          if(res.data.length > 0){
-            this.lectures = res.data ? res.data:'';  
-            this.nolectures = false;   
+          if(res.data.length > 0){ 
+            var classes = res.data ? res.data:'';  
+            if(classes){ 
+              classes.forEach((c) => {  
+                c.meeting.forEach((single) => {
+                  var date = single.lecture_date +' '+ single.lecture_time;
+                  var lec_date = new Date(date); 
+                  var current_date =  new Date(Date.now() + (10 * 60000));  
+                  if(current_date.getTime() > lec_date.getTime())
+                  { 
+                    single.lectureIsOn = true;
+                  }else{ 
+                    single.lectureIsOn = false;
+                  }   
+                });      
+              });       
+            }
+            if(classes){
+              this.lectures = classes;  
+              this.nolectures = false;   
+            }
           }else{
             this.lectures = [];   
             this.nolectures = true;   

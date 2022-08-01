@@ -65,6 +65,7 @@ export class CallPage  implements OnInit {
       video.setAttribute('height', '350');
       video.setAttribute('width', '100%'); 
       video.setAttribute('playsinline', '');
+      video.setAttribute('muted', 'muted');
       video.setAttribute('class', 'my-video videoStream');
       video.setAttribute('id', 'my-video'); 
       video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);');  
@@ -81,6 +82,7 @@ export class CallPage  implements OnInit {
       video.setAttribute('autoplay', '');
       video.setAttribute('height', '350');
       video.setAttribute('width', '100%');
+      video.setAttribute('muted', 'muted');
       video.setAttribute('playsinline', '');
       video.setAttribute('class', 'partner-video videoStream');
       video.setAttribute('id', 'partner-video'); 
@@ -229,11 +231,11 @@ export class CallPage  implements OnInit {
         this.webRTC.stop(); 
       }else{   
         var callok = this.webRTC.call(); 
-        if(callok){
-          this.streaming = true;   
+        this.streaming = true;   
+        /* if(callok){
         }else{
           this.toastService.presentToast("No student joined yet !"); 
-        } 
+        }  */
       } 
     }
   }

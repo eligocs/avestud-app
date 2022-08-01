@@ -72,10 +72,10 @@
         </div>
         <div class="student-video-section"> 
             <div #studentContainer class="shedule_card"></div> 
-            <ion-row *ngIf="this.usertype == 'student'">
+            <ion-row *ngIf="this.usertype == 'student'" class="background_students">
                 <ion-col size="3">
-                    <div class="shedule_card"> 
-                        <img style='min-height:100px;' src="{{this.userdetails.avatar ? this.userdetails.avatar : '../../assets/images/teachers_profile.png'}}" alt="student_img.jpg">
+                    <div class=""> 
+                        <img  class='student_image'  src="{{this.userdetails.avatar ? this.userdetails.avatar : '../../assets/images/teachers_profile.png'}}" alt="student_img.jpg">
                     </div>
                 </ion-col>
                 <ion-col size="9">

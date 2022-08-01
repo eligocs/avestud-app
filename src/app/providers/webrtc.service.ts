@@ -275,7 +275,7 @@ export class WebrtcService {
       stds.forEach(function (std) {
         itemsProcessed++;
         var image = std.avatar ? std.avatar : "";
-        html += '<ion-row class="student-' + std.id + '"><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="student-details "><h4>' + std.name + ' <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4><div class="btns-m addRaised" ></div></div></ion-col></ion-row>';
+        html += '<ion-row class="background_students student-' + std.id + '"><ion-col size="3"> <div class=""> <img class="student_image" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="student-details "><h4>' + std.name + ' <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4><div class="btns-m addRaised" ></div></div></ion-col></ion-row>';
         if (itemsProcessed === mainThis.students.length) {
           $('#studentdiv').html(html);
         }
