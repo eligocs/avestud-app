@@ -65,7 +65,7 @@ export class CallPage  implements OnInit {
       video.setAttribute('height', '350');
       video.setAttribute('width', '100%'); 
       video.setAttribute('playsinline', '');
-      video.setAttribute('muted', 'muted');
+      video.volume = 0;
       video.setAttribute('class', 'my-video videoStream');
       video.setAttribute('id', 'my-video'); 
       video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);');  
@@ -86,6 +86,7 @@ export class CallPage  implements OnInit {
       video.setAttribute('playsinline', '');
       video.setAttribute('class', 'partner-video videoStream');
       video.setAttribute('id', 'partner-video'); 
+      this.myEl.volume = 0;
       $('#demoicon').html(video);
       this.partnerEl = document.querySelector('#partner-video');  
       this.webRTC.init(this.userId, this.myEl, this.partnerEl,this.studentEl,'student',this.students);
@@ -145,7 +146,7 @@ export class CallPage  implements OnInit {
         var id = $(this).data('id');
         if(id){
           mainThis.streamFromstudent(id);
-          $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: #cf3b1e;color: white;" class="btn_theme_live streamStopstudent"  data-id="'+id+'"><i class="fa fa-desktop"></i> Stop</button>')
+          $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live  streamStopstudent"  data-id="'+id+'"><i class="fa fa-desktop"></i> Stop</button>')
         }
       });
       $(document).on('click','.raiseHand',function(){ 
@@ -155,7 +156,7 @@ export class CallPage  implements OnInit {
         var id = $(this).data('id');
         if(id){
           mainThis.streamStopstudent(id);
-          $('.student_has_question').html('<button style="height: 36px;margin: 4px;" data-id="'+id+'"  class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask</button>'); 
+          $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" data-id="'+id+'"  class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask</button>'); 
         }
       });
     });
@@ -222,16 +223,23 @@ export class CallPage  implements OnInit {
     }
     if(!this.showreset){
       this.showreset = true;
-      this.streaming = false; 
+      this.streaming = true;   
       this.init(); 
+      //this.webRTC.call(); 
     }else{
       if(this.streaming == true){
         this.streaming = false; 
         this.showreset = false;
-        this.webRTC.stop(); 
+        var res = this.webRTC.stop(); 
+        if(res){
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
       }else{   
         var callok = this.webRTC.call(); 
         this.streaming = true;   
+        $('.live_stream_btn').html('<i class="fa fa-stop"></i> Stop');
         /* if(callok){
         }else{
           this.toastService.presentToast("No student joined yet !"); 
@@ -245,12 +253,12 @@ export class CallPage  implements OnInit {
       this.handRaised = true;
       this.userdetails.handRaised='1';
       this.webRTC.raiseHand(this.teacher,this.userdetails);  
-      $('.onRaiseHand').css({'background':'#ffe700'}).html('<i class="fa fa-info" aria-hidden="true"></i> Wait...');
+      $('.onRaiseHand').css({'background': 'linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;'}).html('<i class="fa fa-info" aria-hidden="true"></i> Wait...');
     }else{
       this.handRaised = false;
       this.userdetails.handRaised='';
       this.webRTC.pauseStudent(this.teacher,this.userdetails); 
-      $('.onRaiseHand').css({'background':'#f0f0f0'}).html('<i class="fa fa-question" aria-hidden="true"></i> Ask').removeClass('orange_btn');
+      $('.onRaiseHand').css({'background': 'linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;'}).html('<i class="fa fa-question" aria-hidden="true"></i> Ask').removeClass('orange_btn');
     } 
   }
   

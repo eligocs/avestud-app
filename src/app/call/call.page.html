@@ -43,16 +43,16 @@
       <!--   <video id="video-preview"></video> -->
         <div class="comman_page_padding video_lectures_intitute">
             <ion-row nowrap *ngIf="this.usertype == 'institute'" class="text-right">
-                <button *ngIf="showreset" class='btn_theme_live {{this.streaming ? "streaming_btn" :"" }}' (click)="call()"> <i class="fa fa-play"></i> Stream</button>
-                <button *ngIf="!showreset" class='btn_theme_live {{this.streaming ? "streaming_btn" :"" }}' (click)="reset()"> <i class="fa fa-play"></i> Reset</button>
-                <button class='btn_theme_live {{this.pausevideo ? "muted_btn" :"" }}' (click)="stop()"> <i class="fa fa-stop"></i> Pause</button>
+                <button *ngIf="showreset" class='btn_theme_live live_stream_btn {{this.streaming ? "streaming_btn" :"" }}' (click)="call()"> <i class="fa fa-play"></i> Stream</button>
+                <button *ngIf="!showreset" class='btn_theme_live {{this.streaming ? "streaming_btn" :"" }}' (click)="reset()"> <i class="fa fa-refresh"></i> Re-setting...</button>
+                <button class='btn_theme_live {{this.pausevideo ? "muted_btn" :"" }}' (click)="stop()"> <i class="fa fa-pause"></i> Pause</button>
                 <button (click)="mutevideo()" class='btn_theme_live {{this.mutestate ? "muted_btn" :"" }}'>
-                     <i class="fa fa-microphone"></i> Audio</button>
+                     <i class="fa fa-microphone"></i> </button>
 
                 <button *ngIf="!isRecording" (click)="startRecord()" class='btn_theme_live {{this.videoStatus == false ? "muted_btn" :"" }}'>
-                <i class="fa fa-circle recordbtn"></i> Record</button>
-                <button *ngIf="isRecording" (click)="stopRecording()" class='btn_theme_live stoprecordbtn {{this.videoStatus == false ? "muted_btn" :"" }}'>
-                <i class="fa fa-circle"></i> Stop</button>
+                <i class="fa fa-circle recordbtn"></i> Rec</button>
+                <button *ngIf="isRecording" (click)="stopRecording()" class='btn_theme_live muted_btn {{this.videoStatus == false ? "muted_btn" :"" }}'>
+                <i class="fa fa-circle "></i> Stop</button>
 
                 <button class='btn_theme_live' (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
                 <!-- <button class='btn_theme_live' (click)="refreshStudents()"><i class="fa fa-refresh"></i> Students</button> --> 
@@ -65,7 +65,7 @@
                 <button class='btn_theme_live {{this.joined ? "streaming_btn" :"" }}' disabled='{{this.joined ? "disabled" :"" }}' (click)="join()"><i class='fa fa-user'></i> Join</button>
                 <button class='btn_theme_live ' disabled='{{!this.joined ? "disabled" :"" }}' (click)="closeConnection()"><i class="fa fa-stop"></i> Leave</button>
                 <div class="student_has_question">
-                    <button style="height: 36px;margin: 4px;" data-id="{{userId ?? ''}}" disabled='{{!this.joined ? "disabled" :"" }}'   class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask</button>
+                    <button style="height: 36px;margin: 4px;" data-id="{{userId ?? ''}}" disabled='{{!this.joined ? "disabled" :"" }}'   class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>
                 </div>
                 <button class='btn_theme_live'  (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
             </ion-row>
@@ -73,12 +73,12 @@
         <div class="student-video-section"> 
             <div #studentContainer class="shedule_card"></div> 
             <ion-row *ngIf="this.usertype == 'student'" class="background_students">
-                <ion-col size="3">
+                <ion-col size="2">
                     <div class=""> 
                         <img  class='student_image'  src="{{this.userdetails.avatar ? this.userdetails.avatar : '../../assets/images/teachers_profile.png'}}" alt="student_img.jpg">
                     </div>
                 </ion-col>
-                <ion-col size="9">
+                <ion-col size="10">
                     <div class="student-details">
                         <h4>{{this.userdetails?.name | titlecase}} <span class="myonlinestatus"></span></h4>
                     </div>

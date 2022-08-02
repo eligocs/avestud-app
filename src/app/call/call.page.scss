@@ -46,7 +46,7 @@ button.btn_theme_live {
 }
 
 button.btn_theme_live.streaming_btn {
-    background: #17b117;
+    background: #138613;
     color:white;
 }
 
@@ -66,12 +66,12 @@ button.btn_theme_live.streaming_btn {
 video#my-video-el {
     position: absolute;
     z-index: 999;
-    background: #d3d3d330;
+    // background: #d3d3d330;
 }
 
 video#my-video-el {
-    right: 5px;
-    bottom: 5px;
+    right: 0px;
+    bottom: 0px;
 }
  
 .audioMute {
@@ -89,9 +89,9 @@ video#my-video-el {
     color: #bf0000;
 }
 .stoprecordbtn {
-    background: #da0000;
-    color: white;
+    color: #bf0000;
 }
+ 
 
 #partner-video {
     transition: transform 0.8s !important;
@@ -116,10 +116,12 @@ button.btn_theme_live.onRaiseHand.raiseHand.orange_btn {
     padding: 4px;
     text-transform:capitalize;
 }
+.message_box :first-letter {
+    text-transform: capitalize
+}
 
 .student_image{
-    min-height: 46px;
-    max-width: 62%;
+    min-height: 46px; 
     border-radius: 34px;
 }
 
@@ -132,4 +134,8 @@ button.btn_theme_live.onRaiseHand.raiseHand.orange_btn {
 button[disabled]{
     cursor: default;
     background: linear-gradient(6deg, #5f6062, #8a8a8a) !important;
+}
+
+button.btn_theme_live.muted_btn {
+    background: #a71a1a;
 }
