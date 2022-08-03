@@ -36,6 +36,7 @@ export class CallPage  implements OnInit {
   previousUrl: string;
   teacher: string;
   partnerId: string;
+  pauseStudentvideo: boolean;
   userdetails: any;
   mainElement: HTMLMediaElement;
   myEl: HTMLMediaElement;
@@ -63,7 +64,7 @@ export class CallPage  implements OnInit {
       var video = document.createElement('video'); 
       video.setAttribute('autoplay', '');
       video.setAttribute('height', '350');
-      video.setAttribute('width', '100%'); 
+      video.setAttribute('width', 'auto'); 
       video.setAttribute('playsinline', '');
       video.volume = 0;
       video.setAttribute('class', 'my-video videoStream');
@@ -81,7 +82,7 @@ export class CallPage  implements OnInit {
       var video = document.createElement('video'); 
       video.setAttribute('autoplay', '');
       video.setAttribute('height', '350');
-      video.setAttribute('width', '100%');
+      video.setAttribute('width', 'auto');
       video.setAttribute('muted', 'muted');
       video.setAttribute('playsinline', '');
       video.setAttribute('class', 'partner-video videoStream');
@@ -190,6 +191,15 @@ export class CallPage  implements OnInit {
     }
     this.webRTC.stop(); 
   }
+  
+  stopStudent() {   
+    if(this.pauseStudentvideo == true){
+      this.pauseStudentvideo = false;  
+    }else{ 
+      this.pauseStudentvideo = true;
+    }
+    this.webRTC.stopStudent(); 
+  }
   mutevideo() {   
     if(this.mutestate == true){
       this.mutestate = false;
@@ -239,7 +249,7 @@ export class CallPage  implements OnInit {
       }else{   
         var callok = this.webRTC.call(); 
         this.streaming = true;   
-        $('.live_stream_btn').html('<i class="fa fa-stop"></i> Stop');
+        $('.live_stream_btn').html('<i class="fa fa-stop"></i> Stop').css({'background':'linear-gradient(6deg, #c41818, #d40f0f)'});
         /* if(callok){
         }else{
           this.toastService.presentToast("No student joined yet !"); 
@@ -253,12 +263,12 @@ export class CallPage  implements OnInit {
       this.handRaised = true;
       this.userdetails.handRaised='1';
       this.webRTC.raiseHand(this.teacher,this.userdetails);  
-      $('.onRaiseHand').css({'background': 'linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;'}).html('<i class="fa fa-info" aria-hidden="true"></i> Wait...');
+      $('.onRaiseHand').css({'background':'linear-gradient(6deg, #9f6100, #fb9033)','color': 'white','border-radius': '4px'}).html('<i class="fa fa-info" aria-hidden="true"></i> Wait...');
     }else{
       this.handRaised = false;
       this.userdetails.handRaised='';
       this.webRTC.pauseStudent(this.teacher,this.userdetails); 
-      $('.onRaiseHand').css({'background': 'linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;'}).html('<i class="fa fa-question" aria-hidden="true"></i> Ask').removeClass('orange_btn');
+      $('.onRaiseHand').css({'background': 'linear-gradient(6deg, #2b3642, #667a90)','color': 'white','border-radius': '4px;'}).html('<i class="fa fa-question" aria-hidden="true"></i> Ask question').removeClass('orange_btn');
     } 
   }
   
