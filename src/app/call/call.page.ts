@@ -18,6 +18,7 @@ export class CallPage  implements OnInit {
   topVideoFrame = 'partner-video';
   userId: string;
   mutestate: boolean;
+  pauseSVideo: boolean;
   lectureid: string;
   type: string;
   userimage: string;
@@ -63,7 +64,7 @@ export class CallPage  implements OnInit {
       this.mainElement.setAttribute('style','padding-top:0px');
       var video = document.createElement('video'); 
       video.setAttribute('autoplay', '');
-      video.setAttribute('height', '350');
+      video.setAttribute('height', '400');
       video.setAttribute('width', 'auto'); 
       video.setAttribute('playsinline', '');
       video.volume = 0;
@@ -81,7 +82,7 @@ export class CallPage  implements OnInit {
       this.mainElement.setAttribute('style','padding-top:0px');
       var video = document.createElement('video'); 
       video.setAttribute('autoplay', '');
-      video.setAttribute('height', '350');
+      video.setAttribute('height', '400');
       video.setAttribute('width', 'auto');
       video.setAttribute('muted', 'muted');
       video.setAttribute('playsinline', '');
@@ -99,10 +100,18 @@ export class CallPage  implements OnInit {
   
   closeConnection(){
     if(this.joined == true){
+      console.log('adss')
       this.joined = false;
+      $('.strmbtn').attr('disabled',false);
+      $('.leavebtn').attr('disabled',true); 
+      $('.pausebtn').attr('disabled',true);  
+      $('.student_has_question').html('<button  disabled="disabled" style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" data-id="'+this.userId+'"  class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>'); 
+      $('.raiseHand').attr('disabled',true);  
+      this.streamStopstudent(this.userId);
       this.webRTC.closeConnection(this.teacher,this.userdetails) 
     } 
   }
+ 
   
   refreshStudents(){
     this.webRTC.refreshStudents()
@@ -120,6 +129,7 @@ export class CallPage  implements OnInit {
     this.isRecording = false;
     this.handRaised = false;
     this.showreset = true;
+    this.pauseSVideo = false;
     var token =  await this.storageService.get(AuthConstants.AUTH)
     this.route.queryParams.subscribe(
       params => {    
@@ -134,13 +144,17 @@ export class CallPage  implements OnInit {
 
 
     $(document).ready(function(){
+      $('.leavebtn').attr('disabled',true); 
+      $('.pausebtn').attr('disabled',true); 
+      $('.onRaiseHand').attr('disabled',true);
       $('#my-video-el').click(function(){ 
         $(this).toggleClass('inc_size'); 
       });
       $(document).on('click','.studentRaised',function(){
         var id = $(this).data('id');
-        if(id){
-          mainThis.allowStudent(id);
+        var name = $(this).data('name'); 
+        if(id && name){
+          mainThis.allowStudent(id,name);
         }
       });
       $(document).on('click','.streamFromstudent',function(){
@@ -157,8 +171,34 @@ export class CallPage  implements OnInit {
         var id = $(this).data('id');
         if(id){
           mainThis.streamStopstudent(id);
-          $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" data-id="'+id+'"  class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask</button>'); 
+          $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" data-id="'+id+'"  class="btn_theme_live onRaiseHand raiseHand " disabled  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>'); 
         }
+      });
+      $(document).on('click','.strmbtn',function(){
+        $('.strmbtn').attr('disabled',true);
+        $('.leavebtn').attr('disabled',false); 
+        $('.pausebtn').attr('disabled',false); 
+        $('.onRaiseHand').attr('disabled',false);
+        mainThis.webRTC.join(mainThis.teacher,mainThis.userdetails,mainThis.userimage); 
+        mainThis.joined = true;
+      });
+      $(document).on('click','.pauseSAudio',function(){
+        var id = $(this).data('id');
+        var name = $(this).data('name'); 
+        mainThis.webRTC.pauseSAudio(id,name);  
+        $(this).toggleClass('btn_red_color');
+      });
+      $(document).on('click','.pauseSVideo',function(){
+        var id = $(this).data('id');
+        var name = $(this).data('name'); 
+        mainThis.webRTC.pauseSVideo(id,name);  
+       /*  if(this.pauseSVideo == false){
+          this.pauseSVideo = true;
+          $(this).style({'height': '36px','margin': '4px','background': 'linear-gradient(6deg, #2b3642, #a71a1a)','color': 'white','border-radius': '4px'});
+        }else{
+          this.pauseSVideo = false;
+          $(this).style({'height': '36px','margin': '4px','background': 'linear-gradient(6deg, #470505, #d41616)','color': 'white','border-radius': '4px'}); 
+        } */
       });
     });
   }
@@ -219,12 +259,17 @@ export class CallPage  implements OnInit {
   }
 
   join() {       
-    if(this.joined == true){
+    console.log('asd')
+   /*  if(this.joined == true){
       this.joined = false;
     }else{
       this.joined = true;
-      this.webRTC.join(this.teacher,this.userdetails,this.userimage); 
-    }
+    } */
+    $('.strmbtn').attr('disabled',true);
+    $('.leavebtn').attr('disabled',false); 
+    $('.pausebtn').attr('disabled',false); 
+    $('.onRaiseHand').attr('disabled',false);
+    this.webRTC.join(this.teacher,this.userdetails,this.userimage); 
   }
   call() { 
     if(this.pausevideo == true){
@@ -232,9 +277,9 @@ export class CallPage  implements OnInit {
       this.webRTC.stop();
     }
     if(!this.showreset){
-      this.showreset = true;
-      this.streaming = true;   
-      this.init(); 
+     /*  this.showreset = true;
+      this.streaming = true;   */ 
+      //this.init(); 
       //this.webRTC.call(); 
     }else{
       if(this.streaming == true){
@@ -244,7 +289,7 @@ export class CallPage  implements OnInit {
         if(res){
           setTimeout(() => {
             window.location.reload();
-          }, 2000);
+          }, 1000);
         }
       }else{   
         var callok = this.webRTC.call(); 
@@ -272,14 +317,15 @@ export class CallPage  implements OnInit {
     } 
   }
   
-  allowStudent(id){
-    this.webRTC.allowStudent(id,this.teacher);
+  allowStudent(id,name){
+    this.webRTC.allowStudent(id,name,this.teacher);
     $('.student-'+id).find('.addRaised').find('.studentRaised').html('<i class="fa fa-desktop" aria-hidden="true"></i> Presenting...')
+    $('.student-'+id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live pauseSAudio" data-name="'+name+'"  data-id="' + id + '"> <i class="fa fa-microphone"></i></button> <button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live pauseSVideo" data-name="'+name+'"  data-id="' + id + '"> <i class="fa fa-play"></i></button>');
   }
   
   streamFromstudent(id){
     this.userdetails.isPresenting='1';
-    this.webRTC.streamFromstudent(this.userdetails,this.teacher);
+    //this.webRTC.streamFromstudent(this.userdetails,this.teacher);
   }
   
   streamStopstudent(id){

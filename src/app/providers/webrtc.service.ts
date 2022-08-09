@@ -1,5 +1,6 @@
 import Peer from 'peerjs';
 import $ from 'jquery';
+import { CallPage } from '../call/call.page';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { ComponentFactoryResolver } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
@@ -7,11 +8,14 @@ interface CanvasElement extends HTMLCanvasElement {
   captureStream(frameRate?: number): MediaStream;
 }
 export class WebrtcService {
+  CallPage: CallPage;
   peer: Peer;
+  studentStream: any;
   myStream: any;
   myEl: HTMLMediaElement;
   studentEl: HTMLMediaElement;
   partnerEl: HTMLMediaElement;
+  teacherEl: HTMLMediaElement;
   onlineEl: any;
   options: any;
   audioMute: any;
@@ -47,6 +51,7 @@ export class WebrtcService {
       .then(function (stream) {
         mainthis.myStream = stream;
         mainthis.myEl.srcObject = stream;
+        console.log(stream)
       })
       .catch(function (err) {
 
@@ -109,14 +114,13 @@ export class WebrtcService {
   }
 
   async init(userId: string, myEl: HTMLMediaElement, partnerEl: HTMLMediaElement, studentEl: HTMLMediaElement, type: string, students: any) {
-    console.log(userId)
-    this.onlineEl = $('.onlineEl');
+     this.onlineEl = $('.onlineEl');
     this.audioMute = $('.audioMute');
     this.myEl = myEl;
     this.partnerEl = partnerEl;
     this.studentEl = studentEl;
     this.userId = userId;
-    this.type = type;
+    this.type = type; 
     if (myEl) {
       try {
         this.getMedia();
@@ -127,26 +131,30 @@ export class WebrtcService {
     this.peer = new Peer(userId);
     this.peer.on('open', () => {
       this.peer.on('call', (call) => {
-        call.answer(this.myStream);
-        call.on('stream', (stream) => {
-          this.onlineEl.html('<a style="color: #00bc35; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>');
-          if(this.remote_student_video){
-            this.remote_student_video.srcObject = stream; 
-          }else{
-            if (this.partnerEl) {
+        if(this.type == 'student'){ 
+          call.answer(this.myStream);
+          call.on('stream', (stream) => { 
+            console.log(this.studentStream) 
+            if(this.remote_student_video){
+              this.remote_student_video.srcObject = stream; 
+            }else{
               this.partnerEl.srcObject = stream;
             } 
-            if (this.studentEl) {
-              this.studentEl.srcObject = stream;
-            }
-          }
+          });
           $('#partner-video').css({
             'transform': 'scaleX(-1)'
           });
+        }
+        if(this.type == 'institute'){ 
+          call.answer(this.myStream);
+          call.on('stream', (stream) => { 
+          this.onlineEl.html('<a style="color: #00bc35; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>'); 
+          console.log(this.studentStream)
+            this.studentStream = stream; 
         });
-        call.on('close', () => {
-          console.log('closs')
+        call.on('close', () => { 
         });
+      }
       });
     });
     var mainThis = this;
@@ -212,6 +220,18 @@ export class WebrtcService {
     var mainThis = this;
 
 
+    /* if (data.studentCall == true) {
+      console.log(this.peer)
+     
+    } */
+
+    if (data.setupMembers == true) {
+      var student = data.userdetails; 
+      this.studentStream = this.myStream;  
+      console.log(this.myStream)
+      return;
+    }
+
     if (data.studentPaused == true) {
       var student = data.userdetails; 
         $('#student_msg').html(student.name.toUpperCase()+' paused preseting'); 
@@ -227,21 +247,46 @@ export class WebrtcService {
         setTimeout(() => { 
           $('#student_msg').html(''); 
         }, 6000);    
-        $('#partner-video').css({'width':'100%','height':'350px','object-fit': 'cover'});  
+        $('#partner-video').css({'width':'100%','height':'400px','object-fit': 'cover'});  
         $('#remote_student_video').remove(); 
       return;
     }
 
-    if (data.streamToall == true) {
+    if (data.pauseSAudio == true) {
+      var studentname = data.name; 
+        $('#student_msg').html(studentname.toUpperCase()+' audio muted'); 
+        this.myStream.getAudioTracks()[0].enabled = !(this.myStream.getAudioTracks()[0].enabled);
+        $('#total_students').html(studentname+' is muted'); 
+        setTimeout(() => { 
+          $('#student_msg').html(''); 
+          $('#total_students').html(''); 
+        }, 6000);    
+      return;
+    }
+
+    if (data.pauseSVideo == true) {
+      var studentname = data.name; 
+        $('#student_msg').html(studentname.toUpperCase()+' audio muted'); 
+        this.myStream.getVideoTracks()[0].enabled = !(this.myStream.getVideoTracks()[0].enabled);
+        $('#total_students').html(studentname+' is muted'); 
+        setTimeout(() => { 
+          $('#student_msg').html(''); 
+          $('#total_students').html(''); 
+        }, 6000);    
+      return;
+    }
+
+    if (data.streamToall == true) { 
+      var studentName = data.studentName; 
       var student = data.student; 
-        $('#student_msg').html(student.name.toUpperCase()+' presenting question'); 
+        $('#student_msg').html(studentName.toUpperCase()+' presenting question'); 
         setTimeout(() => { 
           $('#student_msg').html(''); 
         }, 6000);    
-        $('#partner-video').css({'width':'50%','height':'350px','right': '0','object-fit': 'cover','float':'left'}); 
+        $('#partner-video').css({'width':'50%','height':'400px','right': '0','object-fit': 'cover','float':'left'}); 
         var video = document.createElement('video'); 
         video.setAttribute('autoplay', '');
-        video.setAttribute('height', '350');
+        video.setAttribute('height', '400px');
         video.setAttribute('width', '50%');  
         video.setAttribute('playsinline', '');
         video.volume = 0;
@@ -249,28 +294,36 @@ export class WebrtcService {
         video.setAttribute('id', 'remote_student_video'); 
         video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);object-fit:cover');  
         $('#demoicon').append(video);
-        this.remote_student_video = document.querySelector('#remote_student_video'); 
+        this.remote_student_video = document.querySelector('#remote_student_video');  
+        /* this.remote_student_video.srcObject = this.myStream */
+        // this.peer.call(data.student.id.toString(), this.myStream); 
       return;
     }
 
     if (data.allowStudent == true) {
-        $('#student_msg').html('present your question'); 
+        $('#student_msg').html('Present your question'); 
         setTimeout(() => { 
           $('#student_msg').html(''); 
         }, 6000);    
         var student_id = data.student_id;
-        this.students = data.allstudents;
-        $('.student_has_question').html('<button style="height: 36px;margin: 4px;background:linear-gradient(6deg, #365209, #72a52c);color: white;border-radius: 4px;" class="btn_theme_live  streamFromstudent"  data-id="' + student_id + '"><i class="fa fa-desktop"></i> Present Question</button>'); 
+        var name = data.name; 
+        this.students = data.allstudents;   
+        this.streamFromstudent(student_id,name,this.userId,this.students);
+        $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #470505, #d41616);color: white;border-radius: 4px;" class="btn_theme_live  streamStopstudent"  data-id="'+student_id+'"><i class="fa fa-desktop"></i> Stop</button>')
+        /* $('.student_has_question').html('<button style="height: 36px;margin: 4px;background:linear-gradient(6deg, #365209, #72a52c);color: white;border-radius: 4px;" class="btn_theme_live  streamFromstudent"  data-id="' + student_id + '"><i class="fa fa-desktop"></i> Present Question</button>');  */
         // $('#partner-video').css({'width':'50%','height':'350px','right': '0'}); 
       return;
     }
 
     if (data.isOffline == true) {
-        $('#student_msg').html('Teacher stopped presenting'); 
-        $('.streaming_btn').attr('disabled',false); 
+        //$('#student_msg').html('Teacher paused presenting video'); 
+        /* $('.streaming_btn').attr('disabled',false).removeClass('streaming_btn'); 
+        $('.leavebtn').attr('disabled',true); 
+        $('.pausebtn').attr('disabled',true); 
+        $('.onRaiseHand').attr('disabled',true);   */
         setTimeout(() => { 
           $('#student_msg').html(''); 
-        }, 6000);    
+        }, 6000);     
         this.onlineEl.html('<a style="color:#cf3b1e; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>');
         //window.location.reload()
       return;
@@ -356,7 +409,7 @@ export class WebrtcService {
     } */
     if (data.stopRaisehand == true) { 
       $('#total_students').html(data.userdetails.name+' has stop presenting');
-      $('#my-video').css({'width':'100%','height':'350px',});  
+      $('#my-video').css({'width':'100%','height':'400px',});  
       $('#my-video-el').css({'width':'100px','height':'100px','right': '0','bottom':'0'});
       this.studentEl.srcObject = null; 
     }
@@ -386,12 +439,12 @@ export class WebrtcService {
         setTimeout(() => { 
           if (std.isPresenting == 1) { 
             setTimeout(() => {
-              $('#total_students').html(data.userdetails.name+' is presenting');
+              $('#total_students').html(data.name+' is presenting');
             }, 1000);
-            $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live studentRaised"  data-id="' + student_id + '"><i class="fa fa-desktop"></i> Student is presenting ...</button>'); 
+            $('.student-' + data.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live studentRaised"  data-id="' + data.id + '"><i class="fa fa-desktop"></i> Student is presenting ...</button>'); 
           } else {
             if (std.handRaised == 1) {
-              $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live studentRaised"  data-id="' + std.id + '">I have a question <i class="fa fa-eye"></i></button>'); 
+              $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live studentRaised" data-name="'+std.name+'"  data-id="' + std.id + '">I have a question <i class="fa fa-eye"></i></button>'); 
             } else {
               $('.student-' + std.id).find('.addRaised').find('.studentRaised').remove();
             }
@@ -405,31 +458,64 @@ export class WebrtcService {
     }
   }
 
-  allowStudent(id, teacher) {
+
+  pauseSAudio(id,name){
+    var conn = this.peer.connect(id.toString());
+    var data = {
+      pauseSAudio: true,
+      student_id: id,
+      name: name, 
+    } 
+    conn.on('open', function () {
+      conn.send(data);
+    });
+  }
+
+  pauseSVideo(id,name){
+    var conn = this.peer.connect(id.toString());
+    var data = {
+      pauseSVideo: true,
+      student_id: id,
+      name: name, 
+    } 
+    conn.on('open', function () {
+      conn.send(data);
+    });
+  }
+
+  allowStudent(id,name, teacher) {
     var mainThis = this;
-    $('#my-video').css({'width':'50%','height':'350px','left': '0','object-fit': 'cover','float':'left'});  
-    $('#my-video-el').css({'width':'50%','height':'350px','right': '0'});  
+    $('#my-video').css({'width':'50%','height':'400px','left': '0','object-fit': 'cover','float':'left'});  
+    $('#my-video-el').css({'width':'50%','height':'400px','right': '0'});  
+   
+    if(this.studentStream){ 
+      this.studentEl.srcObject = this.studentStream;
+    }
+    var conn = this.peer.connect(id.toString());
+    var data = {
+      allowStudent: true,
+      student_id: id,
+      name: name,
+      allstudents:this.students, 
+    } 
+    conn.on('open', function () {
+      conn.send(data);
+    });
+
     this.students.forEach(function (student) {
       if(student.id != id){
         var con = mainThis.peer.connect(student.id.toString());
         var data = {
           streamToall: true, 
-          student:student,
+          student:student, 
+          studentName:student.name, 
         }
         con.on('open', function () {
           con.send(data);
         });
+        //mainThis.peer.call(student.id.toString(), mainThis.myStream); 
       } 
     }) 
-    var conn = this.peer.connect(id.toString());
-    var data = {
-      allowStudent: true,
-      student_id: id,
-      allstudents:this.students
-    }
-    conn.on('open', function () {
-      conn.send(data);
-    });
   }
 
   startRecord() {
@@ -514,6 +600,23 @@ export class WebrtcService {
   
   
   raiseHand(teacher, userdetails) {
+    var mainThis = this;
+    this.peer.call(teacher.toString(), this.myStream); 
+    // if(this.students.length > 0){
+    //   mainThis.students.forEach(function(std){
+    //     if(userdetails.id != std.id){
+    //       var conn = this.peer.connect(teacher.toString());
+    //       var data = {
+    //         setupMembers: true,
+    //         userdetails: userdetails
+    //       }
+    //       conn.on('open', function () {
+    //         conn.send(data);
+    //       });
+    //       //mainThis.peer.call(std.id.toString(), mainThis.myStream);
+    //     }
+    //   });
+    // }
     var conn = this.peer.connect(teacher.toString());
     var data = {
       handRaised: true,
@@ -522,6 +625,7 @@ export class WebrtcService {
     conn.on('open', function () {
       conn.send(data);
     });
+    this.teacherEl = document.querySelector('#my-video-el');
     $('#student_msg').html('wait for teacher approval'); 
     setTimeout(() => {
       var total_students = this.students.length; 
@@ -529,25 +633,27 @@ export class WebrtcService {
     }, 6000);   
   }
 
-  streamFromstudent(userdetails, teacher) { 
+  streamFromstudent(id,name, teacher,students) { 
+    console.log('yes')
+    // console.log(userdetails)
     var mainThis = this;
     if(this.students.length > 0){
       mainThis.students.forEach(function(std){
-        if(userdetails.id != std.id){
+        if(id != std.id){
           mainThis.peer.call(std.id.toString(), mainThis.myStream);
         }
       });
-    }
-    this.peer.call(teacher.toString(), this.myStream);
-    var conn = this.peer.connect(teacher.toString());
+    } 
+    //var r = this.peer.call(teacher.toString(), this.myStream);  
+    /* var conn = this.peer.connect(teacher.toString());
     var data = {
       isPresenting: true,
-      userdetails: userdetails,  
+      id: id,  
+      name: name,  
     }
     conn.on('open', function () {
       conn.send(data);
-    });
-    
+    });  */
   }
 
   streamStopstudent(userdetails, teacher) {
@@ -613,9 +719,8 @@ export class WebrtcService {
     mainThis.isTeacherStreaming = true;
     this.onlineEl.html('<a style="color: #17b117; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>');
     if (this.students.length > 0) {
-      this.students.forEach(function (student) {
-        var call = mainThis.peer.call(student.id.toString(), mainThis.myStream);
-        console.log(call)
+      this.students.forEach(function (student) { 
+          mainThis.peer.call(student.id.toString(), mainThis.myStream); 
       }) 
       return true;
     } else {
@@ -635,7 +740,8 @@ export class WebrtcService {
     var conn = this.peer.connect(teacher.toString());
     if(conn){ 
       var data = {
-          userdetails: userdetails
+          userdetails: userdetails,
+          studentCall: true,
       }
       conn.on('open', function () {
         conn.send(data);
@@ -668,7 +774,7 @@ export class WebrtcService {
       var data = {
         diconnect: true,
         student: this.userId,
-        userdetails:userdetails
+        userdetails:userdetails 
       }
       conn.on('open', function () {
         conn.send(data);

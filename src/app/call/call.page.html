@@ -62,11 +62,11 @@
 
         <div class="comman_page_padding video_lectures_intitute" *ngIf="this.usertype == 'student'">
             <ion-row nowrap  class="text-right">
-                <button class='btn_theme_live {{this.joined ? "streaming_btn" :"" }}' disabled='{{this.joined ? "disabled" :"" }}' (click)="join()"><i class='fa fa-user'></i> Join</button>
-                <button class='btn_theme_live ' disabled='{{!this.joined ? "disabled" :"" }}' (click)="closeConnection()"><i class="fa fa-stop"></i> Leave</button>
-                <button class='btn_theme_live {{this.pauseStudentvideo ? "muted_btn" :"" }}' disabled='{{!this.joined ? "disabled" :"" }}' (click)="stopStudent()"> <i class="fa fa-pause"></i> Pause</button>
+                <button class='btn_theme_live strmbtn {{this.joined ? "streaming_btn" :"" }}'   ><i class='fa fa-user'></i> Join</button>
+                <button class='btn_theme_live leavebtn'   (click)="closeConnection()"><i class="fa fa-stop"></i> Leave</button>
+                <button class='btn_theme_live pausebtn {{this.pauseStudentvideo ? "muted_btn" :"" }}'   (click)="stopStudent()"> <i class="fa fa-pause"></i> Pause</button>
                 <div class="student_has_question">
-                    <button style="height: 36px;margin: 4px;" data-id="{{userId ?? ''}}" disabled='{{!this.joined ? "disabled" :"" }}'   class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>
+                    <button style="height: 36px;margin: 4px;" data-id="{{userId ?? ''}}"     class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>
                 </div>
                 <button class='btn_theme_live'  (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
             </ion-row>
