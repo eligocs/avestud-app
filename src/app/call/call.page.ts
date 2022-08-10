@@ -66,7 +66,7 @@ export class CallPage  implements OnInit {
       var video = document.createElement('video'); 
       video.setAttribute('autoplay', '');
       video.setAttribute('height', '400');
-      video.setAttribute('width', 'auto'); 
+      video.setAttribute('width', '100%'); 
       video.setAttribute('playsinline', '');
       video.volume = 0;
       video.setAttribute('class', 'my-video videoStream');
@@ -84,7 +84,7 @@ export class CallPage  implements OnInit {
       var video = document.createElement('video'); 
       video.setAttribute('autoplay', '');
       video.setAttribute('height', '400');
-      video.setAttribute('width', 'auto');
+      video.setAttribute('width', '100%');
       video.setAttribute('muted', 'muted');
       video.setAttribute('playsinline', '');
       video.setAttribute('class', 'partner-video videoStream');

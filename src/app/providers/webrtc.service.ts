@@ -11,7 +11,9 @@ export class WebrtcService {
   CallPage: CallPage;
   peer: Peer;
   studentStream: any;
+  context: any;
   myStream: any;
+  recordVideoEl: any;
   myEl: HTMLMediaElement;
   studentEl: HTMLMediaElement;
   partnerEl: HTMLMediaElement;
@@ -320,11 +322,7 @@ export class WebrtcService {
     }
 
     if (data.isOffline == true) {
-        $('#student_msg').html('Teacher stopped presenting'); 
-        $('.streaming_btn').attr('disabled',false).removeClass('streaming_btn'); 
-        $('.leavebtn').attr('disabled',true); 
-        $('.pausebtn').attr('disabled',true); 
-        $('.onRaiseHand').attr('disabled',true);  
+        $('#student_msg').html('Teacher stopped presenting');  
         setTimeout(() => { 
           $('#student_msg').html(''); 
         }, 6000);     
@@ -348,9 +346,17 @@ export class WebrtcService {
       if (data.pauseStatus == true) {
         this.onlineEl.html('<a style="color: #cf3b1e; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>');
         this.audioMute.html('<span style="background: #9f0202;border-radius: 3px;padding: 3px;"><i class="fa fa-microphone"></i> Video Paused</span>');
+        $('.streaming_btn').attr('disabled',false).removeClass('streaming_btn'); 
+        $('.leavebtn').attr('disabled',true); 
+        $('.pausebtn').attr('disabled',true); 
+        $('.onRaiseHand').attr('disabled',true);  
       } else {
         this.onlineEl.html('<a style="color: #17b117; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>');
         this.audioMute.html('');
+        $('.streaming_btn').attr('disabled',true).removeClass('streaming_btn'); 
+        $('.leavebtn').attr('disabled',false); 
+        $('.pausebtn').attr('disabled',false); 
+        $('.onRaiseHand').attr('disabled',false);  
       }
       return;
     } 
@@ -415,6 +421,7 @@ export class WebrtcService {
       $('#total_students').html(data.userdetails.name+' has stop presenting');
       $('#my-video').css({'width':'100%','height':'400px',});  
       $('#my-video-el').css({'width':'100px','height':'100px','right': '0','bottom':'0'});
+      this.recordVideoEl = this.myStream;
       this.studentEl.srcObject = null; 
     }
     setTimeout(() => {
@@ -505,10 +512,12 @@ export class WebrtcService {
   allowStudent(id,name, teacher) {
     var mainThis = this;
     $('#my-video').css({'width':'50%','height':'400px','left': '0','object-fit': 'cover','float':'left'});  
+    $('.recordCanvas').css({'width':'50%','height':'500px','left': '0','object-fit': 'cover','float':'left'});  
     $('#my-video-el').css({'width':'50%','height':'400px','right': '0'});  
    
     if(this.studentStream){ 
-      this.studentEl.srcObject = this.studentStream;
+        this.studentEl.srcObject = this.studentStream;  
+        this.recordVideoEl.srcObject = this.studentStream;  
     }
     var conn = this.peer.connect(id.toString());
     var data = {
@@ -547,17 +556,20 @@ export class WebrtcService {
 
     var canvas = <CanvasElement>document.createElement('canvas');
     var context = canvas.getContext('2d');
-    canvas.setAttribute('style', 'position: absolute; z-index: -1;display:none;');
-    $('#demoicon').after(canvas);
+    this.context = context;
+    // canvas.setAttribute('style', 'position: absolute; z-index: -1;display:none;');
+    //canvas.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);'); 
+    $('#recordSection').after(canvas);
 
     var video = document.createElement('video');
-    video.setAttribute('style', 'display:none;');
+    //video.setAttribute('style', 'display:none;');
     video.setAttribute('autoplay', '');
-    video.setAttribute('playsinline', '');
-    video.setAttribute('class', 'mericlass');
+    video.setAttribute('playsinline', '');  
     video.srcObject = this.myStream;
+    this.recordVideoEl = video;
+    // video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);');  
 
-    var canvasStream = canvas.captureStream(100);
+    var canvasStream = canvas.captureStream(1000);
     var audioPlusCanvasStream = new MediaStream();
 
     canvasStream.getTracks().forEach(function (videoTrack) {
@@ -570,40 +582,24 @@ export class WebrtcService {
     var recorder = RecordRTC(audioPlusCanvasStream, {
       type: 'video'
     });
-    this.recorder = recorder;
-
-
-
-
-    recorder.startRecording();
-    // videoPreview.srcObject = canvasStream;
-
+    this.recorder = recorder; 
+    recorder.startRecording(); 
     var tries = 0;
     (function looper() {
-      if (!recorder) return; // ignore/skip on stop-recording 
-
-      tries += 100;
-
+      if (!recorder) return; 
+      tries += 100; 
       canvas.width = 400;
-      canvas.height = 400;
-
-      // show hello.png for one second
-      if (tries < 5000 || tries > 6000) {
+      canvas.height = 400; 
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.save();
+        context.translate(canvas.width, 0);
+        context.scale(-1, 1);
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        // context.drawImage(logoImage, parseInt(canvas.width / 2) - parseInt(logoImage.width / 2), canvas.height - logoImage.height - 10);
-        // context.drawImage(logoImage, parseInt(canvas.width / 2) - parseInt(32 / 2), canvas.height - 32 - 10, 32, 32);
-        context.drawImage(logoImage, 10, 10, 100, 60);
-      }
-      else {
-        context.drawImage(waitImage, 10, 10, 100, 60);
-      }
-
-      // repeat (looper)
+        context.drawImage(logoImage, 10, 10, 80, 50);
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.restore(); 
       setTimeout(looper, 100);
-    })();
-
-
+    })();  
   }
 
   pauseStudent(teacher, userdetails) {
