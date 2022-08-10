@@ -32,6 +32,7 @@ export class CallPage  implements OnInit {
   handRaised: boolean;
   streaming: boolean;
   showreset: boolean;
+  pauseSAudio: boolean; 
   isRecording: boolean;
   iacs: string;
   previousUrl: string;
@@ -99,17 +100,18 @@ export class CallPage  implements OnInit {
   } 
   
   closeConnection(){
-    if(this.joined == true){
-      console.log('adss')
-      this.joined = false;
+    if(this.joined == true){ 
+      this.joined = false;   
       $('.strmbtn').attr('disabled',false);
+      /* $('.onRaiseHand').css({'background': 'linear-gradient(6deg, #2b3642, #667a90)','color': 'white','border-radius': '4px;'}).html('<i class="fa fa-question" aria-hidden="true"></i> Ask question').removeClass('orange_btn'); */
+      $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" data-id="'+this.userId+'"  class="btn_theme_live onRaiseHand raiseHand "   ><i class="fa fa-question" aria-hidden="true"  ></i> Ask Question</button>');  
       $('.leavebtn').attr('disabled',true); 
-      $('.pausebtn').attr('disabled',true);  
-      $('.student_has_question').html('<button  disabled="disabled" style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" data-id="'+this.userId+'"  class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>'); 
-      $('.raiseHand').attr('disabled',true);  
+      $('.pausebtn').attr('disabled',true); 
+       
       this.streamStopstudent(this.userId);
-      this.webRTC.closeConnection(this.teacher,this.userdetails) 
+      this.webRTC.closeConnection(this.teacher,this.userdetails)  
     } 
+    $('.raiseHand').attr('disabled',true);
   }
  
   
@@ -126,6 +128,8 @@ export class CallPage  implements OnInit {
   async ngOnInit(){ 
     var mainThis = this;
     this.streaming = false;
+    this.pauseSAudio = false;
+    this.pauseSVideo = false;
     this.isRecording = false;
     this.handRaised = false;
     this.showreset = true;
@@ -169,9 +173,13 @@ export class CallPage  implements OnInit {
       });
       $(document).on('click','.streamStopstudent',function(){
         var id = $(this).data('id');
-        if(id){
-          mainThis.streamStopstudent(id);
-          $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" data-id="'+id+'"  class="btn_theme_live onRaiseHand raiseHand " disabled  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>'); 
+        if(id){ 
+          $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" data-id="'+id+'"  class="btn_theme_live onRaiseHand raiseHand "   ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>');  
+          $('.strmbtn').attr('disabled',true);
+          $('.leavebtn').attr('disabled',false); 
+          $('.pausebtn').attr('disabled',false); 
+          $('.onRaiseHand').attr('disabled',false);
+            mainThis.streamStopstudent(id);  
         }
       });
       $(document).on('click','.strmbtn',function(){
@@ -185,20 +193,30 @@ export class CallPage  implements OnInit {
       $(document).on('click','.pauseSAudio',function(){
         var id = $(this).data('id');
         var name = $(this).data('name'); 
-        mainThis.webRTC.pauseSAudio(id,name);  
-        $(this).toggleClass('btn_red_color');
+        if((mainThis.pauseSAudio == false)){
+          mainThis.pauseSAudio = true;
+          $(this).css({'background':'linear-gradient(6deg, #470505, #d41616)'}); 
+          mainThis.webRTC.pauseSAudio(id,name,true);  
+        }else{
+          $(this).removeClass('red_audio_btn'); 
+          mainThis.pauseSAudio = false;
+          $(this).css({'background':'linear-gradient(6deg, #2b3642, #667a90)'}); 
+          mainThis.webRTC.pauseSAudio(id,name,false);  
+        } 
       });
       $(document).on('click','.pauseSVideo',function(){
         var id = $(this).data('id');
         var name = $(this).data('name'); 
-        mainThis.webRTC.pauseSVideo(id,name);  
-       /*  if(this.pauseSVideo == false){
-          this.pauseSVideo = true;
-          $(this).style({'height': '36px','margin': '4px','background': 'linear-gradient(6deg, #2b3642, #a71a1a)','color': 'white','border-radius': '4px'});
+        if((mainThis.pauseSVideo == false)){
+          mainThis.pauseSVideo = true;
+          $(this).css({'background':'linear-gradient(6deg, #470505, #d41616)'}); 
+          mainThis.webRTC.pauseSVideo(id,name,true);  
         }else{
-          this.pauseSVideo = false;
-          $(this).style({'height': '36px','margin': '4px','background': 'linear-gradient(6deg, #470505, #d41616)','color': 'white','border-radius': '4px'}); 
-        } */
+          $(this).removeClass('red_audio_btn'); 
+          mainThis.pauseSVideo = false;
+          $(this).css({'background':'linear-gradient(6deg, #2b3642, #667a90)'}); 
+          mainThis.webRTC.pauseSVideo(id,name,false);  
+        }     
       });
     });
   }
@@ -258,13 +276,7 @@ export class CallPage  implements OnInit {
     this.webRTC.stopRecording();
   }
 
-  join() {       
-    console.log('asd')
-   /*  if(this.joined == true){
-      this.joined = false;
-    }else{
-      this.joined = true;
-    } */
+  join() {        
     $('.strmbtn').attr('disabled',true);
     $('.leavebtn').attr('disabled',false); 
     $('.pausebtn').attr('disabled',false); 
@@ -277,10 +289,6 @@ export class CallPage  implements OnInit {
       this.webRTC.stop();
     }
     if(!this.showreset){
-     /*  this.showreset = true;
-      this.streaming = true;   */ 
-      //this.init(); 
-      //this.webRTC.call(); 
     }else{
       if(this.streaming == true){
         this.streaming = false; 
@@ -294,11 +302,7 @@ export class CallPage  implements OnInit {
       }else{   
         var callok = this.webRTC.call(); 
         this.streaming = true;   
-        $('.live_stream_btn').html('<i class="fa fa-stop"></i> Stop').css({'background':'linear-gradient(6deg, #c41818, #d40f0f)'});
-        /* if(callok){
-        }else{
-          this.toastService.presentToast("No student joined yet !"); 
-        }  */
+        $('.live_stream_btn').html('<i class="fa fa-stop"></i> Stop').css({'background':'#a71a1a'}); 
       } 
     }
   }

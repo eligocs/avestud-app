@@ -47,7 +47,7 @@
                 <button *ngIf="!showreset" class='btn_theme_live {{this.streaming ? "streaming_btn" :"" }}' (click)="reset()"> <i class="fa fa-refresh"></i> Re-setting...</button>
                 <button class='btn_theme_live {{this.pausevideo ? "muted_btn" :"" }}' (click)="stop()"> <i class="fa fa-pause"></i> Pause</button>
                 <button (click)="mutevideo()" class='btn_theme_live {{this.mutestate ? "muted_btn" :"" }}'>
-                     <i class="fa fa-microphone"></i> </button>
+                     <i class="fa fa-microphone"></i> Audio</button>
 
                 <button *ngIf="!isRecording" (click)="startRecord()" class='btn_theme_live {{this.videoStatus == false ? "muted_btn" :"" }}'>
                 <i class="fa fa-circle recordbtn"></i> Rec</button>

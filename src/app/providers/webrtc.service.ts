@@ -145,10 +145,10 @@ export class WebrtcService {
             'transform': 'scaleX(-1)'
           });
         }
+        this.onlineEl.html('<a style="color: #00bc35; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>'); 
         if(this.type == 'institute'){ 
           call.answer(this.myStream);
           call.on('stream', (stream) => { 
-          this.onlineEl.html('<a style="color: #00bc35; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>'); 
           console.log(this.studentStream)
             this.studentStream = stream; 
         });
@@ -254,24 +254,28 @@ export class WebrtcService {
 
     if (data.pauseSAudio == true) {
       var studentname = data.name; 
-        $('#student_msg').html(studentname.toUpperCase()+' audio muted'); 
-        this.myStream.getAudioTracks()[0].enabled = !(this.myStream.getAudioTracks()[0].enabled);
-        $('#total_students').html(studentname+' is muted'); 
-        setTimeout(() => { 
-          $('#student_msg').html(''); 
-          $('#total_students').html(''); 
-        }, 6000);    
+      if(data.status == true){ 
+        $('#student_msg').html('Your audio is muted by teacher');   
+      }else{
+        $('#student_msg').html('Your audio is unmuted'); 
+      }
+      this.myStream.getAudioTracks()[0].enabled = !(this.myStream.getAudioTracks()[0].enabled); 
+      setTimeout(() => { 
+        $('#student_msg').html('');  
+      }, 6000);    
       return;
     }
 
     if (data.pauseSVideo == true) {
       var studentname = data.name; 
-        $('#student_msg').html(studentname.toUpperCase()+' audio muted'); 
-        this.myStream.getVideoTracks()[0].enabled = !(this.myStream.getVideoTracks()[0].enabled);
-        $('#total_students').html(studentname+' is muted'); 
+      if(data.status == true){ 
+        $('#student_msg').html('Your video is paused by teacher');   
+      }else{
+        $('#student_msg').html('Your video continued'); 
+      }
+        this.myStream.getVideoTracks()[0].enabled = !(this.myStream.getVideoTracks()[0].enabled); 
         setTimeout(() => { 
-          $('#student_msg').html(''); 
-          $('#total_students').html(''); 
+          $('#student_msg').html('');  
         }, 6000);    
       return;
     }
@@ -316,11 +320,11 @@ export class WebrtcService {
     }
 
     if (data.isOffline == true) {
-        //$('#student_msg').html('Teacher paused presenting video'); 
-        /* $('.streaming_btn').attr('disabled',false).removeClass('streaming_btn'); 
+        $('#student_msg').html('Teacher stopped presenting'); 
+        $('.streaming_btn').attr('disabled',false).removeClass('streaming_btn'); 
         $('.leavebtn').attr('disabled',true); 
         $('.pausebtn').attr('disabled',true); 
-        $('.onRaiseHand').attr('disabled',true);   */
+        $('.onRaiseHand').attr('disabled',true);  
         setTimeout(() => { 
           $('#student_msg').html(''); 
         }, 6000);     
@@ -459,24 +463,39 @@ export class WebrtcService {
   }
 
 
-  pauseSAudio(id,name){
+  pauseSAudio(id,name,status){
     var conn = this.peer.connect(id.toString());
+    if(status == true){
+      $('#total_students').html(name+' audio muted'); 
+    }else{
+      $('#total_students').html(name+' audio unmuted'); 
+    }
     var data = {
       pauseSAudio: true,
       student_id: id,
       name: name, 
+      status: status, 
     } 
     conn.on('open', function () {
       conn.send(data);
     });
+    setTimeout(() => {  
+      $('#total_students').html(''); 
+    }, 6000); 
   }
 
-  pauseSVideo(id,name){
+  pauseSVideo(id,name,status){
     var conn = this.peer.connect(id.toString());
+    if(status == true){
+      $('#total_students').html(name+' video paused'); 
+    }else{
+      $('#total_students').html(name+' video continued'); 
+    }
     var data = {
       pauseSVideo: true,
       student_id: id,
       name: name, 
+      status: status, 
     } 
     conn.on('open', function () {
       conn.send(data);
@@ -749,7 +768,7 @@ export class WebrtcService {
       this.conn = conn;
       //$('#student_msg').html('You joined the class'); 
       
-      $('#student_msg').html('Wait for teacher'); 
+      $('#student_msg').html('Waiting for teacher'); 
       setTimeout(() => { 
         $('#student_msg').html(''); 
       }, 6000);
