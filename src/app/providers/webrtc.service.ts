@@ -4,6 +4,7 @@ import { CallPage } from '../call/call.page';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { ComponentFactoryResolver } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
+import { AuthConstants } from '../../../config/auth-constants';
 interface CanvasElement extends HTMLCanvasElement {
   captureStream(frameRate?: number): MediaStream;
 }
@@ -28,6 +29,7 @@ export class WebrtcService {
   isTeacherStreaming: any;
   conn: any;
   recorder: any;
+  facingMode: any;
   stun = 'stun.l.google.com:19302';
   /*  mediaConnection: Peer.MediaConnection;
    options: Peer.PeerJSOption; */
@@ -44,16 +46,16 @@ export class WebrtcService {
   }
 
   getMedia() {
-    var mainthis = this;
+    console.log(this.facingMode)
+    var mainthis = this;  
     var constraints = {
       audio: true
-      , video: { facingMode: 'user' }
+      , video:  {facingMode:{exact:this.facingMode}}
     };
     navigator.mediaDevices.getUserMedia(constraints)
-      .then(function (stream) {
+      .then(function (stream) { 
         mainthis.myStream = stream;
-        mainthis.myEl.srcObject = stream;
-        console.log(stream)
+        mainthis.myEl.srcObject = stream; 
       })
       .catch(function (err) {
 
@@ -115,6 +117,15 @@ export class WebrtcService {
     this.peer.listAllPeers(list => console.log(list));
   }
 
+  flipcam(){
+    if(this.facingMode == 'user'){
+      this.facingMode = 'environment';
+    } else{
+      this.facingMode = 'user';
+    }
+    this.getMedia(); 
+  }
+
   async init(userId: string, myEl: HTMLMediaElement, partnerEl: HTMLMediaElement, studentEl: HTMLMediaElement, type: string, students: any) {
      this.onlineEl = $('.onlineEl');
     this.audioMute = $('.audioMute');
@@ -123,6 +134,7 @@ export class WebrtcService {
     this.studentEl = studentEl;
     this.userId = userId;
     this.type = type; 
+    this.facingMode = 'user'; 
     if (myEl) {
       try {
         this.getMedia();
@@ -418,10 +430,11 @@ export class WebrtcService {
       return;
     } */
     if (data.stopRaisehand == true) { 
+      console.log('stped')
       $('#total_students').html(data.userdetails.name+' has stop presenting');
       $('#my-video').css({'width':'100%','height':'400px',});  
       $('#my-video-el').css({'width':'100px','height':'100px','right': '0','bottom':'0'});
-      this.recordVideoEl = this.myStream;
+      this.recordVideoEl.srcObject  = this.myStream;
       this.studentEl.srcObject = null; 
     }
     setTimeout(() => {
@@ -698,15 +711,17 @@ export class WebrtcService {
     }
   }
 
-  stopRecording() {
+  stopRecording(lectureid) {
     var mainThis = this;
     var recorder = this.recorder;
+    var blob = '';
     recorder.stopRecording(function () {
       var blob = recorder.getBlob();
       recorder = null;
       mainThis.myStream.stop();
-      window.location.href = URL.createObjectURL(blob);
+      //window.location.href = URL.createObjectURL(blob);
     });
+    return blob;
   }
 
   async studentPeer(userId: string) {
@@ -804,9 +819,21 @@ export class WebrtcService {
     //this.myStream.stop();
   }
 
+    flipStudentcam(teacher, userdetails, userimage){
+      if(this.facingMode == 'user'){
+        this.facingMode = 'environment';
+      } else{
+        this.facingMode = 'user';
+      }
+      navigator.getUserMedia({ audio: true, video: this.facingMode }, (stream) => {
+        //this.streamToTeacher(stream, teacher, userdetails, userimage)
+      }, (error) => {
+        this.handleError(error);
+      });
+    }
 
   join(teacher, userdetails, userimage) {
-    navigator.getUserMedia({ audio: true, video: { facingMode: 'user' } }, (stream) => {
+    navigator.getUserMedia({ audio: true, video: this.facingMode }, (stream) => {
       this.streamToTeacher(stream, teacher, userdetails, userimage)
     }, (error) => {
       this.handleError(error);

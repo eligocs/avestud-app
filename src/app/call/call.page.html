@@ -48,23 +48,27 @@
                 <button class='btn_theme_live {{this.pausevideo ? "muted_btn" :"" }}' (click)="stop()"> <i class="fa fa-pause"></i> Pause</button>
                 <button (click)="mutevideo()" class='btn_theme_live {{this.mutestate ? "muted_btn" :"" }}'>
                      <i class="fa fa-microphone"></i> Audio</button>
-
-                <button *ngIf="!isRecording" (click)="startRecord()" class='btn_theme_live {{this.videoStatus == false ? "muted_btn" :"" }}'>
-                <i class="fa fa-circle recordbtn"></i> Rec</button>
-                <button *ngIf="isRecording" (click)="stopRecording()" class='btn_theme_live muted_btn {{this.videoStatus == false ? "muted_btn" :"" }}'>
+                <button (click)="flipcam()" class='btn_theme_live {{this.flipped ? "flipped_btn" :"" }}'>
+                     <i class="fa fa-refresh"></i> Flip</button>
+                     
+                     <button *ngIf="!isRecording" (click)="startRecord()" class='btn_theme_live {{this.videoStatus == false ? "muted_btn" :"" }}'>
+                         <i class="fa fa-circle recordbtn"></i> Rec</button>
+                         <button *ngIf="isRecording" (click)="stopRecording()" class='btn_theme_live muted_btn {{this.videoStatus == false ? "muted_btn" :"" }}'>
                 <i class="fa fa-circle "></i> Stop</button>
-
+                
                 <button class='btn_theme_live' (click)="reset()"><i class="fa fa-refresh"></i> Restart</button>
                 <!-- <button class='btn_theme_live' (click)="refreshStudents()"><i class="fa fa-refresh"></i> Students</button> --> 
             </ion-row>
         </div>
         
-
+        
         <div class="comman_page_padding video_lectures_intitute" *ngIf="this.usertype == 'student'">
             <ion-row nowrap  class="text-right">
                 <button class='btn_theme_live strmbtn {{this.joined ? "streaming_btn" :"" }}'   ><i class='fa fa-user'></i> Join</button>
                 <button class='btn_theme_live leavebtn'   (click)="closeConnection()"><i class="fa fa-stop"></i> Leave</button>
                 <button class='btn_theme_live pausebtn {{this.pauseStudentvideo ? "muted_btn" :"" }}'   (click)="stopStudent()"> <i class="fa fa-pause"></i> Pause</button>
+                <!-- <button (click)="flipStudentcam()" class='btn_theme_live {{this.flipped ? "flipped_btn" :"" }}'>
+                     <i class="fa fa-refresh"></i> Flip</button> -->
                 <div class="student_has_question">
                     <button style="height: 36px;margin: 4px;" data-id="{{userId ?? ''}}"     class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>
                 </div>

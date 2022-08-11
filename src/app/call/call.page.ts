@@ -1,10 +1,10 @@
 import { Component, OnInit,ElementRef,AfterViewInit,ViewChild,Renderer2  } from '@angular/core';  
-import { WebrtcService } from '../providers/webrtc.service';
-import { Router,ActivatedRoute  } from '@angular/router'; 
+import { WebrtcService } from '../providers/webrtc.service'; 
 import { StorageService } from '../services/storage.service';
 import { AuthConstants } from '../../../config/auth-constants'; 
 import $ from 'jquery';
 import { ToastService } from '../services/toast.service'; 
+import { Router,ActivatedRoute,NavigationExtras } from '@angular/router';
 import { HomeService } from '../services/home.service'; 
 @Component({
   selector: 'app-call',
@@ -45,13 +45,14 @@ export class CallPage  implements OnInit {
   partnerEl: HTMLMediaElement;
   private video: HTMLMediaElement; 
   constructor(
+    private router: Router,
     public webRTC: WebrtcService,
     public elRef: ElementRef,
     private route: ActivatedRoute,
     private storageService: StorageService,
     private renderer:Renderer2,
     private toastService: ToastService,
-    private homeService: HomeService,
+    private homeService: HomeService, 
   ) {}
 
   async init() { 
@@ -140,7 +141,7 @@ export class CallPage  implements OnInit {
         this.lectureid =  params['lectureid'];
         this.type =  params['type'];
         this.subject =  params['subject'];
-        this.iacs =  params['iacs']; 
+        this.iacs =  params['iacs'];  
         this.getTeacher(this.iacs,token);  
         this.init();  
       }
@@ -237,6 +238,13 @@ export class CallPage  implements OnInit {
         }
       })
   } 
+
+  flipcam(){
+    this.webRTC.flipcam();
+  }
+  flipStudentcam(){
+    this.webRTC.flipStudentcam(this.teacher,this.userdetails,this.userimage);
+  }
   
   stop() {  
     var teacher = this.teacher;
@@ -271,9 +279,30 @@ export class CallPage  implements OnInit {
     this.isRecording = true;
     this.webRTC.startRecord();
   }
-  stopRecording(){
+  async stopRecording(){
     this.isRecording = false;
-    this.webRTC.stopRecording();
+    var recording = this.webRTC.stopRecording(this.lectureid);
+    var token =  await this.storageService.get(AuthConstants.AUTH)   
+    if(recording){
+      var formData = new FormData();
+      formData.append('lecture_video', recording);  
+      var newData = { 
+        old_id : this.lectureid, 
+        lecture_video : recording, 
+      }  
+      if(newData){
+        this.homeService.createLecture(newData,token).subscribe( (res: any) => {
+          if (res.status == 200) {
+            this.toastService.presentToast(res.msg); 
+            let navigationExtras: NavigationExtras = {
+              queryParams: { 'iacs': this.iacs,'subject':this.subject },
+              fragment: 'anchor'
+            }; 
+            this.router.navigate(['liveclasses'],navigationExtras); 
+          }
+        })
+      }
+    }
   }
 
   join() {        
