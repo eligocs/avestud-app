@@ -74,6 +74,8 @@
                         <!-- <img src="../../assets/images/edit_icon.png"> --></a>
                      <a (click)="presentAlert(single.id)"><i class='fa fa-trash text-white'></i>
                         <!-- <img src="../../assets/images/delete_icon.png"> --></a>
+                     <a [routerLink]="['/off-line-students']"
+                     [queryParams]="{iacs:this.iacs,subject:subject,lectureid:single.id}"><i class='fa fa-users text-white'></i></a>
                   </div>
                </ion-col>
             </ion-row>

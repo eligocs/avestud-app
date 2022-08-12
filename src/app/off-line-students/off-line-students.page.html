@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+     <ion-grid>
+        <ion-row>
+           <ion-col size="3">
+              <div class="d-flex">
+                 <ion-back-button defaultHref="{{previousUrl}}"></ion-back-button>
+              </div>
+           </ion-col>
+           <ion-col size="6">
+              <p class="ion-text-center heading">Offline Students</p>
+           </ion-col>
+           <ion-col size="3">
+              <img class="header_icon_1" src="../../assets/images/weblgo.png"> 
+           </ion-col>
+        </ion-row>
+     </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="comman_page_padding video_lectures_intitute">
+    <ion-row class="student_profile" *ngFor="let data of students; let i = index">
+      <ion-col size="5" class="right_section">
+         <img
+            src="{{data.avatar ? 'https://aaradhanaclasses.s3.ap-south-1.amazonaws.com/'+data.avatar : '../../assets/images/teachers_profile.png'}}"
+            alt="student_img.jpg">
+      </ion-col>
+      <ion-col class="left_section" size="7">
+         <div class="prof_name">
+            <h4 class="comman_font2 color_violet">{{data.name ?? ''}}</h4>
+            <h4 class="comman_font2 color_violet">{{data.email ?? ''}}</h4>
+            <!-- <a [routerLink]="['/view-attendance']"
+               [queryParams]="{iacs:iacs,subject:subject,student:data.student_id,studentName:data.name}"><img
+                  class='eye_img' src="../../assets/images/green_eye_icon.png" alt="green_eye_icon.png"></a> -->
+         </div> 
+         <p class="contact_no">{{data.phone ?? ''}}</p>
+         <div class="s_ship"> 
+            <p class="m_top2" (click)="mark_student_attendance(this.lectureid,data.id)"> <i class="fa fa-check"></i> Mark Attendance</p> 
+         </div>
+      </ion-col>
+   </ion-row>
+  </div> 
+</ion-content>

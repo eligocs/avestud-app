@@ -212,7 +212,12 @@ const routes: Routes = [
   {
     path: 's-livelectures',
     loadChildren: () => import('./s-livelectures/s-livelectures.module').then( m => m.SLivelecturesPageModule)
-  },
+  },  {
+    path: 'off-line-students',
+    loadChildren: () => import('./off-line-students/off-line-students.module').then( m => m.OffLineStudentsPageModule)
+  }
+
+
 
 ];
 @NgModule({

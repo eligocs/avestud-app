@@ -35,6 +35,12 @@ export class HomeService {
   getTeacher(postData,token){  
     return this.httpService.gettrip('getTeacher',postData,token);
   }
+  mark_student_attendance(postData,token){  
+    return this.httpService.gettrip('mark_student_attendance',postData,token);
+  }
+  getOfflineStudents(postData,token){  
+    return this.httpService.gettrip('getOfflineStudents',postData,token);
+  }
   getReport(postData,token){  
     return this.httpService.gettrip('getReport',postData,token);
   }
@@ -176,6 +182,12 @@ export class HomeService {
       id:id, 
     } 
     return this.httpService.delLecture('deltest',data,token);
+  }
+  deleteRecording(id,token){  
+    var data = {
+      id:id, 
+    } 
+    return this.httpService.delLecture('deleteRecording',data,token);
   }
   getLecture(id,token){  
     var data = {

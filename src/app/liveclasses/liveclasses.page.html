@@ -62,6 +62,7 @@
                         <div class="icons_set"> 
                             <a *ngIf="single.lecture_video" href="{{single.lecture_video ?? ''}}" target="_blank"  class="  text-white play_btn"  ><i class="fa fa-play"></i>   
                             </a>
+                            <!-- <a *ngIf="single.lecture_video" class="  text-white play_btn"   (click)="deleteRecording(single.id)"><i class='fa fa-trash text-white'></i></a> -->
                             <!--  <a *ngIf='single.notes' href='{{ single.notes ?? "#" }}'><i class='fa fa-download text-white'></i> </a>
                   <i class='fa fa-download text-white' *ngIf='!single.notes'></i> -->
                             <a [routerLink]="['/addlecture']" [queryParams]="{iacs:this.iacs,subject:subject,lectureid:single.id,type:'live'}"><i

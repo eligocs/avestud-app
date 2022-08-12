@@ -110,6 +110,42 @@ export class LiveclassesPage implements OnInit {
 
     await alert.present();
   }
+  
+  async deleteRecording(id) { 
+    var token = await this.storageService.get(AuthConstants.AUTH);  
+    var toast = this.toastService;
+    var serv_home = this.homeService; 
+    var mainthis = this;
+    function delete_l(id){
+      serv_home.deleteRecording(id,token).subscribe(
+        (res: any) => {   
+          mainthis.getLiveClasses(mainthis.iacs,token);
+          toast.presentToast(res.msg);
+        }); 
+    }
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: 'Sure, to delete lecture recording!!!',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            
+          }
+        }, {
+          text: 'Yes',
+          handler: function() {
+            delete_l(id); 
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
 
 
