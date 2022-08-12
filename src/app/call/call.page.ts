@@ -308,8 +308,8 @@ export class CallPage  implements OnInit {
                 fragment: 'anchor'
               }; 
               mainThis.router.navigate(['liveclasses'],navigationExtras); 
+              mainThis.showloader = false;
             }
-            mainThis.showloader = false;
           })
         }
       }

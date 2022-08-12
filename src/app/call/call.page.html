@@ -38,6 +38,16 @@
                 <div class="black_bg" id="demoicon"></div> 
             </ion-col>
         </ion-row> 
+            <ion-row class='ion-text-center' *ngIf="showloader" >
+            <ion-col size-sm="6">
+                <div class='loader_ms'><i class="fa fa-save"></i> Saving Lecture...</div>
+            </ion-col>
+            <ion-col size-sm="6">
+                <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner> 
+                <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner> 
+                <ion-spinner name="bubbles" class='bubblesloader'></ion-spinner> 
+            </ion-col>
+          </ion-row>
             <div class="" id="recordSection"></div>  
         <img class="header_icon_1 " id="logo-image" style="display:none;" src="../../assets/images/recoredlogo.png">
       <!--   <video id="video-preview"></video> -->

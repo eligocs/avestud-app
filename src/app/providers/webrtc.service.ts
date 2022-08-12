@@ -45,8 +45,7 @@ export class WebrtcService {
     };
   }
 
-  getMedia() {
-    console.log(this.facingMode)
+  getMedia() { 
     var mainthis = this;  
     var constraints = {
       audio: true
@@ -148,7 +147,6 @@ export class WebrtcService {
         if(this.type == 'student'){ 
           call.answer(this.myStream);
           call.on('stream', (stream) => { 
-            console.log(this.studentStream) 
             if(this.remote_student_video){
               this.remote_student_video.srcObject = stream; 
             }else{
@@ -162,8 +160,7 @@ export class WebrtcService {
         this.onlineEl.html('<a style="color: #00bc35; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>'); 
         if(this.type == 'institute'){ 
           call.answer(this.myStream);
-          call.on('stream', (stream) => { 
-          console.log(this.studentStream)
+          call.on('stream', (stream) => {  
             this.studentStream = stream; 
         });
         call.on('close', () => { 
@@ -241,8 +238,7 @@ export class WebrtcService {
 
     if (data.setupMembers == true) {
       var student = data.userdetails; 
-      this.studentStream = this.myStream;  
-      console.log(this.myStream)
+      this.studentStream = this.myStream;   
       return;
     }
 
@@ -429,13 +425,14 @@ export class WebrtcService {
       $('#raiseHand').html('<ion-row ><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;"            src='+imageAvatar+' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="shedule_card ion-text-center">'+data.userdetails.name+' raised hand !</div></ion-col></ion-row>'); 
       return;
     } */
-    if (data.stopRaisehand == true) { 
-      console.log('stped')
+    if (data.stopRaisehand == true) {  
       $('#total_students').html(data.userdetails.name+' has stop presenting');
       $('#my-video').css({'width':'100%','height':'400px',});  
       $('#my-video-el').css({'width':'100px','height':'100px','right': '0','bottom':'0'});
-      this.recordVideoEl.srcObject  = this.myStream;
       this.studentEl.srcObject = null; 
+      if(this.recordVideoEl){
+        this.recordVideoEl.srcObject  = this.myStream;
+      }
     }
     setTimeout(() => {
       var total_students = this.students.length;
@@ -527,10 +524,12 @@ export class WebrtcService {
     $('#my-video').css({'width':'50%','height':'400px','left': '0','object-fit': 'cover','float':'left'});  
     $('.recordCanvas').css({'width':'50%','height':'500px','left': '0','object-fit': 'cover','float':'left'});  
     $('#my-video-el').css({'width':'50%','height':'400px','right': '0'});  
-   
+   console.log(this.studentStream)
     if(this.studentStream){ 
         this.studentEl.srcObject = this.studentStream;  
-        this.recordVideoEl.srcObject = this.studentStream;  
+        if(this.recordVideoEl){
+          this.recordVideoEl.srcObject = this.studentStream;  
+        }
     }
     var conn = this.peer.connect(id.toString());
     var data = {
@@ -602,7 +601,7 @@ export class WebrtcService {
       if (!recorder) return; 
       tries += 100; 
       canvas.width = 600;
-      canvas.height = 500; 
+      canvas.height = 400; 
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
         context.translate(canvas.width, 0);
@@ -661,9 +660,7 @@ export class WebrtcService {
     }, 6000);   
   }
 
-  streamFromstudent(id,name, teacher,students) { 
-    console.log('yes')
-    // console.log(userdetails)
+  streamFromstudent(id,name, teacher,students) {  
     var mainThis = this;
     if(this.students.length > 0){
       mainThis.students.forEach(function(std){
