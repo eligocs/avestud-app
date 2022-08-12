@@ -20,6 +20,8 @@ export class CallPage  implements OnInit {
   mutestate: boolean;
   pauseSVideo: boolean;
   lectureid: string;
+  unit_id: string;
+  showloader:boolean;
   type: string;
   userimage: string;
   students: any[] = [];
@@ -128,6 +130,7 @@ export class CallPage  implements OnInit {
 
   async ngOnInit(){ 
     var mainThis = this;
+    this.showloader = false;
     this.streaming = false;
     this.pauseSAudio = false;
     this.pauseSVideo = false;
@@ -139,6 +142,7 @@ export class CallPage  implements OnInit {
     this.route.queryParams.subscribe(
       params => {    
         this.lectureid =  params['lectureid'];
+        this.unit_id =  params['unit_id'];
         this.type =  params['type'];
         this.subject =  params['subject'];
         this.iacs =  params['iacs'];  
@@ -280,30 +284,38 @@ export class CallPage  implements OnInit {
     this.webRTC.startRecord();
   }
   async stopRecording(){
+    var mainThis = this;
+    this.showloader = true;
     this.isRecording = false;
-    var recording = this.webRTC.stopRecording(this.lectureid);
-    var token =  await this.storageService.get(AuthConstants.AUTH)   
-    if(recording){
-      var formData = new FormData();
-      formData.append('lecture_video', recording);  
-      var newData = { 
-        old_id : this.lectureid, 
-        video : recording, 
-        type:'live'
-      }  
-      if(newData){
-        this.homeService.createLecture(newData,token).subscribe( (res: any) => {
-          if (res.status == 200) {
-            this.toastService.presentToast(res.msg); 
-            let navigationExtras: NavigationExtras = {
-              queryParams: { 'iacs': this.iacs,'subject':this.subject },
-              fragment: 'anchor'
-            }; 
-            this.router.navigate(['liveclasses'],navigationExtras); 
-          }
-        })
+    var token =  await mainThis.storageService.get(AuthConstants.AUTH)
+    this.webRTC.stopRecording(this.lectureid,function(file){ 
+      if(file && token){
+     /*    var formData = new FormData();
+        formData.append('lecture_video', file);  */ 
+        var newData = { 
+          i_assigned_class_subject_id : mainThis.iacs,
+          old_id : mainThis.lectureid, 
+          unit : mainThis.unit_id, 
+          video : file, 
+          type:'live'
+        }  
+        if(newData){
+          mainThis.homeService.createLecture(newData,token).subscribe( (res: any) => { 
+            if (res.status == 200) {
+              mainThis.toastService.presentToast('Lecture details saved successfully'); 
+              let navigationExtras: NavigationExtras = {
+                queryParams: { 'iacs': mainThis.iacs,'subject':mainThis.subject },
+                fragment: 'anchor'
+              }; 
+              mainThis.router.navigate(['liveclasses'],navigationExtras); 
+            }
+            mainThis.showloader = false;
+          })
+        }
       }
-    }
+    });
+     
+    
   }
 
   join() {        

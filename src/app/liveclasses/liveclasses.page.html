@@ -44,10 +44,10 @@
                         <div class="video_img">
                             <!-- <a *ngIf='single.lecture_video' href='{{ single?.lecture_video }}'><img src="../../assets/images/video_img2.png" class="youtube_icon"></a> -->
                             <div class="btn_theme "> 
-                                <button *ngIf="single.lectureIsOn" [routerLink]="['/call']" class="btn_blue startstream" [queryParams]="{iacs:iacs,subject:subject,type:'live',lectureid:single.id}">Start Stream <i class="fa fa-play"></i> 
+                                <button *ngIf="single.lectureIsOn" [routerLink]="['/call']" class="btn_blue startstream" [queryParams]="{iacs:iacs,subject:subject,type:'live',lectureid:single.id,unit_id:single.unit_id}">Start Stream <i class="fa fa-play"></i> 
                                 </button>
                                 <button *ngIf="!single.lectureIsOn"  class="btn_blue startstream"  ><i class="fa fa-info"></i><br>Class has<br>time yet  
-                                </button>
+                                </button> 
                             </div>
                         </div>
                     </ion-col> 
@@ -58,7 +58,9 @@
                         </marquee>
                         <!-- <h3 class="text_light">{{ single.lecture_name | titlecase }}</h3> -->
                         <p class="text_blue">{{ single?.lecture_date | date: 'dd/MM/yyyy' }} {{ single?.lecture_time}}</p>
-                        <div class="icons_set">
+                        <div class="icons_set"> 
+                            <a *ngIf="single.lecture_video" href="{{single.lecture_video ?? ''}}" target="_blank"  class="  text-white play_btn"  ><i class="fa fa-play"></i>   
+                            </a>
                             <!--  <a *ngIf='single.notes' href='{{ single.notes ?? "#" }}'><i class='fa fa-download text-white'></i> </a>
                   <i class='fa fa-download text-white' *ngIf='!single.notes'></i> -->
                             <a [routerLink]="['/addlecture']" [queryParams]="{iacs:this.iacs,subject:subject,lectureid:single.id,type:'live'}"><i

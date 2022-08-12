@@ -110,6 +110,7 @@ export class HttpService {
     }
     if(data.video){
       formDatas.append('video', data.video); 
+      console.log(data)
     } 
     formDatas.append('i_assigned_class_subject_id', data.i_assigned_class_subject_id);  
     const url = environment.apiUrl + serviceName;  

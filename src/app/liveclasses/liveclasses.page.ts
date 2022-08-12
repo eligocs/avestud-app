@@ -52,8 +52,7 @@ export class LiveclassesPage implements OnInit {
                 c.meeting.forEach((single) => {
                   var date = single.lecture_date +' '+ single.lecture_time;
                   var lec_date = new Date(date);
-                  var current_date =  new Date(Date.now() + (10 * 60000));   
-                  console.log(current_date.getTime() > lec_date.getTime())
+                  var current_date =  new Date(Date.now() + (10 * 60000));    
                   if(current_date.getTime() > lec_date.getTime())
                   { 
                     single.lectureIsOn = true;

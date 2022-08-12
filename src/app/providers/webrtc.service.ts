@@ -570,19 +570,19 @@ export class WebrtcService {
     var canvas = <CanvasElement>document.createElement('canvas');
     var context = canvas.getContext('2d');
     this.context = context;
-    // canvas.setAttribute('style', 'position: absolute; z-index: -1;display:none;');
+    canvas.setAttribute('style', 'position: absolute; z-index: -1;display:none;');
     //canvas.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);'); 
     $('#recordSection').after(canvas);
 
     var video = document.createElement('video');
-    //video.setAttribute('style', 'display:none;');
+    // video.setAttribute('style', 'display:none;');
     video.setAttribute('autoplay', '');
     video.setAttribute('playsinline', '');  
     video.srcObject = this.myStream;
     this.recordVideoEl = video;
     // video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);');  
 
-    var canvasStream = canvas.captureStream(1000);
+    var canvasStream = canvas.captureStream(100);
     var audioPlusCanvasStream = new MediaStream();
 
     canvasStream.getTracks().forEach(function (videoTrack) {
@@ -601,14 +601,14 @@ export class WebrtcService {
     (function looper() {
       if (!recorder) return; 
       tries += 100; 
-      canvas.width = 400;
-      canvas.height = 400; 
+      canvas.width = 600;
+      canvas.height = 500; 
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
         context.translate(canvas.width, 0);
         context.scale(-1, 1);
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        context.drawImage(logoImage, 10, 10, 80, 50);
+        context.drawImage(logoImage, 10, 10, 85, 50);
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.restore(); 
       setTimeout(looper, 100);
@@ -711,17 +711,22 @@ export class WebrtcService {
     }
   }
 
-  stopRecording(lectureid) {
+  async stopRecording(lectureid,callback) {
     var mainThis = this;
     var recorder = this.recorder;
-    var blob = '';
-    recorder.stopRecording(function () {
-      var blob = recorder.getBlob();
+    var myFile = '';
+    await recorder.stopRecording(function () {
+      var blobData = recorder.getBlob();
       recorder = null;
       mainThis.myStream.stop();
-      //window.location.href = URL.createObjectURL(blob);
-    });
-    return blob;
+      //blob = URL.createObjectURL(blobData);
+      const myFile = new File(
+        [blobData],
+        "demo.mp4",
+        { type: 'video/mp4' }
+      );
+      return callback(myFile);
+    }); 
   }
 
   async studentPeer(userId: string) {
