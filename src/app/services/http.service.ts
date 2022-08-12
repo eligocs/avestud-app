@@ -81,11 +81,21 @@ export class HttpService {
   }
   postWithImg(serviceName: string,data: any,token:any) {         
     const formDatas = new FormData();
-    formDatas.append('unit', data.unit);
-    formDatas.append('number', data.number);
-    formDatas.append('lecturename', data.lecturename);
-    formDatas.append('date', data.date); 
-    formDatas.append('type', data.type); 
+    if(data.unit){
+      formDatas.append('unit', data.unit);
+    }
+    if(data.number){
+      formDatas.append('number', data.number);
+    }
+    if(data.lecturename){
+      formDatas.append('lecturename', data.lecturename);
+    }
+    if(data.date){
+      formDatas.append('date', data.date); 
+    }
+    if(data.type){
+      formDatas.append('type', data.type); 
+    }
     if(data.time){
       formDatas.append('time', data.time); 
     }

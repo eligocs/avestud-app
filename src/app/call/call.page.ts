@@ -288,7 +288,8 @@ export class CallPage  implements OnInit {
       formData.append('lecture_video', recording);  
       var newData = { 
         old_id : this.lectureid, 
-        lecture_video : recording, 
+        video : recording, 
+        type:'live'
       }  
       if(newData){
         this.homeService.createLecture(newData,token).subscribe( (res: any) => {
