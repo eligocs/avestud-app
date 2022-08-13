@@ -52,7 +52,7 @@
                             <h3 class="text_light">{{ single.lecture_name | titlecase }}</h3>
                         </marquee>
                         <p class="text_blue">{{ single?.lecture_date | date: 'dd/MM/yyyy' }} {{ single?.lecture_time}}</p>
-                        <!--  <div class="icons_set">
+                        <!-- s  <div class="icons_set">
                             <a [routerLink]="['/addlecture']" [queryParams]="{iacs:this.iacs,subject:subject,lectureid:single.id,type:'live'}"><i
                     class='fa fa-pencil text-white'></i>
                  </a>
