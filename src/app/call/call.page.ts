@@ -6,6 +6,7 @@ import $ from 'jquery';
 import { ToastService } from '../services/toast.service'; 
 import { Router,ActivatedRoute,NavigationExtras } from '@angular/router';
 import { HomeService } from '../services/home.service'; 
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-call',
   templateUrl: './call.page.html',
@@ -55,6 +56,7 @@ export class CallPage  implements OnInit {
     private renderer:Renderer2,
     private toastService: ToastService,
     private homeService: HomeService, 
+    public alertController: AlertController,
   ) {}
 
   async init() { 
@@ -78,7 +80,7 @@ export class CallPage  implements OnInit {
       $('#demoicon').html(video);
       this.usertype = 'institute';
       this.myEl = document.querySelector('#my-video'); 
-      this.webRTC.init(this.userId, this.myEl,this.partnerEl,this.studentEl,'institute',this.students);  
+      this.webRTC.init(this.userId, this.myEl,this.partnerEl,this.studentEl,'institute',this.students,this.lectureid);  
       this.previousUrl = 'liveclasses?iacs='+this.iacs+'&subject='+this.subject; 
     }else{  
       this.myEl = document.querySelector('#my-video-el'); 
@@ -95,7 +97,7 @@ export class CallPage  implements OnInit {
       this.myEl.volume = 0;
       $('#demoicon').html(video);
       this.partnerEl = document.querySelector('#partner-video');  
-      this.webRTC.init(this.userId, this.myEl, this.partnerEl,this.studentEl,'student',this.students);
+      this.webRTC.init(this.userId, this.myEl, this.partnerEl,this.studentEl,'student',this.students,this.lectureid);
       this.usertype = 'student'; 
       this.myvideo = false;  
       this.previousUrl = 's-livelectures?iacs='+this.iacs+'&subject='+this.subject;  
@@ -222,6 +224,11 @@ export class CallPage  implements OnInit {
           $(this).css({'background':'linear-gradient(6deg, #2b3642, #667a90)'}); 
           mainThis.webRTC.pauseSVideo(id,name,false);  
         }     
+      });
+      $(document).on('click','.mark_student_attendance',function(){
+         var lectureid = $(this).data('lecture');
+         var studentid = $(this).data('id');
+         mainThis.mark_student_attendance(lectureid,studentid);
       });
     });
   }
@@ -365,8 +372,9 @@ export class CallPage  implements OnInit {
   
   allowStudent(id,name){
     this.webRTC.allowStudent(id,name,this.teacher);
-    $('.student-'+id).find('.addRaised').find('.studentRaised').html('<i class="fa fa-desktop" aria-hidden="true"></i> Presenting...')
-    $('.student-'+id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live pauseSAudio" data-name="'+name+'"  data-id="' + id + '"> <i class="fa fa-microphone"></i></button> <button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live pauseSVideo" data-name="'+name+'"  data-id="' + id + '"> <i class="fa fa-play"></i></button>');
+    $('.student-'+id).find('.addRaised').find('.studentRaised').html('<i class="fa fa-desktop" aria-hidden="true"></i> Presenting...');
+    $('.student-'+id).find('.addRaised').find('.studentRaised').attr('disabled',true);
+    $('.student-'+id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live pauseSAudio" data-name="'+name+'"  data-id="' + id + '"> <i class="fa fa-microphone"></i></button> <button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live pauseSVideo" data-name="'+name+'"  data-id="' + id + '"> <i class="fa fa-play"></i></button>');
   }
   
   streamFromstudent(id){
@@ -384,6 +392,54 @@ export class CallPage  implements OnInit {
 
   swapVideo(topVideo: string) {
     this.topVideoFrame = topVideo;
+  }
+
+  async mark_student_attendance(lecture_id,student_id){
+    var toast = this.toastService;
+    var token =  await this.storageService.get(AuthConstants.AUTH);
+    var mainThis = this;
+    /*  */
+
+    function markattendance(lecture_id,student_id,token){
+      if(token && lecture_id && student_id){
+        var postData = {
+          lecture_id:lecture_id,
+          student_id:student_id,
+        } 
+        mainThis.homeService.mark_student_attendance(postData,token).subscribe(
+          (res: any) => {     
+            if(res.status == 200){
+              toast.presentToast(res.msg); 
+            }else{
+              toast.presentToast(res.msg); 
+            }
+          }); 
+      }
+    }
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: 'Are you sure you want to mark student attendance!!!',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            
+          }
+        }, {
+          text: 'Yes',
+          handler: function() {
+            markattendance(lecture_id,student_id,token); 
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
+
   }
 }
 

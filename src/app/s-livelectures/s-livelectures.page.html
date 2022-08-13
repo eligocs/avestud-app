@@ -32,17 +32,17 @@
                 <ion-row class="card_video_lecture" *ngFor="let single of lect.meeting;">
                     <ion-col size="5">
                         <div class="video_img">
-                            <div class="btn_theme " *ngIf="!single?.lecture_video"> 
+                            <div class="btn_theme " > 
                                 <button *ngIf="single.lectureIsOn" [routerLink]="['/call']" class="btn_blue startstream" [queryParams]="{iacs:iacs,subject:subject,type:'live',lectureid:single.id}">Join Class <i class="fa fa-play"></i> 
                                 </button>
                                 <button *ngIf="!single.lectureIsOn"  class="btn_blue startstream"  ><i class="fa fa-info"></i><br>Class has<br>time yet  
                                 </button> 
                             </div>
 
-                          <div class="btn_theme " *ngIf="single?.lecture_video">  
+                         <!--  <div class="btn_theme " *ngIf="single?.lecture_video">  
                             <a *ngIf="single.lecture_video" href="{{single.lecture_video ?? ''}}" target="_blank"   ><button   class="btn_blue startstream"  ><i class="fa fa-play"></i> Play 
                             </button> </a>
-                        </div>
+                        </div> -->
 
                         </div>
                     </ion-col>
@@ -59,6 +59,8 @@
                             <a (click)="presentAlert(single.id)"><i class='fa fa-trash text-white'></i>
                  </a>
                         </div> -->
+                        <a *ngIf="single.lecture_video" href="{{single.lecture_video ?? ''}}" target="_blank"  class="  text-white play_btn"  ><i class="fa fa-play"></i>   
+                        </a>
                     </ion-col>
                 </ion-row>
             </div>

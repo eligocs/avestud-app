@@ -26,6 +26,7 @@ export class WebrtcService {
   students: any[] = [];
   type: any;
   userId: any;
+  lectureid: any;
   isTeacherStreaming: any;
   conn: any;
   recorder: any;
@@ -125,13 +126,14 @@ export class WebrtcService {
     this.getMedia(); 
   }
 
-  async init(userId: string, myEl: HTMLMediaElement, partnerEl: HTMLMediaElement, studentEl: HTMLMediaElement, type: string, students: any) {
+  async init(userId: string, myEl: HTMLMediaElement, partnerEl: HTMLMediaElement, studentEl: HTMLMediaElement, type: string, students: any,lectureid:any) {
      this.onlineEl = $('.onlineEl');
     this.audioMute = $('.audioMute');
     this.myEl = myEl;
     this.partnerEl = partnerEl;
     this.studentEl = studentEl;
     this.userId = userId;
+    this.lectureid = lectureid;
     this.type = type; 
     this.facingMode = 'user'; 
     if (myEl) {
@@ -452,7 +454,7 @@ export class WebrtcService {
       stds.forEach(function (std) {
         itemsProcessed++; 
         var image = std.avatar ? std.avatar : "";
-        html += '<div class="student-video-section"> <ion-row style="background: linear-gradient(130deg,#385169 -12%, #385169 12%, #385169 18%,#1f1e1e 74%);border: 1px solid #848484;border-radius: 4px;" class="background_students student-' + std.id + '"><ion-col size="2"><div class=""> <img  class="student_image" style="min-height: 46px;max-width: 100%;border-radius: 34px;" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="10"><div class="student-details addRaised"><h4>' + std.name + ' <span class="myonlinestatus"></span> <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4></div></ion-col></ion-row></div>';
+        html += '<div class="student-video-section"> <ion-row style="background: linear-gradient(130deg,#385169 -12%, #385169 12%, #385169 18%,#1f1e1e 74%);border: 1px solid #848484;border-radius: 4px;" class="background_students student-' + std.id + '"><ion-col size="2"><div class=""> <img  class="student_image" style="min-height: 46px;max-width: 100%;border-radius: 34px;" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="10"><div class="student-details addRaised"><h4>' + std.name + ' <span class="myonlinestatus"></span> <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4>&nbsp;<button  style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;"         data-lecture="'+mainThis.lectureid+'" data-id="'+std.id+'"   class="mark_student_attendance"> <i class="fa fa-check-circle"></i> Mark</button></div></ion-col></ion-row></div>';
         // html += '<ion-row class="background_students student-' + std.id + '"><ion-col size="3"> <div class=""> <img class="student_image" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="student-details addRaised"><h4>' + std.name + ' <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4></div></ion-col></ion-row>';
         if (itemsProcessed === mainThis.students.length) {
           $('#studentdiv').html(html);
@@ -462,10 +464,10 @@ export class WebrtcService {
             setTimeout(() => {
               $('#total_students').html(data.name+' is presenting');
             }, 1000);
-            $('.student-' + data.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live studentRaised"  data-id="' + data.id + '"><i class="fa fa-desktop"></i> Student is presenting ...</button>'); 
+            $('.student-' + data.id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live studentRaised"  data-id="' + data.id + '"><i class="fa fa-desktop"></i> Student is presenting ...</button>');
           } else {
             if (std.handRaised == 1) {
-              $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live studentRaised" data-name="'+std.name+'"  data-id="' + std.id + '">I have a question <i class="fa fa-eye"></i></button>'); 
+              $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live studentRaised" data-name="'+std.name+'"  data-id="' + std.id + '">Has question <i class="fa fa-eye"></i></button>')
             } else {
               $('.student-' + std.id).find('.addRaised').find('.studentRaised').remove();
             }
@@ -473,6 +475,7 @@ export class WebrtcService {
         }, 500);
         
       })
+      $('.addRaised').css({'display': 'flex'}); 
       
     } else {
       $('#studentdiv').html('<ion-row "><ion-col size="12"><div class="shedule_card ion-text-center">No students Yet !</div></ion-col></ion-row>');
