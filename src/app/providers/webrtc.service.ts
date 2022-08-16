@@ -50,7 +50,12 @@ export class WebrtcService {
     var mainthis = this;  
     var constraints = {
       audio: true
-      , video:  {facingMode:this.facingMode}
+      ,
+       video:  {
+        facingMode:this.facingMode,
+        width: 1920,
+            height: 1080
+      }
     };
     navigator.mediaDevices.getUserMedia(constraints)
       .then(function (stream) { 
@@ -579,7 +584,8 @@ export class WebrtcService {
     var video = document.createElement('video');
     // video.setAttribute('style', 'display:none;');
     video.setAttribute('autoplay', '');
-    video.setAttribute('playsinline', '');  
+    video.setAttribute('playsinline', '');
+    // video.volume = 0;  
     video.srcObject = this.myStream;
     this.recordVideoEl = video;
     // video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);');  
@@ -590,6 +596,7 @@ export class WebrtcService {
     canvasStream.getTracks().forEach(function (videoTrack) {
       audioPlusCanvasStream.addTrack(videoTrack);
     });
+    console.log(this.studentStream)
     if(this.studentStream){
       this.studentStream.getTracks(this.studentStream, 'audio').forEach(function (audioTrack) {
         audioPlusCanvasStream.addTrack(audioTrack);
@@ -601,7 +608,9 @@ export class WebrtcService {
     }
 
     var recorder = RecordRTC(audioPlusCanvasStream, {
-      type: 'video'
+      type: 'video',
+      videoBitsPerSecond: 51200000,
+      mimeType: 'video/webm'
     });
     this.recorder = recorder; 
     recorder.startRecording(); 

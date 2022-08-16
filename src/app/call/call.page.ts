@@ -73,9 +73,11 @@ export class CallPage  implements OnInit {
       video.setAttribute('height', '400');
       video.setAttribute('width', '100%'); 
       video.setAttribute('playsinline', '');
+      video.muted = true;
       video.volume = 0;
       video.setAttribute('class', 'my-video videoStream');
       video.setAttribute('id', 'my-video'); 
+      // video.controls = true;
       video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);');  
       $('#demoicon').html(video);
       this.usertype = 'institute';
@@ -90,11 +92,12 @@ export class CallPage  implements OnInit {
       video.setAttribute('autoplay', '');
       video.setAttribute('height', '400');
       video.setAttribute('width', '100%');
-      video.setAttribute('muted', 'muted');
       video.setAttribute('playsinline', '');
       video.setAttribute('class', 'partner-video videoStream');
       video.setAttribute('id', 'partner-video'); 
+      // video.muted = true;
       this.myEl.volume = 0;
+      this.myEl.muted = true;
       $('#demoicon').html(video);
       this.partnerEl = document.querySelector('#partner-video');  
       this.webRTC.init(this.userId, this.myEl, this.partnerEl,this.studentEl,'student',this.students,this.lectureid);

@@ -33,7 +33,7 @@ export class SLivelecturesPage implements OnInit {
         this.iacs =  params['iacs']; 
         this.subject =  params['subject'];  
         this.getLiveClasses(this.iacs,token);
-        this.previousUrl = 'subject-detail?iacs='+this.iacs+'&subject='+this.subject+'&purchased=1';  
+        this.previousUrl = 'subject-detail-student?iacs='+this.iacs+'&subject='+this.subject+'&purchased=1';  
       }
     )
      
