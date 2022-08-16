@@ -50,7 +50,7 @@ export class WebrtcService {
     var mainthis = this;  
     var constraints = {
       audio: true
-      , video:  {facingMode:{exact:this.facingMode}}
+      , video:  {facingMode:this.facingMode}
     };
     navigator.mediaDevices.getUserMedia(constraints)
       .then(function (stream) { 

@@ -68,7 +68,7 @@ export class LiveclassesPage implements OnInit {
             }
           }else{
             this.lectures = [];   
-            this.nolectures = true;   
+            this.nolectures = true;    
           }
         }); 
     }  
