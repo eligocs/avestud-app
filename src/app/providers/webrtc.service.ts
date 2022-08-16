@@ -590,9 +590,15 @@ export class WebrtcService {
     canvasStream.getTracks().forEach(function (videoTrack) {
       audioPlusCanvasStream.addTrack(videoTrack);
     });
-    this.myStream.getTracks(this.myStream, 'audio').forEach(function (audioTrack) {
-      audioPlusCanvasStream.addTrack(audioTrack);
-    });
+    if(this.studentStream){
+      this.studentStream.getTracks(this.studentStream, 'audio').forEach(function (audioTrack) {
+        audioPlusCanvasStream.addTrack(audioTrack);
+      });
+    }else{
+      this.myStream.getTracks(this.myStream, 'audio').forEach(function (audioTrack) {
+        audioPlusCanvasStream.addTrack(audioTrack);
+      });
+    }
 
     var recorder = RecordRTC(audioPlusCanvasStream, {
       type: 'video'

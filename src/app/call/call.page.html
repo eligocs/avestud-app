@@ -77,8 +77,8 @@
                 <button class='btn_theme_live strmbtn {{this.joined ? "streaming_btn" :"" }}'   ><i class='fa fa-user'></i> Join</button>
                 <button class='btn_theme_live leavebtn'   (click)="closeConnection()"><i class="fa fa-stop"></i> Leave</button>
                 <button class='btn_theme_live pausebtn {{this.pauseStudentvideo ? "muted_btn" :"" }}'   (click)="stopStudent()"> <i class="fa fa-pause"></i> Pause</button>
-                <!-- <button (click)="flipStudentcam()" class='btn_theme_live {{this.flipped ? "flipped_btn" :"" }}'>
-                     <i class="fa fa-refresh"></i> Flip</button> -->
+                <button (click)="flipcam()" class='btn_theme_live {{this.flipped ? "flipped_btn" :"" }}'>
+                     <i class="fa fa-refresh"></i> Flip</button>
                 <div class="student_has_question">
                     <button style="height: 36px;margin: 4px;" data-id="{{userId ?? ''}}"     class="btn_theme_live onRaiseHand raiseHand "  ><i class="fa fa-question" aria-hidden="true"></i> Ask Question</button>
                 </div>
