@@ -23,6 +23,7 @@ export class CallPage  implements OnInit {
   lectureid: string;
   unit_id: string;
   showloader:boolean;
+  allowedStudent:boolean;
   type: string;
   userimage: string;
   students: any[] = [];
@@ -43,6 +44,7 @@ export class CallPage  implements OnInit {
   partnerId: string;
   pauseStudentvideo: boolean;
   userdetails: any;
+  fullscreen: boolean;
   mainElement: HTMLMediaElement;
   myEl: HTMLMediaElement;
   partnerEl: HTMLMediaElement;
@@ -67,7 +69,7 @@ export class CallPage  implements OnInit {
       this.studentEl = document.querySelector('#my-video-el');
       this.myvideo = true; 
       this.mainElement = document.querySelector('#demoicon');
-      this.mainElement.setAttribute('style','padding-top:0px');
+      this.mainElement.setAttribute('style','padding-top:0px;');
       var video = document.createElement('video'); 
       video.setAttribute('autoplay', '');
       video.setAttribute('height', '400');
@@ -78,7 +80,7 @@ export class CallPage  implements OnInit {
       video.setAttribute('class', 'my-video videoStream');
       video.setAttribute('id', 'my-video'); 
       // video.controls = true;
-      video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);');  
+      video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);object-fit: cover;');  
       $('#demoicon').html(video);
       this.usertype = 'institute';
       this.myEl = document.querySelector('#my-video'); 
@@ -87,7 +89,7 @@ export class CallPage  implements OnInit {
     }else{  
       this.myEl = document.querySelector('#my-video-el'); 
       this.mainElement = document.querySelector('#demoicon');
-      this.mainElement.setAttribute('style','padding-top:0px');
+      this.mainElement.setAttribute('style','padding-top:0px;');
       var video = document.createElement('video'); 
       video.setAttribute('autoplay', '');
       video.setAttribute('height', '400');
@@ -95,11 +97,13 @@ export class CallPage  implements OnInit {
       video.setAttribute('playsinline', '');
       video.setAttribute('class', 'partner-video videoStream');
       video.setAttribute('id', 'partner-video'); 
+      video.setAttribute('style', 'object-fit: cover;'); 
       // video.muted = true;
       this.myEl.volume = 0;
       this.myEl.muted = true;
       $('#demoicon').html(video);
       this.partnerEl = document.querySelector('#partner-video');  
+      // this.partnerEl.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);object-fit: cover;');  
       this.webRTC.init(this.userId, this.myEl, this.partnerEl,this.studentEl,'student',this.students,this.lectureid);
       this.usertype = 'student'; 
       this.myvideo = false;  
@@ -142,6 +146,7 @@ export class CallPage  implements OnInit {
     this.isRecording = false;
     this.handRaised = false;
     this.showreset = true;
+    this.fullscreen = false;
     this.pauseSVideo = false;
     var token =  await this.storageService.get(AuthConstants.AUTH)
     this.route.queryParams.subscribe(
@@ -156,7 +161,7 @@ export class CallPage  implements OnInit {
       }
     )
 
-
+ 
     $(document).ready(function(){
       $('.leavebtn').attr('disabled',true); 
       $('.pausebtn').attr('disabled',true); 
@@ -170,6 +175,11 @@ export class CallPage  implements OnInit {
         if(id && name){
           mainThis.allowStudent(id,name);
         }
+      });
+      $(document).on('click','#gofullScreen',function(){
+        $('.hideonfullscreen').toggle();  
+        mainThis.updateFullscreen();
+       
       });
       $(document).on('click','.streamFromstudent',function(){
         var id = $(this).data('id');
@@ -192,7 +202,7 @@ export class CallPage  implements OnInit {
             mainThis.streamStopstudent(id);  
         }
       });
-      $(document).on('click','.strmbtn',function(){
+      $(document).on('click','.strmbtn',function(){ 
         $('.strmbtn').attr('disabled',true);
         $('.leavebtn').attr('disabled',false); 
         $('.pausebtn').attr('disabled',false); 
@@ -234,6 +244,67 @@ export class CallPage  implements OnInit {
          mainThis.mark_student_attendance(lectureid,studentid);
       });
     });
+  }
+
+  updateFullscreen(){
+    var mainThis = this;   
+    console.log(mainThis.fullscreen)
+    if(mainThis.fullscreen == true){  
+      $('.video_lectures_intitute').css({'position': 'relative', 'width': '100%','background': '#1a1a1a'}); 
+     
+      if(mainThis.allowedStudent){
+        $('#my-video,#partner-video').css({
+          'object-fit': 'cover',
+          'position': 'relative',
+          'right': '0px',
+          'bottom': '0px',
+          'height':'400px',
+          'width':'50%',
+          'left': '0',
+          'float':'left'
+        });
+        $('#my-video-el').css({'width':'50%','height':'400px','right': '0','z-index':'0','position': 'relative','float':'right'}); 
+      }else{
+        $('#my-video,#partner-video').css({
+          'object-fit': 'cover',
+          'position': 'relative',
+          'right': '0px',
+          'bottom': '0px',
+          'min-width': '100%',
+          'min-height': '100%',
+        });
+      } 
+      $('#studentdiv').css({'bottom': 'unset','position': 'relative','max-height':'unset','overflow': 'unset','z-index': 'unset'});
+      $('.video_dummy').css({'margin-top':'none','position': 'absolute','left': '10px','bottom': '10px','z-index':'5'});
+      $('#gofullScreen').css({'top':'118px'});
+      if(mainThis.usertype == 'student'){
+        $('#my-video-el').css({
+          'right': '6px',
+          'bottom': '6px',
+          'position': 'absolute',
+        });
+      } 
+      mainThis.fullscreen = false; 
+    }else{ 
+      $('#gofullScreen').css({'top':'50px'}); 
+      mainThis.fullscreen = true; 
+      $('.video_lectures_intitute').css({'position': 'absolute','bottom': '0', 'width': '100%','background': '#20202000'});
+      if(mainThis.allowedStudent){
+        $('#my-video').css({'height':'100%','left': '0','object-fit': 'cover','float':'left','min-width': '50%','position': 'fixed'});   
+        $('#my-video-el').css({'width':'50%','height':'100%','right': '0','z-index':'0','position': 'fixed','bottom':'0'}); 
+      }else{
+        $('#my-video,#partner-video').css({'position': 'fixed','right': '0','bottom': '0','min-width': '100%','min-height': '100%'}); 
+      }
+      $('#studentdiv').css({'bottom': '100px','position': 'fixed','max-height':'100px','overflow': 'scroll','z-index': '999'});
+      $('.video_dummy').css({'margin-top':'10px','position': 'absolute','bottom':'unset'}); 
+      if(mainThis.usertype == 'student'){
+        $('#my-video-el').css({
+          'right': '6px',
+          'bottom': '110px',
+          'position': 'fixed',
+        });
+      } 
+    } 
   }
 
   stopMedia(){
@@ -374,10 +445,12 @@ export class CallPage  implements OnInit {
   }
   
   allowStudent(id,name){
-    this.webRTC.allowStudent(id,name,this.teacher);
+    this.allowedStudent = true; 
+    this.webRTC.allowStudent(id,name,this.teacher,this.fullscreen);
     $('.student-'+id).find('.addRaised').find('.studentRaised').html('<i class="fa fa-desktop" aria-hidden="true"></i> Presenting...');
     $('.student-'+id).find('.addRaised').find('.studentRaised').attr('disabled',true);
     $('.student-'+id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live pauseSAudio" data-name="'+name+'"  data-id="' + id + '"> <i class="fa fa-microphone"></i></button> <button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live pauseSVideo" data-name="'+name+'"  data-id="' + id + '"> <i class="fa fa-play"></i></button>');
+    this.fullscreen = false; 
   }
   
   streamFromstudent(id){

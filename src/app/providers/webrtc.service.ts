@@ -434,7 +434,7 @@ export class WebrtcService {
     } */
     if (data.stopRaisehand == true) {  
       $('#total_students').html(data.userdetails.name+' has stop presenting');
-      $('#my-video').css({'width':'100%','height':'400px',});  
+      $('#my-video').css({'width':'100%','height':'400px','position':'absolute'});  
       $('#my-video-el').css({'width':'100px','height':'100px','right': '0','bottom':'0'});
       this.studentEl.srcObject = null; 
       if(this.recordVideoEl){
@@ -527,12 +527,18 @@ export class WebrtcService {
     });
   }
 
-  allowStudent(id,name, teacher) {
+  allowStudent(id,name, teacher,fullscreen) {
     var mainThis = this;
-    $('#my-video').css({'width':'50%','height':'400px','left': '0','object-fit': 'cover','float':'left'});  
+    console.log(fullscreen)
     $('.recordCanvas').css({'width':'50%','height':'500px','left': '0','object-fit': 'cover','float':'left'});  
-    $('#my-video-el').css({'width':'50%','height':'400px','right': '0'});  
-   console.log(this.studentStream)
+    if(fullscreen){
+      $('#my-video').css({'width':'50%','height':'100%','left': '0','object-fit': 'cover','float':'left','min-width': '50%','bottom':'0'});  
+      $('#my-video-el').css({'width':'50%','height':'100%','right': '0','z-index':'0','bottom':'0','position': 'fixed'}); 
+    }else{
+      $('#my-video').css({'width':'50%','height':'400px','left': '0','object-fit': 'cover','float':'left','min-width': '50%'}); 
+      $('#my-video-el').css({'width':'50%','height':'400px','right': '0','z-index':'0'});  
+    }
+   /* console.log(this.studentStream) */
     if(this.studentStream){ 
         this.studentEl.srcObject = this.studentStream;  
         if(this.recordVideoEl){

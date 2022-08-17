@@ -1,6 +1,6 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-grid>
+<ion-header  >
+    <ion-toolbar class="hideonfullscreen">
+        <ion-grid >
             <ion-row>
                 <ion-col size="3">
                     <div class="d-flex">
@@ -25,7 +25,7 @@
         <ion-row>
             <ion-col size="12" class="padding_zero">
                 <div class="ion-text-center video_dummy d-flex">
-                    <img class="header_icon_1 "  src="../../assets/images/weblgo.png">
+                    <img class="header_icon_1 videost"  src="../../assets/images/weblgo.png">
                     <div class="onlineEl">
                         <a style="color: #cf3b1e; margin-left:5px;float: right;" href="#"><i class="fa fa-circle"></i></a>
                     </div>
@@ -35,6 +35,7 @@
                 <div *ngIf="this.usertype == 'institute'" class="message_box"  id="total_students" ></div> 
                 <div *ngIf="this.usertype == 'student'" class="message_box"  id="student_msg" ></div> 
                 <div class="audioMute" style="position: absolute;bottom: 50px;z-index: 2;margin-left: 18px;"></div>
+                <div id="gofullScreen" style=""><i class="fa fa-expand"></i></div>
                 <div class="black_bg" id="demoicon"></div> 
             </ion-col>
         </ion-row> 

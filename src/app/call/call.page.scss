@@ -143,5 +143,13 @@ button.btn_theme_live.muted_btn {
 .loader_ms {
     margin-top: 8px;
 }
-
+#gofullScreen{
+    position: fixed;
+    top: 108px;
+    background: #0606066b;
+    border-radius: 2px; 
+    z-index: 2;
+    right: 17px;
+    padding: 4px;
+}
  

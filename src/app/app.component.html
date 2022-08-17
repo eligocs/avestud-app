@@ -1,8 +1,8 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
 <!-- institute -->
-  <ion-tabs *ngIf="this.previousUrl && this.previousUrl == 'institute'">
-    <ion-tab-bar slot="bottom" >  
+  <ion-tabs *ngIf="this.previousUrl && this.previousUrl == 'institute'" class="">
+    <ion-tab-bar slot="bottom" class="hideonfullscreen">  
       <ion-tab-button tab="homepage">
         <li  class="homeicon"><i class='fa fa-home'></i></li><span class='icon_tab'>Classroom</span>
         </ion-tab-button>
@@ -25,8 +25,8 @@
   </ion-tabs>
 
   <!-- student -->
-    <ion-tabs *ngIf="this.previousUrl && this.previousUrl == 'student'">
-      <ion-tab-bar slot="bottom">
+    <ion-tabs *ngIf="this.previousUrl && this.previousUrl == 'student'" class="">
+      <ion-tab-bar slot="bottom" class="hideonfullscreen">
         <ion-tab-button tab="studenthome">
         <li  class="homeicon"><i class='fa fa-home'></i></li><span class='icon_tab'>Classroom</span>
         </ion-tab-button>
