@@ -260,7 +260,7 @@ export class WebrtcService {
 
     if (data.studentStopped == true) {
       var student = data.userdetails; 
-        $('#student_msg').html(student.name.toUpperCase()+' stopped preseting'); 
+        $('#student_msg').html('Student stopped preseting'); 
         setTimeout(() => { 
           $('#student_msg').html(''); 
         }, 6000);    
@@ -322,15 +322,16 @@ export class WebrtcService {
     }
 
     if (data.allowStudent == true) {
-        $('#student_msg').html('Present your question'); 
-        setTimeout(() => { 
-          $('#student_msg').html(''); 
-        }, 6000);    
+        $('#student_msg').html('Present your question...'); 
         var student_id = data.student_id;
         var name = data.name; 
         this.students = data.allstudents;   
+        $('.onRaiseHand').css({'background': 'linear-gradient(6deg, rgb(8 143 182), rgb(55 192 204))','color': 'white','border-radius': '4px;'}).html('Present your question').removeClass('orange_btn').attr('disabled',true);
         this.streamFromstudent(student_id,name,this.userId,this.students);
-        $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #470505, #d41616);color: white;border-radius: 4px;" class="btn_theme_live  streamStopstudent"  data-id="'+student_id+'"><i class="fa fa-desktop"></i> Stop</button>')
+        setTimeout(() => { 
+          $('#student_msg').html(''); 
+        }, 6000);    
+        // $('.student_has_question').html('<button style="height: 36px;margin: 4px;background: linear-gradient(6deg, #470505, #d41616);color: white;border-radius: 4px;" class="btn_theme_live  streamStopstudent"  data-id="'+student_id+'"><i class="fa fa-desktop"></i> Stop</button>')
         /* $('.student_has_question').html('<button style="height: 36px;margin: 4px;background:linear-gradient(6deg, #365209, #72a52c);color: white;border-radius: 4px;" class="btn_theme_live  streamFromstudent"  data-id="' + student_id + '"><i class="fa fa-desktop"></i> Present Question</button>');  */
         // $('#partner-video').css({'width':'50%','height':'350px','right': '0'}); 
       return;
@@ -354,6 +355,21 @@ export class WebrtcService {
       } else {
         this.audioMute.html('');
       }
+      return;
+    }
+
+    if (data.stopRaisehand == true) {  
+      $('#student_msg').html('Tap Finish to end question');
+      $('.onRaiseHand').css({'background': 'linear-gradient(6deg, rgb(78 182 8), rgb(74 132 15))','color': 'white','border-radius': '4px;'}).html('Finish').removeClass('orange_btn').attr('disabled',false);
+      /* $('#my-video').css({'width':'100%','height':'400px','position':'absolute'});  
+      $('#my-video-el').css({'width':'100px','height':'100px','right': '0','bottom':'0'}); */
+     /*  this.studentEl.srcObject = null; 
+      if(this.recordVideoEl){
+        this.recordVideoEl.srcObject  = this.myStream;
+      } */
+      setTimeout(() => { 
+        $('#student_msg').html('');   
+      }, 6000);
       return;
     }
 
@@ -432,15 +448,7 @@ export class WebrtcService {
       $('#raiseHand').html('<ion-row ><ion-col size="3"> <div class="shedule_card"> <img style="min-height:100px;"            src='+imageAvatar+' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="shedule_card ion-text-center">'+data.userdetails.name+' raised hand !</div></ion-col></ion-row>'); 
       return;
     } */
-    if (data.stopRaisehand == true) {  
-      $('#total_students').html(data.userdetails.name+' has stop presenting');
-      $('#my-video').css({'width':'100%','height':'400px','position':'absolute'});  
-      $('#my-video-el').css({'width':'100px','height':'100px','right': '0','bottom':'0'});
-      this.studentEl.srcObject = null; 
-      if(this.recordVideoEl){
-        this.recordVideoEl.srcObject  = this.myStream;
-      }
-    }
+   
     setTimeout(() => {
       var total_students = this.students.length;
       $('#total_students').html(total_students);   
@@ -459,7 +467,7 @@ export class WebrtcService {
       stds.forEach(function (std) {
         itemsProcessed++; 
         var image = std.avatar ? std.avatar : "";
-        html += '<div class="student-video-section"> <ion-row style="background: linear-gradient(130deg,#385169 -12%, #385169 12%, #385169 18%,#1f1e1e 74%);border: 1px solid #848484;border-radius: 4px;" class="background_students student-' + std.id + '"><ion-col size="2"><div class=""> <img  class="student_image" style="min-height: 46px;max-width: 100%;border-radius: 34px;" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="10"><div class="student-details addRaised"><h4>' + std.name + ' <span class="myonlinestatus"></span> <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4>&nbsp;<button  style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;"         data-lecture="'+mainThis.lectureid+'" data-id="'+std.id+'"   class="mark_student_attendance"> <i class="fa fa-check-circle"></i> Mark</button></div></ion-col></ion-row></div>';
+        html += '<div class="student-video-section"> <ion-row style="background: linear-gradient(130deg,#385169 -12%, #385169 12%, #385169 18%,#1f1e1e 74%);border: 1px solid #848484;border-radius: 4px;" class="background_students student-' + std.id + '"><ion-col size="2"><div class=""> <img  class="student_image" style="min-height: 46px;max-width: 100%;border-radius: 34px;" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="10"><div class="student-details addRaised"><h4>' + std.name + ' <span class="myonlinestatus"></span> <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4>&nbsp;<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live pauseSAudio" data-name="'+name+'"  data-id="' + std.id + '"> <i class="fa fa-microphone"></i></button> <button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live pauseSVideo" data-name="'+std.name+'"  data-id="' + std.id + '"> <i class="fa fa-pause"></i></button><button  style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;"         data-lecture="'+mainThis.lectureid+'" data-id="'+std.id+'"   class="mark_student_attendance"> <i class="fa fa-check-circle"></i></button></div></ion-col></ion-row></div>';
         // html += '<ion-row class="background_students student-' + std.id + '"><ion-col size="3"> <div class=""> <img class="student_image" src=' + image + ' alt="student_img.jpg"></div></ion-col><ion-col size="9"><div class="student-details addRaised"><h4>' + std.name + ' <a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a></h4></div></ion-col></ion-row>';
         if (itemsProcessed === mainThis.students.length) {
           $('#studentdiv').html(html);
@@ -472,7 +480,7 @@ export class WebrtcService {
             $('.student-' + data.id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live studentRaised"  data-id="' + data.id + '"><i class="fa fa-desktop"></i> Student is presenting ...</button>');
           } else {
             if (std.handRaised == 1) {
-              $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live studentRaised" data-name="'+std.name+'"  data-id="' + std.id + '">Has question <i class="fa fa-eye"></i></button>')
+              $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #a53939, #da4c4c);color: white;border-radius: 4px;" class="btn_theme_live studentRaised" data-name="'+std.name+'"  data-id="' + std.id + '"><i class="fa fa-question"></i></button>')
             } else {
               $('.student-' + std.id).find('.addRaised').find('.studentRaised').remove();
             }
@@ -528,17 +536,18 @@ export class WebrtcService {
   }
 
   allowStudent(id,name, teacher,fullscreen) {
-    var mainThis = this;
+    var mainThis = this; 
+    $('.recordCanvas').css({'width':'50%','height':'500px','left': '0','object-fit': 'cover','float':'left'});
     console.log(fullscreen)
-    $('.recordCanvas').css({'width':'50%','height':'500px','left': '0','object-fit': 'cover','float':'left'});  
     if(fullscreen){
       $('#my-video').css({'width':'50%','height':'100%','left': '0','object-fit': 'cover','float':'left','min-width': '50%','bottom':'0'});  
-      $('#my-video-el').css({'width':'50%','height':'100%','right': '0','z-index':'0','bottom':'0','position': 'fixed'}); 
-    }else{
+      $('#my-video-el').css({'width':'50%','height':'100%','right': '0','z-index':'0','bottom':'0','position':'fixed'}); 
+    }else{ 
       $('#my-video').css({'width':'50%','height':'400px','left': '0','object-fit': 'cover','float':'left','min-width': '50%'}); 
-      $('#my-video-el').css({'width':'50%','height':'400px','right': '0','z-index':'0'});  
+      $('#my-video-el').css({'width':'50%','height':'400px','right': '0','z-index':'0','position':'absolute'});  
     }
-   /* console.log(this.studentStream) */
+    $('.student-' + id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live streamStopstudent" data-name="'+name+'"  data-id="' + id + '"> <i class="fa fa-stop"></i></button>')
+    $('#gofullScreen').attr('id','gofullScreen2');
     if(this.studentStream){ 
         this.studentEl.srcObject = this.studentStream;  
         if(this.recordVideoEl){
@@ -601,8 +610,7 @@ export class WebrtcService {
 
     canvasStream.getTracks().forEach(function (videoTrack) {
       audioPlusCanvasStream.addTrack(videoTrack);
-    });
-    console.log(this.studentStream)
+    }); 
     if(this.studentStream){
       this.studentStream.getTracks(this.studentStream, 'audio').forEach(function (audioTrack) {
         audioPlusCanvasStream.addTrack(audioTrack);
@@ -705,24 +713,43 @@ export class WebrtcService {
     });  */
   }
 
-  streamStopstudent(userdetails, teacher) {
+  streamStopstudent(id, teacher,fullscreen) { 
     var mainThis = this;
-    var conn = this.peer.connect(teacher.toString());
+    var conn = this.peer.connect(id.toString());
     var data = {
       isPresenting: true,
-      stopRaisehand: true,
-      userdetails: userdetails
+      stopRaisehand: true, 
     }
     conn.on('open', function () {
       conn.send(data);
     });
+    $('#total_students').html('Student video stopped');
+    setTimeout(() => {
+      var total_students = this.students.length; 
+      $('#total_students').html(''); 
+    }, 6000);  
+   /*  $('#my-video').css({'width':'100%','height':'400px','position':'absolute'});  
+    $('#my-video-el').css({'width':'100px','height':'100px','right': '0','bottom':'0'}); */
+     
+    if(fullscreen){
+      $('#my-video').css({'width':'100%','height':'100%','left': '0','object-fit': 'cover','float':'left','min-width': '50%','bottom':'0'});    
+    }else{
+      $('#my-video').css({'width':'100%','height':'100%','left': '0','object-fit': 'cover','float':'left','min-width': '50%'}); 
+    }
+    $('.streamStopstudent').remove();
+    $('#gofullScreen2').attr('id','gofullScreen');
+    if(this.studentEl){
+      this.studentEl.srcObject = null; 
+    }
+    if(this.recordVideoEl){
+      this.recordVideoEl.srcObject  = this.myStream;
+    }
     if(this.students.length > 0){
       mainThis.students.forEach(function(std){
-        if(userdetails.id != std.id){
+        if(id != std.id){
           var conn = mainThis.peer.connect(std.id.toString());
           var data = {
-            studentStopped: true,
-            userdetails: userdetails,  
+            studentStopped: true,   
           }
           conn.on('open', function () {
             conn.send(data);
