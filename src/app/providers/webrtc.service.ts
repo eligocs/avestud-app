@@ -47,7 +47,7 @@ export class WebrtcService {
   }
 
   getMedia() { 
-    alert(this.facingMode)
+    // alert(this.facingMode)
     var mainthis = this;  
     var constraints = {
       audio: true

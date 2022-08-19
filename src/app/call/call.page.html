@@ -54,9 +54,9 @@
             <ion-row nowrap *ngIf="this.usertype == 'institute'" class="text-right">
                 <button *ngIf="showreset" class='btn_theme_live live_stream_btn {{this.streaming ? "streaming_btn" :"" }}' (click)="call()"> <i class="fa fa-play"></i> Stream</button>
                 <button *ngIf="!showreset" class='btn_theme_live {{this.streaming ? "streaming_btn" :"" }}' (click)="reset()"> <i class="fa fa-refresh"></i> Re-setting...</button>
-                <button class='btn_theme_live {{this.pausevideo ? "muted_btn" :"" }}' (click)="stop()"> <i class="fa fa-pause"></i> Pause</button>
+                <button class='btn_theme_live {{this.pausevideo ? "muted_btn" :"" }}' (click)="stop()"> <i class="fa fa-pause"></i></button>
                 <button (click)="mutevideo()" class='btn_theme_live {{this.mutestate ? "muted_btn" :"" }}'>
-                     <i class="fa fa-microphone"></i> Audio</button>
+                     <i class="fa fa-microphone"></i></button>
                 <button (click)="flipcam()" class='btn_theme_live {{this.flipped ? "flipped_btn" :"" }}'>
                      <i class="fa fa-refresh"></i> Flip</button> 
                      
@@ -75,7 +75,7 @@
             <ion-row nowrap  class="text-right">
                 <button class='btn_theme_live strmbtn {{this.joined ? "streaming_btn" :"" }}'   ><i class='fa fa-user'></i> Join</button>
                 <button class='btn_theme_live leavebtn'   (click)="closeConnection()"><i class="fa fa-stop"></i> Leave</button>
-                <button class='btn_theme_live pausebtn {{this.pauseStudentvideo ? "muted_btn" :"" }}'   (click)="stopStudent()"> <i class="fa fa-pause"></i> Pause</button>
+                <button class='btn_theme_live pausebtn {{this.pauseStudentvideo ? "muted_btn" :"" }}'   (click)="stopStudent()"> <i class="fa fa-pause"></i></button>
                 <button (click)="flipcam()" class='btn_theme_live {{this.flipped ? "flipped_btn" :"" }}'>
                      <i class="fa fa-refresh"></i> Flip</button>
                 <div class="student_has_question">
