@@ -47,6 +47,7 @@ export class WebrtcService {
   }
 
   getMedia() { 
+    alert(this.facingMode)
     var mainthis = this;  
     var constraints = {
       audio: true
@@ -54,7 +55,7 @@ export class WebrtcService {
        video:  {
         facingMode:this.facingMode,
         width: 1920,
-            height: 1080
+        height: 1080
       }
     };
     navigator.mediaDevices.getUserMedia(constraints)
@@ -238,8 +239,15 @@ export class WebrtcService {
     var mainThis = this;
 
 
-    /* if (data.studentCall == true) {
-      console.log(this.peer)
+   /*  if (data.studentCall == true) {
+      var student = data.userdetails.id;
+      var index = this.students.findIndex(function (o) {
+        return o.id === student;
+      })
+      if (index !== -1) {
+        this.students.splice(index, 1);
+      };
+      this.students.push(data.userdetails) 
      
     } */
 
@@ -304,10 +312,10 @@ export class WebrtcService {
         setTimeout(() => { 
           $('#student_msg').html(''); 
         }, 6000);    
-        $('#partner-video').css({'width':'50%','height':'400px','right': '0','object-fit': 'cover','float':'left'}); 
+        $('#partner-video').css({'width':'50%','object-fit': 'cover','float':'left'}); 
         var video = document.createElement('video'); 
         video.setAttribute('autoplay', '');
-        video.setAttribute('height', '400px');
+     /*    video.setAttribute('height', '400px'); */
         video.setAttribute('width', '50%');  
         video.setAttribute('playsinline', '');
         video.volume = 0;
@@ -316,6 +324,16 @@ export class WebrtcService {
         video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);object-fit:cover');  
         $('#demoicon').append(video);
         this.remote_student_video = document.querySelector('#remote_student_video');  
+        console.log(data.fullscreen)
+        if(data.fullscreen){
+          $('#remote_student_video').css({'float':'right','position':'fixed'});   
+          $('#partner-video,#remote_student_video').css({'height':'100%'}); 
+          
+        }else{ 
+          $('#remote_student_video').css({'position':'absolute'});   
+          $('#partner-video,#remote_student_video').css({'height':'400px'}); 
+          
+        }
         /* this.remote_student_video.srcObject = this.myStream */
         // this.peer.call(data.student.id.toString(), this.myStream); 
       return;
@@ -328,6 +346,9 @@ export class WebrtcService {
         this.students = data.allstudents;   
         $('.onRaiseHand').css({'background': 'linear-gradient(6deg, rgb(8 143 182), rgb(55 192 204))','color': 'white','border-radius': '4px;'}).html('Present your question').removeClass('orange_btn').attr('disabled',true);
         this.streamFromstudent(student_id,name,this.userId,this.students);
+
+        
+
         setTimeout(() => { 
           $('#student_msg').html(''); 
         }, 6000);    
@@ -412,6 +433,7 @@ export class WebrtcService {
         $('#total_students').html(data.userdetails.name+' left the class');  
       } else {
         if (data.handRaised == true) {
+         
           var student = data.userdetails.id;
           var index = this.students.findIndex(function (o) {
             return o.id === student;
@@ -433,7 +455,14 @@ export class WebrtcService {
         } else {
           $('#total_students').html(data.userdetails.name+' joined the class');  
           if (data.userdetails) {
-            this.students.push(data.userdetails) 
+            var student = data.userdetails.id;
+            var index = this.students.findIndex(function (o) {
+              return o.id === student;
+            })  
+            if (index !== -1) {
+            }else{
+              this.students.push(data.userdetails) 
+            }
             if(mainThis.isTeacherStreaming){
               mainThis.peer.call(data.userdetails.id.toString(), mainThis.myStream);
             }
@@ -464,6 +493,7 @@ export class WebrtcService {
       } else {
         var stds = this.students;
       }
+       
       stds.forEach(function (std) {
         itemsProcessed++; 
         var image = std.avatar ? std.avatar : "";
@@ -480,7 +510,7 @@ export class WebrtcService {
             $('.student-' + data.id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live studentRaised"  data-id="' + data.id + '"><i class="fa fa-desktop"></i> Student is presenting ...</button>');
           } else {
             if (std.handRaised == 1) {
-              $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #a53939, #da4c4c);color: white;border-radius: 4px;" class="btn_theme_live studentRaised" data-name="'+std.name+'"  data-id="' + std.id + '"><i class="fa fa-question"></i></button>')
+              $('.student-' + std.id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #a53939, #da4c4c);color: white;border-radius: 4px;" class="btn_theme_live studentRaised" data-name="'+std.name+'"  data-id="' + std.id + '"><i class="fa fa-question"></i></button><button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live streamStopstudent" data-name="'+name+'"  data-id="' + std.id + '"> <i class="fa fa-close"></i></button>')
             } else {
               $('.student-' + std.id).find('.addRaised').find('.studentRaised').remove();
             }
@@ -495,6 +525,8 @@ export class WebrtcService {
     }
   }
 
+
+   
 
   pauseSAudio(id,name,status){
     var conn = this.peer.connect(id.toString());
@@ -537,8 +569,17 @@ export class WebrtcService {
 
   allowStudent(id,name, teacher,fullscreen) {
     var mainThis = this; 
-    $('.recordCanvas').css({'width':'50%','height':'500px','left': '0','object-fit': 'cover','float':'left'});
-    console.log(fullscreen)
+
+    var student = id;
+    var index = this.students.findIndex(function (o) {
+      if(o.id === student){
+        o.handRaised = ''; 
+        o.isPresenting = 1; 
+        return o.id === student;
+      }
+    }) 
+      
+    $('.recordCanvas').css({'width':'50%','height':'500px','left': '0','object-fit': 'cover','float':'left'}); 
     if(fullscreen){
       $('#my-video').css({'width':'50%','height':'100%','left': '0','object-fit': 'cover','float':'left','min-width': '50%','bottom':'0'});  
       $('#my-video-el').css({'width':'50%','height':'100%','right': '0','z-index':'0','bottom':'0','position':'fixed'}); 
@@ -546,13 +587,13 @@ export class WebrtcService {
       $('#my-video').css({'width':'50%','height':'400px','left': '0','object-fit': 'cover','float':'left','min-width': '50%'}); 
       $('#my-video-el').css({'width':'50%','height':'400px','right': '0','z-index':'0','position':'absolute'});  
     }
-    $('.student-' + id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live streamStopstudent" data-name="'+name+'"  data-id="' + id + '"> <i class="fa fa-stop"></i></button>')
+ /*    $('.student-' + id).find('.addRaised').append('<button style="height: 36px;margin-top: 12px;margin-left: 6px;background: linear-gradient(6deg, #2b3642, #667a90);color: white;border-radius: 4px;" class="btn_theme_live streamStopstudent" data-name="'+name+'"  data-id="' + id + '"> <i class="fa fa-close"></i></button>') */
     $('#gofullScreen').attr('id','gofullScreen2');
     if(this.studentStream){ 
         this.studentEl.srcObject = this.studentStream;  
-        if(this.recordVideoEl){
+        /* if(this.recordVideoEl){
           this.recordVideoEl.srcObject = this.studentStream;  
-        }
+        } */
     }
     var conn = this.peer.connect(id.toString());
     var data = {
@@ -572,6 +613,7 @@ export class WebrtcService {
           streamToall: true, 
           student:student, 
           studentName:student.name, 
+          fullscreen:fullscreen, 
         }
         con.on('open', function () {
           con.send(data);
@@ -581,6 +623,12 @@ export class WebrtcService {
     }) 
   }
 
+  pauseRecording(){
+    this.recorder.pauseRecording();
+  }
+  resumeRecording(){
+    this.recorder.resumeRecording(); 
+  }
   startRecord() {
     var mainThis = this;
 
@@ -592,7 +640,7 @@ export class WebrtcService {
     var canvas = <CanvasElement>document.createElement('canvas');
     var context = canvas.getContext('2d');
     this.context = context;
-    canvas.setAttribute('style', 'position: absolute; z-index: -1;display:none;');
+    canvas.setAttribute('style', 'position: absolute; z-index: -1;display:block;');
     //canvas.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);'); 
     $('#recordSection').after(canvas);
 
@@ -632,14 +680,14 @@ export class WebrtcService {
     (function looper() {
       if (!recorder) return; 
       tries += 100; 
-      canvas.width = 600;
-      canvas.height = 400; 
+      canvas.width = 1280;
+      canvas.height = 720; 
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
         context.translate(canvas.width, 0);
         context.scale(-1, 1);
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        context.drawImage(logoImage, 10, 10, 85, 50);
+        context.drawImage(logoImage, 20, 20, 85, 60);
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.restore(); 
       setTimeout(looper, 100);
@@ -656,26 +704,13 @@ export class WebrtcService {
       conn.send(data);
     });
   }
+
+  
   
   
   raiseHand(teacher, userdetails) {
     var mainThis = this;
     this.peer.call(teacher.toString(), this.myStream); 
-    // if(this.students.length > 0){
-    //   mainThis.students.forEach(function(std){
-    //     if(userdetails.id != std.id){
-    //       var conn = this.peer.connect(teacher.toString());
-    //       var data = {
-    //         setupMembers: true,
-    //         userdetails: userdetails
-    //       }
-    //       conn.on('open', function () {
-    //         conn.send(data);
-    //       });
-    //       //mainThis.peer.call(std.id.toString(), mainThis.myStream);
-    //     }
-    //   });
-    // }
     var conn = this.peer.connect(teacher.toString());
     var data = {
       handRaised: true,
@@ -727,23 +762,21 @@ export class WebrtcService {
     setTimeout(() => {
       var total_students = this.students.length; 
       $('#total_students').html(''); 
-    }, 6000);  
-   /*  $('#my-video').css({'width':'100%','height':'400px','position':'absolute'});  
-    $('#my-video-el').css({'width':'100px','height':'100px','right': '0','bottom':'0'}); */
-     
+    }, 6000);   
+    $('.student-' + id).find('.addRaised').find('.studentRaised').remove();
     if(fullscreen){
       $('#my-video').css({'width':'100%','height':'100%','left': '0','object-fit': 'cover','float':'left','min-width': '50%','bottom':'0'});    
     }else{
       $('#my-video').css({'width':'100%','height':'100%','left': '0','object-fit': 'cover','float':'left','min-width': '50%'}); 
     }
-    $('.streamStopstudent').remove();
+    $('.student-' + id).find('.addRaised').find('.streamStopstudent').remove();
     $('#gofullScreen2').attr('id','gofullScreen');
     if(this.studentEl){
       this.studentEl.srcObject = null; 
     }
-    if(this.recordVideoEl){
+   /*  if(this.recordVideoEl){
       this.recordVideoEl.srcObject  = this.myStream;
-    }
+    } */
     if(this.students.length > 0){
       mainThis.students.forEach(function(std){
         if(id != std.id){
@@ -836,9 +869,6 @@ export class WebrtcService {
       setTimeout(() => { 
         $('#student_msg').html(''); 
       }, 6000);
-      setTimeout(() => { 
-        $('#student_msg').html(''); 
-      }, 6000);
       $('.myonlinestatus').html('<a style="color: #17b117; margin-left:5px;" href="#"><i class="fa fa-circle"></i></a>');
     }else{
       $('#student_msg').html('Wait for teacher or try again'); 
@@ -878,8 +908,7 @@ export class WebrtcService {
       } else{
         this.facingMode = 'user';
       }
-      navigator.getUserMedia({ audio: true, video: this.facingMode }, (stream) => {
-        //this.streamToTeacher(stream, teacher, userdetails, userimage)
+      navigator.getUserMedia({ audio: true, video: this.facingMode }, (stream) => { 
       }, (error) => {
         this.handleError(error);
       });
