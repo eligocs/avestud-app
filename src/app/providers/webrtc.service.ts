@@ -19,6 +19,7 @@ export class WebrtcService {
   studentEl: HTMLMediaElement;
   partnerEl: HTMLMediaElement;
   teacherEl: HTMLMediaElement;
+  recordedVideo: HTMLMediaElement;
   onlineEl: any;
   options: any;
   audioMute: any;
@@ -50,12 +51,15 @@ export class WebrtcService {
     // alert(this.facingMode)
     var mainthis = this;  
     var constraints = {
-      audio: true
-      ,
+      audio: true,
        video:  {
-        facingMode:this.facingMode,
-        width: 1920,
-        height: 1080
+        facingMode:this.facingMode, 
+        minWidth: 1280,
+        minHeight: 720, 
+        maxWidth: 1920,
+        maxHeight: 1080, 
+        minFrameRate: 3,
+        maxFrameRate: 32,
       }
     };
     navigator.mediaDevices.getUserMedia(constraints)
@@ -640,16 +644,19 @@ export class WebrtcService {
     var canvas = <CanvasElement>document.createElement('canvas');
     var context = canvas.getContext('2d');
     this.context = context;
-    canvas.setAttribute('style', 'position: absolute; z-index: -1;display:block;');
+    canvas.setAttribute('style', 'position: absolute; z-index: -1;display:none;');
     //canvas.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);'); 
     $('#recordSection').after(canvas);
 
-    var video = document.createElement('video');
-    // video.setAttribute('style', 'display:none;');
+    var video = document.createElement('video');   
     video.setAttribute('autoplay', '');
-    video.setAttribute('playsinline', '');
-    // video.volume = 0;  
-    video.srcObject = this.myStream;
+    video.setAttribute('playsinline', ''); 
+    video.setAttribute('muted', '');
+    video.setAttribute('id', 'recordVid');  
+    video.srcObject = this.myStream;  
+    setTimeout(() => {
+      video.muted = true; 
+    }, 300);
     this.recordVideoEl = video;
     // video.setAttribute('style', 'transition: transform 0.8s;-webkit-transform: scaleX(-1);transform: scaleX(-1);');  
 
@@ -659,20 +666,25 @@ export class WebrtcService {
     canvasStream.getTracks().forEach(function (videoTrack) {
       audioPlusCanvasStream.addTrack(videoTrack);
     }); 
-    if(this.studentStream){
+   /*  if(this.studentStream){
       this.studentStream.getTracks(this.studentStream, 'audio').forEach(function (audioTrack) {
         audioPlusCanvasStream.addTrack(audioTrack);
       });
     }else{
-      this.myStream.getTracks(this.myStream, 'audio').forEach(function (audioTrack) {
-        audioPlusCanvasStream.addTrack(audioTrack);
-      });
-    }
+    } */
+    this.myStream.getTracks(this.myStream, 'audio').forEach(function (audioTrack) {
+      audioPlusCanvasStream.addTrack(audioTrack);
+    });
 
     var recorder = RecordRTC(audioPlusCanvasStream, {
       type: 'video',
       videoBitsPerSecond: 51200000,
-      mimeType: 'video/webm'
+      mimeType: 'video/webm',
+      timeSlice: 1000,
+      bitsPerSecond: 128000,
+      bufferSize: 16384,
+      frameRate: 30,
+      numberOfAudioChannels: 2, 
     });
     this.recorder = recorder; 
     recorder.startRecording(); 
@@ -680,14 +692,14 @@ export class WebrtcService {
     (function looper() {
       if (!recorder) return; 
       tries += 100; 
-      canvas.width = 1280;
+      canvas.width = 980;
       canvas.height = 720; 
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
         context.translate(canvas.width, 0);
         context.scale(-1, 1);
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        context.drawImage(logoImage, 20, 20, 85, 60);
+        context.drawImage(logoImage, 20, 20, 90, 70);
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.restore(); 
       setTimeout(looper, 100);

@@ -73,7 +73,7 @@ export class CallPage  implements OnInit {
       this.myvideo = true; 
       this.mainElement = document.querySelector('#demoicon');
       this.mainElement.setAttribute('style','padding-top:0px;');
-      var video = document.createElement('video'); 
+      var video = document.createElement('video');  
       video.setAttribute('autoplay', '');
       video.setAttribute('height', '400');
       video.setAttribute('width', '100%'); 
