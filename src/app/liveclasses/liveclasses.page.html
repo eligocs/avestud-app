@@ -60,7 +60,9 @@
                         <!-- <h3 class="text_light">{{ single.lecture_name | titlecase }}</h3> -->
                         <p class="text_blue">{{ single?.lecture_date | date: 'dd/MM/yyyy' }} {{ single?.lecture_time}}</p>
                         <div class="icons_set"> 
-                            <a *ngIf="single.lecture_video" href="{{single.lecture_video ?? ''}}" target="_blank"  class="  text-white play_btn"  ><i class="fa fa-play"></i>   
+                            <a *ngIf="single.uploadStatus == 1" (click)="reload()" target="_blank"  class="  text-white play_btn"  ><i class="fa fa-refresh"></i>   
+                            </a>
+                            <a *ngIf="single.lecture_video && single.uploadStatus == 0" href="{{single.lecture_video ?? ''}}" target="_blank"  class="  text-white play_btn"  ><i class="fa fa-play"></i>   
                             </a>
                             <!-- <a *ngIf="single.lecture_video" class="  text-white play_btn"   (click)="deleteRecording(single.id)"><i class='fa fa-trash text-white'></i></a> -->
                             <!--  <a *ngIf='single.notes' href='{{ single.notes ?? "#" }}'><i class='fa fa-download text-white'></i> </a>

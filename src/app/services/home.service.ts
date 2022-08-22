@@ -189,6 +189,9 @@ export class HomeService {
     } 
     return this.httpService.delLecture('deleteRecording',data,token);
   }
+  uploadingLectureVideo(data,token){ 
+    return this.httpService.gettrip('uploadingLectureVideo',data,token);
+  }
   getLecture(id,token){  
     var data = {
       id:id, 

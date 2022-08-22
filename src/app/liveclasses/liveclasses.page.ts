@@ -37,6 +37,10 @@ export class LiveclassesPage implements OnInit {
       }
     )  
   }
+
+  reload(){
+    window.location.reload();
+  }
   
   getLiveClasses(iacs,token){
     if(iacs && token){   
@@ -46,7 +50,7 @@ export class LiveclassesPage implements OnInit {
       this.homeService.getLiveClasses(data,token).subscribe(
         (res: any) => {    
           if(res.data.length > 0){
-            var classes = res.data ? res.data:'';  
+            var classes = res.data ? res.data:''; 
             if(classes){ 
               classes.forEach((c) => {  
                 c.meeting.forEach((single) => {

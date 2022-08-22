@@ -489,9 +489,20 @@ export class CallPage  implements OnInit {
     this.webRTC.mutevideo(this.mutestate); 
   }
 
-  startRecord(){
+  async startRecord(){
     this.isRecording = true;
     this.webRTC.startRecord();
+    var mainThis = this;
+    var newData = {  
+      last_id : mainThis.lectureid,  
+      type:'live'
+    }  
+    console.log(mainThis.lectureid)
+    var token =  await mainThis.storageService.get(AuthConstants.AUTH)
+    if(token){ 
+      mainThis.homeService.uploadingLectureVideo(newData,token).subscribe( (res: any) => {  
+      })
+    }
   }
   async stopRecording(){
     var mainThis = this;
@@ -511,7 +522,7 @@ export class CallPage  implements OnInit {
         }  
         if(newData){
           mainThis.homeService.createLecture(newData,token).subscribe( (res: any) => { 
-            if (res.status == 200) {
+            /* if (res.status == 200) {
               mainThis.toastService.presentToast('Lecture details saved successfully'); 
               let navigationExtras: NavigationExtras = {
                 queryParams: { 'iacs': mainThis.iacs,'subject':mainThis.subject },
@@ -519,8 +530,17 @@ export class CallPage  implements OnInit {
               }; 
               mainThis.router.navigate(['liveclasses'],navigationExtras); 
               mainThis.showloader = false;
-            }
+            } */
           })
+         /*  mainThis.homeService.uploadingLectureVideo(newData,token).subscribe( (res: any) => {  */
+            mainThis.toastService.presentToast('Lecture video is uploading in background...'); 
+            let navigationExtras: NavigationExtras = {
+              queryParams: { 'iacs': mainThis.iacs,'subject':mainThis.subject },
+              fragment: 'anchor'
+            }; 
+            mainThis.router.navigate(['liveclasses'],navigationExtras); 
+            mainThis.showloader = false;
+          /* }) */
         }
       }
     });
